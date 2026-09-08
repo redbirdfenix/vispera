@@ -2,14 +2,31 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=1280, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <title>Víspera</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="stage">
     <canvas id="game" width="1280" height="720" aria-label="Víspera"></canvas>
+    <div id="pad" aria-hidden="true">
+      <div class="pad-side pad-left">
+        <div class="stick" id="stick">
+          <div class="stick-base"></div>
+          <div class="stick-knob" id="stick-knob"></div>
+        </div>
+      </div>
+      <div class="pad-side pad-right">
+        <div class="zone zone-guard" data-hold="KeyS" id="zone-s"><i class="shape shield"></i><b class="lab">guarda</b></div>
+        <div class="cut-cluster">
+          <div class="zone zone-slash" data-tap="Space" id="zone-slash"><i class="shape blade"></i><b class="lab">tajo</b></div>
+          <div class="zone zone-golpe" data-tap="KeyL" id="zone-l"><i class="shape blade-sm"></i><b class="lab">golpe</b></div>
+        </div>
+        <div class="zone zone-dart" data-tap="KeyK" id="zone-k"><i class="shape ember"></i><b class="lab">dardo</b></div>
+      </div>
+    </div>
+    <div id="giro" aria-hidden="true"><i class="shape land"></i></div>
   </div>
-  <script src="game.js?v=106"></script>
+  <script src="game.js?v=312"></script>
 </body>
 </html>
