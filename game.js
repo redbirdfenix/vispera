@@ -1508,6 +1508,184 @@
  * follow-up still reaches, AI_LINK_RANGE_CHANCE 0.55 so tajo→golpe / golpe→tajo /
  * →K actually fire more in range. Clash doors stay 0.4. CDs / stam / reversal /
  * pushblock / feint rules unchanged. Space/L/K/riposte frames untouched.
+ * Tip under boltPlantFade leftover: idle/walk K recovery used to dump
+ * bladeTip onto idle-edge (~339px) the same tick dart birth popped
+ * boltPhase to recovery while leftover knife still owned the sheet
+ * (boltPlantFade; poseBitmap already idle) — a hop, not a plant. Same hole
+ * tip under feintFade already closed for windup→idle. Draw-only
+ * (bladeTipX / bladeTipY). Ease throwKnife→pose tip with boltPlantFade
+ * (bf dies 1→0; mirror feintFade). Special-cancel still 0 (holdingCutBolt).
+ * castPlantXY K path unchanged (already rides knife through fade). Tip under
+ * feintFade / telegraphFade / tipX under plant fades / reversal tip unchanged.
+ * tip markers / steelX / bladeBox / active hitbox unchanged. AABB planted.
+ * No new combat verb.
+ * Hurt pose snap leftover: leftover crumple used to pop hurt→idle when
+ * throw-invuln died (wakeupFade dies with THROW_WAKE_INVULN 80) — meaty stun
+ * past that window / getup settle read as a sheet cut, not a plant. Same hole
+ * parryFade closed for slash→idle on interrupt. Draw-only (hurtFade). Fade
+ * Fade leftover hurt→idle over SHEATHE_MS from thrownT clear (poseBitmap still idle
+ * once thrownT is 0). Keep through stun / guard / wakeRev like wakeupFade.
+ * wakeupFade still owns invuln-window / wakeRevFadeHold. Tip under hurt did not
+ * hop (hurt/idle share sheet-edge; no tipX). destRect/AABB planted. Stun frames /
+ * damage / THROW_WAKE_INVULN / tip under boltPlantFade v334 / cover family locked.
+ * No new combat verb.
+ * Hit interrupt leftover (v336): landHit / landBoltHit used to pop the defender
+ * slash/windup/knife sheet to idle the same tick stun armed (sheatheFade dies on
+ * stun; poseBitmap idle immediately), so freeze/flinch hard-cut the attack sheet
+ * with a ~66px tip hop — a snap, not a plant. Sibling of attacker parryFade
+ * (v325). Draw-only (parryFade). Arm SHEATHE_MS on def when interrupting a cut
+ * pose; latch parryFadeSheet (slash/windup/knife). Clear bolt plant so poseBitmap
+ * stays idle (chip path). Hold clock through freeze. destRect eases leftover
+ * ox/rot into flinch; tip eases under fade. Idle chip stun still 0. Throw KD /
+ * wakeupFade / crumpleFade / dart tip v334 / cover-family / HITSTUN 350 /
+ * HITSTOP_HIT 140 / HIT_FLASH_MS 120 / frames / tipX / pad locked. No new combat verb.
+ * Clash/tech/pushblock dust ↔ punchCover (v337): choque scrape + CLASH_FX /
+ * TECH_FX / PUSHBLOCK_FX shove trails used to spawnPlantDust before bumpShake,
+ * so punch mark never armed — grit faded on its own t/life linear clock while
+ * punchCover held full (clash spark / steel / knock grit already peaked). Sibling
+ * of knock grit v330 (landHit bumps shake first). Draw-only (plantDustK). Arm
+ * shake before dust so punch-marked stamps/specks hold peak with cover. Walk/idle
+ * grit unmarked — stays linear. Clash dust leftover cull / pushblock skip-1.0 /
+ * CLASH_FX 1.7 / TECH_FX 1.5 / PUSHBLOCK_FX 1.85 / HITSTOP_BLOCK 60 / cover family /
+ * hit interrupt v336 / hurtFade v335 / dart tip v334 / tipX / plants / frames /
+ * pad locked. No new combat verb.
+ * Hurt settle→walk plant-release destRect leftover (v338): leftover hurtFade breath used to
+ * seat mid-stride / mid-raise the tick hurtFadeT cleared after throw-invuln already ended idle
+ * (no cutRec arm) or after cutRec drained — idleBreath keep-0 through walking/recoveryWalkOut/
+ * walkFadeHold while hurtFade>0, but nothing armed cutRec when SHEATHE_MS hurtFade died under
+ * plant (wakeup/feint/stun already closed that hole on their clocks). destRect-only (idleBreath /
+ * cutRecBreathT). Keep breath 0 through walk during hurtFade (already); tickHurtFade arms
+ * cutRecBreathT when hurtFadeT clears mid-stride / mid-raise / under walkFadeHold so max(ck, wk) /
+ * hold-under-rise own the post-hurt seat. Idle hurt→idle still eases with hurtFade. Sheet
+ * hurtFade / wakeupFade / THROW_WAKE_INVULN / SHEATHE_MS / dust cover v337 / hit interrupt v336 /
+ * tipX / plants / frames / pad locked. No new combat verb.
+ * Throw interrupt leftover (v339): landThrow used to pop the defender mid-cut /
+ * windup / knife / sheathe sheet to hurt the same tick thrownT armed (poseBitmap
+ * hurt immediately; no fade) — startup tip hopped ~270px, a snap not a plant.
+ * Sibling of hit interrupt v336 (landHit mid-cut→idle via parryFade). Draw-only
+ * (parryFade). Arm SHEATHE_MS on def when interrupting a cut pose; latch
+ * parryFadeSheet. Rest leftover cut on hurt while pf live (poseBitmap still hurt
+ * immediately). destRect eases leftover ox/rot into plant; tip eases under fade.
+ * Idle throw still snaps (no cut sheet → pf 0). Hold clock through freeze.
+ * THROW_KD_MS 520 / THROW_DMG 20 / HITSTOP_HIT 140 / hurt settle→walk v338 /
+ * dust cover v337 / hit interrupt v336 / hurtFade v335 / tipX / plants / frames /
+ * pad locked. No new combat verb.
+ * Tech / KO interrupt leftover (v340): landThrowTech used to dump slash / sheathe /
+ * knife → throw windup the same tick techRec armed (poseBitmap windup; no fade) —
+ * tip hopped ~270px, a snap not a plant. KO mid-cut / windup landHit also latched
+ * parryFadeSheet but parryFade died on hp<=0, so killing blows still hard-cut to
+ * hurt crumple. Sibling of throw interrupt v339. Draw-only (parryFade). Arm
+ * armHitInterruptFade on both fighters before landThrowTech phase dump; allow
+ * parryFade through techRec throw recovery and through hp<=0 / falling while
+ * latched. Rest leftover cut on windup (tech) or hurt (KO). Tip eases under fade.
+ * Idle tech / tech-from-guard still own their snaps (no cut sheet → pf 0; guard
+ * plant stays techGuardPlantFade). Clash mid-active sheet stays slash (no snap).
+ * THROW_RECOVERY 220 / HITSTOP_BLOCK 60 / throw interrupt v339 / hit interrupt
+ * v336 / tipX / plants / frames / pad locked. No new combat verb.
+ * Tip under throw-startup→tech leftover (v341): attacker throw startup→tech used to
+ * dump tipX ~152px onto windup tip the same tick landThrowTech cleared
+ * throwGuardPlanting / tipPlantK while the sheet stayed windup (poseBitmap windup;
+ * parryFade latched windup→windup — a no-op vs the tipPlantK edge blend) — a hop,
+ * not a plant. Same hole tip under feintFade / parryFade / boltPlantFade closed for
+ * marker hops. Draw-only (parryFade). Latch tipPlantK raise fraction at
+ * armHitInterruptFade (throw startup only); ease tipX/tipY from that blend through
+ * the interrupt fade envelope. Idle tech / tech-from-guard still own their snaps
+ * (no tipK latch). Defender mid-cut tech / KO interrupt v340 unchanged. tipX locks
+ * 991/0/884 / plants / frames / pad locked. No new combat verb.
+ * Tip under guard raise leftover (v342): S-press / guard raise used to dump bladeTip
+ * onto block tipY (~43px) the same tick poseBitmap flipped to block while raise k
+ * still low (guardRaiseK sat outside tip ease; poseBitmap still block immediately)
+ * — a hop, not a raise. Same hole tip under guard drop leftover already closed for
+ * S-release (mirror). Draw-only (bladeTipX / bladeTipY). Ease idle→block tip with
+ * guardRaiseK while guarding idle (rk rises 0→1; mirror telegraphFade). Full raise:
+ * rk=1 is a no-op vs block tip. Drop still tipPlantK+guardDropFade. Plant-from-guard
+ * (throw/reverse/tech) still tipPlantK (phase startup). tip markers / steelX /
+ * bladeBox / active hitbox unchanged. AABB planted. No new combat verb.
+ * Tip under tipPlantK+tele leftover stack (v343): Space/L/K from short leftover drop
+ * with telegraph on used to dump bladeTip onto idle-edge (~21px tipY at gpk≈0.5) the
+ * same tick startAttack/startBolt armed while leftoverPlantTip latched but tele tip
+ * still eased idle-edge→pose (tipPlantK gated !telegraphing; tele base ignored the
+ * leftover block blend) — a hop, not a plant. Same hole tip under slash/golpe/bolt
+ * leftover short raise already closed for tele-off. Draw-only (bladeTipX / bladeTipY).
+ * Latch leftoverPlantTipK = guardRaiseK at startAttack/startBolt; ease leftover
+ * tip→pose with telegraphFade (bias idle-edge/chest toward block by tipK). Tele-off
+ * tipPlantK / idle tele / clash-cancel / holdCut / link tip unchanged. tip markers /
+ * steelX / bladeBox / active hitbox unchanged. AABB planted. No new combat verb.
+ * Tip under mid-tele feint leftover (v344): Space feint mid-telegraph used to dump
+ * bladeTip onto full windup (~122px hop at tf≈0.5; ~308px at tf≈0) the same tick
+ * startFeint cleared telegraph while feintFade latched fk=1 onto windup tip
+ * (tip under feintFade already eased windup→idle, but mid-tele tip was still between
+ * idle-edge and windup) — a hop, not a pull. Same hole tip under tipPlantK+tele
+ * leftover stack closed for leftover→tele. Draw-only (bladeTipX / bladeTipY).
+ * Latch feintTipK = telegraphFade at startFeint BEFORE phase/tele clear
+ * (telegraphing needs startup; 1 when tele already seated); bias windup tip toward
+ * idle-edge by tipK so feintFade eases mid-tele→idle. Late tele feint (tipK=1) /
+ * tip under feintFade / tele tip unchanged. tip markers / steelX / bladeBox /
+ * active hitbox unchanged. AABB planted. No new combat verb.
+ * Tip under sheathe↔guardDrop tip gate (v345): sheatheFade and guardDrop tip used to
+ * fight mid-transition — (1) S-raise mid-sheathe dumped tip onto idle-edge (~70px) the
+ * same tick poseBitmap flipped to block while sheatheFade still owned the slash overlay
+ * (tip under guard raise eased idle→block; no tip under sheatheFade); (2) S-release mid-
+ * sheathe pulled tip toward slash (~45px) then dumped idle-edge because guardDropFade
+ * zeroed sheatheFade (block owns sheet) while sheathing() still held slash in poseSheet
+ * so tipPlantK eased block→slash; (3) pure idle sheathe sat on full slash tip then dumped
+ * ~68px onto idle-edge when sheatheT died. Same hole tip under feintFade / guard raise /
+ * guard drop closed for marker hops. Draw-only (bladeTipX / bladeTipY). Seat tip on
+ * idle-edge while guardDropFade && sheatheT so tipPlantK eases block→idle (mirror sheet).
+ * Ease slash→pose tip with sheatheFade (mirror feintFade). Recovery sheatheFade tip
+ * seats idle-edge too (v346 holdCut door). When sheathing keep poseSheet on slash, seat
+ * pose tip on idle-edge so ease matches restSheathe. Raise mid-sheathe keeps block tip
+ * after rk ease. Drop / raise / feint / tele tip family
+ * v342–344 unchanged. tip markers / steelX / bladeBox / active hitbox unchanged. AABB
+ * planted. No new combat verb.
+ * Tip under holdCutFade / boltPlant leftover (v346): special-cancel cut→K tip used to
+ * sit on full slash while leftover sheathe still owned the sheet (holdCutFade draw sk =
+ * 1 − hf·(1−linkSheathe); recovery tip stayed hard slash), so tip / cast juice hopped
+ * ~26px off the visible blade when the dart planted from the cut pose — a hop, not a
+ * plant. Same hole tip under sheatheFade / linkPlantFade closed for marker hops.
+ * Draw-only (bladeTipX / bladeTipY). Seat recovery sheatheFade tip on idle-edge (mirror
+ * idle sheathing) so tip tracks restSheathe into the cancel door. Ease leftover-sheathe
+ * tip→slash with holdCutFade (mirror draw sk). castPlantXY follows bladeTip so puff
+ * tracks the cut; after holdCutFade dies tip/cast sit on slash for dart birth. Tip under boltPlantFade v334 idle
+ * path unchanged (holdingCutBolt still 0). tipX locks / castPlantXY / v343 tele stack /
+ * v345 sheathe gate unchanged. AABB planted. No new combat verb.
+ * KO slashPose ox under pf leftover (v347): mid-cut / windup / knife KO used to
+ * dump destRect ox/rot the same tick hp hit 0 / beginFall set falling (stun path
+ * gated hp>0; falling hard-zeroed), while parryFade still owned the cut→hurt sheet
+ * — a hop, not a plant. Chip stun already eases fromOx under pf. Mirror throw /
+ * hit interrupt. destRect-only (slashPose). AABB planted (bodyAABB zeros falling).
+ * poseBitmap still hurt. Ease leftover cut ox/rot under parryFade into crumple;
+ * idle KO (no pf) still ox 0 + crumple oy. Extra destRect rot stays 0 once pf dies.
+ * tip under holdCut / link / clash / tipX 991/0/884 / plants / frames / pad locked.
+ * No new combat verb.
+ * Knock grit leftover walk stamps ↔ punchCover (v348): leftover walk/idle plant
+ * stamps used to ride the knock boot (syncPlantDust) and fade on their own t/life
+ * linear clock while punchCover held full through the slam — unmarked grit died
+ * mid-cover beside punch-marked connect grit (clash / pushblock cull siblings).
+ * Draw-only (dropPlantUnderKnock). Cull leftover unmarked non-shove stamps for the
+ * hurt fighter before landHit / landBoltHit / landThrow connect grit. Specks still
+ * fly. Shove trails stay. Clash dropPlantUnderClash / pushblock dropBlockPlantUnderShove
+ * unchanged. Walk/idle grit unmarked when no knock. plantDustK / HITSTOP_HIT /
+ * KNOCK_PX / tipX / plants / frames / pad locked. No new combat verb.
+ * Knock grit leftover atk walk stamps ↔ punchCover (v349): landHit / landBoltHit
+ * used to cull only the hurt fighter (v348), so the attacker's leftover walk/idle
+ * / lunge plant stamps kept riding syncPlantDust and faded on their own t/life
+ * linear clock while punchCover held full — unmarked atk grit died mid-cover
+ * beside punch-marked connect grit on the hurt boot (landThrow / landThrowTech
+ * already culled both). Draw-only (dropPlantUnderKnock). Cull leftover unmarked
+ * non-shove stamps for atk too before landHit / landBoltHit connect grit. Specks
+ * still fly. Shove trails stay. Def-only connect grit spawn unchanged. Clash /
+ * pushblock culls unchanged. Walk/idle grit unmarked when no knock. plantDustK /
+ * HITSTOP_HIT / KNOCK_PX / tipX / plants / frames / pad locked. No new combat verb.
+ * Cast brasa ↔ punchCover (v350): spent-super plant puff (BOLT_CAST_FX_MS 220) used to
+ * linear-drain mid-cover after startBolt spend freeze (BOLT_SUPER_STOP + mag 10) —
+ * cast puff faded while punchCover still held full (hit|grab already hold+clear).
+ * Empty K never arms shake — stays linear. Feint / reversal / wakeup never arm shake
+ * — stay linear. Block / clash brasa kinds still linear (steel/clash clocks already
+ * cover-held). Hold cast (+ hit + grab) brasaFxT through live punch; clear when cover
+ * dies. Draw uses brasaFxT/life peak while held (no separate cast draw-K). BOLT_CAST_FX_MS
+ * 220 / BOLT_SUPER_STOP 60 / BOLT_SUPER_FX 1.55 unchanged. Juice only — grit culls v348/
+ * v349 / short flecks v333 / tipX / plants / frames / pad locked. No new combat verb.
  */
 
 
@@ -2665,6 +2843,8 @@
       techRec: false,
       techGuardTip: false,
       leftoverPlantTip: false,
+      leftoverPlantTipK: 0,
+      feintTipK: 1,
       throwTechArmed: 0,
       reversal: false,
       revCd: 0,
@@ -2674,6 +2854,9 @@
       pbArmed: 0,
       feintT: 0,
       parryFadeT: 0,
+      parryFadeSheet: "",
+      parryFadeTipK: 0,
+      hurtFadeT: 0,
       feintCd: 0,
       feintArmed: 0,
       telegraph: false,
@@ -3062,7 +3245,7 @@
       // reversalPlantFade is already <=0.02 — keep hold through leftover
       // wakeupFade / wakeRevFadeHold crumple plant instead of zeroing.
       // Plant walk-in destRect lean leftover: keep settle through reverse raise.
-      if (reversalPlantFade(f) <= 0.02 && wakeupFade(f) <= 0.02) f.walkFadeHold = 0;
+      if (reversalPlantFade(f) <= 0.02 && wakeupFade(f) <= 0.02 && hurtFade(f) <= 0.02) f.walkFadeHold = 0;
       drainWalkSettleUnderPlant(f, dt, was);
       return;
     }
@@ -3123,6 +3306,7 @@
       // plant (settle may be 0 on a plant-frame / rival closing arm). Walk→guard
       // settle path unchanged once wakeupFade dies.
       if (wakeupFade(f) > 0.02 && f.walkFadeHold > 0) return;
+      if (hurtFade(f) > 0.02 && f.walkFadeHold > 0) return;
       if (f.walkSettleT <= 0) f.walkFadeHold = 0;
       return;
     }
@@ -3430,10 +3614,22 @@
     // ends mid-stride / mid-raise / under walkFadeHold so max(ck, wk) / hold-under-rise own the
     // post-getup seat. Idle getup still eases with wakeupFade. Wakeup settle→guard unchanged.
     // AABB planted.
-    if (wakeupFade(f) > 0) {
+    // Hurt pose snap leftover: also suppress breath through hurtFade (SHEATHE_MS)
+    // so chest does not seat when invuln window dies. AABB planted.
+    // Hurt settle→walk plant-release destRect leftover: leftover hurtFade breath used to
+    // seat mid-stride / mid-raise the tick hurtFadeT cleared after throw-invuln already ended
+    // idle (no cutRec arm) or after cutRec drained (idleBreath preferred plant release — keep-0
+    // through walking / walk-out / walkFadeHold while hurtFade>0, but no arm when SHEATHE_MS
+    // died under plant), then ease — a hop, not a plant. Same hole wakeup / feint / chip stun
+    // settle→walk plant-release already closed. Keep breath 0 through walking / walk-out /
+    // leftover walkFadeHold during hurtFade plant; tickHurtFade arms cutRecBreathT when
+    // hurtFadeT clears mid-stride / mid-raise / under walkFadeHold so max(ck, wk) /
+    // hold-under-rise own the post-hurt seat. Idle hurt→idle still eases with hurtFade.
+    // Hurt settle→guard: keep 0 through raise; arm cutRec on clear mid-raise too. AABB planted.
+    if (wakeupFade(f) > 0 || hurtFade(f) > 0) {
       if (walking(f) || recoveryWalkOut(f) || f.walkFadeHold > 0.02) return 0;
       if (f.guarding || f.guardPoseK > 0) return 0;
-      return amp * (1 - wakeupFade(f));
+      return amp * (1 - Math.max(wakeupFade(f), hurtFade(f)));
     }
     // Throw recovery leftover: leftover breath used to dump ~1.6 the
     // same tick recovery popped idle. Ease with throwPlantFade. AABB planted.
@@ -3789,19 +3985,83 @@
   }
 
   function slashPose(f) {
-    if (f.falling) {
-      const t = Math.min(1, f.fallT / FALL_MS);
-      const lift = (1 - t) * (1 - t);
-      // destRect-only. AABB planted. Freeze sat at oy 0; −10 used
-      // to dump the same tick beginFall set falling. Ease leftover
-      // plant into the lift. Extra rot stays 0.
-      return { rot: 0, ox: 0, oy: -10 * lift * crumpleFade(f) };
+    // KO slashPose ox under pf leftover (v347): mid-cut / windup / knife KO used to
+    // dump destRect ox/rot the same tick hp hit 0 / beginFall set falling (stun path
+    // gated hp>0; falling hard-zeroed ox), while parryFade still owned the cut→hurt
+    // sheet — a hop, not a plant. Chip stun already eases fromOx under pf. Mirror
+    // throw interrupt / hit interrupt. destRect-only. AABB planted (bodyAABB zeros
+    // falling). poseBitmap still hurt. Extra destRect rot stays 0 once pf dies.
+    // Idle KO (no parryFadeT) still ox 0 + crumple oy. tipX / plants / frames locked.
+    if (f.falling || (f.hp <= 0 && (f.parryFadeT || 0) > 0)) {
+      const t = f.falling ? Math.min(1, f.fallT / FALL_MS) : 0;
+      const lift = f.falling ? (1 - t) * (1 - t) : 0;
+      const pk = parryFade(f);
+      if (pk > 0.02) {
+        const sheet = f.parryFadeSheet || "slash";
+        const golpe = f.cut === "golpe";
+        let fromRot;
+        let fromOx;
+        let fromOy;
+        if (sheet === "windup") {
+          fromRot = golpe ? -0.24 : -0.42;
+          fromOx = golpe ? -18 : -36;
+          fromOy = golpe ? 2 : 4;
+        } else if (sheet === "knife") {
+          fromRot = 0;
+          fromOx = 0;
+          fromOy = 0;
+        } else {
+          fromRot = golpe ? 0.32 : 0.55;
+          fromOx = golpe ? 40 : 72;
+          fromOy = golpe ? -6 : -10;
+        }
+        return {
+          rot: f.facing * fromRot * pk,
+          ox: f.facing * fromOx * pk,
+          oy: fromOy * pk + (-10 * lift * crumpleFade(f)),
+        };
+      }
+      if (f.falling) {
+        // destRect-only. AABB planted. Freeze sat at oy 0; −10 used
+        // to dump the same tick beginFall set falling. Ease leftover
+        // plant into the lift. Extra rot stays 0.
+        return { rot: 0, ox: 0, oy: -10 * lift * crumpleFade(f) };
+      }
     }
     // Throw knockdown reuses hurt/KO art. destRect planted; no extra rot.
     // Throw KD leftover destRect plant: leftover k still drives destRect
     // via guardPlant. Hurt rot stays 0 so leftover guard rot does not
     // stack extra. Extra destRect rot stays 0.
+    // Throw interrupt leftover (v339): ease leftover mid-cut / windup / knife
+    // ox/rot into plant over parryFade (landThrow armed pf). Idle throw still
+    // snaps (pf 0). AABB planted (bodyAABB zeros via stunT). No new combat verb.
     if (f.thrownT > 0 && f.hp > 0) {
+      const pk = parryFade(f);
+      if (pk > 0.02) {
+        const sheet = f.parryFadeSheet || "slash";
+        const golpe = f.cut === "golpe";
+        let fromRot;
+        let fromOx;
+        let fromOy;
+        if (sheet === "windup") {
+          fromRot = golpe ? -0.24 : -0.42;
+          fromOx = golpe ? -18 : -36;
+          fromOy = golpe ? 2 : 4;
+        } else if (sheet === "knife") {
+          fromRot = 0;
+          fromOx = 0;
+          fromOy = 0;
+        } else {
+          fromRot = golpe ? 0.32 : 0.55;
+          fromOx = golpe ? 40 : 72;
+          fromOy = golpe ? -6 : -10;
+        }
+        return {
+          rot: f.facing * fromRot * pk,
+          ox: f.facing * fromOx * pk,
+          oy: fromOy * pk,
+        };
+      }
       return { rot: 0, ox: 0, oy: 0 };
     }
     // Chip stun is not the KO crumple. Flinch is destRect rot around the
@@ -3819,10 +4079,26 @@
       // over parryFade. AABB planted (bodyAABB still zeros stun ox).
       const pk = parryFade(f);
       if (pk > 0.02) {
+        // Hit interrupt leftover (v336): ease leftover windup/knife/slash ox into flinch.
+        // Attacker perfect-parry still latches slash (active ox). AABB planted.
+        const sheet = f.parryFadeSheet || "slash";
         const golpe = f.cut === "golpe";
-        const fromRot = golpe ? 0.32 : 0.55;
-        const fromOx = golpe ? 40 : 72;
-        const fromOy = golpe ? -6 : -10;
+        let fromRot;
+        let fromOx;
+        let fromOy;
+        if (sheet === "windup") {
+          fromRot = golpe ? -0.24 : -0.42;
+          fromOx = golpe ? -18 : -36;
+          fromOy = golpe ? 2 : 4;
+        } else if (sheet === "knife") {
+          fromRot = 0;
+          fromOx = 0;
+          fromOy = 0;
+        } else {
+          fromRot = golpe ? 0.32 : 0.55;
+          fromOx = golpe ? 40 : 72;
+          fromOy = golpe ? -6 : -10;
+        }
         const flinch = -0.16 * k * (1 - lk);
         return {
           rot: f.facing * (fromRot * pk + flinch * (1 - pk)),
@@ -3885,7 +4161,10 @@
   function bodyAABB(f) {
     const s = worldScale();
     const d = poseFamily(f).idle;
-    const pose = (walking(f) || (f.stunT > 0 && f.hp > 0) || f.falling) ? { rot: 0, ox: 0, oy: 0 } : slashPose(f);
+    // KO slashPose ox under pf leftover (v347): hp<=0 used to fall through to
+    // slashPose while stunT>0&&hp>0 was the only chip-stun zero — after pf ox
+    // ease, AABB would ride leftover cut ox. Keep hurt box planted on KO.
+    const pose = (walking(f) || (f.stunT > 0 && f.hp > 0) || f.falling || f.hp <= 0) ? { rot: 0, ox: 0, oy: 0 } : slashPose(f);
     const ox = f.x + pose.ox;
     const dy = FLOOR_Y - d.footY * s + pose.oy;
     const dx = ox - d.footX * s;
@@ -3903,7 +4182,8 @@
     // still owned the sheet (linkPlantFade / clashPlantFade), so tip juice hopped
     // ~240px off the visible blade — a hop, not a plant. Same hole spark origin
     // leftover already closed for clash-K / idle-sheathe-K castPlantXY. Ease
-    // slash→pose tip with that leftover fade. HoldCut still slash tip. Telegraph /
+    // slash→pose tip with that leftover fade. HoldCut still slash tip after holdCutFade
+    // (v346 eases leftover sheathe→slash under holdCutFade). Telegraph /
     // idle K cast still rides castPlantXY. Active hitbox still phase===active only.
     // Reversal/throw-guard settle→plant tip leftover: ease block→pose tip with
     // max(reversalPlantFade, throwGuardPlantFade) (mirror link/clash). AABB planted.
@@ -3920,7 +4200,18 @@
       const sl = poseFamily(f).slash;
       if (sl && sl.tipX != null) {
         const sx = r.dx + sl.tipX * s;
-        tip = sx + (tip - sx) * (1 - k);
+        // Tip under holdCutFade / boltPlant leftover (v346): recovery sheathe tip may
+        // sit mid-sheathe into connected slash-L — start ease from leftover sheathe blend
+        // (linkSheathe) so tip does not hop mid-sheathe→full slash the tick linkPlant arms.
+        // Clash leftover pose still full slash (linkSheathe 0). HoldCut uses holdCutFade.
+        let from = sx;
+        if (linkPlantFade(f) > 0.02 && (f.linkSheathe || 0) > 0.02) {
+          const ex = f.facing > 0 ? r.dx + r.dw - 8 : r.dx + 8;
+          from = ex + (sx - ex) * (f.linkSheathe || 0);
+          tip = from + (tip - from) * (1 - k);
+        } else {
+          tip = sx + (tip - sx) * (1 - k);
+        }
       }
     }
     // Reversal/throw-guard settle→plant tip leftover: tip used to hop
@@ -3978,18 +4269,112 @@
         tip = bx + (tip - bx) * (1 - tipPlantK);
       }
     }
+    // Tip under sheathe↔guardDrop tip gate (v345): guardDropFade zeros sheatheFade so
+    // block owns the sheet, but sheathing() still holds slash in poseSheet — tipPlantK
+    // eased block→slash (~45px) while draw went block→idle. Raise mid-sheathe tip was
+    // slash→block under sf; release dumped onto pure block then idle. Overwrite: ease
+    // slash-biased block (sf from sheatheT) → idle-edge with gdf (mirror restGuard +
+    // unfinished sheathe). Pure drop (no sheatheT) still tipPlantK above. AABB planted.
+    if (guardDropFade(f) > 0.02 && f.sheatheT > 0) {
+      const gdf = guardDropFade(f);
+      const u = 1 - Math.max(0, Math.min(1, f.sheatheT / SHEATHE_MS));
+      const sf = 1 - u * u * (3 - 2 * u);
+      const sl = poseFamily(f).slash;
+      const sx = sl && sl.tipX != null
+        ? r.dx + sl.tipX * s
+        : (f.facing > 0 ? r.dx + r.dw - 8 : r.dx + 8);
+      const bl = poseFamily(f).block;
+      const bx = bl && bl.tipX != null
+        ? r.dx + bl.tipX * s
+        : (f.facing > 0 ? r.dx + r.dw - 8 : r.dx + 8);
+      const ex = f.facing > 0 ? r.dx + r.dw - 8 : r.dx + 8;
+      const mid = bx + (sx - bx) * sf;
+      tip = mid + (ex - mid) * (1 - gdf);
+    }
+    // Tip under guard raise leftover (v342): S-press used to dump tip onto block
+    // (~sheet-edge / tipY) the same tick poseBitmap flipped while raise k still
+    // low — a hop, not a raise. Mirror tip under telegraphFade (rk rises 0→1).
+    // Ease idle-edge→block tip with guardRaiseK while guarding idle. Drop still
+    // tipPlantK+guardDropFade (guarding cleared). Plant-from-guard still tipPlantK
+    // (phase startup). Full raise rk=1 no-op. AABB planted. No new combat verb.
+    if (f.guarding && f.phase === "idle" && !f.boltPhase) {
+      const rk = guardRaiseK(f);
+      if (rk < 0.98) {
+        const ex = f.facing > 0 ? r.dx + r.dw - 8 : r.dx + 8;
+        tip = ex + (tip - ex) * rk;
+      }
+    }
+    // Tip under sheatheFade leftover (v345): tip used to sit on full slash then dump
+    // idle-edge (~68px) when sheatheT died (poseSheet slash via sheathing; draw rested
+    // idle+slash). Raise mid-sheathe dumped ~70px onto idle-edge the tick block flipped
+    // while sheatheFade still owned slash overlay. Mirror tip under feintFade. Ease
+    // slash→pose tip with sheatheFade (sf dies 1→0). Raise mid-sheathe: pose tip is block
+    // after rk ease — slash→block under sf. Drop mid-sheathe still tipPlantK+idle seat
+    // above (sf 0 while gdf). tip under guard raise / feint / tele / tipPlantK+tele
+    // v342–344 unchanged. castPlantXY K path unchanged. tip markers / steelX / bladeBox /
+    // active hitbox unchanged. AABB planted.
+    // Tip under holdCutFade / boltPlant leftover (v346): recovery sheatheFade also seats
+    // pose tip on idle-edge (mirror restSheathe / sheathing) so tip tracks the fading cut
+    // into the special-cancel door — holdCutFade then eases leftover-sheathe→slash.
+    // holdCutFade zeros sheatheFade during plant. >0 (not 0.02): last smoothstep tick
+    // must not snap back onto full slash then dump idle-edge (~68px). Mirror restSheathe.
+    const sfTip = sheatheFade(f);
+    if (sfTip > 0) {
+      const sl = poseFamily(f).slash;
+      if (sl && sl.tipX != null) {
+        const sx = r.dx + sl.tipX * s;
+        let poseTip = tip;
+        // sheathing / recovery fade keep poseSheet on slash while draw rests idle+slash —
+        // tip would no-op on slash→slash. Seat pose tip on idle-edge (mirror restSheathe).
+        // Raise mid-sheathe: pose tip is block after rk ease — slash→block under sf.
+        if (sheathing(f) || (f.phase === "recovery" && (f.cut === "golpe" || f.cut === "slash") && !f.clashRec && !f.techRec && f.sheatheT <= 0)) {
+          poseTip = f.facing > 0 ? r.dx + r.dw - 8 : r.dx + 8;
+        }
+        tip = sx + (poseTip - sx) * (1 - sfTip);
+      }
+    }
+    // Tip under holdCutFade leftover (v346): tip / cast used to sit on full slash while
+    // leftover sheathe still owned the sheet (holdCutFade; draw sk =
+    // 1 − hf·(1−linkSheathe)), so juice hopped ~26px off the visible blade when the dart
+    // planted from the cut pose — a hop, not a plant. Mirror tip under sheatheFade /
+    // linkPlantFade. Ease leftover-sheathe tip→slash with holdCutFade (sk mirrors draw).
+    // After hf dies tip stays slash through bolt plant. castPlantXY follows bladeTip
+    // (slash once hf dies) so dart birth stays on cut tip. Tip under boltPlantFade still 0
+    // (holdingCutBolt). tip markers / steelX / bladeBox / active hitbox unchanged. AABB planted.
+    const hfTip = holdCutFade(f);
+    if (hfTip > 0) {
+      const sl = poseFamily(f).slash;
+      if (sl && sl.tipX != null) {
+        const sx = r.dx + sl.tipX * s;
+        const ex = f.facing > 0 ? r.dx + r.dw - 8 : r.dx + 8;
+        const sheatheK = f.linkSheathe || 0;
+        const sk = 1 - hfTip * (1 - sheatheK);
+        tip = ex + (sx - ex) * sk;
+      }
+    }
     // Tip under telegraphFade leftover: tip used to hop idle/walk→windup
     // (throwKnife on K) the same tick poseBitmap flipped while leftover idle
     // still owned the sheet (telegraphFade) — a hop, not a plant. Mirror tipX
     // under plant fades. Ease idle-edge→pose tip with telegraphFade (tf rises
     // 0→1). Idle/walk have no tipX; sheet-edge matches pre-tele tip. Rival same.
-    // TipX under plant fades / reversal tip unchanged. castPlantXY K path
-    // unchanged. tip markers / steelX / bladeBox / active hitbox unchanged.
-    // AABB planted.
+    // Tip under tipPlantK+tele leftover stack (v343): leftoverPlantTip + tele used
+    // to dump tip onto idle-edge while leftover block blend still owned the tip
+    // (tipPlantK gated !telegraphing). Bias idle-edge toward block by latched
+    // leftoverPlantTipK so tele eases leftover→pose. TipX under plant fades /
+    // reversal tip / tele-off tipPlantK unchanged. castPlantXY K path unchanged.
+    // tip markers / steelX / bladeBox / active hitbox unchanged. AABB planted.
     if (telegraphing(f)) {
       const tf = telegraphFade(f);
       if (tf < 0.98) {
-        const ex = f.facing > 0 ? r.dx + r.dw - 8 : r.dx + 8;
+        let ex = f.facing > 0 ? r.dx + r.dw - 8 : r.dx + 8;
+        const tipK = f.leftoverPlantTipK || 0;
+        if (f.leftoverPlantTip && tipK > 0.02) {
+          const bl = poseFamily(f).block;
+          const bx = bl && bl.tipX != null
+            ? r.dx + bl.tipX * s
+            : (f.facing > 0 ? r.dx + r.dw - 8 : r.dx + 8);
+          ex = ex + (bx - ex) * tipK;
+        }
         tip = ex + (tip - ex) * tf;
       }
     }
@@ -4001,23 +4386,65 @@
     // under plant fades / reversal tip unchanged. castPlantXY K path
     // unchanged. tip markers / steelX / bladeBox / active hitbox unchanged.
     // AABB planted.
+    // Tip under mid-tele feint leftover (v344): mid-tele startFeint used to dump
+    // tip onto full windup (~122px at tf≈0.5) when fk latched 1 while tele tip
+    // was still mid-edge→windup. Bias windup tip toward idle-edge by latched
+    // feintTipK so feintFade eases mid-tele→idle. Late tele tipK=1 is a no-op.
+    // tip under feintFade / tele tip unchanged. AABB planted.
     const fk = feintFade(f);
     if (fk > 0.02) {
       const wu = poseFamily(f).windup;
       if (wu && wu.tipX != null) {
-        const wx = r.dx + wu.tipX * s;
+        let wx = r.dx + wu.tipX * s;
+        const tipK = (f.feintTipK == null) ? 1 : f.feintTipK;
+        if (tipK < 0.98) {
+          const ex = f.facing > 0 ? r.dx + r.dw - 8 : r.dx + 8;
+          wx = ex + (wx - ex) * tipK;
+        }
         tip = wx + (tip - wx) * (1 - fk);
+      }
+    }
+    // Tip under boltPlantFade leftover: tip used to hop knife→idle the same tick
+    // dart birth popped boltPhase to recovery while leftover knife still owned
+    // the sheet (boltPlantFade; poseBitmap already idle) — a hop, not a plant
+    // (~339px while bf high). Mirror tip under feintFade. Ease throwKnife→pose
+    // tip with boltPlantFade (bf dies 1→0). Special-cancel still 0
+    // (holdingCutBolt). castPlantXY K path unchanged. tip markers / steelX /
+    // bladeBox / active hitbox unchanged. AABB planted.
+    const bfTip = boltPlantFade(f);
+    if (bfTip > 0.02) {
+      const knife = poseFamily(f).throwKnife || poseFamily(f).windup;
+      if (knife && knife.tipX != null) {
+        const kx = r.dx + knife.tipX * s;
+        tip = kx + (tip - kx) * (1 - bfTip);
       }
     }
     // Tip under parryFade leftover: tip used to hop slash→idle the same tick
     // landParry set stunT while leftover cut still owned the sheet — a hop, not
     // a break. Mirror tip under feintFade. Ease slash→pose tip with parryFade
     // (pk dies 1→0). tip markers / bladeBox / active hitbox unchanged. AABB planted.
+    // Hit interrupt leftover (v336): same ease for defender mid-cut / windup / knife
+    // → idle (landHit / landBoltHit). Latch parryFadeSheet picks tip markers.
+    // Throw interrupt leftover (v339): same ease mid-cut → hurt (landThrow).
+    // Tech / KO interrupt leftover (v340): landThrowTech mid-cut → windup; KO mid-cut → hurt.
+    // Tip under throw-startup→tech leftover (v341): tipPlantK edge blend used to dump
+    // ~152px onto windup tip while sheet stayed windup. Latch tipK; ease blend→pose
+    // through pf (mirror tip under feintFade). Idle tech / tech-from-guard still 0.
     const pkTip = parryFade(f);
     if (pkTip > 0.02) {
-      const sl = poseFamily(f).slash;
+      const fam = poseFamily(f);
+      const sheet = f.parryFadeSheet || "slash";
+      const sl = sheet === "windup" ? fam.windup
+        : sheet === "knife" ? (fam.throwKnife || fam.windup)
+        : fam.slash;
       if (sl && sl.tipX != null) {
-        const sx = r.dx + sl.tipX * s;
+        let sx = r.dx + sl.tipX * s;
+        const tipK = f.parryFadeTipK || 0;
+        if (tipK > 0.02) {
+          // Mirror tipPlantK from (block has no tipX → sheet-edge).
+          const ex = f.facing > 0 ? r.dx + r.dw - 8 : r.dx + 8;
+          sx = ex + (sx - ex) * (1 - tipK);
+        }
         tip = sx + (tip - sx) * (1 - pkTip);
       }
     }
@@ -4043,7 +4470,20 @@
       const sl = poseFamily(f).slash;
       if (sl && sl.tipY != null) {
         const sy = r.dy + sl.tipY * s;
-        tip = sy + (tip - sy) * (1 - k);
+        let from = sy;
+        if (linkPlantFade(f) > 0.02 && (f.linkSheathe || 0) > 0.02) {
+          const id = poseFamily(f).idle;
+          let ey;
+          if (id && id.tipY != null) ey = r.dy + id.tipY * s;
+          else {
+            const b = bodyAABB(f);
+            ey = b.y + b.h * 0.06 + b.h * 0.38 * 0.45;
+          }
+          from = ey + (sy - ey) * (f.linkSheathe || 0);
+          tip = from + (tip - from) * (1 - k);
+        } else {
+          tip = sy + (tip - sy) * (1 - k);
+        }
       }
     }
     // Reversal/throw-guard settle→plant tip leftover: ease block→pose tipY
@@ -4087,10 +4527,97 @@
         tip = by + (tip - by) * (1 - tipPlantK);
       }
     }
+    // Tip under sheathe↔guardDrop tip gate (v345): ease slash-biased block tipY
+    // → idle chest with gdf while sheatheT (mirror bladeTipX). Pure drop still
+    // tipPlantK above. AABB planted.
+    if (guardDropFade(f) > 0.02 && f.sheatheT > 0) {
+      const gdf = guardDropFade(f);
+      const u = 1 - Math.max(0, Math.min(1, f.sheatheT / SHEATHE_MS));
+      const sf = 1 - u * u * (3 - 2 * u);
+      const sl = poseFamily(f).slash;
+      const sy = sl && sl.tipY != null ? r.dy + sl.tipY * s : tip;
+      const bl = poseFamily(f).block;
+      let by = tip;
+      if (bl && bl.tipY != null) by = r.dy + bl.tipY * s;
+      const id = poseFamily(f).idle;
+      let ey;
+      if (id && id.tipY != null) ey = r.dy + id.tipY * s;
+      else {
+        const b = bodyAABB(f);
+        ey = b.y + b.h * 0.06 + b.h * 0.38 * 0.45;
+      }
+      const mid = by + (sy - by) * sf;
+      tip = mid + (ey - mid) * (1 - gdf);
+    }
+    // Tip under guard raise leftover (v342): ease idle→block tipY with
+    // guardRaiseK while guarding idle (rk rises 0→1; mirror bladeTipX /
+    // telegraphFade). Idle has no tipY; bodyAABB chest mid matches pre-raise
+    // tipY fallback without bladeBox (tipX-live). Drop still tipPlantK+
+    // guardDropFade. Plant-from-guard still tipPlantK. AABB planted.
+    if (f.guarding && f.phase === "idle" && !f.boltPhase) {
+      const rk = guardRaiseK(f);
+      if (rk < 0.98) {
+        const id = poseFamily(f).idle;
+        let ey;
+        if (id && id.tipY != null) ey = r.dy + id.tipY * s;
+        else {
+          const b = bodyAABB(f);
+          ey = b.y + b.h * 0.06 + b.h * 0.38 * 0.45;
+        }
+        tip = ey + (tip - ey) * rk;
+      }
+    }
+    // Tip under sheatheFade leftover (v345): ease slash→pose tipY with sheatheFade
+    // (sf dies 1→0; mirror bladeTipX / feintFade). When sheathing seat pose tipY on idle
+    // chest mid. Raise mid-sheathe keeps block tipY after rk. Drop mid-sheathe still
+    // tipPlantK+idle seat above. tip under guard raise / feint / tele / tipPlantK+tele
+    // v342–344 unchanged. tip markers / steelX / bladeBox unchanged. AABB planted.
+    // Tip under holdCutFade / boltPlant leftover (v346): recovery sheatheFade also seats
+    // pose tipY on idle chest (mirror bladeTipX / restSheathe). holdCutFade zeros
+    // sheatheFade during plant. >0 mirror bladeTipX.
+    const sfTipY = sheatheFade(f);
+    if (sfTipY > 0) {
+      const sl = poseFamily(f).slash;
+      if (sl && sl.tipY != null) {
+        const sy = r.dy + sl.tipY * s;
+        let poseTip = tip;
+        if (sheathing(f) || (f.phase === "recovery" && (f.cut === "golpe" || f.cut === "slash") && !f.clashRec && !f.techRec && f.sheatheT <= 0)) {
+          const id = poseFamily(f).idle;
+          if (id && id.tipY != null) poseTip = r.dy + id.tipY * s;
+          else {
+            const b = bodyAABB(f);
+            poseTip = b.y + b.h * 0.06 + b.h * 0.38 * 0.45;
+          }
+        }
+        tip = sy + (poseTip - sy) * (1 - sfTipY);
+      }
+    }
+    // Tip under holdCutFade leftover (v346): ease leftover-sheathe tipY→slash with
+    // holdCutFade (sk mirrors draw / bladeTipX). After hf dies tipY stays slash through
+    // bolt plant. tip markers / steelX / bladeBox unchanged. AABB planted.
+    const hfTipY = holdCutFade(f);
+    if (hfTipY > 0) {
+      const sl = poseFamily(f).slash;
+      if (sl && sl.tipY != null) {
+        const sy = r.dy + sl.tipY * s;
+        const id = poseFamily(f).idle;
+        let ey;
+        if (id && id.tipY != null) ey = r.dy + id.tipY * s;
+        else {
+          const b = bodyAABB(f);
+          ey = b.y + b.h * 0.06 + b.h * 0.38 * 0.45;
+        }
+        const sheatheK = f.linkSheathe || 0;
+        const sk = 1 - hfTipY * (1 - sheatheK);
+        tip = ey + (sy - ey) * sk;
+      }
+    }
     // Tip under telegraphFade leftover: ease idle-edge→pose tipY with
     // telegraphFade (mirror bladeTipX). Idle/walk have no tipY; bodyAABB
     // chest mid matches pre-tele tipY fallback without bladeBox (tipX-live).
-    // tip markers / steelX / bladeBox unchanged. AABB planted.
+    // Tip under tipPlantK+tele leftover stack (v343): bias idle tipY toward
+    // block tipY by latched leftoverPlantTipK so tele eases leftover→pose
+    // (mirror bladeTipX). tip markers / steelX / bladeBox unchanged. AABB planted.
     if (telegraphing(f)) {
       const tf = telegraphFade(f);
       if (tf < 0.98) {
@@ -4101,28 +4628,78 @@
           const b = bodyAABB(f);
           ey = b.y + b.h * 0.06 + b.h * 0.38 * 0.45;
         }
+        const tipK = f.leftoverPlantTipK || 0;
+        if (f.leftoverPlantTip && tipK > 0.02) {
+          const bl = poseFamily(f).block;
+          if (bl && bl.tipY != null) {
+            const by = r.dy + bl.tipY * s;
+            ey = ey + (by - ey) * tipK;
+          }
+        }
         tip = ey + (tip - ey) * tf;
       }
     }
     // Tip under feintFade leftover: ease windup→pose tipY with feintFade
     // (fk dies 1→0; mirror bladeTipX). tip markers / steelX / bladeBox
     // unchanged. AABB planted.
+    // Tip under mid-tele feint leftover (v344): bias windup tipY toward idle
+    // tipY by latched feintTipK (mirror bladeTipX). Late tele tipK=1 no-op.
     const fk = feintFade(f);
     if (fk > 0.02) {
       const wu = poseFamily(f).windup;
       if (wu && wu.tipY != null) {
-        const wy = r.dy + wu.tipY * s;
+        let wy = r.dy + wu.tipY * s;
+        const tipK = (f.feintTipK == null) ? 1 : f.feintTipK;
+        if (tipK < 0.98) {
+          // Mirror tele idle tipY base (bodyAABB chest; idle has no tipY).
+          const id = poseFamily(f).idle;
+          let ey;
+          if (id && id.tipY != null) ey = r.dy + id.tipY * s;
+          else {
+            const b = bodyAABB(f);
+            ey = b.y + b.h * 0.06 + b.h * 0.38 * 0.45;
+          }
+          wy = ey + (wy - ey) * tipK;
+        }
         tip = wy + (tip - wy) * (1 - fk);
+      }
+    }
+    // Tip under boltPlantFade leftover: ease throwKnife→pose tipY with
+    // boltPlantFade (bf dies 1→0; mirror bladeTipX). tip markers / steelX /
+    // bladeBox unchanged. AABB planted.
+    const bfTipY = boltPlantFade(f);
+    if (bfTipY > 0.02) {
+      const knife = poseFamily(f).throwKnife || poseFamily(f).windup;
+      if (knife && knife.tipY != null) {
+        const ky = r.dy + knife.tipY * s;
+        tip = ky + (tip - ky) * (1 - bfTipY);
       }
     }
     // Tip under parryFade leftover: ease slash→pose tipY with parryFade
     // (pk dies 1→0; mirror bladeTipX). tip markers / steelX / bladeBox
-    // unchanged. AABB planted.
+    // / active hitbox unchanged. AABB planted.
+    // Hit interrupt leftover (v336): defender mid-cut / windup / knife tipY too.
+    // Throw interrupt leftover (v339): landThrow mid-cut → hurt tipY too.
+    // Tech / KO interrupt leftover (v340): tech mid-cut → windup tipY; KO mid-cut → hurt tipY.
+    // Tip under throw-startup→tech leftover (v341): tipPlantK edge blend tipY too
+    // (mirror bladeTipX; block tipY when marked). Idle tech / tech-from-guard still 0.
     const pkTipY = parryFade(f);
     if (pkTipY > 0.02) {
-      const sl = poseFamily(f).slash;
+      const fam = poseFamily(f);
+      const sheet = f.parryFadeSheet || "slash";
+      const sl = sheet === "windup" ? fam.windup
+        : sheet === "knife" ? (fam.throwKnife || fam.windup)
+        : fam.slash;
       if (sl && sl.tipY != null) {
-        const sy = r.dy + sl.tipY * s;
+        let sy = r.dy + sl.tipY * s;
+        const tipK = f.parryFadeTipK || 0;
+        if (tipK > 0.02) {
+          const bl = fam.block;
+          if (bl && bl.tipY != null) {
+            const by = r.dy + bl.tipY * s;
+            sy = by + (sy - by) * (1 - tipK);
+          }
+        }
         tip = sy + (tip - sy) * (1 - pkTipY);
       }
     }
@@ -4241,6 +4818,8 @@
     f.closing = false;
     f.cutHit = false;
     f.parryFadeT = 0;
+    f.parryFadeSheet = "";
+    f.parryFadeTipK = 0;
     f.linkGolpe = false;
     f.linkSlash = false;
     f.linkBolt = false;
@@ -4252,7 +4831,10 @@
     // leftover k planted so tipPlantK phaseT ease holds after gpk dies
     // (slash/golpe planting stays true whole startup; idle Space/L still snaps
     // with no latch). Draw-only.
+    // Tip under tipPlantK+tele leftover stack (v343): also latch tipK so tele tip
+    // eases leftover blend→pose (idle-edge base ignored leftover block tip).
     f.leftoverPlantTip = (f.guardPoseK || 0) > 0;
+    f.leftoverPlantTipK = f.leftoverPlantTip ? guardRaiseK(f) : 0;
     if (leftoverSheathe > 0.02) {
       f.linkPlant = true;
       f.linkSheathe = leftoverSheathe;
@@ -4289,6 +4871,9 @@
     // restFeintWalk. Mid-stride gaitWalkOn path unchanged. Draw-only.
     if (!canFeint(f)) return false;
     const feintRecWalk = recoveryWalkOut(f) || f.walkFadeHold > 0.02 || f.walkT > 0 || f.gait !== 0;
+    // Tip under mid-tele feint leftover (v344): latch tele blend BEFORE phase/tele
+    // clear (telegraphing needs startup). Late tele seats tipK=1.
+    const feintTipLatch = telegraphing(f) ? telegraphFade(f) : 1;
     f.phase = "idle";
     f.phaseT = 0;
     f.cut = "slash";
@@ -4303,11 +4888,15 @@
     f.holdCutPlant = false;
     f.linkSheathe = 0;
     f.leftoverPlantTip = false;
+    f.leftoverPlantTipK = 0;
     f.gait = 0;
     f.cutRecBreathT = 0;
     f.parryFadeT = 0;
+    f.parryFadeSheet = "";
+    f.parryFadeTipK = 0;
     f.feintT = FEINT_RECOVERY;f.feintT = FEINT_RECOVERY;
     f.sheatheT = SHEATHE_MS;
+    f.feintTipK = feintTipLatch;
     f.telegraph = false;
     if (feintRecWalk && f.walkFadeHold < 0.02) f.walkFadeHold = 1;
     // Feint cancel juice (v317): whoosh-down / soft sheath sting + tiny tip hueso fleck.
@@ -4364,12 +4953,24 @@
 
   function tickStun(f, dt) {
     if (!f || f.stunT <= 0) {
-      if (f) f.parryFadeT = 0;
+      if (f) {
+        // Tip under throw-startup→tech leftover (v341): techRec throw recovery has
+        // stunT 0, so this used to zero parryFadeT the tick freeze ended — tip/sheet
+        // dumped instead of easing through SHEATHE_MS. Keep latched pf while techCut
+        // owns the interrupt (parryFade gate / tip under pf). Hit/throw KD still clear
+        // via stunT > 0 path below. Idle tech still 0 (no parryFadeT).
+        const techCut = !!(f.techRec && f.cut === "throw" && f.phase === "recovery");
+        if (!techCut) {
+          f.parryFadeT = 0;
+          f.parryFadeSheet = "";
+          f.parryFadeTipK = 0;
+        }
+      }
       return;
     }
     const prevStun = f.stunT;
     f.stunT = Math.max(0, f.stunT - dt);
-    if (f.stunT === 0) f.parryFadeT = 0;
+    if (f.stunT === 0) { f.parryFadeT = 0; f.parryFadeSheet = ""; f.parryFadeTipK = 0; }
     // Chip stun settle→walk destRect leftover: walk / raise mid-end used to dump breath
     // when stunT cleared while stun-end ease had already seated full amp under planted
     // walk-out; arm cutRec and let cut recovery settle→walk max(ck, wk) / hold-under-rise
@@ -4431,6 +5032,9 @@
       if (f.thrownT === 0 && f.hp > 0 && !f.falling) {
         f.throwInvulnT = THROW_WAKE_INVULN;
         f.wakeRev = true;
+        // Hurt pose snap leftover: arm SHEATHE_MS hurt→idle fade (invuln-window fade
+        // alone died at 80). Draw-only (hurtFade). Stun / invuln clocks unchanged.
+        f.hurtFadeT = SHEATHE_MS;
         // Wakeup / getup readability (v320/v321): brief grit + soft hueso wash + soft foot-scrape
         // on throw-invuln start. Not reversal fleck, not parry gleam, not feint sting. No shake.
         playGetupScrape();
@@ -4440,6 +5044,33 @@
           spawnBrasaFx("wakeup", chest.x, chest.y, f.facing, f);
         }
       }
+    }
+  }
+
+  function tickHurtFade(f, dt) {
+    if (!f || f.hurtFadeT <= 0) return;
+    const prevHurt = f.hurtFadeT;
+    f.hurtFadeT = Math.max(0, f.hurtFadeT - dt);
+    // Hurt settle→walk plant-release destRect leftover: walk / walkFadeHold /
+    // recoveryWalkOut / raise mid-end used to dump breath when hurtFadeT cleared while
+    // plant-release had already seated under rest hurt walk (invuln already idle — no
+    // cutRec arm — or cutRec already drained); arm cutRec and let cut recovery
+    // settle→walk max(ck, wk) / hold-under-rise own it. Hurt settle→guard: same arm on
+    // guard mid-end so max(ck, rk) / hold-under-raise own it. Idle hurt→idle still eases
+    // with hurtFade (no cutRec arm). Mirror tickThrowState invuln-end / tickStun chip-end.
+    if (
+      prevHurt > 0 &&
+      f.hurtFadeT === 0 &&
+      f.hp > 0 &&
+      !f.falling &&
+      f.thrownT <= 0 &&
+      f.throwInvulnT <= 0 &&
+      f.phase === "idle" &&
+      !f.boltPhase &&
+      f.feintT <= 0 &&
+      (walking(f) || recoveryWalkOut(f) || f.walkFadeHold > 0.02 || f.guarding || f.guardPoseK > 0)
+    ) {
+      f.cutRecBreathT = GUARD_RAISE_MS;
     }
   }
 
@@ -4475,10 +5106,13 @@
     f.closing = false;
     f.cutHit = false;
     f.parryFadeT = 0;
+    f.parryFadeSheet = "";
+    f.parryFadeTipK = 0;
     f.clashRec = false;
     f.techRec = false;
     f.techGuardTip = false;
     f.leftoverPlantTip = false;
+    f.leftoverPlantTipK = 0;
     f.gait = 0;
     f.reversal = false;
     f.clashPlant = false;
@@ -4534,6 +5168,7 @@
     f.techRec = false;
     f.techGuardTip = false;
     f.leftoverPlantTip = false;
+    f.leftoverPlantTipK = 0;
     f.gait = 0;
     f.reversal = true;
     f.clashPlant = false;
@@ -4662,6 +5297,7 @@
     f.telegraph = false;
     // Tip latch: cancel usually has no leftover k; idle snap path.
     f.leftoverPlantTip = (f.guardPoseK || 0) > 0;
+    f.leftoverPlantTipK = f.leftoverPlantTip ? guardRaiseK(f) : 0;
     if (clashRecWalk && f.walkFadeHold < 0.02) f.walkFadeHold = 1;
     return true;
   }
@@ -4710,6 +5346,7 @@
     f.telegraph = false;
     // Tip latch: cancel usually has no leftover k; idle snap path.
     f.leftoverPlantTip = (f.guardPoseK || 0) > 0;
+    f.leftoverPlantTipK = f.leftoverPlantTip ? guardRaiseK(f) : 0;
     if (clashRecWalk && f.walkFadeHold < 0.02) f.walkFadeHold = 1;
     return true;
   }
@@ -4840,6 +5477,7 @@
       f.techRec = false;
       f.techGuardTip = false;
       f.leftoverPlantTip = false;
+      f.leftoverPlantTipK = 0;
       f.reversal = false;
       f.clashPlant = false;
       f.linkPlant = false;
@@ -5589,6 +6227,10 @@
     f.stamRegenT = STAMINA_REGEN_DELAY;
     f.pushT = GUARD_PUSH_MS;
     f.pushVel = (PUSHBLOCK_PX * away) / GUARD_PUSH_MS;
+    // Clash/tech/pushblock dust ↔ punchCover (v337): PUSHBLOCK_FX shove used to
+    // spawn before bumpShake (no hitstop), so punch mark never armed — grit faded
+    // linear through live cover while óxido steel held. Arm shake first (plantDustK).
+    bumpShake(PUSHBLOCK_SHAKE, away, HITSTOP_BLOCK);
     spawnPlantDust(f, PUSHBLOCK_FX, away);
     // Player pushblock dust leftover: landBlock's 1.0 plant used to ride under
     // the boot after hitstop while PUSHBLOCK_FX scrape also spawned (shove arms
@@ -5599,7 +6241,6 @@
     playPushblockSting();
     // Distinct connect juice vs normal block: stronger camera punch + óxido steel.
     // Hitstop ms / shove px / stam cost unchanged. Draw-only flash + shake mag.
-    bumpShake(PUSHBLOCK_SHAKE, away, HITSTOP_BLOCK);
     {
       const foe = f === player ? rival : player;
       const pt = guardSteelPoint(f);
@@ -5631,6 +6272,27 @@
     for (let i = plantDust.length - 1; i >= 0; i--) {
       const p = plantDust[i];
       if (p.speck || p.shove) continue;
+      plantDust.splice(i, 1);
+    }
+  }
+
+  function dropPlantUnderKnock(f) {
+    // Draw-only. Knock grit leftover walk stamps ↔ punchCover (v348/v349): leftover
+    // walk/idle plant stamps used to ride the knock boot (syncPlantDust) and
+    // fade linear mid-cover beside punch-marked connect grit — a camera-punch
+    // orphan (clash dropPlantUnderClash / pushblock dropBlockPlantUnderShove
+    // siblings). Cull leftover unmarked non-shove stamps for this fighter so
+    // connect knock grit alone rides the boot through punchCover. v349: landHit /
+    // landBoltHit also cull atk (throw/tech already did). Specks still
+    // fly. Shove trails stay. Already-marked connect grit stays. Walk/idle grit
+    // unmarked when no knock. destRect/AABB planted.
+    if (!f) return;
+    const homeYou = f.kind === "you";
+    for (let i = plantDust.length - 1; i >= 0; i--) {
+      const p = plantDust[i];
+      if (p.speck || p.shove) continue;
+      if (p.homeYou !== homeYou) continue;
+      if (p.punch) continue;
       plantDust.splice(i, 1);
     }
   }
@@ -5909,6 +6571,10 @@
     const hb = bladeBox(f);
     const fallback = { x: bladeTipX(f), y: bladeTipY(f) };
     if (!f) return fallback;
+    // Tip under holdCutFade / boltPlant leftover (v346): special-cancel cast follows
+    // bladeTip (eased under holdCutFade with leftover sheathe) so puff tracks the visible
+    // blade; after holdCutFade dies tip/cast sit on slash for dart birth. Idle/walk K
+    // still throwKnife below. holdingCutBolt still skips knife plant path.
     if (holdingCutBolt(f)) return fallback;
     if (f.boltPhase !== "startup" && boltPlantFade(f) <= 0) return fallback;
     // Idle/walk K cast/puff rides the raised knife tip (throwKnife), not sword windup.
@@ -5962,6 +6628,8 @@
       // Spark origin leftover: seat on live castPlantXY. Wound offset used to
       // bake against the pre-clashPlant / pre-advance origin, so brasaX stuck
       // on windup (clash-K) or raw slash tip (idle-sheathe) after ease.
+      // Hold+clear through punchCover (v350): startBolt spend arms BOLT_SUPER_STOP.
+      // Empty cast never arms shake — linear. Same tip, same 220 life.
       const p = castPlantXY(home);
       brasaX = p.x;
       brasaY = p.y;
@@ -6140,14 +6808,18 @@
     // Draw-only. Drop leftover plant stamps when clash owns the scrape.
     // Specks still fly. Pushblock scrape-only unchanged.
     dropPlantUnderClash();
+    // Clash/tech/pushblock dust ↔ punchCover (v337): scrape + shove used to spawn
+    // before bumpShake, so punch mark never armed — grit faded linear mid-cover
+    // while clash spark held. Arm shake first so plantDustK holds with cover
+    // (same as landHit knock grit v330). Walk/idle grit unmarked.
+    bumpShake(CLASH_SHAKE, 1, HITSTOP_BLOCK);
+    hitstopLeft = HITSTOP_BLOCK;
     spawnPlantDust(player, 1.2);
     spawnPlantDust(rival, 1.2);
     // Clearer clash grit: outward shove trails on top of locked 1.2 scrape.
     // Draw-only (CLASH_FX). Specks still fly. 1.2 stamps stay for bar lock.
     spawnPlantDust(player, CLASH_FX, -1);
     spawnPlantDust(rival, CLASH_FX, 1);
-    bumpShake(CLASH_SHAKE, 1, HITSTOP_BLOCK);
-    hitstopLeft = HITSTOP_BLOCK;
     playSfx(SFX.choque);
     playClashSting();
   }
@@ -6155,6 +6827,69 @@
   function pulseBar(f, before) {
     f.hudGhost = Math.max(f.hudGhost, before);
     f.hudFlashT = HUD_FLASH_MS;
+  }
+
+  function armHitInterruptFade(def) {
+    // Hit interrupt leftover (v336): mid-cut / windup / knife → idle used to snap
+    // the same tick landHit / landBoltHit set stunT (sheatheFade dies on stun;
+    // poseBitmap idle). Reuse parryFadeT (attacker perfect-parry sibling). Latch
+    // sheet for draw/tip. Clear bolt plant so poseBitmap stays idle during freeze
+    // (advanceBolt would wait for hitstop). Idle chip stun (no cut sheet) still 0.
+    // Throw interrupt leftover (v339): landThrow reuses the same latch; draw rests
+    // leftover cut on hurt (poseBitmap hurt on thrownT). Idle throw still 0.
+    // Tech / KO interrupt leftover (v340): landThrowTech reuses the same latch
+    // before phase dump (slash/sheathe/knife → throw windup); KO mid-cut keeps the
+    // latch through hp<=0 / falling (parryFade no longer dies on crumple). Idle
+    // tech / tech-from-guard still 0. Draw-only. AABB planted. No new combat verb.
+    // Tip under throw-startup→tech leftover (v341): latch tipPlantK raise fraction
+    // on throw startup so tip ease under parryFade holds the edge blend while the
+    // sheet stays windup. Idle tech / tech-from-guard still 0 (no sheet / no tipK).
+    if (!def) return;
+    let sheet = "";
+    let tipK = 0;
+    if (holdingCutBolt(def) || def.phase === "active" || def.phase === "recovery") {
+      sheet = "slash";
+    } else if (def.boltPhase === "startup") {
+      sheet = def.boltHoldCut ? "slash" : "knife";
+    } else if (def.phase === "startup") {
+      sheet = "windup";
+      // Mirror tipPlantK throw-startup raise clock (throwGuardPlanting path).
+      // Latch before phase dump. Raise done (tipK≈0) stays a windup→windup no-op.
+      if (def.cut === "throw" && GUARD_RAISE_MS > 0) {
+        const tRaise = def.phaseT || 0;
+        const u = Math.max(0, Math.min(1, tRaise / GUARD_RAISE_MS));
+        const raiseT = u * u * (3 - 2 * u);
+        // tipPlantK then telegraphFade both ease edge→windup; latch the
+        // combined blend so mid-tele tech holds the visible tip (not tipK alone).
+        let blend = raiseT;
+        if (telegraphing(def)) {
+          const tf = telegraphFade(def);
+          if (tf < 0.98) blend = raiseT * tf;
+        }
+        tipK = 1 - blend;
+      }
+    } else if (def.sheatheT > 0 && def.phase === "idle") {
+      sheet = "slash";
+    }
+    def.boltPhase = "";
+    def.boltT = 0;
+    def.boltHoldCut = false;
+    def.boltSuper = false;
+    def.clashPlant = false;
+    def.linkPlant = false;
+    def.holdCutPlant = false;
+    def.linkSheathe = 0;
+    def.telegraph = false;
+    def.sheatheT = 0;
+    if (sheet) {
+      def.parryFadeT = SHEATHE_MS;
+      def.parryFadeSheet = sheet;
+      def.parryFadeTipK = tipK;
+    } else {
+      def.parryFadeT = 0;
+      def.parryFadeSheet = "";
+      def.parryFadeTipK = 0;
+    }
   }
 
   function landHit(atk, def, dir) {
@@ -6193,7 +6928,8 @@
       playSfx(SFX.impacto);
     }
     def.stunT = HITSTUN;
-    def.parryFadeT = 0;
+    // Hit interrupt leftover (v336): fade leftover cut→idle (sheatheFade dies on stun).
+    armHitInterruptFade(def);
     def.phase = "idle";
     def.phaseT = 0;
     def.guarding = false;
@@ -6210,6 +6946,10 @@
     const kbDir = def.x >= atk.x ? 1 : -1;
     def.pushT = KNOCK_MS;
     def.pushVel = (KNOCK_PX * kbDir) / KNOCK_MS;
+    // Knock grit leftover walk stamps ↔ punchCover (v348/v349): cull leftover
+    // unmarked walk/idle stamps on def + atk so connect grit alone rides the boot.
+    dropPlantUnderKnock(atk);
+    dropPlantUnderKnock(def);
     spawnPlantDust(def, 1.15);
     if (def.hp <= 0) {
       koTarget = def;
@@ -6236,15 +6976,21 @@
     atk.techRec = false;
     atk.techGuardTip = false;
     atk.leftoverPlantTip = false;
+    atk.leftoverPlantTipK = 0;
     def.techRec = false;
     def.techGuardTip = false;
     def.leftoverPlantTip = false;
+    def.leftoverPlantTipK = 0;
     // Grab-connect juice: GRAB_SHAKE + pitched impacto sting + brief brasa/hueso puff.
     // Hitstop / THROW_DMG / KD / frames unchanged. Distinct from tech steel + normal hit spark.
     bumpShake(GRAB_SHAKE, atk.facing, HITSTOP_HIT);
     hitstopLeft = HITSTOP_HIT;
     playSfx(SFX.impacto);
     playGrabConnectSting();
+    // Throw interrupt leftover (v339): fade leftover mid-cut / windup / knife /
+    // sheathe → hurt (poseBitmap hurt on thrownT). Latch before phase/bolt clear.
+    // Idle throw still 0. Sibling of landHit armHitInterruptFade (v336).
+    armHitInterruptFade(def);
     def.guarding = false;
     def.reversal = false;
     def.riposteWindowT = 0;
@@ -6257,6 +7003,7 @@
     def.stunT = THROW_KD_MS;
     def.thrownT = THROW_KD_MS;
     def.throwInvulnT = 0;
+    def.hurtFadeT = 0;
     def.wakeRev = false;
     def.pushT = 0;
     def.pushVel = 0;
@@ -6267,6 +7014,10 @@
     def.standWait = 0;
     def.standGoal = 0;
     hitFlashT = HIT_FLASH_MS;
+    // Knock grit leftover walk stamps ↔ punchCover (v348): cull leftover
+    // unmarked walk/idle stamps under grab grit (same hole as landHit).
+    dropPlantUnderKnock(atk);
+    dropPlantUnderKnock(def);
     spawnPlantDust(atk, 1.2);
     spawnPlantDust(def, 1.4);
     // Discreet clinch puff at body mid — brasa/hueso, not tech steel asterisk / slash spark.
@@ -6304,6 +7055,14 @@
     atk.pushVel = (-dir * sep) / KNOCK_MS;
     def.pushT = KNOCK_MS;
     def.pushVel = (dir * sep) / KNOCK_MS;
+    // Tech interrupt leftover (v340): fade leftover mid-cut / sheathe / knife →
+    // throw windup (poseBitmap windup on techRec). Latch before phase/bolt/cut
+    // dump. Idle tech still 0. Tech-from-guard still techGuardPlantFade (no cut
+    // sheet). Sibling of landThrow armHitInterruptFade (v339).
+    // Tip under throw-startup→tech leftover (v341): arm also latches tipPlantK on
+    // throw startup so tip eases under pf while sheet stays windup.
+    armHitInterruptFade(atk);
+    armHitInterruptFade(def);
     for (const f of [atk, def]) {
       // Tech-from-guard plant leftover: leftover k used to snap here, so
       // leftover block dumped into windup. Ease leftover k (tickGuardPose).
@@ -6321,6 +7080,7 @@
       // requires leftover k). Idle tech still snaps (no latch). Draw-only.
       f.techGuardTip = (f.guardPoseK || 0) > 0;
       f.leftoverPlantTip = false;
+      f.leftoverPlantTipK = 0;
       f.gait = 0;
       f.boltPhase = "";
       f.boltHoldCut = false;
@@ -6335,13 +7095,20 @@
       // unguard / closing arm. Arm walkFadeHold for restTechGuardWalk. Draw-only.
       if (recoveryWalkOut(f) && f.walkFadeHold < 0.02) f.walkFadeHold = 1;
     }
+    // Clash/tech/pushblock dust ↔ punchCover (v337): tech scrape + shove used to
+    // spawn before bumpShake (no hitstop), so punch mark never armed — grit faded
+    // linear through live cover while steel held. Arm shake first (plantDustK).
+    bumpShake(TECH_SHAKE, dir, HITSTOP_BLOCK);
+    // Knock grit leftover walk stamps ↔ punchCover (v348): cull leftover
+    // unmarked walk/idle stamps under tech scrape (clash cull sibling).
+    dropPlantUnderKnock(atk);
+    dropPlantUnderKnock(def);
     spawnPlantDust(atk, 1.1);
     spawnPlantDust(def, 1.1);
     // Clearer tech-clash grit: outward shove trails on top of locked 1.1 scrape.
     // Draw-only (TECH_FX). Specks still fly. 1.1 stamps stay for bar lock.
     spawnPlantDust(atk, TECH_FX, -dir);
     spawnPlantDust(def, TECH_FX, dir);
-    bumpShake(TECH_SHAKE, dir, HITSTOP_BLOCK);
     // Distinct connect juice vs failed throw / normal block: tech steel + pitched sting.
     // Hitstop / tech window / recovery / damage unchanged. Draw-only flash + shake mag.
     {
@@ -6491,6 +7258,8 @@
     atk.stunT = PARRY_STAGGER_MS;
     // Parry interrupt leftover (v325): fade leftover cut→idle (sheatheFade dies on stun).
     atk.parryFadeT = SHEATHE_MS;
+    atk.parryFadeSheet = "slash";
+    atk.parryFadeTipK = 0;
     atk.linkGolpe = false;
     atk.linkSlash = false;
     atk.linkBolt = false;
@@ -6636,11 +7405,16 @@
     u.clashPlant = false;
     u.holdCutPlant = false;
     u.parryFadeT = 0;
+    u.parryFadeSheet = "";
+    u.parryFadeTipK = 0;
     // Tip under bolt leftover short raise leftover: latch tip raise when
     // leftover k planted so tipPlantK boltT ease holds after gpk dies
     // (boltLeftoverPlanting stays true whole startup; idle K still snaps
     // with no latch; special-cancel still snaps). Draw-only.
+    // Tip under tipPlantK+tele leftover stack (v343): also latch tipK so tele tip
+    // eases leftover blend→pose (idle-edge base ignored leftover block tip).
     u.leftoverPlantTip = (u.guardPoseK || 0) > 0;
+    u.leftoverPlantTipK = u.leftoverPlantTip ? guardRaiseK(u) : 0;
     if (!holdingCutBolt(u) && leftoverSheathe > 0.02) {
       u.linkPlant = true;
       u.linkSheathe = leftoverSheathe;
@@ -6770,6 +7544,8 @@
     hitstopLeft = HITSTOP_HIT;
     playBoltHitSting(!!(bolt && bolt.super));
     def.stunT = HITSTUN;
+    // Hit interrupt leftover (v336): same mid-cut → idle fade as landHit.
+    armHitInterruptFade(def);
     def.phase = "idle";
     def.phaseT = 0;
     def.guarding = false;
@@ -6781,6 +7557,10 @@
     const kbDir = def.x >= atk.x ? 1 : -1;
     def.pushT = KNOCK_MS;
     def.pushVel = (KNOCK_PX * kbDir) / KNOCK_MS;
+    // Knock grit leftover walk stamps ↔ punchCover (v348/v349): cull leftover
+    // unmarked walk/idle stamps on def + atk so connect grit alone rides the boot.
+    dropPlantUnderKnock(atk);
+    dropPlantUnderKnock(def);
     spawnPlantDust(def, 1.15);
     if (def.hp <= 0) koTarget = def;
   }
@@ -7026,6 +7806,7 @@
       }
       if (player.parryFadeT > 0) player.parryFadeT = Math.max(0, player.parryFadeT - dt);
       if (rival.parryFadeT > 0) rival.parryFadeT = Math.max(0, rival.parryFadeT - dt);
+      // hurtFadeT drains in tickHurtFade (arms cutRec on plant-release clear).
       if (clashSparkT > 0) {
         if (shake > 0 && shakeDur > 0) {
           /* hold through live cover */
@@ -7051,13 +7832,14 @@
           hitSparkT = Math.max(0, hitSparkT - dt);
         }
       }
-      // Dart ember (brasaFxKind hit) ↔ punchCover (v329) + short grab fleck (v333):
-      // same hold+clear for flesh-related ember and grab clinch puff (GRAB_FX_MS 90
-      // < leftover slam after throw HITSTOP_HIT). Feint / reversal / wakeup never
-      // arm shake — stay linear. Cast / block / clash brasa kinds stay linear.
-      // BRASA_HIT_MS 140 keeps longer no-punch life than HIT_SPARK_MS 100.
+      // Dart ember (brasaFxKind hit) ↔ punchCover (v329) + short grab fleck (v333)
+      // + cast plant puff (v350): same hold+clear for flesh ember, grab clinch puff
+      // (GRAB_FX_MS 90), and spent-super cast (BOLT_CAST_FX_MS 220 after BOLT_SUPER_STOP).
+      // Feint / reversal / wakeup never arm shake — stay linear. Block / clash brasa
+      // kinds stay linear (steel/clash clocks already cover-held). Empty cast no shake
+      // — linear. BRASA_HIT_MS 140 keeps longer no-punch life than HIT_SPARK_MS 100.
       if (brasaFxT > 0) {
-        const brasaCoverHold = brasaFxKind === "hit" || brasaFxKind === "grab";
+        const brasaCoverHold = brasaFxKind === "hit" || brasaFxKind === "grab" || brasaFxKind === "cast";
         if (brasaCoverHold && shake > 0 && shakeDur > 0) {
           /* hold through live cover */
         } else if (brasaCoverHold && shakeDur > 0) {
@@ -7224,6 +8006,10 @@
 
     tickStun(player, dt);
     tickStun(rival, dt);
+    // Drain hurtFade before throw-state arm so getup SHEATHE_MS seats full this frame
+    // (same-frame drain after arm used to land ~123 instead of 140 — v335 live lock).
+    tickHurtFade(player, dt);
+    tickHurtFade(rival, dt);
     tickThrowState(player, dt);
     tickThrowState(rival, dt);
     tickSheathe(player, dt);
@@ -7743,15 +8529,24 @@
   }
 
   function parryFade(f) {
-    // Visual only (drawKnight). poseBitmap still idle once landParry set stunT.
+    // Visual only (drawKnight). poseBitmap still idle once landParry / landHit set stunT
+    // (hurt once landThrow set thrownT / hp 0).
     // Perfect-parry used to pop slash/golpe→idle the same tick (sheatheFade dies
     // on stun), so the freeze frame was standing idle while gleam sat on blades —
-    // a snap, not a break. Fade leftover slash→idle over SHEATHE_MS. Hold through
-    // freeze. destRect eases leftover active ox/rot into flinch. Tip eases with
-    // fade. Chip stun (no parryFadeT) still 0. AABB planted. No new combat verb.
+    // a snap, not a break. Hit interrupt leftover (v336): same hole on the defender
+    // when landHit / landBoltHit dumps mid-cut / windup / knife → idle — arm
+    // parryFadeT + parryFadeSheet. Throw interrupt leftover (v339): landThrow mid-cut
+    // → hurt — same arm; draw rests leftover cut on hurt. Tech / KO interrupt
+    // leftover (v340): landThrowTech mid-cut → throw windup (techRec recovery);
+    // KO mid-cut keeps the latch through hp<=0 / falling (used to die on crumple).
+    // Fade leftover over SHEATHE_MS. Hold through freeze. destRect eases leftover
+    // ox/rot (flinch on stun / plant on KD). Tip eases with fade. Chip stun / idle
+    // throw / idle tech (no parryFadeT) still 0. AABB planted. No new combat verb.
     if (!f || f.parryFadeT <= 0) return 0;
-    if (f.falling || f.hp <= 0) return 0;
-    if (f.phase !== "idle") return 0;
+    // KO interrupt leftover (v340): keep latched fade through hp<=0 / falling.
+    // Unlatched crumple still 0 (parryFadeT gate above).
+    const techCut = !!(f.techRec && f.cut === "throw" && f.phase === "recovery");
+    if (f.phase !== "idle" && !techCut) return 0;
     if (f.boltPhase) return 0;
     if (f.guarding) return 0;
     const rec = SHEATHE_MS;
@@ -8188,6 +8983,31 @@
     return u * u * (3 - 2 * u);
   }
 
+  function hurtFade(f) {
+    // Visual only (drawKnight). poseBitmap still idle once thrownT is 0
+    // (block once guarding mid-getup; windup immediately on reversal).
+    // Hurt pose snap leftover: leftover crumple used to pop hurt→idle when
+    // throw-invuln died (wakeupFade dies with THROW_WAKE_INVULN 80), so meaty
+    // stun past that window / getup settle was a sheet cut — a snap, not a plant.
+    // Same hole parryFade closed for slash→idle on interrupt. Fade leftover hurt→idle over SHEATHE_MS from thrownT clear. Keep through stun / guard /
+    // wakeRev like wakeupFade (parryFade cuts on guard; this does not).
+    // wakeupFade still owns invuln-window / wakeRevFadeHold. Chip stun (no
+    // hurtFadeT) still 0. Tip under hurt did not hop (shared sheet-edge).
+    // destRect/AABB planted. Stun frames / damage / THROW_WAKE_INVULN unchanged.
+    // No new combat verb.
+    if (!f || f.hurtFadeT <= 0) return 0;
+    if (f.falling || f.hp <= 0) return 0;
+    if (f.thrownT > 0) return 0;
+    if (f.boltPhase) return 0;
+    // Idle getup / meaty stun / wakeup→guard. Wakeup→reversal uses phase startup
+    // with wakeRevFadeHold on wakeupFade; keep hurtFade through that plant too.
+    if (f.phase !== "idle" && !(f.wakeRevFadeHold > 0 && reversalPlanting(f))) return 0;
+    const rec = SHEATHE_MS;
+    if (rec <= 0) return 0;
+    const u = 1 - Math.max(0, Math.min(1, f.hurtFadeT / rec));
+    return 1 - u * u * (3 - 2 * u);
+  }
+
   function wakeupFade(f) {
     // Visual only (drawKnight). poseBitmap still idle once thrownT is 0
     // (block once guarding mid-getup; windup immediately on reversal).
@@ -8386,6 +9206,9 @@
     // clashSparkK / steelFlashK / hurtFlashK / parryGleamK); floor at linear life
     // fade so post-cover does not pop. Walk/idle grit unmarked — stays linear. No
     // punch keeps linear. destRect/AABB planted.
+    // Clash/tech/pushblock dust ↔ punchCover (v337): those paths now bumpShake
+    // before spawnPlantDust so scrape/shove trails punch-mark too (used to spawn
+    // first → unmarked linear mid-cover).
     if (!p) return 0;
     const lin = Math.max(0, 1 - p.t / p.life);
     if (!p.punch) return lin;
@@ -8549,7 +9372,9 @@
     const wf = walkFade(f);
     const walk = walkBitmap(f);
     const idle = f.img;
-    const wake = wakeupFade(f);
+    // Hurt pose snap leftover: max(wakeupFade, hurtFade) so crumple→idle lasts
+    // SHEATHE_MS after thrownT clear (wakeupFade alone died with invuln 80).
+    const wake = Math.max(wakeupFade(f), hurtFade(f));
     const hurt = hurtBitmap(f);
     const bf = boltPlantFade(f);
     const wind = windupBitmap(f);
@@ -8656,7 +9481,20 @@
     // Parry interrupt leftover (v325): leftover slash used to pop to idle the same tick
     // landParry set stunT (sheatheFade dies on stun). Rest leftover cut on idle while pf live.
     // poseBitmap still idle. Chip stun (pf 0) unchanged. AABB planted.
-    const restParry = pf > 0.02 && !restFeint && !restFeintGuard && !restFeintWalk && ready(cut) && ready(idle) && cut !== idle;
+    // Hit interrupt leftover (v336): defender landHit / landBoltHit reuses pf; latch
+    // parryFadeSheet picks slash / windup / knife leftover over idle.
+    // Throw interrupt leftover (v339): landThrow mid-cut → hurt; rest leftover cut on
+    // hurt while pf live (poseBitmap still hurt on thrownT). Idle throw still snaps.
+    // Tech / KO interrupt leftover (v340): landThrowTech mid-cut → throw windup; KO
+    // mid-cut → hurt crumple. Rest leftover cut on windup (techRec) or hurt (hp 0 /
+    // falling / thrownT). Idle tech still snaps. Tech-from-guard still block plant.
+    const parrySheet = f.parryFadeSheet === "windup" ? wind
+      : f.parryFadeSheet === "knife" ? (ready(knife) ? knife : wind)
+      : cut;
+    const parryBase = ((f.thrownT > 0 || f.falling || f.hp <= 0) && ready(hurt)) ? hurt
+      : (f.techRec && f.cut === "throw" && ready(wind)) ? wind
+      : idle;
+    const restParry = pf > 0.02 && !restFeint && !restFeintGuard && !restFeintWalk && ready(parrySheet) && ready(parryBase) && parrySheet !== parryBase;
     // Throw / cut recovery fade leftover: >0.02 used to drop the idle base while
     // poseBitmap still held windup, so the last recovery tick flashed full grab.
     // Keep idle/walk base through any live throwPlantFade. Overlay alpha can be tiny.
@@ -8666,8 +9504,10 @@
     // recovery ended — a hop, not a plant. Rest leftover grab on the walk
     // sheet when A/D is held. Idle throw recovery still rests on idle.
     // poseBitmap still windup while planted. AABB planted.
-    const restThrowWalk = trf > 0 && ready(wind) && recoveryWalkOut(f) && recoveryWalkResting(f) && ready(walk) && walk !== wind;
-    const restThrow = trf > 0 && !restThrowWalk && ready(wind) && ready(idle) && idle !== wind;
+    // Tech interrupt leftover (v340): skip throwPlantFade rest while pf owns the
+    // mid-cut → windup overlay (trf would paint full windup over leftover slash).
+    const restThrowWalk = trf > 0 && !restParry && ready(wind) && recoveryWalkOut(f) && recoveryWalkResting(f) && ready(walk) && walk !== wind;
+    const restThrow = trf > 0 && !restThrowWalk && !restParry && ready(wind) && ready(idle) && idle !== wind;
     // Telegraph walk-in pose leftover: leftover walk used to dump to idle the tick
     // startAttack/startThrow/startBolt armed from mid-stride (tickGait zeroed
     // walkFadeHold; restTele rested on idle), so the raise hopped walk→idle under
@@ -8823,7 +9663,8 @@
     } else if (restFeint) {
       octx.drawImage(idle, 0, 0, dw, dh);
     } else if (restParry) {
-      octx.drawImage(idle, 0, 0, dw, dh);
+      // Throw interrupt leftover (v339): hurt base when thrownT; idle base on stun/parry.
+      octx.drawImage(parryBase, 0, 0, dw, dh);
     } else if (restThrowWalk) {
       octx.drawImage(walk, 0, 0, dw, dh);
     } else if (restThrow) {
@@ -8896,7 +9737,7 @@
     }
     if (restParry) {
       octx.globalAlpha = pf;
-      octx.drawImage(cut, 0, 0, dw, dh);
+      octx.drawImage(parrySheet, 0, 0, dw, dh);
       octx.globalAlpha = 1;
     }
     if (restThrow || restThrowWalk) {
