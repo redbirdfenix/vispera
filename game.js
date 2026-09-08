@@ -158,6 +158,10 @@
  * (block 4 / pushblock 8 / clash 14) + pitched choque/bloqueo sting. Mutual break-apart gets
  * clearer grit (TECH_FX shove trails on top of locked 1.1). Juice only — THROW_TECH window /
  * recovery / damage / tipX / plants / pad / parry / AI / tutorial / pushblock-clash v312 locked.
+ * Grab-connect readability (v314): successful landThrow juices distinct from tech / normal hit /
+ * block — brief brasa/hueso grab puff + GRAB_SHAKE 11 (hit 10 / riposte 12) + pitched impacto
+ * sting. Keeps unpitched impacto first. Juice only — THROW frames / dmg / tech window / tipX /
+ * plants / pad / parry / AI / tutorial / pushblock-clash v312 / tech juice v313 locked.
  * Rematch (KO→REVANCHA) rotates yard +1 so consecutive bouts never repeat the same patio
  * (yards 2–5 get airtime; Escenarios picker still sticky for JUGAR / title start).
  * Escenarios labels carry a brief light tag (SOL/SOMBRA/OCASO/BRASA/LUNA). Draw-only.
@@ -1440,6 +1444,10 @@
   const TECH_SHAKE = 9;
   // Extra tech grit on top of locked scrape 1.1 (shove trails; draw-only).
   const TECH_FX = 1.5;
+  // Grab-connect camera punch — slightly above normal hit 10, under riposte 12.
+  const GRAB_SHAKE = 11;
+  // Brief grab puff life (under hit spark 140; steel asterisk 60 reads too snappy alone).
+  const GRAB_FX_MS = 90;
   const GUARD_BREAK_MS = 400;
   const GUARD_BREAK_SETTLE = 180;
   const HITSTUN = 350;
@@ -1625,6 +1633,7 @@
   let lastPushblockSfx = "";
   let lastClashSfx = "";
   let lastThrowTechSfx = "";
+  let lastGrabSfx = "";
   let lastRiposteSfx = "";
   let lastParrySfx = "";
   let lastKoSfx = "";
@@ -1755,6 +1764,13 @@
     playSfx(SFX.choque, { rate: 0.74, volume: 0.88 });
     playSfx(SFX.choque, { rate: 1.34, volume: 0.46 });
     playSfx(SFX.bloqueo, { rate: 1.16, volume: 0.34 });
+  }
+  function playGrabConnectSting() {
+    // Grab-connect sting: pitched impacto so clinch reads vs normal hit impacto and tech choque.
+    // landThrow still fires the unpitched impacto first (bar lock).
+    lastGrabSfx = "grab";
+    playSfx(SFX.impacto, { rate: 0.72, volume: 0.90 });
+    playSfx(SFX.impacto, { rate: 1.16, volume: 0.44 });
   }
   function playSuperSting() {
     // Super spend sting: pitched brasa/cast stack so the dump reads. Not tajo whoosh.
@@ -5684,6 +5700,19 @@
       }
       return;
     }
+    if (kind === "grab") {
+      // Brief clinch puff — fewer / tighter bits than dart hit. Brasa/hueso/pizarra.
+      brasaFxT = GRAB_FX_MS;
+      for (let i = 0; i < 6; i++) {
+        brasaBits.push({
+          ang: (i / 6) * Math.PI * 2 + i * 0.13,
+          len: 4 + (i % 3) * 2.2,
+          r: 1.2 + (i % 3) * 0.4,
+          tone: i % 3 === 0 ? "brasa" : (i % 3 === 1 ? "hueso" : "pizarra"),
+        });
+      }
+      return;
+    }
     brasaFxT = HIT_SPARK_MS;
     const base = brasaDir >= 0 ? 0.2 : Math.PI - 0.2;
     for (let i = 0; i < 8; i++) {
@@ -5855,9 +5884,12 @@
     def.techRec = false;
     def.techGuardTip = false;
     def.leftoverPlantTip = false;
-    bumpShake(10, atk.facing, HITSTOP_HIT);
+    // Grab-connect juice: GRAB_SHAKE + pitched impacto sting + brief brasa/hueso puff.
+    // Hitstop / THROW_DMG / KD / frames unchanged. Distinct from tech steel + normal hit spark.
+    bumpShake(GRAB_SHAKE, atk.facing, HITSTOP_HIT);
     hitstopLeft = HITSTOP_HIT;
     playSfx(SFX.impacto);
+    playGrabConnectSting();
     def.guarding = false;
     def.reversal = false;
     def.riposteWindowT = 0;
@@ -5882,6 +5914,14 @@
     hitFlashT = HIT_FLASH_MS;
     spawnPlantDust(atk, 1.2);
     spawnPlantDust(def, 1.4);
+    // Discreet clinch puff at body mid — brasa/hueso, not tech steel asterisk / slash spark.
+    {
+      const aa = bodyAABB(atk);
+      const bb = bodyAABB(def);
+      const mx = (aa.x + aa.w * 0.5 + bb.x + bb.w * 0.5) * 0.5;
+      const my = (aa.y + aa.h * 0.36 + bb.y + bb.h * 0.36) * 0.5;
+      spawnBrasaFx("grab", mx, my, atk.facing, def);
+    }
     if (def.hp <= 0) koTarget = def;
   }
 
@@ -8840,7 +8880,7 @@
   function drawBrasaFx() {
     if (brasaFxT <= 0) return;
     syncBrasaFx();
-    const life = brasaFxKind === "block" ? STEEL_FLASH_MS : (brasaFxKind === "clash" ? CLASH_SPARK_MS : (brasaFxKind === "cast" ? BOLT_CAST_FX_MS : HIT_SPARK_MS));
+    const life = brasaFxKind === "block" ? STEEL_FLASH_MS : (brasaFxKind === "clash" ? CLASH_SPARK_MS : (brasaFxKind === "cast" ? BOLT_CAST_FX_MS : (brasaFxKind === "grab" ? GRAB_FX_MS : HIT_SPARK_MS)));
     const k = brasaFxT / life;
     const grow = 1 - k;
     ctx.save();
@@ -8870,6 +8910,33 @@
         ctx.fillStyle = brasaTone(sh.tone);
         ctx.beginPath();
         ctx.arc(c * d, sn * d - 3 * grow, sh.r * (0.85 + 0.4 * k), 0, Math.PI * 2);
+        ctx.fill();
+      }
+    } else if (brasaFxKind === "grab") {
+      // Discreet clinch puff: soft pizarra ring, brasa core, hueso fleck — under dart hit size.
+      ctx.globalAlpha = 0.32 * k;
+      ctx.fillStyle = COL_PIZARRA;
+      ctx.beginPath();
+      ctx.arc(0, 0, 5 + 9 * grow, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 0.68 * k;
+      ctx.fillStyle = COL_BRASA;
+      ctx.beginPath();
+      ctx.arc(0, 0, 3 + 5 * grow, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 0.50 * k;
+      ctx.fillStyle = COL_HUESO;
+      ctx.beginPath();
+      ctx.arc(brasaDir * 1.5, -1, 1.2 + 1.6 * grow, 0, Math.PI * 2);
+      ctx.fill();
+      for (const sh of brasaBits) {
+        const d = sh.len * (0.28 + 0.7 * grow);
+        const c = Math.cos(sh.ang);
+        const sn = Math.sin(sh.ang);
+        ctx.globalAlpha = 0.78 * k;
+        ctx.fillStyle = brasaTone(sh.tone);
+        ctx.beginPath();
+        ctx.arc(c * d, sn * d - 2 * grow, sh.r * (0.8 + 0.35 * k), 0, Math.PI * 2);
         ctx.fill();
       }
     } else if (brasaFxKind === "cast") {
