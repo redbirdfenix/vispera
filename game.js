@@ -280,6 +280,16 @@
  * unchanged. Juice only — hud/combo v331 / grit/dmg v330 / hitSparkK v329 /
  * clashSparkK v328 / pad v327 / parry gleam v326 / steel v323 / meter v324 /
  * hitFlash v301 / tipX / plants / frames / pad / parry-riposte locked.
+ * Short brasa flecks ↔ punchCover (v333): grab clinch puff (GRAB_FX_MS 90) used to
+ * linear-drain mid-cover after throw connect (GRAB_SHAKE + HITSTOP_HIT) — puff died
+ * while punchCover still held. Feint / reversal / wakeup flecks never arm shake
+ * (inspect: no bumpShake on those paths) so they stay linear. Hit already hold+clear
+ * (v329 brasaHitK). Hold grab (+ hit) brasaFxT through live punch; clear when cover
+ * dies. Cast / block / clash brasa kinds unchanged. Draw uses brasaFxT/life peak while
+ * held (no separate grab draw-K). GRAB_FX_MS 90 / FEINT_FX_MS 55 / REVERSAL_FX_MS 70 /
+ * WAKE_FX_MS 65 unchanged. Juice only — steel/gleam/clash clocks v332 / hud/combo v331 /
+ * grit/dmg v330 / hitSparkK v329 / clashSparkK v328 / pad v327 / parry gleam v326 /
+ * steel v323 / meter v324 / hitFlash v301 / tipX / plants / frames / pad / parry-riposte locked.
  * Rematch (KO→REVANCHA) rotates yard +1 so consecutive bouts never repeat the same patio
  * (yards 2–5 get airtime; Escenarios picker still sticky for JUGAR / title start).
  * Escenarios labels carry a brief light tag (SOL/SOMBRA/OCASO/BRASA/LUNA). Draw-only.
@@ -5987,6 +5997,7 @@
     }
     if (kind === "grab") {
       // Brief clinch puff — fewer / tighter bits than dart hit. Brasa/hueso/pizarra.
+      // Hold+clear through punchCover (v333): landThrow arms GRAB_SHAKE + HITSTOP_HIT.
       brasaFxT = GRAB_FX_MS;
       for (let i = 0; i < 6; i++) {
         brasaBits.push({
@@ -7040,13 +7051,17 @@
           hitSparkT = Math.max(0, hitSparkT - dt);
         }
       }
-      // Dart ember (brasaFxKind hit) ↔ punchCover (v329): same hold+clear for
-      // flesh-related ember draw. Other brasa kinds stay linear. BRASA_HIT_MS
-      // 140 keeps longer no-punch life than HIT_SPARK_MS 100.
+      // Dart ember (brasaFxKind hit) ↔ punchCover (v329) + short grab fleck (v333):
+      // same hold+clear for flesh-related ember and grab clinch puff (GRAB_FX_MS 90
+      // < leftover slam after throw HITSTOP_HIT). Feint / reversal / wakeup never
+      // arm shake — stay linear. Cast / block / clash brasa kinds stay linear.
+      // BRASA_HIT_MS 140 keeps longer no-punch life than HIT_SPARK_MS 100.
       if (brasaFxT > 0) {
-        if (brasaFxKind === "hit" && shake > 0 && shakeDur > 0) {
+        const brasaCoverHold = brasaFxKind === "hit" || brasaFxKind === "grab";
+        if (brasaCoverHold && shake > 0 && shakeDur > 0) {
           /* hold through live cover */
-        } else if (brasaFxKind === "hit" && shakeDur > 0) {
+        } else if (brasaCoverHold && shakeDur > 0) {
+          // Cover just died — die with it.
           brasaFxT = 0;
         } else {
           brasaFxT = Math.max(0, brasaFxT - dt);
