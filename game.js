@@ -180,9 +180,12 @@
  * dmg nums / grab-tech-pushblock / parry-riposte locked.
  * Wakeup / getup readability (v320): rising from KD (thrownT expiry / throw-invuln arm) juices a
  * brief getup grit stamp so the grounded frame reads, plus an optional soft hueso wash on chest
- * (hueso/pizarra only — not reversal fleck, not parry gleam, no sting, no shake).
+ * (hueso/pizarra only — not reversal fleck, not parry gleam, no shake).
+ * Soft getup foot-scrape SFX (v321): same getup arm plays pitched whoosh-down + very quiet
+ * bloqueo plant scrape matching the grit stamp. Distinct from feint sheath sting, reversal
+ * whoosh-up/choque, parry gleam, riposte, grab impacto. No shake / no frame-invuln retune.
  * Juice only — THROW_WAKE_INVULN / frames / tipX / plants / pad / sparks v316 / feint v317 / reversal v319 /
- * dmg nums / grab-tech-pushblock / parry-riposte locked.
+ * wakeup grit v320 / dmg nums / grab-tech-pushblock / parry-riposte locked.
  * Rematch (KO→REVANCHA) rotates yard +1 so consecutive bouts never repeat the same patio
  * (yards 2–5 get airtime; Escenarios picker still sticky for JUGAR / title start).
  * Escenarios labels carry a brief light tag (SOL/SOMBRA/OCASO/BRASA/LUNA). Draw-only.
@@ -1669,6 +1672,7 @@
   let lastParrySfx = "";
   let lastFeintSfx = "";
   let lastReversalSfx = "";
+  let lastGetupSfx = "";
   let lastKoSfx = "";
   const MUSIC = {
     title: new Audio("music/music_titulo.ogg"),
@@ -1880,6 +1884,14 @@
     lastReversalSfx = "reversal";
     playSfx(SFX.whoosh, { rate: 1.32, volume: 0.78 });
     playSfx(SFX.choque, { rate: 0.94, volume: 0.36 });
+  }
+  function playGetupScrape() {
+    // Soft getup foot-scrape: whoosh pitched further down + very quiet bloqueo plant.
+    // Matches grit stamp on throw-invuln arm. Distinct from feint sheath (0.66/1.08 + bloqueo 1.18),
+    // reversal whoosh-up/choque, parry gleam, riposte, grab impacto, clash, pushblock, tech.
+    lastGetupSfx = "getup";
+    playSfx(SFX.whoosh, { rate: 0.48, volume: 0.46 });
+    playSfx(SFX.bloqueo, { rate: 0.82, volume: 0.14 });
   }
 
   const ART = {
@@ -4246,8 +4258,9 @@
       if (f.thrownT === 0 && f.hp > 0 && !f.falling) {
         f.throwInvulnT = THROW_WAKE_INVULN;
         f.wakeRev = true;
-        // Wakeup / getup readability (v320): brief grit so the grounded frame reads + soft
-        // hueso wash on throw-invuln start. Not reversal fleck, not parry gleam. No sting / shake.
+        // Wakeup / getup readability (v320/v321): brief grit + soft hueso wash + soft foot-scrape
+        // on throw-invuln start. Not reversal fleck, not parry gleam, not feint sting. No shake.
+        playGetupScrape();
         spawnPlantDust(f, 1.15);
         {
           const chest = hitWoundAnchor(f);
