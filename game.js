@@ -162,6 +162,12 @@
  * block — brief brasa/hueso grab puff + GRAB_SHAKE 11 (hit 10 / riposte 12) + pitched impacto
  * sting. Keeps unpitched impacto first. Juice only — THROW frames / dmg / tech window / tipX /
  * plants / pad / parry / AI / tutorial / pushblock-clash v312 / tech juice v313 locked.
+ * Damage-number distinct leftover (v315): floating −N hit vs chip vs throw now read apart
+ * (hueso 4 / óxido "-" 2 / brasa 3). Draw-only. Combat math / grab juice v314 locked.
+ * Dust / hit spark polish (v316): cleaner flesh sparks — fewer muddy particles, sharper
+ * brasa/hueso streaks, shorter post-freeze life so knock does not smear. Block steel
+ * asterisks (push/tech/block steelKind) stay distinct. Slight quieter ground grit on
+ * heavy connects (fewer knock specks). Draw-only. Combat math / dmg distinct v315 locked.
  * Rematch (KO→REVANCHA) rotates yard +1 so consecutive bouts never repeat the same patio
  * (yards 2–5 get airtime; Escenarios picker still sticky for JUGAR / title start).
  * Escenarios labels carry a brief light tag (SOL/SOMBRA/OCASO/BRASA/LUNA). Draw-only.
@@ -589,8 +595,14 @@
  * destRect/AABB planted. No new combat verb.
  * Floating damage numbers: on HP loss (slash/golpe/dart/throw hit, dart chip on
  * block) spawn short-lived pixel text at the impact that rises ~50px and fades
- * (~600ms). Brasa for hits, muted óxido for chip; chip draws smaller. Stack
- * offset so multi-hits do not fully overlap. Draw-only juice; both sides.
+ * (~600ms). Clean hit: bright hueso, larger. Chip: muted óxido/pizarra, smaller
+ * with ASCII "-" so it never reads as a clean hit. Throw/grab: brasa third tint.
+ * Stack offset so multi-hits do not fully overlap. Draw-only juice; both sides.
+ * Damage number distinct leftover (v315): hit/chip used the same −N family
+ * (brasa 3 / óxido 2), so dart chip looked like a soft clean hit. Draw-only (drawDmgNums / spawnDmgNum kind). Hit hueso 4 + unicode −; chip óxido 2 +
+ * ASCII "-"; throw/grab brasa 3. Ride/rise/trail/MS locked. destRect/AABB
+ * planted. No new combat verb. Frames / tipX / plants / pad / parry / AI /
+ * tutorial / grab-tech-pushblock juice paths locked.
  * Knife tip plant leftover: throw_knife tip markers used to sit on the helmet
  * (you tipX 359/tipY 198) and mid-blade (rival 70 / flip 815), so idle/walk K
  * cast puff + dart birth hung off the raised knife — empty air / short of the
@@ -754,9 +766,8 @@
  * inherits that plant. Pure idle→walk / idle→guard still eases. Sheet still fades via
  * throwPlantFade. Tip / steel markers unchanged. AABB planted. No new combat verb.
  * Damage number trail leftover: −N used to rise as a single glyph, so the float read as a
- * teleport hop off the wound, not a streak. Draw-only (drawDmgNums). Ghosts along the rise
- * path; live −N still on top. Ride still live hurt. Rise still fades. Chip scale/color
- * unchanged. destRect/AABB planted. No new combat verb.
+ * teleport hop off the wound, not a streak. Draw-only (drawDmgNums). Ghosts along the rise path; live −N still on top. Ride still live hurt. Rise still fades. Hit/chip/throw
+ * palette scale owned by v315 distinct leftover. destRect/AABB planted. No new combat verb.
  * Special dart trail leftover: K dart (empty + super) used to fly as a single body, so the
  * flight read as a teleport hop across the yard, not a streak. Draw-only (drawBolt). Ghosts
  * along the flight path; live dart still on top. Super wake still attached. Empty dart still
@@ -1457,7 +1468,9 @@
   const HIT_FLASH_MS = 120;
   const STEEL_FLASH_MS = 60;
   const CLASH_SPARK_MS = 110;
-  const HIT_SPARK_MS = 140;
+  const HIT_SPARK_MS = 100;
+  // Brasa dart hit/ember puff keeps pre-polish life (flesh spark alone shortened).
+  const BRASA_HIT_MS = 140;
   const DMG_NUM_MS = 600;
   const DMG_NUM_RISE = 50;
   const LUNGE_PX = 36;
@@ -5451,14 +5464,16 @@
       homeYou: homeYou,
       plantDX: plantDX,
     });
-    const n = shove ? 7 : (power > 1.1 ? 6 : 4);
+    // Dust polish (v316): heavy connect grit (knock/scrape) used 6 long-lived
+    // specks and read as noise under the boot; shove trails stay dense.
+    const n = shove ? 7 : (power > 1.1 ? 5 : 4);
     for (let i = 0; i < n; i++) {
       const side = n <= 1 ? 0 : i / (n - 1) - 0.5;
       plantDust.push({
         x: x + side * (shove ? 14 : 10) * power + dir * (16 * power),
         y: y,
         t: 0,
-        life: (shove ? 190 : 160) + i * 18,
+        life: (shove ? 190 : 145) + i * 16,
         power: power * 0.55,
         facing: f.facing,
         // Shove trail follows shoveDir; walk/block/knock keep facing*12.
@@ -5496,11 +5511,13 @@
     return { x: bb.x + bb.w * 0.5, y: bb.y + bb.h * 0.28 };
   }
 
-  function spawnDmgNum(x, y, amount, chip, def) {
+  function spawnDmgNum(x, y, amount, chip, def, kind) {
     // Draw-only. Damage number leftover: num used to sit at spawn world xy,
     // so after freeze the hurt knocked 80 / crumple dropped and the −N hung
     // in empty air (flesh spark already rides hitWoundAnchor). Ride live
     // hurt (you + rival). Rise still fades. destRect/AABB planted.
+    // Damage number distinct leftover (v315): optional kind "hit"/"chip"/
+    // "throw" so draw can tint clean vs chip vs grab without retuning dmg.
     const amt = Math.max(0, amount | 0);
     if (amt <= 0) return;
     const stack = dmgNums.length;
@@ -5510,13 +5527,15 @@
     const a = home ? hitWoundAnchor(home) : { x: x, y: y };
     const plantDX = (x + ox) - a.x;
     const plantDY = (y + oy) - a.y;
+    const k = kind || (chip ? "chip" : "hit");
     dmgNums.push({
       x: x + ox,
       y: y + oy,
       t: 0,
       life: DMG_NUM_MS,
       amt: amt,
-      chip: !!chip,
+      chip: !!chip || k === "chip",
+      kind: k,
       homeYou: home ? home.kind === "you" : null,
       plantDX: plantDX,
       plantDY: plantDY,
@@ -5554,14 +5573,27 @@
       const u = Math.min(1, p.t / p.life);
       const rise = DMG_NUM_RISE * u;
       const fade = 1 - u;
-      const scale = p.chip ? 2 : 3;
-      const col = p.chip ? COL_OXIDO : COL_BRASA;
-      const label = "−" + p.amt;
-      // Draw-only. Damage number trail leftover: −N used to rise as a single
-      // glyph, so the float read as a teleport hop off the wound, not a
-      // streak. Ghosts along the rise path; live −N still on top. Ride still
-      // live hurt. Rise still fades. Chip scale/color unchanged.
-      // destRect/AABB planted.
+      // Draw-only. Damage number distinct leftover (v315): hit/chip used the
+      // same −N family (brasa 3 / óxido 2), so dart chip looked like a soft
+      // clean hit. Clean hit: bright hueso, larger (4). Chip: muted
+      // óxido/pizarra, smaller (2) + ASCII "-" so it never reads as clean.
+      // Throw/grab: brasa third tint (3). Trail ghosts keep the same tint.
+      // Ride still live hurt. Rise still fades. destRect/AABB planted.
+      const kind = p.kind || (p.chip ? "chip" : "hit");
+      let scale = 4;
+      let col = COL_HUESO;
+      let label = "−" + p.amt;
+      if (kind === "chip" || p.chip) {
+        scale = 2;
+        col = COL_OXIDO;
+        label = "-" + p.amt;
+      } else if (kind === "throw") {
+        scale = 3;
+        col = COL_BRASA;
+        label = "−" + p.amt;
+      }
+      // Damage number trail leftover: −N used to rise as a single glyph, so
+      // the float read as a teleport hop off the wound, not a streak. Ghosts along the rise path; live −N still on top.
       ctx.save();
       for (let g = 3; g >= 1; g--) {
         const gu = Math.max(0, u - g * 0.08);
@@ -5569,8 +5601,10 @@
         const riseG = DMG_NUM_RISE * gu;
         const fadeG = fade * (0.28 / g);
         if (fadeG < 0.03) continue;
+        // Chip ghosts lean pizarra so the trail stays muted vs clean hueso.
+        const gcol = (kind === "chip" || p.chip) ? COL_PIZARRA : col;
         ctx.globalAlpha = fadeG;
-        drawPixelText(label, p.x, p.y - riseG, scale, col, "center");
+        drawPixelText(label, p.x, p.y - riseG, scale, gcol, "center");
       }
       ctx.globalAlpha = Math.max(0, fade);
       drawPixelText(label, p.x, p.y - rise, scale, col, "center");
@@ -5587,13 +5621,15 @@
     hitWoundDY = y - a.y;
     hitSparkT = HIT_SPARK_MS;
     hitShards = [];
-    const base = dir >= 0 ? 0.2 : Math.PI - 0.2;
-    for (let i = 0; i < 9; i++) {
-      const fan = (i / 8 - 0.5) * 2.2;
+    // Dust / hit spark polish (v316): 9 wide muddy fans smeared through knock;
+    // fewer sharper brasa/hueso streaks, tighter fan. Ride still live hurt.
+    const base = dir >= 0 ? 0.15 : Math.PI - 0.15;
+    for (let i = 0; i < 5; i++) {
+      const fan = (i / 4 - 0.5) * 1.35;
       hitShards.push({
         ang: base + fan,
-        len: 26 + (i % 3) * 11,
-        brasa: i % 3 !== 0,
+        len: 24 + (i % 2) * 9,
+        brasa: i % 2 === 0,
       });
     }
   }
@@ -5713,7 +5749,7 @@
       }
       return;
     }
-    brasaFxT = HIT_SPARK_MS;
+    brasaFxT = BRASA_HIT_MS;
     const base = brasaDir >= 0 ? 0.2 : Math.PI - 0.2;
     for (let i = 0; i < 8; i++) {
       const fan = (i / 7 - 0.5) * 2.5;
@@ -5870,7 +5906,7 @@
     pulseBar(def, before);
     {
       const bb = bodyAABB(def);
-      spawnDmgNum(bb.x + bb.w * 0.5, bb.y + bb.h * 0.28, before - def.hp, false, def);
+      spawnDmgNum(bb.x + bb.w * 0.5, bb.y + bb.h * 0.28, before - def.hp, false, def, "throw");
     }
     gainMeter(atk, METER_HIT);
     if (atk.kind === "rival") atk.superArmed = true;
@@ -8808,38 +8844,34 @@
     syncHitSpark();
     const k = hitSparkT / HIT_SPARK_MS;
     const grow = 1 - k;
+    // Dust / hit spark polish (v316): squared fade + short grow so post-freeze
+    // knock does not smear a soft bloom. Palette brasa/hueso; no muddy wash.
+    const fade = k * k;
     ctx.save();
     ctx.translate(hitSparkX, hitSparkY);
     ctx.globalCompositeOperation = "lighter";
-    ctx.globalAlpha = 0.8 * k;
-    ctx.fillStyle = "#fff1e0";
+    ctx.globalAlpha = 0.72 * fade;
+    ctx.fillStyle = COL_HUESO;
     ctx.beginPath();
-    ctx.arc(0, 0, 4 + 11 * grow, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.globalAlpha = 0.55 * k;
-    ctx.fillStyle = "#c42818";
-    ctx.beginPath();
-    ctx.arc(0, 0, 2 + 18 * grow, 0, Math.PI * 2);
+    ctx.arc(0, 0, 2.2 + 5 * grow, 0, Math.PI * 2);
     ctx.fill();
     for (const sh of hitShards) {
-      const inner = sh.len * (0.08 + 0.18 * grow);
-      const outer = sh.len * (0.6 + 1.15 * grow);
+      const inner = sh.len * (0.10 + 0.12 * grow);
+      const outer = sh.len * (0.55 + 0.75 * grow);
       const c = Math.cos(sh.ang);
       const sn = Math.sin(sh.ang);
-      ctx.globalAlpha = (sh.brasa ? 0.95 : 1) * k;
-      ctx.strokeStyle = sh.brasa ? "#c42818" : "#fff4e6";
-      ctx.lineWidth = sh.brasa ? 3.2 : 2.0;
-      ctx.lineCap = "round";
+      ctx.globalAlpha = (sh.brasa ? 0.95 : 1) * fade;
+      ctx.strokeStyle = sh.brasa ? COL_BRASA : COL_HUESO;
+      ctx.lineWidth = sh.brasa ? 2.0 : 1.35;
+      ctx.lineCap = "butt";
       ctx.beginPath();
       ctx.moveTo(c * inner, sn * inner);
       ctx.lineTo(c * outer, sn * outer);
       ctx.stroke();
       if (sh.brasa) {
-        ctx.globalAlpha = 0.9 * k;
-        ctx.fillStyle = "#ff7040";
-        ctx.beginPath();
-        ctx.arc(c * outer, sn * outer, 2.6, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.globalAlpha = 0.85 * fade;
+        ctx.fillStyle = COL_HUESO;
+        ctx.fillRect(c * outer - 1, sn * outer - 1, 2, 2);
       }
     }
     ctx.restore();
@@ -8880,7 +8912,7 @@
   function drawBrasaFx() {
     if (brasaFxT <= 0) return;
     syncBrasaFx();
-    const life = brasaFxKind === "block" ? STEEL_FLASH_MS : (brasaFxKind === "clash" ? CLASH_SPARK_MS : (brasaFxKind === "cast" ? BOLT_CAST_FX_MS : (brasaFxKind === "grab" ? GRAB_FX_MS : HIT_SPARK_MS)));
+    const life = brasaFxKind === "block" ? STEEL_FLASH_MS : (brasaFxKind === "clash" ? CLASH_SPARK_MS : (brasaFxKind === "cast" ? BOLT_CAST_FX_MS : (brasaFxKind === "grab" ? GRAB_FX_MS : BRASA_HIT_MS)));
     const k = brasaFxT / life;
     const grow = 1 - k;
     ctx.save();
