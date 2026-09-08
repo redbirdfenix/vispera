@@ -168,6 +168,16 @@
  * brasa/hueso streaks, shorter post-freeze life so knock does not smear. Block steel
  * asterisks (push/tech/block steelKind) stay distinct. Slight quieter ground grit on
  * heavy connects (fewer knock specks). Draw-only. Combat math / dmg distinct v315 locked.
+ * Feint cancel readability (v317): S during slash startup juices a distinct whoosh-down /
+ * soft sheath sting (pitched whoosh + soft bloqueo) plus a tiny tip hueso fleck so the
+ * cancel reads vs guard drop / whiff recovery. Discreet — not hit bloom, not parry gleam,
+ * no shake. Juice only — FEINT_RECOVERY / frames / tipX / plants / pad / sparks v316 /
+ * dmg nums / grab-tech-pushblock / parry-riposte locked.
+ * Reversal juice (v319): L-from-guard / wakeup startReversal juices a distinct pitched whoosh-up
+ * + soft choque sting plus a brief chest invuln fleck (hueso/brasa/pizarra) and light plant dust
+ * so the cancel reads vs normal golpe. Discreet — not parry gleam, not hit bloom, no shake.
+ * Juice only — FEINT_RECOVERY / frames / tipX / plants / pad / sparks v316 / feint v317 /
+ * dmg nums / grab-tech-pushblock / parry-riposte locked.
  * Rematch (KO→REVANCHA) rotates yard +1 so consecutive bouts never repeat the same patio
  * (yards 2–5 get airtime; Escenarios picker still sticky for JUGAR / title start).
  * Escenarios labels carry a brief light tag (SOL/SOMBRA/OCASO/BRASA/LUNA). Draw-only.
@@ -1529,6 +1539,8 @@
   const REVERSAL_AI_CD = 1800;
   const REVERSAL_AI_CHANCE = 0.4;
   const FEINT_RECOVERY = 100;
+  const FEINT_FX_MS = 55;
+  const REVERSAL_FX_MS = 70;
   const FEINT_AI_CD = 1800;
   const FEINT_AI_CHANCE = 0.4;
   // Rival AI variety weights (readable personality, not noise).
@@ -1649,6 +1661,8 @@
   let lastGrabSfx = "";
   let lastRiposteSfx = "";
   let lastParrySfx = "";
+  let lastFeintSfx = "";
+  let lastReversalSfx = "";
   let lastKoSfx = "";
   const MUSIC = {
     title: new Audio("music/music_titulo.ogg"),
@@ -1843,6 +1857,23 @@
     lastParrySfx = "parry";
     playSfx(SFX.bloqueo, { rate: 1.48, volume: 0.92 });
     playSfx(SFX.choque, { rate: 1.22, volume: 0.42 });
+  }
+  function playFeintSting() {
+    // Feint cancel sting: whoosh-down sheath pull + soft bloqueo tip retract.
+    // Distinct from slash whoosh (unpitched active), guard-drop silence, parry gleam,
+    // and full impacto. Soft — not a hit or tech choque stack.
+    lastFeintSfx = "feint";
+    playSfx(SFX.whoosh, { rate: 0.66, volume: 0.70 });
+    playSfx(SFX.whoosh, { rate: 1.08, volume: 0.28 });
+    playSfx(SFX.bloqueo, { rate: 1.18, volume: 0.26 });
+  }
+  function playReversalSting() {
+    // Reversal cancel sting: pitched whoosh-up + soft choque bite.
+    // Distinct from golpe whoosh (unpitched active), parry gleam (bloqueo 1.48+choque 1.22),
+    // riposte spend, feint whoosh-down, grab impacto, clash, pushblock, tech.
+    lastReversalSfx = "reversal";
+    playSfx(SFX.whoosh, { rate: 1.32, volume: 0.78 });
+    playSfx(SFX.choque, { rate: 0.94, volume: 0.36 });
   }
 
   const ART = {
@@ -4092,8 +4123,11 @@
     f.sheatheT = SHEATHE_MS;
     f.telegraph = false;
     if (feintRecWalk && f.walkFadeHold < 0.02) f.walkFadeHold = 1;
-    playSfx(SFX.whoosh, { rate: 1.28, volume: 0.48 });
+    // Feint cancel juice (v317): whoosh-down / soft sheath sting + tiny tip hueso fleck.
+    // Dust plant stays. No shake, no hit flash, no steel asterisk / parry gleam.
+    playFeintSting();
     spawnPlantDust(f, 0.9);
+    spawnBrasaFx("feint", bladeTipX(f), bladeTipY(f), f.facing, f);
     if (f.kind === "you") noteHintVerb("feint");
     return true;
   }
@@ -4322,6 +4356,14 @@
     f.throwInvulnT = 0;
     f.wakeRev = false;
     f.telegraph = false;
+    // Reversal juice (v319): pitched whoosh-up / soft choque sting + chest invuln fleck.
+    // Soft plant dust. No shake, no hit bloom, no steel asterisk / parry gleam.
+    playReversalSting();
+    spawnPlantDust(f, 1.0);
+    {
+      const chest = hitWoundAnchor(f);
+      spawnBrasaFx("reversal", chest.x, chest.y, f.facing, f);
+    }
     if (f.kind === "you") noteHintVerb("reversal");
     return true;
   }
@@ -5745,6 +5787,44 @@
           len: 4 + (i % 3) * 2.2,
           r: 1.2 + (i % 3) * 0.4,
           tone: i % 3 === 0 ? "brasa" : (i % 3 === 1 ? "hueso" : "pizarra"),
+        });
+      }
+      return;
+    }
+    if (kind === "feint") {
+      // Tiny tip sheath fleck — ride live bladeTip. Hueso/pizarra only; not hit bloom.
+      const home = brasaHomeYou ? player : rival;
+      brasaX = bladeTipX(home);
+      brasaY = bladeTipY(home);
+      brasaWoundDX = 0;
+      brasaWoundDY = 0;
+      brasaFxT = FEINT_FX_MS;
+      for (let i = 0; i < 3; i++) {
+        brasaBits.push({
+          ang: (brasaDir >= 0 ? -0.55 : Math.PI + 0.55) + i * 0.42,
+          len: 2.2 + i * 1.1,
+          r: 0.95 + (i % 2) * 0.3,
+          tone: i === 1 ? "pizarra" : "hueso",
+        });
+      }
+      return;
+    }
+    if (kind === "reversal") {
+      // Discreet invuln flash mote on chest — ride live hitWoundAnchor. Hueso/brasa/pizarra.
+      // Not parry gleam ring, not hit bloom.
+      const home = brasaHomeYou ? player : rival;
+      const a = hitWoundAnchor(home);
+      brasaX = a.x;
+      brasaY = a.y;
+      brasaWoundDX = 0;
+      brasaWoundDY = 0;
+      brasaFxT = REVERSAL_FX_MS;
+      for (let i = 0; i < 4; i++) {
+        brasaBits.push({
+          ang: (i / 4) * Math.PI * 2 + i * 0.11,
+          len: 3 + (i % 3) * 1.6,
+          r: 1.05 + (i % 2) * 0.35,
+          tone: i % 3 === 0 ? "hueso" : (i % 3 === 1 ? "brasa" : "pizarra"),
         });
       }
       return;
@@ -8890,6 +8970,23 @@
       brasaY = p.y;
       return;
     }
+    if (brasaFxKind === "feint") {
+      // Tip sheath fleck: ride live bladeTip under feintFade (wound 0).
+      brasaWoundDX = 0;
+      brasaWoundDY = 0;
+      brasaX = bladeTipX(home);
+      brasaY = bladeTipY(home);
+      return;
+    }
+    if (brasaFxKind === "reversal") {
+      // Invuln chest mote: ride live hitWoundAnchor (wound 0) so flash sits on the fighter.
+      brasaWoundDX = 0;
+      brasaWoundDY = 0;
+      const a = hitWoundAnchor(home);
+      brasaX = a.x;
+      brasaY = a.y;
+      return;
+    }
     if (brasaFxKind === "clash") {
       const hb = bladeBox(home);
       brasaX = bladeTipX(home) + brasaWoundDX;
@@ -8912,7 +9009,7 @@
   function drawBrasaFx() {
     if (brasaFxT <= 0) return;
     syncBrasaFx();
-    const life = brasaFxKind === "block" ? STEEL_FLASH_MS : (brasaFxKind === "clash" ? CLASH_SPARK_MS : (brasaFxKind === "cast" ? BOLT_CAST_FX_MS : (brasaFxKind === "grab" ? GRAB_FX_MS : BRASA_HIT_MS)));
+    const life = brasaFxKind === "block" ? STEEL_FLASH_MS : (brasaFxKind === "clash" ? CLASH_SPARK_MS : (brasaFxKind === "cast" ? BOLT_CAST_FX_MS : (brasaFxKind === "grab" ? GRAB_FX_MS : (brasaFxKind === "feint" ? FEINT_FX_MS : (brasaFxKind === "reversal" ? REVERSAL_FX_MS : BRASA_HIT_MS)))));
     const k = brasaFxT / life;
     const grow = 1 - k;
     ctx.save();
@@ -8969,6 +9066,56 @@
         ctx.fillStyle = brasaTone(sh.tone);
         ctx.beginPath();
         ctx.arc(c * d, sn * d - 2 * grow, sh.r * (0.8 + 0.35 * k), 0, Math.PI * 2);
+        ctx.fill();
+      }
+    } else if (brasaFxKind === "feint") {
+      // Discreet tip sheath fleck: tiny hueso mote + soft pizarra — not hit bloom / parry gleam.
+      // Slight down drift reads as tip dip without touching destRect plant / tipX.
+      ctx.globalAlpha = 0.26 * k;
+      ctx.fillStyle = COL_PIZARRA;
+      ctx.beginPath();
+      ctx.arc(0, 1.5 * grow, 2.0 + 3.2 * grow, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 0.58 * k;
+      ctx.fillStyle = COL_HUESO;
+      ctx.beginPath();
+      ctx.arc(brasaDir * 0.6, 2.2 * grow, 1.3 + 1.6 * grow, 0, Math.PI * 2);
+      ctx.fill();
+      for (const sh of brasaBits) {
+        const d = sh.len * (0.22 + 0.5 * grow);
+        const c = Math.cos(sh.ang);
+        const sn = Math.sin(sh.ang);
+        ctx.globalAlpha = 0.70 * k;
+        ctx.fillStyle = brasaTone(sh.tone);
+        ctx.beginPath();
+        ctx.arc(c * d, sn * d + 1.8 * grow, sh.r * (0.75 + 0.3 * k), 0, Math.PI * 2);
+        ctx.fill();
+      }
+    } else if (brasaFxKind === "reversal") {
+      // Discreet invuln flash mote on chest: hueso/brasa/pizarra — not parry gleam ring, not hit bloom.
+      ctx.globalAlpha = 0.28 * k;
+      ctx.fillStyle = COL_PIZARRA;
+      ctx.beginPath();
+      ctx.arc(0, 0, 3.2 + 4.5 * grow, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 0.55 * k;
+      ctx.fillStyle = COL_HUESO;
+      ctx.beginPath();
+      ctx.arc(0, -0.5, 1.6 + 2.2 * grow, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 0.42 * k;
+      ctx.fillStyle = COL_BRASA;
+      ctx.beginPath();
+      ctx.arc(brasaDir * 0.8, -1, 1.1 + 1.4 * grow, 0, Math.PI * 2);
+      ctx.fill();
+      for (const sh of brasaBits) {
+        const d = sh.len * (0.24 + 0.55 * grow);
+        const c = Math.cos(sh.ang);
+        const sn = Math.sin(sh.ang);
+        ctx.globalAlpha = 0.72 * k;
+        ctx.fillStyle = brasaTone(sh.tone);
+        ctx.beginPath();
+        ctx.arc(c * d, sn * d - 1.2 * grow, sh.r * (0.78 + 0.32 * k), 0, Math.PI * 2);
         ctx.fill();
       }
     } else if (brasaFxKind === "cast") {
