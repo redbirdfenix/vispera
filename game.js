@@ -238,6 +238,38 @@
  * keeps linear clashSparkT fade. CLASH_SPARK_MS 110 / CLASH_SHAKE 14 /
  * HITSTOP_BLOCK 60 arm unchanged. Juice only — pad v327 / parry gleam v326 /
  * steel v323 / meter v324 / tipX / plants / frames locked.
+ * Flesh hit spark ↔ punchCover (v329): clean flesh spark used to fade on its own
+ * HIT_SPARK_MS 100 linear clock while punchCover held full through the slam —
+ * shards died mid-cover (white still peaked via hurtFlashK). Draw-only (hitSparkK)
+ * + hold armed clock through live punch; clear when cover dies (no linear pop).
+ * Peak while cover is full (k>0.25); ease out over cover's last quarter (same
+ * smoothstep as punchCover / clashSparkK / steelFlashK / hurtFlashK / parryGleamK).
+ * Related dart ember draw (brasaFxKind hit / brasaHitK) same cover envelope; hold+clear
+ * only for hit kind. BRASA_HIT_MS 140 stays longer than HIT_SPARK_MS 100 (dart ember
+ * separated). No punch keeps linear fade. HIT_SPARK_MS 100 / BRASA_HIT_MS 140 /
+ * HITSTOP_HIT 140 arm unchanged. Juice only — clashSparkK v328 / pad v327 /
+ * parry gleam v326 / steel v323 / meter v324 / hitFlash v301 / tipX / plants / frames locked.
+ * Knock grit / plant dust + floating −N ↔ punchCover (v330): connect grit and dmg nums used
+ * to fade on their own t/life / DMG_NUM_MS linear clocks while punchCover held full through
+ * the slam — dust / −N died mid-cover (white still peaked via hurtFlashK). Draw-only (plantDustK / dmgNumK).
+ * Punch-marked particles (spawned while shake armed) hold peak while
+ * cover is full (k>0.25); ease out over cover's last quarter (same smoothstep as punchCover /
+ * hitSparkK / clashSparkK / steelFlashK / hurtFlashK / parryGleamK); floor at linear life fade
+ * so post-cover does not pop. Walk/idle grit unmarked — stays linear. Rise still ages (alpha
+ * only). Chip/clean/throw tints stay distinct. DMG_NUM_MS 600 / DMG_NUM_RISE 50 / grit life
+ * formulas unchanged. No punch keeps linear. Juice only — hitSparkK v329 / clashSparkK v328 /
+ * pad v327 / parry gleam v326 / steel v323 / meter v324 / hitFlash v301 / tipX / plants / frames locked.
+ * HP drain flash + combo counter ↔ punchCover (v331): hudFlashT / comboT used to fade on their own
+ * 220 / COMBO_SHOW_MS 640 linear clocks while punchCover held full through the slam — HP brasa
+ * ghost flash / combo count died mid-cover (white still peaked via hurtFlashK). Draw-only (hudFlashK / comboK).
+ * hudFlash already held through freeze (v301-era); now peaks with cover
+ * (hold clock + clear when cover dies, same as meterFlashK / hitSparkK). Combo punch-marked on
+ * 2+ connect holds peak while cover is full (k>0.25); ease out over cover's last quarter (same
+ * smoothstep as punchCover / dmgNumK / plantDustK / hitSparkK); floor at linear so post-cover
+ * does not pop. Rise still ages (alpha only). First connect stays silent. No punch keeps linear.
+ * HUD_FLASH_MS 220 / COMBO_SHOW_MS 640 unchanged. Juice only — grit/dmg v330 / hitSparkK v329 /
+ * clashSparkK v328 / pad v327 / parry gleam v326 / steel v323 / meter v324 / hitFlash v301 /
+ * tipX / plants / frames / pad / parry-riposte locked.
  * Rematch (KO→REVANCHA) rotates yard +1 so consecutive bouts never repeat the same patio
  * (yards 2–5 get airtime; Escenarios picker still sticky for JUGAR / title start).
  * Escenarios labels carry a brief light tag (SOL/SOMBRA/OCASO/BRASA/LUNA). Draw-only.
@@ -1579,6 +1611,7 @@
   const METER_BLOCK_SPECIAL = 10;
   const METER_FLASH_MS = 220;
   const METER_GAIN_MS = 180;
+  const HUD_FLASH_MS = 220;
   const COMBO_SHOW_MS = 640;
   const YARD_SWITCH_MS = 280;
   const SUPER_RANGE = 380;
@@ -2574,6 +2607,7 @@
       meterFlashKind: "",
       comboN: 0,
       comboT: 0,
+      comboPunch: false,
       wantBlock: false,
       guarding: false,
       guardPoseK: 0,
@@ -2763,12 +2797,17 @@
     // Sparse multi-connect count. Chain while defender still stunned /
     // falling / thrown from a prior hit. First connect stays silent (1);
     // 2+ arms a brief pixel count near the attacker. Draw-only.
+    // Combo ↔ punchCover (v331): punch-mark when 2+ arms so draw can hold
+    // peak with cover (same idea as dmgNum punch mark). Alpha only — rise
+    // still ages. First connect stays silent (no mark).
     if (!atk || !def) return;
     const chain = atk.comboN > 0 && (def.stunT > 0 || def.falling || (def.thrownT || 0) > 0);
     atk.comboN = chain ? atk.comboN + 1 : 1;
     atk.comboT = atk.comboN >= 2 ? COMBO_SHOW_MS : 0;
+    atk.comboPunch = atk.comboT > 0;
     def.comboN = 0;
     def.comboT = 0;
+    def.comboPunch = false;
   }
 
   function noteHintVerb(v) {
@@ -5637,6 +5676,9 @@
     const y = FLOOR_Y - 1;
     const plantDX = x - r.pivX;
     const homeYou = f.kind === "you";
+    // Knock grit ↔ punchCover (v330): mark connect grit spawned while shake is
+    // armed so draw can hold peak with cover (walk/idle grit stays unmarked).
+    const punch = shake > 0 && shakeDur > 0;
     if (plantDust.length > 40) plantDust.splice(0, plantDust.length - 40);
     plantDust.push({
       x: x,
@@ -5650,6 +5692,7 @@
       vx: shove ? dir * (420 + 60 * power) : 0,
       homeYou: homeYou,
       plantDX: plantDX,
+      punch: punch,
     });
     // Dust polish (v316): heavy connect grit (knock/scrape) used 6 long-lived
     // specks and read as noise under the boot; shove trails stay dense.
@@ -5670,6 +5713,7 @@
         shoveDir: dir,
         shove: shove,
         homeYou: homeYou,
+        punch: punch,
       });
     }
     // Draw-only. Glue this tick so a later destRect.pivX move
@@ -5715,6 +5759,11 @@
     const plantDX = (x + ox) - a.x;
     const plantDY = (y + oy) - a.y;
     const k = kind || (chip ? "chip" : "hit");
+    // Floating −N ↔ punchCover (v330): dmg nums only spawn on connect — always
+    // punch-mark so draw can hold peak with cover even when spawn precedes
+    // bumpShake (landHit arms −N before shake). Alpha only — rise still ages.
+    // No live shake still fades linear via dmgNumK.
+    const punch = true;
     dmgNums.push({
       x: x + ox,
       y: y + oy,
@@ -5726,6 +5775,7 @@
       homeYou: home ? home.kind === "you" : null,
       plantDX: plantDX,
       plantDY: plantDY,
+      punch: punch,
     });
     syncDmgNums();
   }
@@ -5759,7 +5809,9 @@
       const p = dmgNums[i];
       const u = Math.min(1, p.t / p.life);
       const rise = DMG_NUM_RISE * u;
-      const fade = 1 - u;
+      // Floating −N ↔ punchCover (v330): cover envelope via dmgNumK (alpha).
+      // Rise still linear u. Chip/clean/throw tints stay distinct.
+      const fade = dmgNumK(p);
       // Draw-only. Damage number distinct leftover (v315): hit/chip used the
       // same −N family (brasa 3 / óxido 2), so dart chip looked like a soft
       // clean hit. Clean hit: bright hueso, larger (4). Chip: muted
@@ -6081,7 +6133,7 @@
 
   function pulseBar(f, before) {
     f.hudGhost = Math.max(f.hudGhost, before);
-    f.hudFlashT = 220;
+    f.hudFlashT = HUD_FLASH_MS;
   }
 
   function landHit(atk, def, dir) {
@@ -6930,8 +6982,33 @@
       if (player.parryFadeT > 0) player.parryFadeT = Math.max(0, player.parryFadeT - dt);
       if (rival.parryFadeT > 0) rival.parryFadeT = Math.max(0, rival.parryFadeT - dt);
       if (clashSparkT > 0) clashSparkT = Math.max(0, clashSparkT - dt);
-      if (hitSparkT > 0) hitSparkT = Math.max(0, hitSparkT - dt);
-      if (brasaFxT > 0) brasaFxT = Math.max(0, brasaFxT - dt);
+      // Flesh hit spark ↔ punchCover (v329): linear hitSparkT used to start
+      // draining the tick freeze ended while punchCover still held full, so
+      // shards died on their own clock — not with cover (HIT_SPARK_MS 100 <
+      // leftover slam). Hold the armed clock through the live punch; clear
+      // when cover dies. No-punch fallback still linear. Freeze already held.
+      if (hitSparkT > 0) {
+        if (shake > 0 && shakeDur > 0) {
+          /* hold through live cover */
+        } else if (shakeDur > 0) {
+          // Cover just died — die with it.
+          hitSparkT = 0;
+        } else {
+          hitSparkT = Math.max(0, hitSparkT - dt);
+        }
+      }
+      // Dart ember (brasaFxKind hit) ↔ punchCover (v329): same hold+clear for
+      // flesh-related ember draw. Other brasa kinds stay linear. BRASA_HIT_MS
+      // 140 keeps longer no-punch life than HIT_SPARK_MS 100.
+      if (brasaFxT > 0) {
+        if (brasaFxKind === "hit" && shake > 0 && shakeDur > 0) {
+          /* hold through live cover */
+        } else if (brasaFxKind === "hit" && shakeDur > 0) {
+          brasaFxT = 0;
+        } else {
+          brasaFxT = Math.max(0, brasaFxT - dt);
+        }
+      }
       tickHudBar(player, dt);
       tickHudBar(rival, dt);
       for (let i = plantDust.length - 1; i >= 0; i--) {
@@ -8204,6 +8281,126 @@
     return clashSparkT / CLASH_SPARK_MS;
   }
 
+  function hitSparkK() {
+    // Draw-only. Flesh hit spark ↔ punchCover (v329): clean flesh spark used to
+    // fade on its own HIT_SPARK_MS 100 linear clock while punchCover held full
+    // through the slam — shards died mid-cover (white still peaked). Hold peak
+    // while cover is full; ease out over cover's last quarter (same smoothstep
+    // as punchCover / clashSparkK / steelFlashK / hurtFlashK / parryGleamK). No
+    // punch keeps linear hitSparkT fade. Armed clock holds through live punch
+    // and clears when cover dies (update). destRect/AABB planted.
+    if (hitSparkT <= 0) return 0;
+    if (shake > 0 && shakeDur > 0) {
+      const k = Math.min(1, shake / shakeDur);
+      if (k > 0.25) return 1;
+      const u = k / 0.25;
+      return u * u * (3 - 2 * u);
+    }
+    return hitSparkT / HIT_SPARK_MS;
+  }
+
+  function brasaHitK() {
+    // Draw-only. Dart ember ↔ punchCover (v329): brasaFxKind "hit" flesh-related
+    // ember used to fade on its own BRASA_HIT_MS linear clock while punchCover
+    // held full — ember died mid-cover (flesh spark sibling). Hold peak while
+    // cover is full; ease out over cover's last quarter. Other brasa kinds do
+    // not use this. No punch keeps linear BRASA_HIT_MS fade. BRASA_HIT_MS 140
+    // stays longer than HIT_SPARK_MS 100. destRect/AABB planted.
+    if (brasaFxT <= 0 || brasaFxKind !== "hit") return 0;
+    if (shake > 0 && shakeDur > 0) {
+      const k = Math.min(1, shake / shakeDur);
+      if (k > 0.25) return 1;
+      const u = k / 0.25;
+      return u * u * (3 - 2 * u);
+    }
+    return brasaFxT / BRASA_HIT_MS;
+  }
+
+  function plantDustK(p) {
+    // Draw-only. Knock grit / plant dust ↔ punchCover (v330): connect grit used to
+    // fade on its own t/life linear clock while punchCover held full through the
+    // slam — dust died mid-cover (white still peaked). Punch-marked stamps/specks
+    // (spawned while shake armed) Hold peak while cover is full (k>0.25); ease out
+    // over cover's last quarter (same smoothstep as punchCover / hitSparkK /
+    // clashSparkK / steelFlashK / hurtFlashK / parryGleamK); floor at linear life
+    // fade so post-cover does not pop. Walk/idle grit unmarked — stays linear. No
+    // punch keeps linear. destRect/AABB planted.
+    if (!p) return 0;
+    const lin = Math.max(0, 1 - p.t / p.life);
+    if (!p.punch) return lin;
+    if (shake > 0 && shakeDur > 0) {
+      const k = Math.min(1, shake / shakeDur);
+      if (k > 0.25) return 1;
+      const u = k / 0.25;
+      const ease = u * u * (3 - 2 * u);
+      return Math.max(lin, ease);
+    }
+    return lin;
+  }
+
+  function dmgNumK(p) {
+    // Draw-only. Floating −N ↔ punchCover (v330): dmg nums used to fade on their
+    // own DMG_NUM_MS linear clock while punchCover held full through the slam —
+    // −N faded mid-cover (white still peaked). Punch-marked nums (spawned while
+    // shake armed) Hold peak while cover is full (k>0.25); ease out over cover's
+    // last quarter (same smoothstep as punchCover / plantDustK / hitSparkK);
+    // floor at linear fade so post-cover does not pop. Rise still ages (alpha
+    // only). Chip/clean/throw tints stay distinct. DMG_NUM_MS 600 / DMG_NUM_RISE
+    // 50 unchanged. No punch keeps linear. destRect/AABB planted.
+    if (!p) return 0;
+    const lin = Math.max(0, 1 - Math.min(1, p.t / p.life));
+    if (!p.punch) return lin;
+    if (shake > 0 && shakeDur > 0) {
+      const k = Math.min(1, shake / shakeDur);
+      if (k > 0.25) return 1;
+      const u = k / 0.25;
+      const ease = u * u * (3 - 2 * u);
+      return Math.max(lin, ease);
+    }
+    return lin;
+  }
+
+  function hudFlashK(f) {
+    // Draw-only. HP drain flash ↔ punchCover (v331): hudFlashT used to fade on
+    // its own HUD_FLASH_MS 220 linear clock while punchCover held full through
+    // the slam — brasa ghost flash died mid-cover (white still peaked). Already
+    // held through freeze; now hold peak while cover is full; ease out over
+    // cover's last quarter (same smoothstep as punchCover / meterFlashK /
+    // hurtFlashK / dmgNumK). Armed clock holds through live punch and clears
+    // when cover dies (tickHudBar). Ghost drain waits on hudFlashT=0. No punch
+    // keeps linear. destRect/AABB planted.
+    if (!f || f.hudFlashT <= 0) return 0;
+    if (shake > 0 && shakeDur > 0) {
+      const k = Math.min(1, shake / shakeDur);
+      if (k > 0.25) return 1;
+      const u = k / 0.25;
+      return u * u * (3 - 2 * u);
+    }
+    return f.hudFlashT / HUD_FLASH_MS;
+  }
+
+  function comboK(f) {
+    // Draw-only. Combo counter ↔ punchCover (v331): comboT used to fade on its
+    // own COMBO_SHOW_MS 640 linear clock while punchCover held full through the
+    // slam — count died mid-cover (white still peaked). Punch-marked (2+
+    // connect) Hold peak while cover is full (k>0.25); ease out over cover's
+    // last quarter (same smoothstep as punchCover / dmgNumK / plantDustK /
+    // hudFlashK); floor at linear so post-cover does not pop. Rise still ages
+    // (alpha only). First connect silent. No punch keeps linear.
+    // COMBO_SHOW_MS 640 unchanged. destRect/AABB planted.
+    if (!f || f.comboT <= 0) return 0;
+    const lin = Math.min(1, f.comboT / COMBO_SHOW_MS);
+    if (!f.comboPunch) return lin;
+    if (shake > 0 && shakeDur > 0) {
+      const k = Math.min(1, shake / shakeDur);
+      if (k > 0.25) return 1;
+      const u = k / 0.25;
+      const ease = u * u * (3 - 2 * u);
+      return Math.max(lin, ease);
+    }
+    return lin;
+  }
+
   function meterFlashK(f) {
     // Draw-only. Full-meter leftover pip used to die the tick
     // startBolt spends the stock (meter=0), so spend freeze had
@@ -8759,8 +8956,21 @@
   const COL_NEGRO = "#0c0a08";
 
   function tickHudBar(f, dt) {
-    if (f.hudFlashT > 0) f.hudFlashT = Math.max(0, f.hudFlashT - dt);
-    else if (f.hudGhost > f.hp) f.hudGhost = Math.max(f.hp, f.hudGhost - 80 * (dt / 1000));
+    // HP drain flash ↔ punchCover (v331): linear hudFlashT used to start
+    // draining the tick freeze ended while punchCover still held full, so the
+    // brasa ghost flash died on its own clock — not with cover. Hold through
+    // the live punch; clear when cover dies (ghost drain waits on T=0).
+    // No-punch still linear. Freeze already held the clock.
+    if (f.hudFlashT > 0) {
+      if (shake > 0 && shakeDur > 0) {
+        /* hold through live cover */
+      } else if (shakeDur > 0 && f.hudFlashT >= HUD_FLASH_MS - 0.5) {
+        // Was held at peak through slam; cover just died — die with it.
+        f.hudFlashT = 0;
+      } else {
+        f.hudFlashT = Math.max(0, f.hudFlashT - dt);
+      }
+    } else if (f.hudGhost > f.hp) f.hudGhost = Math.max(f.hp, f.hudGhost - 80 * (dt / 1000));
     else f.hudGhost = f.hp;
     // Meter fill ↔ punchCover (v324): linear meterFlashT / meterGainT used to
     // start draining the tick freeze ended while punchCover still held full,
@@ -8789,7 +8999,10 @@
         f.meterGainT = Math.max(0, f.meterGainT - dt);
       }
     }
+    // Combo ↔ punchCover (v331): clock still ages (rise); draw envelope via
+    // comboK. Clear punch mark when the count dies.
     if (f.comboT > 0) f.comboT = Math.max(0, f.comboT - dt);
+    if (f.comboT <= 0) f.comboPunch = false;
   }
 
   function hudBarX(left) {
@@ -8846,7 +9059,8 @@
       ctx.globalAlpha = 1;
     }
     if (f.hudFlashT > 0 && ghost > fill) {
-      const k = f.hudFlashT / 220;
+      // HP drain flash ↔ punchCover (v331): cover envelope via hudFlashK.
+      const k = hudFlashK(f);
       const x0 = left ? x + w * fill : x + w - w * ghost;
       const fw = w * (ghost - fill);
       ctx.fillStyle = COL_BRASA;
@@ -8995,13 +9209,16 @@
     // Sparse pixel combo on 2+ connects. Near the attacker, fades fast.
     // Scale 2 — not SF-style huge. Palette hueso over negro outline.
     // Does not sit on HP/stam / teach HUD.
+    // Combo ↔ punchCover (v331): cover envelope via comboK (alpha). Rise
+    // still ages on linear comboT.
     if (!f || f.comboN < 2 || f.comboT <= 0 || mode !== "play") return;
     const u = Math.min(1, f.comboT / COMBO_SHOW_MS);
+    const fade = comboK(f);
     const bb = bodyAABB(f);
     const x = bb.x + bb.w * 0.5;
     const y = bb.y - 28 - (1 - u) * 10;
     ctx.save();
-    ctx.globalAlpha = 0.45 + 0.40 * u;
+    ctx.globalAlpha = 0.45 + 0.40 * fade;
     drawPixelText(String(f.comboN | 0), x, y, 2, COL_HUESO, "center");
     ctx.restore();
   }
@@ -9229,7 +9446,8 @@
   function drawHitSpark() {
     if (hitSparkT <= 0) return;
     syncHitSpark();
-    const k = hitSparkT / HIT_SPARK_MS;
+    // Flesh hit spark ↔ punchCover (v329): cover envelope via hitSparkK.
+    const k = hitSparkK();
     const grow = 1 - k;
     // Dust / hit spark polish (v316): squared fade + short grow so post-freeze
     // knock does not smear a soft bloom. Palette brasa/hueso; no muddy wash.
@@ -9326,7 +9544,8 @@
     if (brasaFxT <= 0) return;
     syncBrasaFx();
     const life = brasaFxKind === "block" ? STEEL_FLASH_MS : (brasaFxKind === "clash" ? CLASH_SPARK_MS : (brasaFxKind === "cast" ? BOLT_CAST_FX_MS : (brasaFxKind === "grab" ? GRAB_FX_MS : (brasaFxKind === "feint" ? FEINT_FX_MS : (brasaFxKind === "reversal" ? REVERSAL_FX_MS : (brasaFxKind === "wakeup" ? WAKE_FX_MS : BRASA_HIT_MS))))));
-    const k = brasaFxT / life;
+    // Flesh dart ember ↔ punchCover (v329): cover envelope via brasaHitK for hit.
+    const k = brasaFxKind === "hit" ? brasaHitK() : (brasaFxT / life);
     const grow = 1 - k;
     ctx.save();
     ctx.translate(brasaX, brasaY);
@@ -9550,7 +9769,8 @@
     syncPlantDust();
     ctx.save();
     for (const p of plantDust) {
-      const k = Math.max(0, 1 - p.t / p.life);
+      // Knock grit ↔ punchCover (v330): cover envelope via plantDustK.
+      const k = plantDustK(p);
       if (p.speck) {
         ctx.globalAlpha = 0.5 * k * p.power;
         // Pushblock / clash shove trail: óxido grit. Walk/block stay pizarra-dark.
