@@ -186,6 +186,58 @@
  * whoosh-up/choque, parry gleam, riposte, grab impacto. No shake / no frame-invuln retune.
  * Juice only — THROW_WAKE_INVULN / frames / tipX / plants / pad / sparks v316 / feint v317 / reversal v319 /
  * wakeup grit v320 / dmg nums / grab-tech-pushblock / parry-riposte locked.
+ * Special-cancel K clarity (v322): connected Space/L→K (holdCut, not clash-K, not idle K)
+ * layers a pitched cast/whoosh cancel sting so the cut→dart plant reads vs idle knife plant.
+ * Soft plant dust on cancel. Keeps existing cast puff on slash tip (do not replace brasaFxKind cast).
+ * Distinct from feint whoosh-down, reversal whoosh-up/choque, getup scrape, super spend brasa stack,
+ * idle cast+knifeThrow. No shake / no frame retune.
+ * Juice only — BOLT_CANCEL_MS / frames / tipX / plants / pad / sparks v316 / feint v317 / reversal v319 /
+ * wakeup grit v320 / getup scrape v321 / dmg nums / grab-tech-pushblock / parry-riposte locked.
+ * Steel flash ↔ punchCover (v323): block steel asterisk used to fade on its own STEEL_FLASH_MS
+ * linear clock while punchCover held full through the slam — asterisk died mid-cover. Draw-only
+ * (steelFlashK). Peak while cover is full (k>0.25); ease out over cover's last quarter (same
+ * smoothstep as punchCover / hurtFlashK). No punch keeps linear steelFlashT fade. push/tech/block
+ * steelKind variants unchanged. STEEL_FLASH_MS 60 arm unchanged.
+ * KO land grit (v323): caida bumpShake used to re-arm punchCover after kill flash died — yard
+ * punched with no white. Prefer grit+shake only on land (camera sx still slides); skip overscan
+ * punch once koLanded. Do not re-arm HIT_FLASH. Juice only — hitFlash v301 / hudFlash / pushblock /
+ * clash / wakeup / special-cancel K / tipX / plants / frames / pad / parry-riposte locked.
+ * Meter fill ↔ punchCover (v324): fill-to-full / gain pulse used to fade on their own
+ * METER_FLASH_MS / METER_GAIN_MS linear clocks while punchCover held full through the slam —
+ * pip flash died mid-cover. Draw-only (meterFlashK / meterGainK). Peak while cover is full
+ * (k>0.25); ease out over cover's last quarter (same smoothstep as punchCover / hurtFlashK /
+ * steelFlashK). Hold armed clocks through live punch; clear when cover dies (no linear pop).
+ * Spend flash stays linear (own freeze). No punch keeps linear fade. METER_FLASH_MS 220 /
+ * METER_GAIN_MS 180 arm unchanged. Juice only — hitFlash v301 / steel v323 / hudFlash /
+ * pushblock / clash / wakeup / special-cancel K / tipX / plants / frames / pad / parry-riposte locked.
+ * Parry interrupt leftover (v325): perfect-parry used to pop the attacker slash/golpe
+ * sheet to idle the same tick landParry set stunT (sheatheFade dies on stun; poseBitmap
+ * idle immediately), so the freeze frame was standing idle while gleam sat on blades —
+ * a snap, not a break. Draw-only (parryFade). Fade leftover slash→idle over SHEATHE_MS.
+ * Hold clock through freeze. poseBitmap still idle (chip stun path). destRect eases
+ * leftover active ox/rot into flinch (AABB planted). Tip eases slash→idle with fade.
+ * PARRY_STAGGER 180 / PARRY_GLEAM 80 / frames / tipX / plants / pad locked.
+ * Parry gleam ↔ punchCover (v326): perfect-parry brasa gleam used to fade on its own
+ * PARRY_GLEAM_MS linear clock while punchCover held full through the slam — gleam died
+ * mid-cover (steel asterisk sibling already fixed in v323). Draw-only (parryGleamK).
+ * Peak while cover is full (k>0.25); ease out over cover's last quarter (same smoothstep
+ * as punchCover / steelFlashK / hurtFlashK). No punch keeps linear parryGleamT fade.
+ * PARRY_GLEAM_MS 80 / bumpShake 6 / HITSTOP_BLOCK 60 arm unchanged. Juice only —
+ * parryFade v325 / steel v323 / meter v324 / tipX / plants / frames / pad locked.
+ * Pad zone slide-off leftover (v327): hold-guarda (and other zone holds) used to dump on
+ * lostpointercapture when the thumb drifted slightly off the hit target — capture loss
+ * released KeyS while the finger was still down. Capture loss does not dump zone holds
+ * (padByPtr). Window pointerup / pointercancel still release. Stick path unchanged.
+ * Landscape/portrait pad 2×2, multi-touch chords (throw Space+S, reversal S+L) stay.
+ * Juice/combat frames / tipX / plants locked. No 6th button.
+ * Clash spark ↔ punchCover (v328): choque spark used to fade on its own
+ * CLASH_SPARK_MS linear clock while punchCover held full through the slam —
+ * shards died mid-cover (steel asterisk / parry gleam siblings). Draw-only (clashSparkK).
+ * Peak while cover is full (k>0.25); ease out over cover's last quarter (same
+ * smoothstep as punchCover / steelFlashK / hurtFlashK / parryGleamK). No punch
+ * keeps linear clashSparkT fade. CLASH_SPARK_MS 110 / CLASH_SHAKE 14 /
+ * HITSTOP_BLOCK 60 arm unchanged. Juice only — pad v327 / parry gleam v326 /
+ * steel v323 / meter v324 / tipX / plants / frames locked.
  * Rematch (KO→REVANCHA) rotates yard +1 so consecutive bouts never repeat the same patio
  * (yards 2–5 get airtime; Escenarios picker still sticky for JUGAR / title start).
  * Escenarios labels carry a brief light tag (SOL/SOMBRA/OCASO/BRASA/LUNA). Draw-only.
@@ -1673,6 +1725,7 @@
   let lastFeintSfx = "";
   let lastReversalSfx = "";
   let lastGetupSfx = "";
+  let lastHoldCutSfx = "";
   let lastKoSfx = "";
   const MUSIC = {
     title: new Audio("music/music_titulo.ogg"),
@@ -1892,6 +1945,15 @@
     lastGetupSfx = "getup";
     playSfx(SFX.whoosh, { rate: 0.48, volume: 0.46 });
     playSfx(SFX.bloqueo, { rate: 0.82, volume: 0.14 });
+  }
+
+  function playHoldCutSting() {
+    // Special-cancel K sting: pitched cast bite + soft whoosh so cut→dart reads vs idle plant.
+    // Distinct from idle cast (unpitched), super spend (cast 0.66/1.38 + brasaImpacto),
+    // feint whoosh-down, reversal whoosh-up/choque, getup scrape, knifeThrow plant.
+    lastHoldCutSfx = "holdCut";
+    playSfx(SFX.cast, { rate: 1.28, volume: 0.72 });
+    playSfx(SFX.whoosh, { rate: 0.88, volume: 0.34 });
   }
 
   const ART = {
@@ -2251,7 +2313,9 @@
      Tap tajo then tap guarda during slash startup is feint (not throw).
      Keyboard path stays the verb table. Vertical stick does nothing.
      Portrait stick leftover: follow on window while stickPtr is live so the
-     thumb can leave the thin letterbox strip. Capture loss does not dump A/D. */
+     thumb can leave the thin letterbox strip. Capture loss does not dump A/D.
+     Pad zone slide-off leftover: capture loss does not dump zone holds (padByPtr).
+     Window pointerup / pointercancel still release. */
   let padShown = false;
   const padHoldN = Object.create(null);
   const padByPtr = new Map();
@@ -2372,8 +2436,12 @@
     pad.addEventListener("lostpointercapture", (e) => {
       // Portrait stick leftover: capture loss used to dump A/D when the thumb
       // left the thin letterbox strip onto the canvas. Window pointerup still
-      // releases. Zones still padUp (stick has no padByPtr row).
+      // releases. Capture loss does not dump the stick.
+      // Pad zone slide-off leftover: hold-guarda dumps on lostpointercapture when
+      // the thumb drifts off the zone. Keep padByPtr holds while still down;
+      // window pointerup / pointercancel still release. Stick has no padByPtr row.
       if (stickPtr != null && e.pointerId === stickPtr) return;
+      if (padByPtr.has(e.pointerId)) return;
       padUp(e.pointerId);
     });
     pad.addEventListener("contextmenu", eat);
@@ -2551,6 +2619,7 @@
       pbCd: 0,
       pbArmed: 0,
       feintT: 0,
+      parryFadeT: 0,
       feintCd: 0,
       feintArmed: 0,
       telegraph: false,
@@ -3686,6 +3755,22 @@
       // guardPlant. Scale stun rot so leftover guard rot does not stack
       // extra. Extra destRect rot stays 0.
       const lk = stunLeftoverPlanting(f) ? guardRaiseK(f) : 0;
+      // Parry interrupt leftover (v325): leftover active ox/rot used to dump
+      // the same tick landParry set stunT (poseBitmap idle). Ease into flinch
+      // over parryFade. AABB planted (bodyAABB still zeros stun ox).
+      const pk = parryFade(f);
+      if (pk > 0.02) {
+        const golpe = f.cut === "golpe";
+        const fromRot = golpe ? 0.32 : 0.55;
+        const fromOx = golpe ? 40 : 72;
+        const fromOy = golpe ? -6 : -10;
+        const flinch = -0.16 * k * (1 - lk);
+        return {
+          rot: f.facing * (fromRot * pk + flinch * (1 - pk)),
+          ox: f.facing * fromOx * pk,
+          oy: fromOy * pk,
+        };
+      }
       return { rot: f.facing * -0.16 * k * (1 - lk), ox: 0, oy: 0 };
     }
     // Walk sheet is dedicated but still needs walkPose — zeroing it made
@@ -3865,6 +3950,18 @@
         tip = wx + (tip - wx) * (1 - fk);
       }
     }
+    // Tip under parryFade leftover: tip used to hop slash→idle the same tick
+    // landParry set stunT while leftover cut still owned the sheet — a hop, not
+    // a break. Mirror tip under feintFade. Ease slash→pose tip with parryFade
+    // (pk dies 1→0). tip markers / bladeBox / active hitbox unchanged. AABB planted.
+    const pkTip = parryFade(f);
+    if (pkTip > 0.02) {
+      const sl = poseFamily(f).slash;
+      if (sl && sl.tipX != null) {
+        const sx = r.dx + sl.tipX * s;
+        tip = sx + (tip - sx) * (1 - pkTip);
+      }
+    }
     return tip;
   }
 
@@ -3957,6 +4054,17 @@
       if (wu && wu.tipY != null) {
         const wy = r.dy + wu.tipY * s;
         tip = wy + (tip - wy) * (1 - fk);
+      }
+    }
+    // Tip under parryFade leftover: ease slash→pose tipY with parryFade
+    // (pk dies 1→0; mirror bladeTipX). tip markers / steelX / bladeBox
+    // unchanged. AABB planted.
+    const pkTipY = parryFade(f);
+    if (pkTipY > 0.02) {
+      const sl = poseFamily(f).slash;
+      if (sl && sl.tipY != null) {
+        const sy = r.dy + sl.tipY * s;
+        tip = sy + (tip - sy) * (1 - pkTipY);
       }
     }
     return tip;
@@ -4073,6 +4181,7 @@
     const teleRecWalk = recoveryWalkOut(f);
     f.closing = false;
     f.cutHit = false;
+    f.parryFadeT = 0;
     f.linkGolpe = false;
     f.linkSlash = false;
     f.linkBolt = false;
@@ -4137,7 +4246,8 @@
     f.leftoverPlantTip = false;
     f.gait = 0;
     f.cutRecBreathT = 0;
-    f.feintT = FEINT_RECOVERY;
+    f.parryFadeT = 0;
+    f.feintT = FEINT_RECOVERY;f.feintT = FEINT_RECOVERY;
     f.sheatheT = SHEATHE_MS;
     f.telegraph = false;
     if (feintRecWalk && f.walkFadeHold < 0.02) f.walkFadeHold = 1;
@@ -4194,9 +4304,13 @@
   }
 
   function tickStun(f, dt) {
-    if (!f || f.stunT <= 0) return;
+    if (!f || f.stunT <= 0) {
+      if (f) f.parryFadeT = 0;
+      return;
+    }
     const prevStun = f.stunT;
     f.stunT = Math.max(0, f.stunT - dt);
+    if (f.stunT === 0) f.parryFadeT = 0;
     // Chip stun settle→walk destRect leftover: walk / raise mid-end used to dump breath
     // when stunT cleared while stun-end ease had already seated full amp under planted
     // walk-out; arm cutRec and let cut recovery settle→walk max(ck, wk) / hold-under-rise
@@ -4301,6 +4415,7 @@
     const teleRecWalk = recoveryWalkOut(f);
     f.closing = false;
     f.cutHit = false;
+    f.parryFadeT = 0;
     f.clashRec = false;
     f.techRec = false;
     f.techGuardTip = false;
@@ -4603,6 +4718,10 @@
       f.holdCutPlant = true;
       f.linkSheathe = leftoverSheathe;
       if (clashRecWalk && f.walkFadeHold < 0.02) f.walkFadeHold = 1;
+      // Special-cancel K clarity (v322): pitched cast/whoosh sting + soft plant dust.
+      // Clash-K / idle startBolt stay plain cast. Cast puff already from startBolt.
+      playHoldCutSting();
+      spawnPlantDust(f, 0.95);
     }
     return ok;
   }
@@ -6001,6 +6120,7 @@
       playSfx(SFX.impacto);
     }
     def.stunT = HITSTUN;
+    def.parryFadeT = 0;
     def.phase = "idle";
     def.phaseT = 0;
     def.guarding = false;
@@ -6296,6 +6416,8 @@
     atk.riposteArmed = false;
     atk.riposteWindowT = 0;
     atk.stunT = PARRY_STAGGER_MS;
+    // Parry interrupt leftover (v325): fade leftover cut→idle (sheatheFade dies on stun).
+    atk.parryFadeT = SHEATHE_MS;
     atk.linkGolpe = false;
     atk.linkSlash = false;
     atk.linkBolt = false;
@@ -6440,6 +6562,7 @@
     if (u.kind === "you") noteHintVerb("dart");
     u.clashPlant = false;
     u.holdCutPlant = false;
+    u.parryFadeT = 0;
     // Tip under bolt leftover short raise leftover: latch tip raise when
     // leftover k planted so tipPlantK boltT ease holds after gpk dies
     // (boltLeftoverPlanting stays true whole startup; idle K still snaps
@@ -6804,6 +6927,8 @@
       }
       if (steelFlashT > 0) steelFlashT = Math.max(0, steelFlashT - dt);
       if (parryGleamT > 0) parryGleamT = Math.max(0, parryGleamT - dt);
+      if (player.parryFadeT > 0) player.parryFadeT = Math.max(0, player.parryFadeT - dt);
+      if (rival.parryFadeT > 0) rival.parryFadeT = Math.max(0, rival.parryFadeT - dt);
       if (clashSparkT > 0) clashSparkT = Math.max(0, clashSparkT - dt);
       if (hitSparkT > 0) hitSparkT = Math.max(0, hitSparkT - dt);
       if (brasaFxT > 0) brasaFxT = Math.max(0, brasaFxT - dt);
@@ -6937,6 +7062,8 @@
         playSfx(SFX.ko);
         lastKoSfx = "caida";
         spawnPlantDust(koTarget, 2.4);
+        // KO land grit (v323): bumpShake keeps camera shake; punchCover
+        // skips overscan once koLanded (no orphan yard / no HIT_FLASH).
         bumpShake(5, koTarget.kind === "you" ? -1 : 1, 140);
       }
       if (koTarget.fallT >= FALL_MS) {
@@ -7287,7 +7414,12 @@
     // ~0 — a zoom hop, not a settle. Hold full cover through the live slam
     // (no mid-punch zoom); ease cover out over the last quarter of the
     // slam envelope. Rest still flush.
+    // KO land grit (v323): caida bumpShake re-armed cover after kill flash
+    // died — yard punched with no white. Keep camera shake + land grit;
+    // skip overscan punch once land fired. Early-fall kill cover still arms
+    // (koLanded false). destRect/AABB planted.
     if (mode === "title") return 0;
+    if (mode === "falling" && koLanded) return 0;
     if (shake <= 0 || shakeDur <= 0) return 0;
     const k = Math.min(1, shake / shakeDur);
     // Full cover while the slide still reads. Last quarter eases to flush.
@@ -7472,6 +7604,24 @@
     const rec = FEINT_RECOVERY;
     if (rec <= 0) return 0;
     const u = 1 - Math.max(0, Math.min(1, f.feintT / rec));
+    return 1 - u * u * (3 - 2 * u);
+  }
+
+  function parryFade(f) {
+    // Visual only (drawKnight). poseBitmap still idle once landParry set stunT.
+    // Perfect-parry used to pop slash/golpe→idle the same tick (sheatheFade dies
+    // on stun), so the freeze frame was standing idle while gleam sat on blades —
+    // a snap, not a break. Fade leftover slash→idle over SHEATHE_MS. Hold through
+    // freeze. destRect eases leftover active ox/rot into flinch. Tip eases with
+    // fade. Chip stun (no parryFadeT) still 0. AABB planted. No new combat verb.
+    if (!f || f.parryFadeT <= 0) return 0;
+    if (f.falling || f.hp <= 0) return 0;
+    if (f.phase !== "idle") return 0;
+    if (f.boltPhase) return 0;
+    if (f.guarding) return 0;
+    const rec = SHEATHE_MS;
+    if (rec <= 0) return 0;
+    const u = 1 - Math.max(0, Math.min(1, f.parryFadeT / rec));
     return 1 - u * u * (3 - 2 * u);
   }
 
@@ -8003,6 +8153,57 @@
     return hitFlashT / HIT_FLASH_MS;
   }
 
+  function steelFlashK() {
+    // Draw-only. Block steel asterisk used to fade on its own STEEL_FLASH_MS
+    // linear clock while punchCover held full through the slam — asterisk
+    // died mid-cover. Hold peak while cover is full; ease out over cover's
+    // last quarter (same smoothstep as punchCover / hurtFlashK). No punch
+    // keeps linear steelFlashT fade. push/tech/block steelKind unchanged.
+    // destRect/AABB planted.
+    if (steelFlashT <= 0) return 0;
+    if (shake > 0 && shakeDur > 0) {
+      const k = Math.min(1, shake / shakeDur);
+      if (k > 0.25) return 1;
+      const u = k / 0.25;
+      return u * u * (3 - 2 * u);
+    }
+    return steelFlashT / STEEL_FLASH_MS;
+  }
+
+  function parryGleamK() {
+    // Draw-only. Parry gleam ↔ punchCover (v326): brasa gleam used to fade on
+    // its own PARRY_GLEAM_MS linear clock while punchCover held full through
+    // the slam — gleam died mid-cover (steel asterisk sibling). Hold peak
+    // while cover is full; ease out over cover's last quarter (same
+    // smoothstep as punchCover / steelFlashK / hurtFlashK). No punch keeps
+    // linear parryGleamT fade. destRect/AABB planted.
+    if (parryGleamT <= 0) return 0;
+    if (shake > 0 && shakeDur > 0) {
+      const k = Math.min(1, shake / shakeDur);
+      if (k > 0.25) return 1;
+      const u = k / 0.25;
+      return u * u * (3 - 2 * u);
+    }
+    return parryGleamT / PARRY_GLEAM_MS;
+  }
+
+  function clashSparkK() {
+    // Draw-only. Clash spark ↔ punchCover (v328): choque spark used to fade on
+    // its own CLASH_SPARK_MS linear clock while punchCover held full through
+    // the slam — shards died mid-cover (steel asterisk / parry gleam siblings).
+    // Hold peak while cover is full; ease out over cover's last quarter (same
+    // smoothstep as punchCover / steelFlashK / hurtFlashK / parryGleamK). No
+    // punch keeps linear clashSparkT fade. destRect/AABB planted.
+    if (clashSparkT <= 0) return 0;
+    if (shake > 0 && shakeDur > 0) {
+      const k = Math.min(1, shake / shakeDur);
+      if (k > 0.25) return 1;
+      const u = k / 0.25;
+      return u * u * (3 - 2 * u);
+    }
+    return clashSparkT / CLASH_SPARK_MS;
+  }
+
   function meterFlashK(f) {
     // Draw-only. Full-meter leftover pip used to die the tick
     // startBolt spends the stock (meter=0), so spend freeze had
@@ -8013,14 +8214,37 @@
     // fill envelope so drawLifeBar can pulse the well. Spend flash still
     // meter=0. destRect/AABB planted. HUD bar-drain already holds
     // through freeze.
+    // Meter fill ↔ punchCover (v324): fill-to-full pulse used to fade on its
+    // own METER_FLASH_MS linear clock while punchCover held full through the
+    // slam — pip flash died mid-cover. Hold peak while cover is full; ease
+    // out over cover's last quarter (same smoothstep as punchCover /
+    // hurtFlashK / steelFlashK). Spend stays linear (own freeze). No punch
+    // keeps linear meterFlashT fade. destRect/AABB planted.
     if (!f || f.meterFlashT <= 0) return 0;
+    if (f.meterFlashKind === "full" && shake > 0 && shakeDur > 0) {
+      const k = Math.min(1, shake / shakeDur);
+      if (k > 0.25) return 1;
+      const u = k / 0.25;
+      return u * u * (3 - 2 * u);
+    }
     return f.meterFlashT / METER_FLASH_MS;
   }
 
   function meterGainK(f) {
     // Draw-only. Partial fill pulse envelope (meterGainT). Stock-complete
     // / spend still ride meterFlashK. destRect/AABB planted.
+    // Meter fill ↔ punchCover (v324): gain pulse used to fade on its own
+    // METER_GAIN_MS linear clock while punchCover held full through the slam
+    // — pip glow died mid-cover. Hold peak while cover is full; ease out
+    // over cover's last quarter (same smoothstep as punchCover / meterFlashK).
+    // No punch keeps linear meterGainT fade. destRect/AABB planted.
     if (!f || f.meterGainT <= 0) return 0;
+    if (shake > 0 && shakeDur > 0) {
+      const k = Math.min(1, shake / shakeDur);
+      if (k > 0.25) return 1;
+      const u = k / 0.25;
+      return u * u * (3 - 2 * u);
+    }
     return f.meterGainT / METER_GAIN_MS;
   }
 
@@ -8082,6 +8306,7 @@
     // windup — a hop, not a raise. Match telePlant: knife only on bolt startup.
     const linkSheet = (f.boltPhase === "startup") ? boltPlant : wind;
     const ff = feintFade(f);
+    const pf = parryFade(f);
     const trf = throwPlantFade(f);
     const gf = guardDropFade(f);
     const rf = reversalPlantFade(f);
@@ -8170,6 +8395,10 @@
     const restFeintGuard = ff > 0.02 && f.guarding && ready(wind) && ready(block) && wind !== block;
     const restFeintWalk = ff > 0.02 && !restFeintGuard && (gaitWalkOn(f) || f.walkFadeHold > 0.02 || recoveryWalkOut(f)) && ready(wind) && ready(walk) && wind !== walk;
     const restFeint = ff > 0.02 && !restFeintGuard && !restFeintWalk && ready(wind) && ready(idle) && idle !== wind;
+    // Parry interrupt leftover (v325): leftover slash used to pop to idle the same tick
+    // landParry set stunT (sheatheFade dies on stun). Rest leftover cut on idle while pf live.
+    // poseBitmap still idle. Chip stun (pf 0) unchanged. AABB planted.
+    const restParry = pf > 0.02 && !restFeint && !restFeintGuard && !restFeintWalk && ready(cut) && ready(idle) && cut !== idle;
     // Throw / cut recovery fade leftover: >0.02 used to drop the idle base while
     // poseBitmap still held windup, so the last recovery tick flashed full grab.
     // Keep idle/walk base through any live throwPlantFade. Overlay alpha can be tiny.
@@ -8335,6 +8564,8 @@
       octx.drawImage(walk, 0, 0, dw, dh);
     } else if (restFeint) {
       octx.drawImage(idle, 0, 0, dw, dh);
+    } else if (restParry) {
+      octx.drawImage(idle, 0, 0, dw, dh);
     } else if (restThrowWalk) {
       octx.drawImage(walk, 0, 0, dw, dh);
     } else if (restThrow) {
@@ -8403,6 +8634,11 @@
     if (restFeint || restFeintGuard || restFeintWalk) {
       octx.globalAlpha = ff;
       octx.drawImage(wind, 0, 0, dw, dh);
+      octx.globalAlpha = 1;
+    }
+    if (restParry) {
+      octx.globalAlpha = pf;
+      octx.drawImage(cut, 0, 0, dw, dh);
       octx.globalAlpha = 1;
     }
     if (restThrow || restThrowWalk) {
@@ -8526,9 +8762,33 @@
     if (f.hudFlashT > 0) f.hudFlashT = Math.max(0, f.hudFlashT - dt);
     else if (f.hudGhost > f.hp) f.hudGhost = Math.max(f.hp, f.hudGhost - 80 * (dt / 1000));
     else f.hudGhost = f.hp;
-    if (f.meterFlashT > 0) f.meterFlashT = Math.max(0, f.meterFlashT - dt);
-    else f.meterFlashKind = "";
-    if (f.meterGainT > 0) f.meterGainT = Math.max(0, f.meterGainT - dt);
+    // Meter fill ↔ punchCover (v324): linear meterFlashT / meterGainT used to
+    // start draining the tick freeze ended while punchCover still held full,
+    // so the pip flash died on its own clock — not with cover. Hold fill-to-full
+    // + gain clocks through the live punch; clear when cover dies (no linear
+    // pop after the draw envelope eases out). Spend flash stays linear.
+    // No-punch (synthetic gain / menu) still linear. Freeze already held clocks.
+    if (f.meterFlashT > 0) {
+      if (f.meterFlashKind === "full" && shake > 0 && shakeDur > 0) {
+        /* hold through live cover */
+      } else if (f.meterFlashKind === "full" && shakeDur > 0 && f.meterFlashT >= METER_FLASH_MS - 0.5) {
+        // Was held at peak through slam; cover just died — die with it.
+        f.meterFlashT = 0;
+        f.meterFlashKind = "";
+      } else {
+        f.meterFlashT = Math.max(0, f.meterFlashT - dt);
+        if (f.meterFlashT <= 0) f.meterFlashKind = "";
+      }
+    } else f.meterFlashKind = "";
+    if (f.meterGainT > 0) {
+      if (shake > 0 && shakeDur > 0) {
+        /* hold through live cover */
+      } else if (shakeDur > 0 && f.meterGainT >= METER_GAIN_MS - 0.5) {
+        f.meterGainT = 0;
+      } else {
+        f.meterGainT = Math.max(0, f.meterGainT - dt);
+      }
+    }
     if (f.comboT > 0) f.comboT = Math.max(0, f.comboT - dt);
   }
 
@@ -8924,7 +9184,8 @@
   function drawClashSpark() {
     if (clashSparkT <= 0) return;
     syncClashSpark();
-    const k = clashSparkT / CLASH_SPARK_MS;
+    // Clash spark ↔ punchCover (v328): cover envelope via clashSparkK.
+    const k = clashSparkK();
     const grow = 1 - k;
     ctx.save();
     ctx.translate(clashX, clashY);
@@ -9336,7 +9597,9 @@
   function drawSteelFlash() {
     if (steelFlashT <= 0) return;
     syncSteelFlash();
-    const k = steelFlashT / STEEL_FLASH_MS;
+    // Steel flash ↔ punchCover (v323): cover envelope via steelFlashK.
+    const k = steelFlashK();
+    if (k <= 0) return;
     const push = steelKind === "push";
     const tech = steelKind === "tech";
     ctx.save();
@@ -9393,7 +9656,9 @@
     // Brief brasa flash on guard tip — distinct from steel asterisk + riposte bang.
     if (parryGleamT <= 0) return;
     syncParryGleam();
-    const k = parryGleamT / PARRY_GLEAM_MS;
+    // Parry gleam ↔ punchCover (v326): cover envelope via parryGleamK.
+    const k = parryGleamK();
+    if (k <= 0) return;
     const grow = 1 - k;
     ctx.save();
     ctx.translate(parryGleamX, parryGleamY);
