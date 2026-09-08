@@ -178,6 +178,11 @@
  * so the cancel reads vs normal golpe. Discreet — not parry gleam, not hit bloom, no shake.
  * Juice only — FEINT_RECOVERY / frames / tipX / plants / pad / sparks v316 / feint v317 /
  * dmg nums / grab-tech-pushblock / parry-riposte locked.
+ * Wakeup / getup readability (v320): rising from KD (thrownT expiry / throw-invuln arm) juices a
+ * brief getup grit stamp so the grounded frame reads, plus an optional soft hueso wash on chest
+ * (hueso/pizarra only — not reversal fleck, not parry gleam, no sting, no shake).
+ * Juice only — THROW_WAKE_INVULN / frames / tipX / plants / pad / sparks v316 / feint v317 / reversal v319 /
+ * dmg nums / grab-tech-pushblock / parry-riposte locked.
  * Rematch (KO→REVANCHA) rotates yard +1 so consecutive bouts never repeat the same patio
  * (yards 2–5 get airtime; Escenarios picker still sticky for JUGAR / title start).
  * Escenarios labels carry a brief light tag (SOL/SOMBRA/OCASO/BRASA/LUNA). Draw-only.
@@ -1541,6 +1546,7 @@
   const FEINT_RECOVERY = 100;
   const FEINT_FX_MS = 55;
   const REVERSAL_FX_MS = 70;
+  const WAKE_FX_MS = 65;
   const FEINT_AI_CD = 1800;
   const FEINT_AI_CHANCE = 0.4;
   // Rival AI variety weights (readable personality, not noise).
@@ -4240,6 +4246,13 @@
       if (f.thrownT === 0 && f.hp > 0 && !f.falling) {
         f.throwInvulnT = THROW_WAKE_INVULN;
         f.wakeRev = true;
+        // Wakeup / getup readability (v320): brief grit so the grounded frame reads + soft
+        // hueso wash on throw-invuln start. Not reversal fleck, not parry gleam. No sting / shake.
+        spawnPlantDust(f, 1.15);
+        {
+          const chest = hitWoundAnchor(f);
+          spawnBrasaFx("wakeup", chest.x, chest.y, f.facing, f);
+        }
       }
     }
   }
@@ -5825,6 +5838,26 @@
           len: 3 + (i % 3) * 1.6,
           r: 1.05 + (i % 2) * 0.35,
           tone: i % 3 === 0 ? "hueso" : (i % 3 === 1 ? "brasa" : "pizarra"),
+        });
+      }
+      return;
+    }
+    if (kind === "wakeup") {
+      // Soft hueso wash on throw-invuln start — ride live hitWoundAnchor. Hueso/pizarra only.
+      // Not reversal fleck (no brasa), not parry gleam, not hit bloom.
+      const home = brasaHomeYou ? player : rival;
+      const a = hitWoundAnchor(home);
+      brasaX = a.x;
+      brasaY = a.y;
+      brasaWoundDX = 0;
+      brasaWoundDY = 0;
+      brasaFxT = WAKE_FX_MS;
+      for (let i = 0; i < 3; i++) {
+        brasaBits.push({
+          ang: (i / 3) * Math.PI * 2 + i * 0.19,
+          len: 2.4 + (i % 2) * 1.2,
+          r: 0.9 + (i % 2) * 0.25,
+          tone: i === 1 ? "pizarra" : "hueso",
         });
       }
       return;
@@ -8987,6 +9020,15 @@
       brasaY = a.y;
       return;
     }
+    if (brasaFxKind === "wakeup") {
+      // Soft getup hueso wash: ride live hitWoundAnchor (wound 0).
+      brasaWoundDX = 0;
+      brasaWoundDY = 0;
+      const a = hitWoundAnchor(home);
+      brasaX = a.x;
+      brasaY = a.y;
+      return;
+    }
     if (brasaFxKind === "clash") {
       const hb = bladeBox(home);
       brasaX = bladeTipX(home) + brasaWoundDX;
@@ -9009,7 +9051,7 @@
   function drawBrasaFx() {
     if (brasaFxT <= 0) return;
     syncBrasaFx();
-    const life = brasaFxKind === "block" ? STEEL_FLASH_MS : (brasaFxKind === "clash" ? CLASH_SPARK_MS : (brasaFxKind === "cast" ? BOLT_CAST_FX_MS : (brasaFxKind === "grab" ? GRAB_FX_MS : (brasaFxKind === "feint" ? FEINT_FX_MS : (brasaFxKind === "reversal" ? REVERSAL_FX_MS : BRASA_HIT_MS)))));
+    const life = brasaFxKind === "block" ? STEEL_FLASH_MS : (brasaFxKind === "clash" ? CLASH_SPARK_MS : (brasaFxKind === "cast" ? BOLT_CAST_FX_MS : (brasaFxKind === "grab" ? GRAB_FX_MS : (brasaFxKind === "feint" ? FEINT_FX_MS : (brasaFxKind === "reversal" ? REVERSAL_FX_MS : (brasaFxKind === "wakeup" ? WAKE_FX_MS : BRASA_HIT_MS))))));
     const k = brasaFxT / life;
     const grow = 1 - k;
     ctx.save();
@@ -9116,6 +9158,28 @@
         ctx.fillStyle = brasaTone(sh.tone);
         ctx.beginPath();
         ctx.arc(c * d, sn * d - 1.2 * grow, sh.r * (0.78 + 0.32 * k), 0, Math.PI * 2);
+        ctx.fill();
+      }
+    } else if (brasaFxKind === "wakeup") {
+      // Soft hueso wash on getup: muted chest mote — not reversal fleck, not parry gleam.
+      ctx.globalAlpha = 0.20 * k;
+      ctx.fillStyle = COL_PIZARRA;
+      ctx.beginPath();
+      ctx.arc(0, 0, 2.6 + 3.6 * grow, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 0.46 * k;
+      ctx.fillStyle = COL_HUESO;
+      ctx.beginPath();
+      ctx.arc(0, -0.3, 1.35 + 1.8 * grow, 0, Math.PI * 2);
+      ctx.fill();
+      for (const sh of brasaBits) {
+        const d = sh.len * (0.20 + 0.48 * grow);
+        const c = Math.cos(sh.ang);
+        const sn = Math.sin(sh.ang);
+        ctx.globalAlpha = 0.62 * k;
+        ctx.fillStyle = brasaTone(sh.tone);
+        ctx.beginPath();
+        ctx.arc(c * d, sn * d - 0.8 * grow, sh.r * (0.72 + 0.28 * k), 0, Math.PI * 2);
         ctx.fill();
       }
     } else if (brasaFxKind === "cast") {
