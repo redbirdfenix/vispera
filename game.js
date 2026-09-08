@@ -153,6 +153,11 @@
  * No separate crush verb: clash gets clearer grit (CLASH_FX shove trails on top of locked 1.2),
  * CLASH_SHAKE 14 screen punch, layered choque sting, shards in pizarra/óxido/brasa/hueso.
  * Juice only — frames / damage / tipX / plants / pad / parry / AI / tutorial locked.
+ * Throw-tech / tech-clash readability (v313): successful Space+S tech juices distinct from
+ * failed throw (landThrow impacto) and normal block — hueso/brasa steel asterisk + TECH_SHAKE 9
+ * (block 4 / pushblock 8 / clash 14) + pitched choque/bloqueo sting. Mutual break-apart gets
+ * clearer grit (TECH_FX shove trails on top of locked 1.1). Juice only — THROW_TECH window /
+ * recovery / damage / tipX / plants / pad / parry / AI / tutorial / pushblock-clash v312 locked.
  * Rematch (KO→REVANCHA) rotates yard +1 so consecutive bouts never repeat the same patio
  * (yards 2–5 get airtime; Escenarios picker still sticky for JUGAR / title start).
  * Escenarios labels carry a brief light tag (SOL/SOMBRA/OCASO/BRASA/LUNA). Draw-only.
@@ -1431,6 +1436,10 @@
   const CLASH_SHAKE = 14;
   // Extra clash grit on top of locked scrape 1.2 (shove trails; draw-only).
   const CLASH_FX = 1.7;
+  // Throw-tech camera punch — between pushblock 8 and clash 14 / throw-land 10.
+  const TECH_SHAKE = 9;
+  // Extra tech grit on top of locked scrape 1.1 (shove trails; draw-only).
+  const TECH_FX = 1.5;
   const GUARD_BREAK_MS = 400;
   const GUARD_BREAK_SETTLE = 180;
   const HITSTUN = 350;
@@ -1615,6 +1624,7 @@
   let lastBoltConnectSfx = "";
   let lastPushblockSfx = "";
   let lastClashSfx = "";
+  let lastThrowTechSfx = "";
   let lastRiposteSfx = "";
   let lastParrySfx = "";
   let lastKoSfx = "";
@@ -1737,6 +1747,14 @@
     lastClashSfx = "clash";
     playSfx(SFX.choque, { rate: 0.58, volume: 0.52 });
     playSfx(SFX.choque, { rate: 1.26, volume: 0.42 });
+  }
+  function playThrowTechSting() {
+    // Throw-tech sting: pitched choque stack + soft bloqueo so tech reads vs failed throw impacto
+    // and plain block bloqueo. landThrowTech still fires the unpitched choque first (bar lock).
+    lastThrowTechSfx = "tech";
+    playSfx(SFX.choque, { rate: 0.74, volume: 0.88 });
+    playSfx(SFX.choque, { rate: 1.34, volume: 0.46 });
+    playSfx(SFX.bloqueo, { rate: 1.16, volume: 0.34 });
   }
   function playSuperSting() {
     // Super spend sting: pitched brasa/cast stack so the dump reads. Not tajo whoosh.
@@ -2499,7 +2517,8 @@
   let steelWoundDY = 0;
   // Guard-break steel sync leftover: tip plant rides wound, not blade∩body mid.
   let steelTipRide = false;
-  // Pushblock steel: "push" draws óxido/hueso asterisk; normal block stays silver.
+  // Pushblock steel: "push" draws óxido/hueso asterisk; throw-tech "tech" draws hueso/brasa;
+  // normal block stays silver.
   let steelKind = "block";
   let clashSparkT = 0;
   let clashX = 0;
@@ -5923,8 +5942,22 @@
     }
     spawnPlantDust(atk, 1.1);
     spawnPlantDust(def, 1.1);
-    bumpShake(6, dir, HITSTOP_BLOCK);
+    // Clearer tech-clash grit: outward shove trails on top of locked 1.1 scrape.
+    // Draw-only (TECH_FX). Specks still fly. 1.1 stamps stay for bar lock.
+    spawnPlantDust(atk, TECH_FX, -dir);
+    spawnPlantDust(def, TECH_FX, dir);
+    bumpShake(TECH_SHAKE, dir, HITSTOP_BLOCK);
+    // Distinct connect juice vs failed throw / normal block: tech steel + pitched sting.
+    // Hitstop / tech window / recovery / damage unchanged. Draw-only flash + shake mag.
+    {
+      const aa = bodyAABB(atk);
+      const bb = bodyAABB(def);
+      const mx = (aa.x + aa.w * 0.5 + bb.x + bb.w * 0.5) * 0.5;
+      const my = (aa.y + aa.h * 0.32 + bb.y + bb.h * 0.32) * 0.5;
+      spawnSteelFlash(mx, my, atk, def, true, "tech");
+    }
     playSfx(SFX.choque);
+    playThrowTechSting();
   }
 
   function tryThrowTech(def) {
@@ -8634,8 +8667,8 @@
     // Guard-break steel sync leftover: tip-planted hold-drain / pushblock
     // steel rides wound only (no blade∩body re-center). Cut-block false.
     steelTipRide = !!tipRide;
-    // Pushblock connect: óxido asterisk. Normal block / guard-break stay silver.
-    steelKind = kind === "push" ? "push" : "block";
+    // Pushblock connect: óxido asterisk. Throw-tech: hueso/brasa. Normal block / guard-break stay silver.
+    steelKind = kind === "push" ? "push" : (kind === "tech" ? "tech" : "block");
   }
 
   function syncSteelFlash() {
@@ -8982,16 +9015,18 @@
     syncSteelFlash();
     const k = steelFlashT / STEEL_FLASH_MS;
     const push = steelKind === "push";
+    const tech = steelKind === "tech";
     ctx.save();
     ctx.translate(steelX, steelY);
     ctx.globalAlpha = 0.35 + 0.65 * k;
-    // Pushblock: óxido spokes + hueso core. Normal block keeps silver asterisk.
-    ctx.strokeStyle = push ? COL_OXIDO : "#e8e2d2";
-    ctx.fillStyle = push ? "rgba(207, 195, 168, 0.78)" : "rgba(210, 205, 190, 0.7)";
-    ctx.lineWidth = push ? 2.6 : 2;
-    const arm = push ? 22 : 18;
-    const tall = push ? 17 : 14;
-    const diag = push ? 14 : 12;
+    // Pushblock: óxido spokes + hueso core. Throw-tech: hueso spokes + brasa core.
+    // Normal block keeps silver asterisk.
+    ctx.strokeStyle = push ? COL_OXIDO : (tech ? COL_HUESO : "#e8e2d2");
+    ctx.fillStyle = push ? "rgba(207, 195, 168, 0.78)" : (tech ? "rgba(196, 40, 24, 0.72)" : "rgba(210, 205, 190, 0.7)");
+    ctx.lineWidth = push || tech ? 2.6 : 2;
+    const arm = push || tech ? 22 : 18;
+    const tall = push || tech ? 17 : 14;
+    const diag = push || tech ? 14 : 12;
     ctx.beginPath();
     ctx.moveTo(-arm * k, 0);
     ctx.lineTo(arm * k, 0);
@@ -9008,10 +9043,25 @@
       ctx.moveTo(-arm * 0.55 * k, 0);
       ctx.lineTo(arm * 0.55 * k, 0);
       ctx.stroke();
+    } else if (tech) {
+      // Soft pizarra ring so tech punches through block silver without matching push óxido.
+      ctx.globalAlpha = 0.42 * k;
+      ctx.strokeStyle = COL_PIZARRA;
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.arc(0, 0, 8 + 6 * (1 - k), 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.globalAlpha = 0.60 * k;
+      ctx.strokeStyle = COL_BRASA;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, -tall * 0.6 * k);
+      ctx.lineTo(0, tall * 0.6 * k);
+      ctx.stroke();
     }
     ctx.globalAlpha = 0.35 + 0.65 * k;
     ctx.beginPath();
-    ctx.arc(0, 0, (push ? 6 : 5) + (push ? 10 : 8) * (1 - k), 0, Math.PI * 2);
+    ctx.arc(0, 0, ((push || tech) ? 6 : 5) + ((push || tech) ? 10 : 8) * (1 - k), 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
   }

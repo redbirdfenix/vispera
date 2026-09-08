@@ -68,7 +68,7 @@ src = src.replace("  requestAnimationFrame(loop);\n})();", `
     get attackEdge(){return attackEdge}, set attackEdge(v){attackEdge=!!v}, get golpeEdge(){return golpeEdge}, set golpeEdge(v){golpeEdge=!!v}, get boltEdge(){return boltEdge}, set boltEdge(v){boltEdge=!!v}, get throwEdge(){return throwEdge}, set throwEdge(v){throwEdge=!!v}, get reversalEdge(){return reversalEdge}, set reversalEdge(v){reversalEdge=!!v}, get feintEdge(){return feintEdge}, set feintEdge(v){feintEdge=!!v}, set mode(v){mode=v},
     keys, update, resetRound, bodyGap, absGap, bladeReach, bladeBox, bodyAABB, hitbox, destRect, poseBitmap, poseSheet, keepApart, throwGrabHold, throwSnapTogether, inMotionFeel, walkFade, sheatheFade, wakeupFade, crumpleFade, boltPlantFade, throwPlantFade, telegraphFade, feintFade, telegraphing, guardRaiseK, idleBreath, walkSettleK, guardDropFade, reversalPlanting, reversalPlantFade, throwGuardPlantFade, throwGuardPlanting, techGuardPlantFade, techGuardPlanting, clashPlantFade, linkPlantFade, holdCutFade, holdCutPlanting, slashLeftoverPlanting, golpeLeftoverPlanting, boltLeftoverPlanting, stunLeftoverPlanting, throwKdLeftoverPlanting, hurtBitmap, windupBitmap, blockBitmap, gaitWalkOn, walkBitmap, recoveryWalkOut, recoveryWalkResting, WALK_STEP_MS, WALK_SETTLE_MS, GUARD_RAISE_MS, FALL_MS, canFeint, startFeint, rivalTryFeint,
     cutPoint, syncHitSpark, syncSteelFlash, get steelTipRide(){return steelTipRide},
-    canStartBolt, startBolt, startAttack, startThrow, startReversal, tripGuardBreak, tickRiposte, trySpendRiposteInput, tryFireRiposte, syncRipostePad, cutStartup, cutActive, cutRecovery, guardSteelPoint, landBlock, landParry, isPerfectParry, startWakeReversal, wakeupWindow, reversalInvuln, throwInRange, tryThrowTech, throwTechWindow, boltBox, bladeTipX, bladeTipY, castPlantXY, tryPushblock, awayWalkDir, playPushblockSting, playClashSting, get lastClashSfx(){return lastClashSfx}, get steelKind(){return steelKind},
+    canStartBolt, startBolt, startAttack, startThrow, startReversal, tripGuardBreak, tickRiposte, trySpendRiposteInput, tryFireRiposte, syncRipostePad, cutStartup, cutActive, cutRecovery, guardSteelPoint, landBlock, landParry, isPerfectParry, startWakeReversal, wakeupWindow, reversalInvuln, throwInRange, tryThrowTech, throwTechWindow, boltBox, bladeTipX, bladeTipY, castPlantXY, tryPushblock, awayWalkDir, playPushblockSting, playClashSting, playThrowTechSting, landThrowTech, get lastClashSfx(){return lastClashSfx}, get lastThrowTechSfx(){return lastThrowTechSfx}, get steelKind(){return steelKind},
     padDown, padUp, padChordHeld, padMarkChordLook,
     stickApply, stickRelease, get stickPtr(){return stickPtr}, set stickPtr(v){stickPtr=v}, confirmTitle, handleTitleKey, handleTitleBack, goTitleFromPlay,
     setBindCode, setPadBind, resetBindsDefaults, actionHeld, actionOfCode, applyActionEdge, bindPrimary, codeLabel,
@@ -97,7 +97,7 @@ src = src.replace("  requestAnimationFrame(loop);\n})();", `
     spawnPlantDust, syncPlantDust, dropBlockPlantUnderShove, dropPlantUnderClash,
     spawnDmgNum, syncDmgNums, hitWoundAnchor, get dmgNums(){return dmgNums}, DMG_NUM_MS, DMG_NUM_RISE,
     STARTUP, ACTIVE, RECOVERY, LUNGE_PX, GOLPE_STARTUP, GOLPE_ACTIVE, GOLPE_RECOVERY, GOLPE_LUNGE_PX, OPENING_MS, HINT_IN_MS, HINT_FADE_MS, HITSTUN, KNOCK_PX, KNOCK_MS, SLASH_BUFFER_MS, SLASH_CANCEL_MS, GOLPE_CANCEL_MS, BOLT_CANCEL_MS, HITSTOP_HIT, HITSTOP_BLOCK, STEEL_FLASH_MS, GUARD_PUSH_MS, CLASH_SPARK_MS, HIT_SPARK_MS, CLASH_RECOVERY, SHEATHE_MS, GUARD_COMMIT_MS, PUNCH_PX, punchCover, drawCourtyard, drawYardCrop, YARD_SWITCH_MS, yardSwitchK, doClash, beginFall, FALL_MS, goTitleFromPlay, get koTarget(){return koTarget}, set koTarget(v){koTarget=v;},
-    MAX_HP, SLASH_DMG, RIPOSTE_WIN_MS, RIPOSTE_STARTUP, RIPOSTE_ACTIVE, RIPOSTE_RECOVERY, PARRY_WIN_MS, PARRY_STAGGER_MS, PARRY_GLEAM_MS, STAMINA_MAX, STAMINA_DRAIN, STAMINA_REGEN, STAMINA_REGEN_THREAT, STAMINA_REGEN_LOCK, STAMINA_REGEN_DELAY, STAMINA_START_MIN, STAMINA_BLOCK, PUSHBLOCK_STAM, PUSHBLOCK_PX, PUSHBLOCK_AI_CD, PUSHBLOCK_AI_CHANCE, PUSHBLOCK_FX, PUSHBLOCK_SHAKE, CLASH_SHAKE, CLASH_FX, GUARD_BREAK_MS, GUARD_BREAK_SETTLE, GUARD_RAISE_MS,
+    MAX_HP, SLASH_DMG, RIPOSTE_WIN_MS, RIPOSTE_STARTUP, RIPOSTE_ACTIVE, RIPOSTE_RECOVERY, PARRY_WIN_MS, PARRY_STAGGER_MS, PARRY_GLEAM_MS, STAMINA_MAX, STAMINA_DRAIN, STAMINA_REGEN, STAMINA_REGEN_THREAT, STAMINA_REGEN_LOCK, STAMINA_REGEN_DELAY, STAMINA_START_MIN, STAMINA_BLOCK, PUSHBLOCK_STAM, PUSHBLOCK_PX, PUSHBLOCK_AI_CD, PUSHBLOCK_AI_CHANCE, PUSHBLOCK_FX, PUSHBLOCK_SHAKE, CLASH_SHAKE, CLASH_FX, TECH_SHAKE, TECH_FX, GUARD_BREAK_MS, GUARD_BREAK_SETTLE, GUARD_RAISE_MS,
     BOLT_STAM, BOLT_CHIP, BOLT_SUPER_CHIP, BOLT_STARTUP, BOLT_RECOVERY, BOLT_SPEED, BOLT_SUPER_SPEED, BOLT_W, BOLT_H, BOLT_SUPER_W, BOLT_SUPER_H, BOLT_AI_CD, THROW_AI_CD, BOLT_CAST_FX_MS,
     BOLT_SUPER_DMG, BOLT_SUPER_RECOVERY, BOLT_SUPER_STOP, BOLT_SUPER_FX, METER_MAX, METER_HIT, METER_BLOCK_SPECIAL, METER_FLASH_MS, METER_GAIN_MS, COMBO_SHOW_MS, SUPER_RANGE,
     THROW_STARTUP, THROW_ACTIVE, THROW_RECOVERY, THROW_DMG, THROW_RANGE, THROW_SNAP_GAP, THROW_KD_MS, THROW_STAM, THROW_TECH_MS, THROW_TECH_REC, THROW_TECH_CHANCE, THROW_WAKE_INVULN,
@@ -510,7 +510,7 @@ check("slash frame data still 180/140/280", V.STARTUP===180 && V.ACTIVE===140 &&
 check("K is not Space", /act === "dart"/.test(srcTxt) && /boltEdge = true/.test(srcTxt) && !/KeyK.*attackEdge/.test(srcTxt));
 const htmlTxt = fs.readFileSync("/workspace/estudio/vispera/index.html","utf8");
 const cssTxt = fs.readFileSync("/workspace/estudio/vispera/style.css","utf8");
-check("cache v=295", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=295", /game\.js\?v=313/.test(htmlTxt));
 check("pad under canvas", /id="pad"/.test(htmlTxt) && /#pad/.test(cssTxt) && /body\.touch-on #pad/.test(cssTxt));
 check("portrait pad in bottom letterbox", /@media \(orientation: portrait\)/.test(cssTxt) && /body\.touch-on #pad/.test(cssTxt) && /bottom:\s*0/.test(cssTxt) && /position:\s*absolute/.test(cssTxt) && !/@media \(orientation: portrait\)[\s\S]*body\.touch-on #game/.test(cssTxt));
 check("giro hidden in portrait", /body\.touch-on #giro\s*\{[^}]*display:\s*none/.test(cssTxt) && !/body\.touch-on #giro\s*\{[^}]*display:\s*flex/.test(cssTxt));
@@ -4706,7 +4706,7 @@ check("forced revArmed -1 does not reverse", failRoll===false && !V.rival.revers
 check("locked layers after rival reversal bar", V.REVERSAL_AI_CD===1800 && V.REVERSAL_AI_CHANCE===0.4 && V.REVERSAL_STAM===30 && V.REVERSAL_INVULN===120 && V.THROW_STARTUP===80 && V.THROW_STAM===0 && V.THROW_RANGE===120 && V.BOLT_SUPER_DMG===28 && V.BOLT_SUPER_CHIP===6 && V.BOLT_CHIP===2 && V.SLASH_CANCEL_MS===100 && V.GOLPE_CANCEL_MS===100 && V.BOLT_CANCEL_MS===100 && V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180);
 
 
-check("cache v=296 after rival reversal", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after rival reversal", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v143 wakeup reversal ---
 check("wakeup window is throw-invuln after knockdown", V.THROW_WAKE_INVULN===80 && V.THROW_KD_MS===520 && V.REVERSAL_STAM===30 && V.REVERSAL_INVULN===120 && V.GOLPE_STARTUP===120);
@@ -4889,7 +4889,7 @@ V.golpeEdge = true;
 V.update(STEP);
 check("live wakeup L is reversal", V.player.cut==="golpe" && V.player.reversal && V.player.phase==="startup" && liveStam0-V.player.stamina===V.REVERSAL_STAM, `cut=${V.player.cut} rev=${V.player.reversal} ph=${V.player.phase} d=${(liveStam0-V.player.stamina).toFixed(2)}`);
 
-check("cache v=296 after wakeup reversal", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after wakeup reversal", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v144 rival wakeup-reversal AI ---
 check("rival wakeup uses startWakeReversal path", /startWakeReversal\(rival\)/.test(sliceFn(codeOnly, "rivalTryWakeReversal")) && /function meatySpaceAtWake/.test(codeOnly) && /function armRivalWakeReversal/.test(codeOnly));
@@ -5150,7 +5150,7 @@ check("rival meaty-Space reversal untouched after wakeup AI", guardStill && V.ri
 
 check("locked layers after rival wakeup AI", V.REVERSAL_AI_CD===1800 && V.REVERSAL_AI_CHANCE===0.4 && V.REVERSAL_STAM===30 && V.REVERSAL_INVULN===120 && V.THROW_WAKE_INVULN===80 && V.THROW_STARTUP===80 && V.THROW_STAM===0 && V.THROW_RANGE===120 && V.BOLT_SUPER_DMG===28 && V.BOLT_SUPER_CHIP===6 && V.BOLT_CHIP===2 && V.SLASH_CANCEL_MS===100 && V.GOLPE_CANCEL_MS===100 && V.BOLT_CANCEL_MS===100 && V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180);
 
-check("cache v=296 after rival wakeup AI", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after rival wakeup AI", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v145 rival reversal vs meaty L (guard + wakeup) ---
 check("v145 reversal rates/CD locked", V.REVERSAL_AI_CD===1800 && V.REVERSAL_AI_CHANCE===0.4 && V.REVERSAL_STAM===30 && V.REVERSAL_INVULN===120 && V.REVERSAL_AI_CD===V.THROW_AI_CD);
@@ -5432,7 +5432,7 @@ check("player wakeup L unchanged after meaty L AI", V.player.cut==="golpe" && V.
 
 check("locked layers after meaty L reversal", V.REVERSAL_AI_CD===1800 && V.REVERSAL_AI_CHANCE===0.4 && V.REVERSAL_STAM===30 && V.REVERSAL_INVULN===120 && V.THROW_WAKE_INVULN===80 && V.THROW_STARTUP===80 && V.THROW_STAM===0 && V.THROW_RANGE===120 && V.BOLT_SUPER_DMG===28 && V.BOLT_SUPER_CHIP===6 && V.BOLT_CHIP===2 && V.SLASH_CANCEL_MS===100 && V.GOLPE_CANCEL_MS===100 && V.BOLT_CANCEL_MS===100 && V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180);
 
-check("cache v=296 after meaty L reversal", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after meaty L reversal", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v146 pushblock: hold S, tap away ---
 check("pushblock cost is a real stam chunk", V.PUSHBLOCK_STAM===25 && V.PUSHBLOCK_STAM>=20 && V.PUSHBLOCK_STAM<=30 && V.PUSHBLOCK_STAM>0 && V.PUSHBLOCK_STAM!==V.REVERSAL_STAM, `st=${V.PUSHBLOCK_STAM}`);
@@ -5634,7 +5634,7 @@ V.padUp(402);
 V.padUp(401);
 
 check("v146 no 6th button", (htmlTxt.match(/data-tap=/g)||[]).length===3 && !/zone-pushblock/.test(htmlTxt) && /data-tap="KeyL"/.test(htmlTxt));
-check("cache v=296 after pushblock", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after pushblock", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v147 rival pushblock: same away extra push, not a robot ---
 check("rival pushblock uses tryPushblock away", /function rivalPushblockOnBlock/.test(codeOnly) && /tryPushblock\(rival, awayWalkDir\(rival\)\)/.test(sliceFn(codeOnly, "rivalPushblockOnBlock")) && /PUSHBLOCK_AI_CD/.test(srcTxt) && /PUSHBLOCK_AI_CHANCE/.test(srcTxt) && /function rivalTryPushblock/.test(codeOnly));
@@ -5647,7 +5647,7 @@ check("player pushblock path unchanged", /tryPushblock\(player, tapWalk\)/.test(
 check("pad leftover already wired no 6th", /class="stick"/.test(htmlTxt) && /feedKey\("KeyA"/.test(srcTxt) && /feedKey\("KeyD"/.test(srcTxt) && /data-hold="KeyS"/.test(htmlTxt) && (htmlTxt.match(/data-tap=/g)||[]).length===3 && !/zone-pushblock/.test(htmlTxt));
 check("throw/reversal/super/chip/cancel locked after rival pushblock", V.THROW_STARTUP===80 && V.THROW_ACTIVE===40 && V.THROW_RECOVERY===220 && V.THROW_STAM===0 && V.THROW_RANGE===120 && V.REVERSAL_STAM===30 && V.REVERSAL_INVULN===120 && V.REVERSAL_AI_CD===1800 && V.REVERSAL_AI_CHANCE===0.4 && V.BOLT_SUPER_DMG===28 && V.BOLT_SUPER_CHIP===6 && V.BOLT_CHIP===2 && V.SLASH_CANCEL_MS===100 && V.GOLPE_CANCEL_MS===100 && V.BOLT_CANCEL_MS===100 && V.PUSHBLOCK_STAM===25 && V.PUSHBLOCK_PX===240);
 check("v147 no 6th button", (htmlTxt.match(/data-tap=/g)||[]).length===3 && !/zone-pushblock/.test(htmlTxt) && /data-tap="KeyL"/.test(htmlTxt));
-check("cache v=296 after rival pushblock", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after rival pushblock", /game\.js\?v=313/.test(htmlTxt));
 
 function parkRivalPushRoom(){
   toClose();
@@ -5967,7 +5967,7 @@ V.update(STEP);
 check("reversal unchanged after rival pushblock", V.player.cut==="golpe" && V.player.phase==="startup" && V.player.reversal && !V.player.guarding && V.player.cut!=="throw" && Math.abs((v147RevSt0-V.player.stamina)-V.REVERSAL_STAM)<3, `cut=${V.player.cut} rev=${V.player.reversal} ph=${V.player.phase} spent=${(v147RevSt0-V.player.stamina).toFixed(2)}`);
 V.keys.clear();
 
-check("cache v=295 final", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=295 final", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v148 pushblock sting: pitched/layered block steel, not a normal block ---
 check("pushblock still 240/25 after sting", V.PUSHBLOCK_STAM===25 && V.PUSHBLOCK_PX===240 && V.PUSHBLOCK_AI_CD===1800 && V.PUSHBLOCK_AI_CHANCE===0.4);
@@ -6048,7 +6048,7 @@ const rStingSt0 = V.rival.stamina;
 const rStingOk = V.rivalTryPushblock();
 check("rival pushblock fires sting", rStingOk && V.lastPushblockSfx==="pushblock" && V.rival.guarding && V.rival.pushT>0 && (rStingSt0-V.rival.stamina)>=V.PUSHBLOCK_STAM-1, `ok=${rStingOk} sfx=${V.lastPushblockSfx} g=${V.rival.guarding} pushT=${V.rival.pushT} spent=${(rStingSt0-V.rival.stamina).toFixed(2)}`);
 
-check("cache v=296 after sting", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after sting", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v149 pushblock dust: scaled/offset plant scrape, not a normal block puff ---
 check("pushblock still 240/25 after dust", V.PUSHBLOCK_STAM===25 && V.PUSHBLOCK_PX===240 && V.PUSHBLOCK_AI_CD===1800 && V.PUSHBLOCK_AI_CHANCE===0.4);
@@ -6169,7 +6169,7 @@ const rDust = dustShove();
 const rDustPow = dustMaxPower(rDust);
 check("rival pushblock fires shove dust", rDustOk && rDust.length>0 && rDustPow>=V.PUSHBLOCK_FX-0.01 && V.lastPushblockSfx==="pushblock" && V.rival.guarding && V.rival.pushT>0 && (rDustSt0-V.rival.stamina)>=V.PUSHBLOCK_STAM-1, `ok=${rDustOk} n=${rDust.length} pow=${rDustPow.toFixed(2)} sfx=${V.lastPushblockSfx} spent=${(rDustSt0-V.rival.stamina).toFixed(2)}`);
 
-check("cache v=296 after dust", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after dust", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- v150 rival pushblock on connecting block, not windup ---
@@ -6235,7 +6235,7 @@ const liveL = liveConnectingRivalPush("golpe");
 check("rival pushblock on connecting meaty L does not whiff", liveL.blocked && liveL.pb && !liveL.hit && !liveL.whiff && liveL.rhp===100 && liveL.php===100 && liveL.dx>=V.PUSHBLOCK_PX-30 && liveL.dx<=V.PUSHBLOCK_PX+40 && liveL.sfx==="pushblock", `blocked=${liveL.blocked} pb=${liveL.pb} hit=${liveL.hit} whiff=${liveL.whiff} dx=${liveL.dx.toFixed(1)} spent=${liveL.spent.toFixed(2)} sfx=${liveL.sfx} rhp=${liveL.rhp} php=${liveL.php} g=${liveL.g}`);
 const liveS = liveConnectingRivalPush("slash");
 check("rival pushblock on connecting meaty Space does not whiff", liveS.blocked && liveS.pb && !liveS.hit && !liveS.whiff && liveS.rhp===100 && liveS.php===100 && liveS.dx>=V.PUSHBLOCK_PX-30 && liveS.dx<=V.PUSHBLOCK_PX+40 && liveS.sfx==="pushblock", `blocked=${liveS.blocked} pb=${liveS.pb} hit=${liveS.hit} whiff=${liveS.whiff} dx=${liveS.dx.toFixed(1)} spent=${liveS.spent.toFixed(2)} sfx=${liveS.sfx} rhp=${liveS.rhp} php=${liveS.php} g=${liveS.g}`);
-check("cache v=296 after connecting pushblock", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after connecting pushblock", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- v151 wakeup L+S spends throw-invuln (not a wakeup super) ---
@@ -6281,7 +6281,7 @@ V.update(STEP);
 check("standing L+S still reversal after wakeup spend", V.player.cut==="golpe" && V.player.reversal && V.player.phase==="startup" && V.player.throwInvulnT===0, `cut=${V.player.cut} rev=${V.player.reversal} ph=${V.player.phase} inv=${V.player.throwInvulnT}`);
 V.keys.delete("KeyS");
 
-check("cache v=296 after wakeup L+S spend", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after wakeup L+S spend", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v152 throw beats hold-guard: no pushblock shove-whiff ---
 const tryPbThrowFn = sliceFn(codeOnly, "tryPushblock");
@@ -6472,7 +6472,7 @@ drainHitstop();
 check("throw chord unchanged after throw-pushblock gate", v152Throw && V.player.cut==="throw" && V.player.cutHit && V.rival.hp===80 && V.rival.thrownT>0 && V.player.cut!=="golpe", `hit=${v152Throw} cut=${V.player.cut} ch=${V.player.cutHit} rhp=${V.rival.hp} th=${V.rival.thrownT}`);
 V.keys.clear();
 
-check("cache v=296 after throw vs pushblock", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after throw vs pushblock", /game\.js\?v=313/.test(htmlTxt));
 
 check("hint HUD source", /function drawControlsHint/.test(srcTxt) && /function controlsHintLines/.test(srcTxt) && /HINT_FADE_MS/.test(srcTxt) && /HINT_IN_MS/.test(srcTxt) && /HINT_HOLD_MS/.test(srcTxt) && /HINT_VERB_N/.test(srcTxt) && /ANDAR/.test(srcTxt) && /AGARRE/.test(srcTxt) && /RIPOSTE/.test(srcTxt) && /PARRY>/.test(srcTxt) && /bindPrimary\("left"\)/.test(srcTxt));
 check("hint patio clean no card", /function drawControlsHint/.test(srcTxt) && !/function drawControlsHint[\s\S]{0,900}fillRect/.test(srcTxt) && /drawHud\(\)[\s\S]{0,180}drawControlsHint/.test(srcTxt));
@@ -6539,7 +6539,7 @@ for(let i=0;i<90;i++){
 V.keys.clear();
 check("walk after slash does not re-arm sheathe", walkIdle && !walkSheathe && walkSh===0, `idle=${walkIdle} saw=${walkSheathe} t=${walkSh} gait=${V.player.gait}`);
 
-check("cache v=296 after sheathe fade", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after sheathe fade", /game\.js\?v=313/.test(htmlTxt));
 
 check("golpe sheathe fades during recovery", /f\.cut === "golpe"/.test(sliceFn(codeOnly, "sheatheFade")) && /clashRec/.test(sliceFn(codeOnly, "sheatheFade")) && /golpeSheathed/.test(srcTxt));
 check("golpe sheathe is draw-only leftover", /Golpe is a poke/.test(srcTxt) && /poseBitmap still holds the cut while planted/.test(srcTxt) && /f\.cut === "golpe"/.test(sliceFn(codeOnly, "poseBitmap"))===false);
@@ -6593,7 +6593,7 @@ for(let i=0;i<40;i++){
   }
 }
 check("golpe idle does not re-arm tajo sheathe", gsIdle && gsSheatheIdle===0 && gsFadeIdle===0 && V.player.cut==="slash", `idle=${gsIdle} sh=${gsSheatheIdle} fade=${gsFadeIdle} cut=${V.player.cut} ph=${V.player.phase}`);
-check("cache v=296 after golpe sheathe", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after golpe sheathe", /game\.js\?v=313/.test(htmlTxt));
 
 toMeasure();
 freezeRivalAI();
@@ -6654,13 +6654,13 @@ for(let i=0;i<40;i++){
   }
 }
 check("clash idle still sheathes from the cut", clIdle && clSheathe>100 && clFadeIdle>0.7 && clCut, `idle=${clIdle} sh=${clSheathe} fade=${clFadeIdle} cut=${clCut} src=${sheetSrc(V.player)}`);
-check("cache v=296 after slash sheathe", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after slash sheathe", /game\.js\?v=313/.test(htmlTxt));
 
 check("walk fade is draw-only leftover", /function walkFade/.test(srcTxt) && /gaitWalkOn still hard-cuts/.test(srcTxt) && /if \(gaitWalkOn\(f\) && ready\(walk\)\) return walk;/.test(srcTxt));
 check("gaitWalkOn sheet still abs sin>0.28", /function gaitWalkOn[\s\S]{0,280}Math\.abs\(Math\.sin\(a\)\) > 0\.28/.test(srcTxt));
 check("walkSheetK uses abs sin both boots", /function walkSheetK[\s\S]{0,280}Math\.abs\(Math\.sin\(a\)\)/.test(srcTxt) && !/const u = Math\.max\(0, Math\.sin\(a\)\)/.test(srcTxt));
 check("walk fade still draw-only after abs", /gaitWalkOn still hard-cuts/.test(srcTxt) && /if \(gaitWalkOn\(f\) && ready\(walk\)\) return walk;/.test(srcTxt));
-check("cache v=296 after walk abs", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after walk abs", /game\.js\?v=313/.test(htmlTxt));
 
 
 bootPlay(); wait(1700);
@@ -6688,7 +6688,7 @@ const wFadePlant=V.walkFade(V.player), wOnPlant=V.gaitWalkOn(V.player);
 check("plant sheet at boot", !wOnPlant && wFadePlant<0.25, `on=${wOnPlant} fade=${wFadePlant} t=${V.player.walkT}`);
 V.keys.clear();
 check("slash frames still 180/140/280 after walk abs", V.STARTUP===180 && V.ACTIVE===140 && V.RECOVERY===280 && V.LUNGE_PX===36);
-check("cache v=296 after walk abs live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after walk abs live", /game\.js\?v=313/.test(htmlTxt));
 
 check("feint recovery 100 faster than slash rec", V.FEINT_RECOVERY===100 && V.FEINT_RECOVERY<V.RECOVERY && V.FEINT_RECOVERY>=80 && V.FEINT_RECOVERY<=120, `feint=${V.FEINT_RECOVERY} rec=${V.RECOVERY}`);
 check("feint AI 40/1800 not a robot", V.FEINT_AI_CD===1800 && V.FEINT_AI_CHANCE===0.4 && V.FEINT_AI_CD===V.REVERSAL_AI_CD);
@@ -6829,7 +6829,7 @@ V.rival.feintCd = 0;
 const noGuardFeint = V.rivalTryFeint();
 check("rival does not feint vs no guard", !noGuardFeint && V.rival.phase==="startup", `ok=${noGuardFeint} rph=${V.rival.phase}`);
 
-check("cache v=296 after feint", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after feint", /game\.js\?v=313/.test(htmlTxt));
 
 check("title pixel not Palatino", /function drawPixelText/.test(srcTxt) && /function drawTitleCard/.test(srcTxt) && /FONT5/.test(srcTxt) && !/Palatino/.test(codeOnly) && !/fillText\("Víspera"/.test(srcTxt) && !/fillText\("Espacio"/.test(srcTxt));
 check("menu items JUGAR CONTROLES", /JUGAR/.test(srcTxt) && /CONTROLES/.test(srcTxt) && /OPCIONES/.test(srcTxt) && /ESCENARIOS/.test(srcTxt) && /VOLVER/.test(srcTxt) && /REVANCHA/.test(srcTxt) && /function confirmTitle/.test(srcTxt) && /function handleTitleKey/.test(srcTxt));
@@ -6837,7 +6837,7 @@ check("joystick feeds KeyA KeyD", /function stickApply/.test(srcTxt) && /feedKey
 check("stick vertical ignored", /Vertical stick does nothing/.test(srcTxt) && /stickApply\(maxR > 0 \? dx \/ maxR : 0\)/.test(srcTxt));
 check("pad still guarda tajo golpe dardo", /guarda/.test(htmlTxt) && /tajo/.test(htmlTxt) && /golpe/.test(htmlTxt) && /dardo/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt) && /data-tap="Space"/.test(htmlTxt) && /data-tap="KeyL"/.test(htmlTxt) && /data-tap="KeyK"/.test(htmlTxt) && (htmlTxt.match(/data-tap=/g)||[]).length===3);
 check("keyboard path untouched after stick", /KeyA/.test(srcTxt) && /KeyD/.test(srcTxt) && /Space/.test(srcTxt) && /KeyJ/.test(srcTxt) && /KeyS/.test(srcTxt) && /KeyK/.test(srcTxt) && /KeyL/.test(srcTxt) && /KeyR/.test(srcTxt) && /act === "dart"/.test(srcTxt) && /boltEdge = true/.test(srcTxt));
-check("cache v=296 after joystick menu", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after joystick menu", /game\.js\?v=313/.test(htmlTxt));
 
 bootPlay(); wait(1700);
 freezeYouAI(); freezeRivalAI();
@@ -6885,7 +6885,7 @@ check("wakeup fade crossfades hurt", /function wakeupFade/.test(srcTxt) && /func
 check("wakeup fade is draw-only leftover", /Getup used to pop/.test(srcTxt) && /poseBitmap still idle once thrownT is 0/.test(srcTxt) && /f\.thrownT > 0/.test(sliceFn(codeOnly, "poseBitmap")));
 check("wakeup fade does not keep hurt in poseBitmap", /throwInvulnT/.test(sliceFn(codeOnly, "wakeupFade")) && !/throwInvulnT/.test(sliceFn(codeOnly, "poseBitmap")));
 check("wakeup invuln still 80 after fade", V.THROW_WAKE_INVULN===80 && V.THROW_WAKE_INVULN===V.THROW_STARTUP && V.THROW_KD_MS===520);
-check("cache v=296 after wakeup fade", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after wakeup fade", /game\.js\?v=313/.test(htmlTxt));
 
 function holdWakeSample(){
   holdRivalNoGrab();
@@ -6958,7 +6958,7 @@ const wrFadeBefore = V.wakeupFade(V.rival);
 V.rival.stamina = 100;
 const wrDid = V.startWakeReversal(V.rival);
 check("wakeup reversal eases crumple leftover", wrReady && wrDid && wrFadeBefore>0.5 && V.wakeupFade(V.rival)>0.5 && V.rival.wakeRevFadeHold>0 && V.rival.throwInvulnT===0 && V.rival.cut==="golpe", `ready=${wrReady} did=${wrDid} fade=${V.wakeupFade(V.rival)} hold=${V.rival.wakeRevFadeHold} inv=${V.rival.throwInvulnT} cut=${V.rival.cut} before=${wrFadeBefore}`);
-check("cache v=296 after wakeup reversal fade", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after wakeup reversal fade", /game\.js\?v=313/.test(htmlTxt));
 
 check("bolt plant fade crossfades windup", /function boltPlantFade/.test(srcTxt) && /function windupBitmap/.test(srcTxt) && /boltPlantFade\(f\)/.test(srcTxt) && /octx.globalAlpha = bf/.test(srcTxt) && /windupBitmap\(f\)/.test(srcTxt));
 check("bolt plant fade is draw-only leftover", /Idle\/walk K used to pop windup/.test(srcTxt) && /poseBitmap still idle once bolt recovery starts/.test(srcTxt) && /boltPhase === "startup"/.test(sliceFn(codeOnly, "poseBitmap")));
@@ -6966,7 +6966,7 @@ check("bolt plant fade does not keep windup in poseBitmap", /boltPhase !== "reco
 check("special-cancel still holds cut not windup fade", /holdingCutBolt\(f\)/.test(sliceFn(codeOnly, "boltPlantFade")) && /holdingCutBolt\(f\)/.test(sliceFn(codeOnly, "poseBitmap")));
 check("K frames still 200/280 after plant fade", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380);
 check("slash frames still 180/140/280 after plant fade", V.STARTUP===180 && V.ACTIVE===140 && V.RECOVERY===280 && V.LUNGE_PX===36);
-check("cache v=296 after bolt plant fade", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after bolt plant fade", /game\.js\?v=313/.test(htmlTxt));
 
 function holdBoltPlant(){
   freezeRivalAI();
@@ -7047,7 +7047,7 @@ for(let i=0;i<20;i++){
   if(V.player.boltPhase==="recovery") break;
 }
 check("special-cancel recovery has no windup fade", V.player.boltPhase==="recovery" && V.player.boltHoldCut && V.boltPlantFade(V.player)===0 && isCutSheet(V.player), `bph=${V.player.boltPhase} fade=${V.boltPlantFade(V.player)} hold=${V.player.boltHoldCut} src=${sheetSrc(V.player)}`);
-check("cache v=296 after bolt plant live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after bolt plant live", /game\.js\?v=313/.test(htmlTxt));
 
 
 check("guard raise destRect-only leftover", /function guardRaiseK/.test(srcTxt) && /function tickGuardPose/.test(srcTxt) && /function guardPlant/.test(srcTxt) && /Guard raise no longer plants destRect/.test(srcTxt) && /guardPlant\(f\)/.test(srcTxt));
@@ -7056,7 +7056,7 @@ check("raise still 0ms frame data", /Guarda S, de cara, raise 0/.test(srcTxt) &&
 check("slash frames still 180/140/280 after guard raise", V.STARTUP===180 && V.ACTIVE===140 && V.RECOVERY===280 && V.LUNGE_PX===36);
 check("golpe frames still 120/80/180 after guard raise", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("no 6th button after guard raise", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after guard raise", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after guard raise", /game\.js\?v=313/.test(htmlTxt));
 
 function holdGuardSample(){
   freezeRivalAI();
@@ -7206,7 +7206,7 @@ for(let i=0;i<10;i++){
 const rvFull = V.destRect(V.rival);
 const rvFullAabb = V.bodyAABB(V.rival);
 check("rival raise settles destRect weight", V.rival.guarding && V.rival.guardPoseK===1 && Math.abs(rvFull.dy-rvDest0.dy)>1.5 && Math.abs(rvFullAabb.y-rvAabb0.y)<0.05, `g=${V.rival.guarding} k=${V.rival.guardPoseK} ddy=${(rvFull.dy-rvDest0.dy).toFixed(2)}`);
-check("cache v=296 after guard raise live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after guard raise live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -7216,7 +7216,7 @@ check("KO flash is not a new combat verb", V.HIT_FLASH_MS===120 && V.HITSTOP_HIT
 check("slash frames still 180/140/280 after KO flash", V.STARTUP===180 && V.ACTIVE===140 && V.RECOVERY===280 && V.LUNGE_PX===36);
 check("golpe frames still 120/80/180 after KO flash", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("no 6th button after KO flash", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after KO flash", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after KO flash", /game\.js\?v=313/.test(htmlTxt));
 
 bootPlay(); wait(1700);
 freezeRivalAI(); freezeYouAI();
@@ -7262,7 +7262,7 @@ for(let i=0;i<80;i++){
 check("chip stun still flashes", chipFlash===V.HIT_FLASH_MS && chipK>0.9 && V.rival.stunT>0 && !V.rival.falling && V.hurtFlashK(V.player)===0, `flash=${chipFlash} k=${chipK} st=${V.rival.stunT} fall=${V.rival.falling}`);
 drainHitstop();
 check("chip flash leftover after freeze", V.hitFlashT>0 && V.hitFlashT<=V.HIT_FLASH_MS && V.hurtFlashK(V.rival)>0 && !V.rival.falling && V.rival.hp===90, `flash=${V.hitFlashT} k=${V.hurtFlashK(V.rival)} fall=${V.rival.falling} hp=${V.rival.hp}`);
-check("cache v=296 after KO flash live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after KO flash live", /game\.js\?v=313/.test(htmlTxt));
 
 
 check("meaty wakeup leftover through stun", /function wakeupFade/.test(srcTxt) && /Meaty leftover/.test(srcTxt) && /stun used to dump leftover crumple/.test(srcTxt) && /Meaty wakeup leftover/.test(srcTxt) && /leftover getup fade no longer dies the tick/.test(srcTxt));
@@ -7272,7 +7272,7 @@ check("slash frames still 180/140/280 after meaty wakeup", V.STARTUP===180 && V.
 check("golpe frames still 120/80/180 after meaty wakeup", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("wakeup invuln still 80 after meaty leftover", V.THROW_WAKE_INVULN===80 && V.THROW_WAKE_INVULN===V.THROW_STARTUP && V.THROW_KD_MS===520);
 check("no 6th button after meaty wakeup", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after meaty wakeup", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after meaty wakeup", /game\.js\?v=313/.test(htmlTxt));
 
 const meatyWakeLand = landCloseThrow();
 check("meaty wakeup leftover setup", meatyWakeLand && V.rival.hp===80 && V.rival.thrownT>0, `hit=${meatyWakeLand} hp=${V.rival.hp} th=${V.rival.thrownT}`);
@@ -7310,7 +7310,7 @@ const mwDest1=V.destRect(V.rival);
 check("meaty wakeup leftover AABB planted", mwReady && mwAabb0 && Math.abs(mwAabb1.y-mwAabb0.y)<0.05 && Math.abs(mwAabb1.h-mwAabb0.h)<0.05 && Math.abs(mwAabb1.w-mwAabb0.w)<0.05, `dy=${(mwAabb1.y-mwAabb0.y).toFixed(2)} dh=${(mwAabb1.h-mwAabb0.h).toFixed(2)} dw=${(mwAabb1.w-mwAabb0.w).toFixed(2)} dx=${(mwAabb1.x-mwAabb0.x).toFixed(2)}`);
 check("meaty wakeup leftover destRect planted", mwReady && mwDest1 && Math.abs(mwDest1.dy-mwDest0.dy)<2.2, `ddy=${(mwDest1.dy-mwDest0.dy).toFixed(2)} drot=${(mwDest1.rot-mwDest0.rot).toFixed(3)} fade=${V.wakeupFade(V.rival)}`);
 check("meaty wakeup poseBitmap still idle", mwReady && V.rival.stunT>0 && !isHurtSheet(V.rival) && V.rival.thrownT===0, `src=${sheetSrc(V.rival)} st=${V.rival.stunT} th=${V.rival.thrownT} fade=${V.wakeupFade(V.rival)}`);
-check("cache v=296 after meaty wakeup live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after meaty wakeup live", /game\.js\?v=313/.test(htmlTxt));
 
 
 check("super pip leftover through spend freeze", /function meterFlashK/.test(srcTxt) && /meterFlashK\(f\)/.test(srcTxt) && /leftover brasa pip no longer dies the tick/.test(srcTxt) && /startBolt spends the stock/.test(srcTxt));
@@ -7320,7 +7320,7 @@ check("slash frames still 180/140/280 after super pip", V.STARTUP===180 && V.ACT
 check("golpe frames still 120/80/180 after super pip", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after super pip", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after super pip", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after super pip", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after super pip", /game\.js\?v=313/.test(htmlTxt));
 
 bootPlay(); wait(1700);
 freezeRivalAI(); freezeYouAI();
@@ -7371,7 +7371,7 @@ check("rival spent pip leftover arms", rPipOk && V.rival.boltPhase==="startup" &
 const rPipHold = V.rival.meterFlashT;
 V.update(STEP);
 check("rival spent pip leftover holds freeze", V.rival.meter===0 && V.rival.meterFlashT===rPipHold && V.meterFlashK(V.rival)>0.9 && V.hitstopLeft>0, `ft=${V.rival.meterFlashT} hold=${rPipHold} k=${V.meterFlashK(V.rival)} hs=${V.hitstopLeft}`);
-check("cache v=296 after super pip live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after super pip live", /game\.js\?v=313/.test(htmlTxt));
 
 
 check("KO rematch leftover pixel screen", /function drawOverPrompt/.test(srcTxt) && /> REVANCHA \/ R/.test(srcTxt) && /KO rematch leftover/.test(srcTxt) && /Dim #a89b88 at 0\.72 used to die against the crumple/.test(srcTxt) && /same pixel menu as JUGAR/.test(srcTxt));
@@ -7385,7 +7385,7 @@ check("golpe frames still 120/80/180 after KO rematch leftover", V.GOLPE_STARTUP
 check("K frames still 200/280 after KO rematch leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after KO rematch leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
 check("Space R still rematch after leftover", /if \(c === "KeyR"\) requestRestart = true/.test(srcTxt) && /mode === "over"/.test(srcTxt) && /attackEdge \|\| throwEdge \|\| requestStart/.test(srcTxt));
-check("cache v=296 after KO rematch leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after KO rematch leftover", /game\.js\?v=313/.test(htmlTxt));
 
 bootPlay(); wait(1700);
 freezeRivalAI(); freezeYouAI();
@@ -7414,7 +7414,7 @@ check("KO rematch leftover AABB planted", rmOver && rmAabb0 && Math.abs(rmAabb1.
 V.attackEdge = true;
 V.update(STEP);
 check("Space rematch leftover still starts", V.mode==="play" && V.rival.hp===100 && !V.rival.falling, `mode=${V.mode} hp=${V.rival.hp} fall=${V.rival.falling}`);
-check("cache v=296 after KO rematch leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after KO rematch leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 check("dart plant puff leftover on raised blade", /function castPlantXY/.test(srcTxt) && /castPlantXY\(f\)/.test(srcTxt) && /Idle\/walk K plant puff used to sit on destRect sheet-edge/.test(srcTxt) && /Dart plant puff leftover/.test(srcTxt) && /windup had no tipX/.test(srcTxt));
 check("dart plant puff leftover is draw-only", /Draw-only/.test(srcTxt) && /castPlantXY\(f\)/.test(srcTxt) && /destRect\/AABB planted/.test(srcTxt) && /Dart births from castPlantXY/.test(srcTxt) && !/castPlantXY/.test(sliceFn(codeOnly, "destRect")) && !/castPlantXY/.test(sliceFn(codeOnly, "bodyAABB")) && !/castPlantXY/.test(sliceFn(codeOnly, "slashPose")));
@@ -7426,7 +7426,7 @@ check("golpe frames still 120/80/180 after dart plant puff leftover", V.GOLPE_ST
 check("K frames still 200/280 after dart plant puff leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after dart plant puff leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
 check("dart still births from tip after leftover", /castPlantXY/.test(sliceFn(codeOnly, "spawnBolt")) && /Dart tip plant leftover/.test(srcTxt));
-check("cache v=296 after dart plant puff leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after dart plant puff leftover", /game\.js\?v=313/.test(htmlTxt));
 
 function sheetEdgeX(f){
   const r = V.destRect(f);
@@ -7542,7 +7542,7 @@ V.update(STEP);
 const scPuff = V.castPlantXY(V.player);
 const scEdge = V.bladeTipX(V.player);
 check("special-cancel puff leftover still slash tip", scHit && scWin && V.player.boltPhase==="startup" && V.player.boltHoldCut===true && V.brasaFxKind==="cast" && Math.abs(V.brasaX-scEdge)<8 && Math.abs(scPuff.x-scEdge)<8, `hit=${scHit} win=${scWin} bph=${V.player.boltPhase} hold=${V.player.boltHoldCut} x=${V.brasaX.toFixed(1)} edge=${scEdge.toFixed(1)} plant=${scPuff.x.toFixed(1)}`);
-check("cache v=296 after dart plant puff leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after dart plant puff leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 check("camera punch leftover holds PUNCH_PX cover", /function punchCover/.test(srcTxt) && /punchCover\(\)/.test(srcTxt) && /Camera punch leftover/.test(srcTxt) && /overscan used to track \|ox\|/.test(srcTxt) && /yard zoomed as the slam squared out/.test(srcTxt) && /Hold PUNCH_PX cover/.test(srcTxt));
 check("camera punch leftover is draw-only", /Draw-only/.test(srcTxt) && /punchCover\(\)/.test(srcTxt) && /destRect\/AABB planted/.test(srcTxt) && /Punch is a slide, not a zoom/.test(srcTxt) && !/punchCover/.test(sliceFn(codeOnly, "destRect")) && !/punchCover/.test(sliceFn(codeOnly, "bodyAABB")) && !/punchCover/.test(sliceFn(codeOnly, "slashPose")) && !/punchCover/.test(sliceFn(codeOnly, "landHit")) && !/punchCover/.test(sliceFn(codeOnly, "bumpShake")));
@@ -7563,7 +7563,7 @@ check("slash frames still 180/140/280 after camera punch leftover", V.STARTUP===
 check("golpe frames still 120/80/180 after camera punch leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after camera punch leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after camera punch leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after camera punch leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after camera punch leftover", /game\.js\?v=313/.test(htmlTxt));
 
 function landCloseSlashPunch(){
   bootPlay(); wait(1700);
@@ -7633,7 +7633,7 @@ V.player.guarding = false;
 V.boltEdge = true;
 V.update(STEP);
 check("camera punch leftover super spend still covers", V.player.boltPhase==="startup" && V.player.boltSuper===true && V.hitstopLeft===V.BOLT_SUPER_STOP && V.shake===V.BOLT_SUPER_STOP && V.shakeMag===10 && V.punchCover()===V.PUNCH_PX, `bph=${V.player.boltPhase} super=${V.player.boltSuper} hs=${V.hitstopLeft} shake=${V.shake} cover=${V.punchCover()}`);
-check("cache v=296 after camera punch leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after camera punch leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -7649,7 +7649,7 @@ check("giro hidden in portrait after stick leftover", /body\.touch-on #giro\s*\{
 check("portrait stick leftover bigger thumb", /Portrait stick leftover/.test(cssTxt) && /body\.touch-on \.stick/.test(cssTxt) && /--stick-size:\s*min\(120px/.test(cssTxt) && /38vw/.test(cssTxt) && /20dvh/.test(cssTxt) && /min\(84px, calc\(var\(--pad-h\) - 14px\), 26vw\)/.test(cssTxt));
 check("stick still horizontal A/D after leftover", /Vertical stick does nothing/.test(srcTxt) && /stickApply\(maxR > 0 \? dx \/ maxR : 0\)/.test(srcTxt) && /feedKey\("KeyA"/.test(srcTxt) && /feedKey\("KeyD"/.test(srcTxt));
 check("keyboard path untouched after portrait stick leftover", /KeyA/.test(srcTxt) && /KeyD/.test(srcTxt) && /Space/.test(srcTxt) && /KeyJ/.test(srcTxt) && /KeyS/.test(srcTxt) && /KeyK/.test(srcTxt) && /KeyL/.test(srcTxt) && /KeyR/.test(srcTxt) && /act === "dart"/.test(srcTxt) && /boltEdge = true/.test(srcTxt));
-check("cache v=296 after portrait stick leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after portrait stick leftover", /game\.js\?v=313/.test(htmlTxt));
 
 bootPlay(); wait(1700);
 freezeYouAI(); freezeRivalAI();
@@ -7670,7 +7670,7 @@ V.update(STEP);
 check("portrait stick leftover AABB planted", Math.abs(V.bodyAABB(V.player).y-aabbStick0.y)<0.05 && Math.abs(V.bodyAABB(V.player).h-aabbStick0.h)<0.05, `dy=${(V.bodyAABB(V.player).y-aabbStick0.y).toFixed(2)}`);
 check("portrait stick leftover destRect planted", Math.abs(V.destRect(V.player).dy-destStick0.dy)<2.2, `ddy=${(V.destRect(V.player).dy-destStick0.dy).toFixed(2)}`);
 V.stickRelease();
-check("cache v=296 after portrait stick leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after portrait stick leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 check("rival telegraph leftover fades idle to windup", /function telegraphFade/.test(srcTxt) && /function telegraphing/.test(srcTxt) && /telegraphFade\(f\)/.test(srcTxt) && /Rival telegraph leftover/.test(srcTxt) && /idle→windup used to pop/.test(srcTxt) && /180ms read was a sheet cut/.test(srcTxt));
 check("rival telegraph leftover is draw-only sheet", /Visual only \(drawKnight\)/.test(srcTxt) && /telegraphFade\(f\)/.test(srcTxt) && /destRect\/AABB planted/.test(srcTxt) && /poseBitmap still windup/.test(srcTxt) && !/telegraphFade/.test(sliceFn(codeOnly, "destRect")) && !/telegraphFade/.test(sliceFn(codeOnly, "bodyAABB")) && !/telegraphFade/.test(sliceFn(codeOnly, "slashPose")) && !/telegraphFade/.test(sliceFn(codeOnly, "landHit")) && !/telegraphFade/.test(sliceFn(codeOnly, "startAttack")));
@@ -7684,7 +7684,7 @@ check("slash frames still 180/140/280 after rival telegraph leftover", V.STARTUP
 check("golpe frames still 120/80/180 after rival telegraph leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after rival telegraph leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after rival telegraph leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after rival telegraph leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after rival telegraph leftover", /game\.js\?v=313/.test(htmlTxt));
 
 bootPlay(); wait(1700);
 freezeYouAI(); freezeRivalAI();
@@ -7761,7 +7761,7 @@ for(let i=0;i<30;i++){
   if(V.player.phase==="active"){ teleActive=true; break; }
 }
 check("active leftover telegraph gone", teleActive && V.player.phase==="active" && V.telegraphFade(V.player)===0 && !V.telegraphing(V.player), `ph=${V.player.phase} k=${V.telegraphFade(V.player)} ing=${V.telegraphing(V.player)} saw=${teleActive}`);
-check("cache v=296 after rival telegraph leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after rival telegraph leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 check("plant dust leftover rides destRect plant", /function syncPlantDust/.test(srcTxt) && /syncPlantDust\(\)/.test(srcTxt) && /Plant dust leftover/.test(srcTxt) && /stamp used to sit at spawn world xy/.test(srcTxt) && /boot shoved 240/.test(srcTxt) && /walked off/.test(srcTxt));
 check("plant dust leftover is draw-only", /Draw-only/.test(srcTxt) && /syncPlantDust\(\)/.test(srcTxt) && /destRect\/AABB planted/.test(srcTxt) && /Stamps ride destRect\.pivX/.test(srcTxt) && !/syncPlantDust/.test(sliceFn(codeOnly, "destRect")) && !/syncPlantDust/.test(sliceFn(codeOnly, "bodyAABB")) && !/syncPlantDust/.test(sliceFn(codeOnly, "slashPose")) && !/syncPlantDust/.test(sliceFn(codeOnly, "landHit")) && !/syncPlantDust/.test(sliceFn(codeOnly, "tryPushblock")) && !/syncPlantDust/.test(sliceFn(codeOnly, "tickGait")));
@@ -7773,7 +7773,7 @@ check("slash frames still 180/140/280 after plant dust leftover", V.STARTUP===18
 check("golpe frames still 120/80/180 after plant dust leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after plant dust leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after plant dust leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after plant dust leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after plant dust leftover", /game\.js\?v=313/.test(htmlTxt));
 
 function dustStamps(homeYou, shove){
   return (V.plantDust||[]).filter(p=>!p.speck && (homeYou==null || p.homeYou===homeYou) && (shove==null || !!p.shove===!!shove));
@@ -7863,7 +7863,7 @@ check("plant dust leftover land rides destRect", landStamp1 && Math.abs(landStam
 check("plant dust leftover land AABB planted", Math.abs(V.bodyAABB(V.rival).y-landAabb0.y)<0.05 && Math.abs(V.bodyAABB(V.rival).h-landAabb0.h)<0.05, `dy=${(V.bodyAABB(V.rival).y-landAabb0.y).toFixed(2)}`);
 check("plant dust leftover land destRect planted", Math.abs(V.destRect(V.rival).dy-landDest0.dy)<2.2, `ddy=${(V.destRect(V.rival).dy-landDest0.dy).toFixed(2)}`);
 check("plant dust leftover specks not glued", (V.plantDust||[]).some(p=>p.speck && p.homeYou===false), `n=${(V.plantDust||[]).filter(p=>p.speck).length}`);
-check("cache v=296 after plant dust leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after plant dust leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 check("throw grab snap leftover yanks to clinch not 40px plants", /function throwSnapTogether/.test(srcTxt) && /function throwGrabHold/.test(srcTxt) && /Throw grab snap leftover/.test(srcTxt) && /leftover 40px plants/.test(srcTxt) && /keepApart un-did the grab/.test(srcTxt) && /THROW_SNAP_GAP/.test(srcTxt));
 check("throw grab snap leftover is body clinch", V.THROW_SNAP_GAP===24 && V.THROW_SNAP_GAP<V.THROW_RANGE && V.THROW_SNAP_GAP>=16 && V.THROW_SNAP_GAP<=32 && /gap > THROW_SNAP_GAP/.test(sliceFn(codeOnly, "throwSnapTogether")));
@@ -7876,7 +7876,7 @@ check("golpe frames still 120/80/180 after throw grab snap leftover", V.GOLPE_ST
 check("K frames still 200/280 after throw grab snap leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after throw grab snap leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
 check("plant dust leftover still rides destRect after throw grab snap", /function syncPlantDust/.test(srcTxt) && /Stamps ride destRect\.pivX/.test(srcTxt));
-check("cache v=296 after throw grab snap leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after throw grab snap leftover", /game\.js\?v=313/.test(htmlTxt));
 
 function plantThrowPocket(){
   V.player.gait = 0; V.rival.gait = 0;
@@ -8011,7 +8011,7 @@ for(let i=0;i<80;i++){
 }
 check("throw grab snap leftover far still whiffs", farSnap0>400 && farSnapAct && !farSnapDmg && V.rival.hp===100 && V.rival.thrownT===0 && !V.player.cutHit, `g0=${farSnap0.toFixed(1)} act=${farSnapAct} dmg=${farSnapDmg} hp=${V.rival.hp} th=${V.rival.thrownT}`);
 V.keys.clear();
-check("cache v=296 after throw grab snap leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after throw grab snap leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -8027,7 +8027,7 @@ check("slash frames still 180/140/280 after feint pose leftover", V.STARTUP===18
 check("golpe frames still 120/80/180 after feint pose leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after feint pose leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after feint pose leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after feint pose leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after feint pose leftover", /game\.js\?v=313/.test(htmlTxt));
 
 toClose();
 freezeYouAI();
@@ -8104,7 +8104,7 @@ V.update(STEP);
 check("golpe still not feint pose leftover", V.player.phase==="startup" && V.player.cut==="golpe" && !V.canFeint(V.player) && V.feintFade(V.player)===0, `ph=${V.player.phase} cut=${V.player.cut} ff=${V.feintFade(V.player)}`);
 V.player.phase = "idle"; V.player.phaseT = 0;
 
-check("cache v=296 after feint pose leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after feint pose leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 check("hurt juice leftover cuts live blade before recovery", /Hurt juice leftover/.test(srcTxt) && /leftover lunge ox dump used to pull cutPoint/.test(srcTxt) && /flesh spark sat on chest/.test(srcTxt) && /AABB fallback/.test(srcTxt) && /chips/.test(srcTxt) && /body puff/.test(srcTxt));
@@ -8119,7 +8119,7 @@ check("slash frames still 180/140/280 after hurt juice leftover", V.STARTUP===18
 check("golpe frames still 120/80/180 after hurt juice leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after hurt juice leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after hurt juice leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after hurt juice leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after hurt juice leftover", /game\.js\?v=313/.test(htmlTxt));
 
 function chestXY(f){
   const bb=V.bodyAABB(f);
@@ -8220,7 +8220,7 @@ const rDChest = Math.hypot(V.hitSparkX-rLiveChest.x, V.hitSparkY-rLiveChest.y);
 check("hurt juice leftover rival spark on live cut", rPlant && V.rival.cutHit && V.player.hp===90 && rDCut<8 && rDChest>28, `ok=${rPlant} php=${V.player.hp} cut=${rDCut.toFixed(1)} chest=${rDChest.toFixed(1)}`);
 V.keys.clear();
 
-check("cache v=296 after hurt juice leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after hurt juice leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 check("KO crumple leftover eases destRect oy", /function crumpleFade/.test(srcTxt) && /crumpleFade\(f\)/.test(srcTxt) && /KO crumple leftover/.test(srcTxt) && /leftover destRect oy used to dump/.test(srcTxt) && /hopped off the stones/.test(srcTxt) && /beginFall set falling/.test(srcTxt));
@@ -8234,7 +8234,7 @@ check("slash frames still 180/140/280 after KO crumple leftover", V.STARTUP===18
 check("golpe frames still 120/80/180 after KO crumple leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after KO crumple leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after KO crumple leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after KO crumple leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after KO crumple leftover", /game\.js\?v=313/.test(htmlTxt));
 
 bootPlay(); wait(1700);
 freezeRivalAI(); freezeYouAI();
@@ -8321,7 +8321,7 @@ V.keys.clear();
 const throwCrumple = landCloseThrow();
 check("throw knockdown still not KO crumple leftover", throwCrumple && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0, `ok=${throwCrumple} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)}`);
 
-check("cache v=296 after KO crumple leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after KO crumple leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 check("wakeup destRect leftover eases breath with wakeupFade", /Wakeup destRect leftover/.test(srcTxt) && /leftover idle breath used to dump/.test(srcTxt) && /hopped destRect while wakeupFade/.test(srcTxt) && /idleBreath eases with wakeupFade/.test(srcTxt) && /throw-invuln armed/.test(srcTxt));
@@ -8333,7 +8333,7 @@ check("slash frames still 180/140/280 after wakeup destRect leftover", V.STARTUP
 check("golpe frames still 120/80/180 after wakeup destRect leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after wakeup destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after wakeup destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after wakeup destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after wakeup destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 function holdWakeDest(){
   holdWakeSample();
@@ -8403,7 +8403,7 @@ check("chip stun is not wakeup destRect leftover", V.wakeupFade(V.player)===0 &&
 
 const throwKdStill = landCloseThrow();
 check("throw knockdown still not KO crumple after wakeup destRect leftover", throwKdStill && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0, `ok=${throwKdStill} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)}`);
-check("cache v=296 after wakeup destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after wakeup destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 check("throw recovery leftover fades windup to idle", /function throwPlantFade/.test(srcTxt) && /throwPlantFade\(f\)/.test(srcTxt) && /Throw recovery leftover/.test(srcTxt) && /leftover windup used to pop/.test(srcTxt) && /wasThrow skips sheatheT/.test(srcTxt) && /grab pose dumped/.test(srcTxt));
@@ -8418,7 +8418,7 @@ check("slash frames still 180/140/280 after throw recovery leftover", V.STARTUP=
 check("golpe frames still 120/80/180 after throw recovery leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after throw recovery leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after throw recovery leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after throw recovery leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after throw recovery leftover", /game\.js\?v=313/.test(htmlTxt));
 
 const throwFadeLand = landCloseThrow();
 check("throw recovery leftover setup throw landed", throwFadeLand && V.rival.hp===80 && V.rival.thrownT>0 && V.player.cut==="throw" && (V.player.phase==="recovery" || V.player.phase==="idle"), `hit=${throwFadeLand} hp=${V.rival.hp} th=${V.rival.thrownT} cut=${V.player.cut} ph=${V.player.phase}`);
@@ -8559,7 +8559,7 @@ for(let i=0;i<4;i++){
 }
 check("throw recovery leftover tech fade drops", techFadeOk && V.player.techRec && V.throwPlantFade(V.player)>0 && V.throwPlantFade(V.player)<0.98 && /windup/.test(sheetSrc(V.player)), `ok=${techFadeOk} fade=${V.throwPlantFade(V.player)} rec=${V.player.techRec} src=${sheetSrc(V.player)}`);
 check("throw recovery leftover tech AABB planted", techFadeOk && Math.abs(V.bodyAABB(V.player).y-techAabb0.y)<0.05 && Math.abs(V.destRect(V.player).rot)<0.001, `dy=${(V.bodyAABB(V.player).y-techAabb0.y).toFixed(2)} rot=${V.destRect(V.player).rot}`);
-check("cache v=296 after throw recovery leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after throw recovery leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 check("dart recovery destRect leftover eases breath with boltPlantFade", /Dart recovery destRect leftover/.test(srcTxt) && /leftover idle breath used to dump/.test(srcTxt) && /dart birth popped boltPhase to recovery/.test(srcTxt) && /telegraphFade died/.test(srcTxt) && /idleBreath eases with boltPlantFade/.test(srcTxt));
@@ -8571,7 +8571,7 @@ check("slash frames still 180/140/280 after dart recovery destRect leftover", V.
 check("golpe frames still 120/80/180 after dart recovery destRect leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after dart recovery destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after dart recovery destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after dart recovery destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after dart recovery destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 function holdDartDest(f){
   const u = f || V.player;
@@ -8755,7 +8755,7 @@ check("chip stun is not dart recovery destRect leftover", V.boltPlantFade(V.play
 
 const dartThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after dart recovery destRect leftover", dartThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0, `ok=${dartThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)}`);
-check("cache v=296 after dart recovery destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after dart recovery destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 check("guard drop leftover fades block to idle", /function guardDropFade/.test(srcTxt) && /guardDropFade\(f\)/.test(srcTxt) && /Guard drop leftover/.test(srcTxt) && /leftover block used to pop/.test(srcTxt) && /sheet cut, not a release/.test(srcTxt) && /S released/.test(srcTxt));
@@ -8769,7 +8769,7 @@ check("slash frames still 180/140/280 after guard drop leftover", V.STARTUP===18
 check("golpe frames still 120/80/180 after guard drop leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after guard drop leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after guard drop leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after guard drop leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after guard drop leftover", /game\.js\?v=313/.test(htmlTxt));
 
 function isBlockSheet(f){ return /block/.test(sheetSrc(f)); }
 
@@ -8883,7 +8883,7 @@ check("chip stun leftover still snaps drop fade", V.guardDropFade(V.player)===0 
 
 const gdThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after guard drop leftover", gdThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0 && V.guardDropFade(V.rival)===0, `ok=${gdThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)} gf=${V.guardDropFade(V.rival)}`);
-check("cache v=296 after guard drop leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after guard drop leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -8897,7 +8897,7 @@ check("slash frames still 180/140/280 after guard break leftover", V.STARTUP===1
 check("golpe frames still 120/80/180 after guard break leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after guard break leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after guard break leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after guard break leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after guard break leftover", /game\.js\?v=313/.test(htmlTxt));
 
 function pinBreakYou(){
   freezeRivalAI();
@@ -9012,7 +9012,7 @@ check("chip stun leftover still snaps break fade", V.guardDropFade(V.player)===0
 
 const gbThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after guard break leftover", gbThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0 && V.guardDropFade(V.rival)===0, `ok=${gbThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)} gf=${V.guardDropFade(V.rival)}`);
-check("cache v=296 after guard break leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after guard break leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -9027,7 +9027,7 @@ check("slash frames still 180/140/280 after reversal plant leftover", V.STARTUP=
 check("golpe frames still 120/80/180 after reversal plant leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after reversal plant leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after reversal plant leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after reversal plant leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after reversal plant leftover", /game\.js\?v=313/.test(htmlTxt));
 
 function pinRevYou(){
   freezeRivalAI();
@@ -9140,7 +9140,7 @@ check("chip stun leftover still snaps reversal plant fade", V.reversalPlantFade(
 
 const rpThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after reversal plant leftover", rpThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0 && V.reversalPlantFade(V.rival)===0, `ok=${rpThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)} rf=${V.reversalPlantFade(V.rival)}`);
-check("cache v=296 after reversal plant leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after reversal plant leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -9155,7 +9155,7 @@ check("slash frames still 180/140/280 after slash leftover k", V.STARTUP===180 &
 check("golpe frames still 120/80/180 after slash leftover k", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after slash leftover k", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after slash leftover k", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after slash leftover k", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after slash leftover k", /game\.js\?v=313/.test(htmlTxt));
 
 function pinSlashYou(){
   freezeRivalAI();
@@ -9278,7 +9278,7 @@ check("chip stun leftover still snaps slash leftover k", V.slashLeftoverPlanting
 
 const slThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after slash leftover k", slThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0 && V.slashLeftoverPlanting(V.rival)===false, `ok=${slThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)} sl=${V.slashLeftoverPlanting(V.rival)}`);
-check("cache v=296 after slash leftover k live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after slash leftover k live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -9292,7 +9292,7 @@ check("slash frames still 180/140/280 after stun leftover k", V.STARTUP===180 &&
 check("golpe frames still 120/80/180 after stun leftover k", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after stun leftover k", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after stun leftover k", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after stun leftover k", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after stun leftover k", /game\.js\?v=313/.test(htmlTxt));
 
 function pinStunYou(){
   freezeRivalAI();
@@ -9417,7 +9417,7 @@ check("standing chip stun destRect is stun flinch", Math.abs(standDest.rot)>0.10
 
 const stThrowKd = landCloseThrow();
 check("throw knockdown leftover destRect plant eases leftover k after stun leftover k", stThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0 && V.stunLeftoverPlanting(V.rival)===false && V.throwKdLeftoverPlanting(V.rival) && V.guardRaiseK(V.rival)>0.5, `ok=${stThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)} slp=${V.stunLeftoverPlanting(V.rival)} tkd=${V.throwKdLeftoverPlanting(V.rival)} gk=${V.guardRaiseK(V.rival)}`);
-check("cache v=296 after stun leftover k live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after stun leftover k live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -9431,7 +9431,7 @@ check("slash frames still 180/140/280 after throw KD leftover destRect plant", V
 check("golpe frames still 120/80/180 after throw KD leftover destRect plant", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after throw KD leftover destRect plant", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after throw KD leftover destRect plant", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after throw KD leftover destRect plant", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after throw KD leftover destRect plant", /game\.js\?v=313/.test(htmlTxt));
 
 function pinThrowKdYou(){
   freezeRivalAI();
@@ -9569,7 +9569,7 @@ check("standing chip stun destRect is still stun flinch after throw KD leftover 
 
 const idleThrowKd = landCloseThrow();
 check("throw knockdown leftover destRect plant live leftover k eases", idleThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0 && V.stunLeftoverPlanting(V.rival)===false && V.throwKdLeftoverPlanting(V.rival) && V.guardRaiseK(V.rival)>0.5 && isHurtSheet(V.rival), `ok=${idleThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)} slp=${V.stunLeftoverPlanting(V.rival)} tkd=${V.throwKdLeftoverPlanting(V.rival)} gk=${V.guardRaiseK(V.rival)} src=${sheetSrc(V.rival)}`);
-check("cache v=296 after throw KD leftover destRect plant live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after throw KD leftover destRect plant live", /game\.js\?v=313/.test(htmlTxt));
 
 check("clash leftover pose fades leftover slash into windup", /function clashPlantFade/.test(srcTxt) && /function clashPlanting/.test(srcTxt) && /Clash leftover pose/.test(srcTxt) && /leftover slash used to pop to windup/.test(srcTxt) && /cancelIntoGolpe/.test(srcTxt) && /cancelIntoSlash/.test(srcTxt) && /sheet cut, not a raise/.test(srcTxt));
 check("clash leftover pose is draw-only leftover", /clashPlantFade/.test(sliceFn(codeOnly, "drawKnight")) && /clashPlantFade/.test(sliceFn(codeOnly, "sheatheFade")) && /clashPlant = !!f\.clashRec/.test(sliceFn(codeOnly, "cancelIntoGolpe")) && /clashPlant = !!f\.clashRec/.test(sliceFn(codeOnly, "cancelIntoSlash")) && !/clashPlantFade/.test(sliceFn(codeOnly, "destRect")) && !/clashPlantFade/.test(sliceFn(codeOnly, "bodyAABB")) && !/clashPlantFade/.test(sliceFn(codeOnly, "poseBitmap")) && !/clashPlantFade/.test(sliceFn(codeOnly, "tickGuardPose")) && !/clashPlantFade/.test(sliceFn(codeOnly, "guardRaiseK")) && !/clashPlantFade/.test(sliceFn(codeOnly, "slashLeftoverPlanting")) && !/clashPlantFade/.test(sliceFn(codeOnly, "landHit")) && !/clashPlantFade/.test(sliceFn(codeOnly, "doClash")));
@@ -9583,7 +9583,7 @@ check("slash frames still 180/140/280 after clash leftover pose", V.STARTUP===18
 check("golpe frames still 120/80/180 after clash leftover pose", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after clash leftover pose", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after clash leftover pose", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after clash leftover pose", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after clash leftover pose", /game\.js\?v=313/.test(htmlTxt));
 
 function pinClashYou(){
   freezeRivalAI();
@@ -9760,7 +9760,7 @@ check("chip stun leftover still snaps clash leftover pose", V.clashPlantFade(V.p
 
 const clThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after clash leftover pose", clThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0 && V.clashPlantFade(V.rival)===0, `ok=${clThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)} fade=${V.clashPlantFade(V.rival)}`);
-check("cache v=296 after clash leftover pose live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after clash leftover pose live", /game\.js\?v=313/.test(htmlTxt));
 
 check("clash-K leftover pose fades leftover slash into windup", /Clash-K leftover slash/.test(srcTxt) && /stick through the K plant/.test(srcTxt) && /boltHoldCut = !fromClash/.test(sliceFn(codeOnly, "cancelIntoBolt")) && /f\.clashPlant = true/.test(sliceFn(codeOnly, "cancelIntoBolt")) && /f\.telegraph = false/.test(sliceFn(codeOnly, "cancelIntoBolt")) && /f\.boltPhase === "startup" \? f\.boltT : f\.phaseT/.test(sliceFn(codeOnly, "clashPlantFade")));
 check("clash-K leftover pose is draw-only leftover", /clashPlantFade/.test(sliceFn(codeOnly, "drawKnight")) && /clashPlantFade/.test(sliceFn(codeOnly, "sheatheFade")) && /clashPlanting\(f\)/.test(sliceFn(codeOnly, "idleBreath")) && !/clashPlantFade/.test(sliceFn(codeOnly, "destRect")) && !/clashPlantFade/.test(sliceFn(codeOnly, "bodyAABB")) && !/clashPlantFade/.test(sliceFn(codeOnly, "poseBitmap")) && !/clashPlantFade/.test(sliceFn(codeOnly, "tickGuardPose")) && !/clashPlantFade/.test(sliceFn(codeOnly, "spawnBolt")));
@@ -9774,7 +9774,7 @@ check("slash frames still 180/140/280 after clash-K leftover pose", V.STARTUP===
 check("golpe frames still 120/80/180 after clash-K leftover pose", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after clash-K leftover pose", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after clash-K leftover pose", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after clash-K leftover pose", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after clash-K leftover pose", /game\.js\?v=313/.test(htmlTxt));
 
 landCloseSlash();
 const scHoldGot = waitUntilBoltWindow("slash");
@@ -9823,7 +9823,7 @@ check("chip stun leftover still snaps clash-K leftover pose", V.clashPlantFade(V
 
 const ckThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after clash-K leftover pose", ckThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0 && V.clashPlantFade(V.rival)===0, `ok=${ckThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)} fade=${V.clashPlantFade(V.rival)}`);
-check("cache v=296 after clash-K leftover pose live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after clash-K leftover pose live", /game\.js\?v=313/.test(htmlTxt));
 
 
 check("connected slash-L leftover sheathe fades leftover sheathe into windup", /function linkPlantFade/.test(srcTxt) && /function linkPlanting/.test(srcTxt) && /Connected slash-L leftover sheathe/.test(srcTxt) && /leftover sheathe overlay used to pop/.test(srcTxt) && /sheatheFade died with recovery/.test(srcTxt));
@@ -9839,7 +9839,7 @@ check("slash frames still 180/140/280 after connected slash-L leftover sheathe",
 check("golpe frames still 120/80/180 after connected slash-L leftover sheathe", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after connected slash-L leftover sheathe", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after connected slash-L leftover sheathe", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after connected slash-L leftover sheathe", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after connected slash-L leftover sheathe", /game\.js\?v=313/.test(htmlTxt));
 
 landCloseSlash();
 const lkGot = waitUntilWindow();
@@ -9912,7 +9912,7 @@ check("chip stun leftover still snaps connected slash-L leftover sheathe", V.lin
 
 const lkThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after connected slash-L leftover sheathe", lkThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0 && V.linkPlantFade(V.rival)===0, `ok=${lkThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)} fade=${V.linkPlantFade(V.rival)}`);
-check("cache v=296 after connected slash-L leftover sheathe live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after connected slash-L leftover sheathe live", /game\.js\?v=313/.test(htmlTxt));
 
 check("special-cancel K leftover sheathe fades leftover sheathe into cut", /function holdCutFade/.test(srcTxt) && /function holdCutPlanting/.test(srcTxt) && /Special-cancel K leftover sheathe/.test(srcTxt) && /leftover recovery sheathe overlay used/.test(srcTxt) && /sheatheFade died with boltPhase/.test(srcTxt) && /Fade leftover sheathe→cut/.test(srcTxt));
 check("special-cancel K leftover sheathe is draw-only leftover", /holdCutFade/.test(sliceFn(codeOnly, "drawKnight")) && /holdCutFade/.test(sliceFn(codeOnly, "sheatheFade")) && /holdCutPlanting\(f\)/.test(sliceFn(codeOnly, "idleBreath")) && /leftoverSheathe = fromClash \? 0 : sheatheFade\(f\)/.test(sliceFn(codeOnly, "cancelIntoBolt")) && /holdCutPlant = true/.test(sliceFn(codeOnly, "cancelIntoBolt")) && !/holdCutFade/.test(sliceFn(codeOnly, "destRect")) && !/holdCutFade/.test(sliceFn(codeOnly, "bodyAABB")) && !/holdCutFade/.test(sliceFn(codeOnly, "poseBitmap")) && !/holdCutFade/.test(sliceFn(codeOnly, "tickGuardPose")) && !/holdCutFade/.test(sliceFn(codeOnly, "guardRaiseK")) && !/holdCutFade/.test(sliceFn(codeOnly, "slashLeftoverPlanting")) && !/holdCutFade/.test(sliceFn(codeOnly, "clashPlantFade")) && !/holdCutFade/.test(sliceFn(codeOnly, "linkPlantFade")) && !/holdCutFade/.test(sliceFn(codeOnly, "landHit")) && !/holdCutFade/.test(sliceFn(codeOnly, "spawnBolt")));
@@ -9928,7 +9928,7 @@ check("slash frames still 180/140/280 after special-cancel K leftover sheathe", 
 check("golpe frames still 120/80/180 after special-cancel K leftover sheathe", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after special-cancel K leftover sheathe", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after special-cancel K leftover sheathe", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after special-cancel K leftover sheathe", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after special-cancel K leftover sheathe", /game\.js\?v=313/.test(htmlTxt));
 
 landCloseSlash();
 const hkGot = waitUntilBoltWindow("slash");
@@ -10028,7 +10028,7 @@ check("chip stun leftover still snaps special-cancel K leftover sheathe", V.hold
 
 const hkThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after special-cancel K leftover sheathe", hkThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0 && V.holdCutFade(V.rival)===0, `ok=${hkThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)} fade=${V.holdCutFade(V.rival)}`);
-check("cache v=296 after special-cancel K leftover sheathe live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after special-cancel K leftover sheathe live", /game\.js\?v=313/.test(htmlTxt));
 
 
 check("super spend freeze leftover eases leftover idle through freeze", /function telegraphFade/.test(srcTxt) && /Super spend freeze leftover/.test(srcTxt) && /leftover idle overlay used to sit/.test(srcTxt) && /boltT frozen at the first raise tick/.test(srcTxt) && /cast puff sat on the windup tip/.test(srcTxt) && /Count freeze as raise time/.test(srcTxt) && /leftover idle does not pop back/.test(srcTxt));
@@ -10043,7 +10043,7 @@ check("slash frames still 180/140/280 after super spend freeze leftover", V.STAR
 check("golpe frames still 120/80/180 after super spend freeze leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after super spend freeze leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after super spend freeze leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after super spend freeze leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after super spend freeze leftover", /game\.js\?v=313/.test(htmlTxt));
 
 bootPlay(); wait(1700);
 freezeRivalAI(); freezeYouAI();
@@ -10140,7 +10140,7 @@ check("chip stun leftover still snaps super spend freeze leftover", V.telegraphF
 
 const sfThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after super spend freeze leftover", sfThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0, `ok=${sfThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)}`);
-check("cache v=296 after super spend freeze leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after super spend freeze leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 check("empty-K leftover destRect plant eases leftover destRect plant", /function boltLeftoverPlanting/.test(srcTxt) && /Empty-K leftover destRect plant/.test(srcTxt) && /startBolt zeroed leftover k/.test(srcTxt) && /leftover destRect plant used to dump/.test(srcTxt) && /hopped off the windup plant/.test(srcTxt) && /Ease leftover k like slash leftover/.test(srcTxt));
 check("empty-K leftover destRect plant is destRect-only ease", /destRect-only ease \(boltLeftoverPlanting\)/.test(srcTxt) && /boltLeftoverPlanting/.test(srcTxt) && /destRect\/AABB planted/.test(srcTxt) && /poseBitmap still windup immediately/.test(srcTxt) && /boltLeftoverPlanting\(f\)/.test(sliceFn(codeOnly, "tickGuardPose")) && /boltLeftoverPlanting\(f\)/.test(sliceFn(codeOnly, "guardRaiseK")) && /Ease leftover k \(boltLeftoverPlanting\)/.test(sliceFn(srcTxt, "startBolt")) && !/guardPoseK = 0/.test(sliceFn(codeOnly, "startBolt")) && !/boltLeftoverPlanting/.test(sliceFn(codeOnly, "destRect")) && !/boltLeftoverPlanting/.test(sliceFn(codeOnly, "bodyAABB")) && !/boltLeftoverPlanting/.test(sliceFn(codeOnly, "poseBitmap")) && !/boltLeftoverPlanting/.test(sliceFn(codeOnly, "slashPose")) && !/boltLeftoverPlanting/.test(sliceFn(codeOnly, "landHit")) && !/boltLeftoverPlanting/.test(sliceFn(codeOnly, "spawnBolt")));
@@ -10154,7 +10154,7 @@ check("slash frames still 180/140/280 after empty-K leftover destRect plant", V.
 check("golpe frames still 120/80/180 after empty-K leftover destRect plant", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after empty-K leftover destRect plant", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after empty-K leftover destRect plant", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after empty-K leftover destRect plant", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after empty-K leftover destRect plant", /game\.js\?v=313/.test(htmlTxt));
 
 function pinBoltYou(){
   freezeRivalAI();
@@ -10297,7 +10297,7 @@ check("chip stun leftover still snaps empty-K leftover destRect plant", V.boltLe
 
 const bkThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after empty-K leftover destRect plant", bkThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0 && V.boltLeftoverPlanting(V.rival)===false, `ok=${bkThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)} bl=${V.boltLeftoverPlanting(V.rival)}`);
-check("cache v=296 after empty-K leftover destRect plant live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after empty-K leftover destRect plant live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v195 throw-from-guard plant leftover: leftover block→windup fade (Space+S) ---
 check("throw-from-guard plant leftover fades leftover block into windup", /function throwGuardPlantFade/.test(srcTxt) && /function throwGuardPlanting/.test(srcTxt) && /Throw-from-guard plant leftover/.test(srcTxt) && /leftover block used to pop to windup/.test(srcTxt) && /Space\+S from guarda was a sheet cut/.test(srcTxt) && /Fade leftover block→windup/.test(srcTxt));
@@ -10314,7 +10314,7 @@ check("slash frames still 180/140/280 after throw-from-guard plant leftover", V.
 check("golpe frames still 120/80/180 after throw-from-guard plant leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after throw-from-guard plant leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after throw-from-guard plant leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after throw-from-guard plant leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after throw-from-guard plant leftover", /game\.js\?v=313/.test(htmlTxt));
 
 function pinThrowYou(){
   freezeRivalAI();
@@ -10409,7 +10409,7 @@ check("chip stun leftover still snaps throw-from-guard plant leftover", V.throwG
 
 const tgThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after throw-from-guard plant leftover", tgThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0 && V.throwGuardPlantFade(V.rival)===0, `ok=${tgThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)} fade=${V.throwGuardPlantFade(V.rival)}`);
-check("cache v=296 after throw-from-guard plant leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after throw-from-guard plant leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v196 walk-out guard drop leftover: block fade survives A/D mid-drop ---
 check("walk-out guard drop leftover keeps fade through walk", /Walk-out guard drop leftover/.test(srcTxt) && /walking used to zero the fade/.test(srcTxt) && /Keep leftover block through leftover guardPoseK/.test(srcTxt) && /same hole wakeup walk-out already closed/.test(srcTxt));
@@ -10423,7 +10423,7 @@ check("slash frames still 180/140/280 after walk-out guard drop leftover", V.STA
 check("golpe frames still 120/80/180 after walk-out guard drop leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after walk-out guard drop leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after walk-out guard drop leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after walk-out guard drop leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after walk-out guard drop leftover", /game\.js\?v=313/.test(htmlTxt));
 
 bootPlay(); wait(1700);
 holdGuardSample();
@@ -10541,7 +10541,7 @@ check("chip stun leftover still snaps walk-out guard drop leftover", V.guardDrop
 
 const woThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after walk-out guard drop leftover", woThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0 && V.guardDropFade(V.rival)===0, `ok=${woThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)} fade=${V.guardDropFade(V.rival)}`);
-check("cache v=296 after walk-out guard drop leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after walk-out guard drop leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v197 tech-from-guard plant leftover: leftover block→windup fade (Space+S tech) ---
 check("tech-from-guard plant leftover fades leftover block into windup", /function techGuardPlantFade/.test(srcTxt) && /function techGuardPlanting/.test(srcTxt) && /Tech-from-guard plant leftover/.test(srcTxt) && /leftover block used to pop to windup/.test(srcTxt) && /Space\+S tech from guarda was a sheet cut/.test(srcTxt) && /Fade leftover block→windup/.test(srcTxt));
@@ -10556,7 +10556,7 @@ check("slash frames still 180/140/280 after tech-from-guard plant leftover", V.S
 check("golpe frames still 120/80/180 after tech-from-guard plant leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after tech-from-guard plant leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after tech-from-guard plant leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after tech-from-guard plant leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after tech-from-guard plant leftover", /game\.js\?v=313/.test(htmlTxt));
 
 bootPlay(); wait(1700);
 holdGuardSample();
@@ -10679,7 +10679,7 @@ check("chip stun leftover still snaps tech-from-guard plant leftover", V.techGua
 
 const tecThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after tech-from-guard plant leftover", tecThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0 && V.techGuardPlantFade(V.rival)===0, `ok=${tecThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)} fade=${V.techGuardPlantFade(V.rival)}`);
-check("cache v=296 after tech-from-guard plant leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after tech-from-guard plant leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v198 feint→guard leftover: leftover windup keeps through S-hold raise ---
 check("feint→guard leftover keeps leftover windup through raise", /Feint→guard leftover/.test(srcTxt) && /leftover windup fade used to die the tick/.test(srcTxt) && /S hold raised guarda mid-pull/.test(srcTxt) && /Keep leftover windup through leftover feintT/.test(srcTxt) && /feintFade gated on guarding/.test(srcTxt));
@@ -10694,7 +10694,7 @@ check("slash frames still 180/140/280 after feint→guard leftover", V.STARTUP==
 check("golpe frames still 120/80/180 after feint→guard leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after feint→guard leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after feint→guard leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after feint→guard leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after feint→guard leftover", /game\.js\?v=313/.test(htmlTxt));
 
 toClose();
 freezeYouAI();
@@ -10811,7 +10811,7 @@ check("rival feint→guard leftover keeps windup on block", V.rival.guarding && 
 
 const fgThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after feint→guard leftover", fgThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0 && V.feintFade(V.rival)===0, `ok=${fgThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)} ff=${V.feintFade(V.rival)}`);
-check("cache v=296 after feint→guard leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after feint→guard leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v199 golpe leftover k: leftover destRect plant eases (L from leftover drop) ---
 check("golpe leftover k eases destRect leftover plant", /function golpeLeftoverPlanting/.test(srcTxt) && /Golpe leftover k/.test(srcTxt) && /leftover destRect plant used to dump/.test(srcTxt) && /startAttack\(golpe\)/.test(srcTxt) && /hopped off the windup plant/.test(srcTxt));
@@ -10826,7 +10826,7 @@ check("slash frames still 180/140/280 after golpe leftover k", V.STARTUP===180 &
 check("golpe frames still 120/80/180 after golpe leftover k", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after golpe leftover k", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after golpe leftover k", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after golpe leftover k", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after golpe leftover k", /game\.js\?v=313/.test(htmlTxt));
 
 function pinGolpeYou(){
   freezeRivalAI();
@@ -10946,7 +10946,7 @@ check("chip stun leftover still snaps golpe leftover k", V.golpeLeftoverPlanting
 
 const glThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after golpe leftover k", glThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0 && V.golpeLeftoverPlanting(V.rival)===false, `ok=${glThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)} gl=${V.golpeLeftoverPlanting(V.rival)}`);
-check("cache v=296 after golpe leftover k live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after golpe leftover k live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v200 feint from leftover drop: leftover block overlay skips through pull ---
 check("feint from leftover drop skips leftover block overlay", /Feint from leftover drop/.test(srcTxt) && /leftover block fade used to sit on the pull/.test(srcTxt) && /startFeint armed from leftover-drop slash/.test(srcTxt) && /Skip leftover block through leftover feintT/.test(srcTxt) && /guardDropFade/.test(srcTxt));
@@ -10961,7 +10961,7 @@ check("slash frames still 180/140/280 after feint from leftover drop", V.STARTUP
 check("golpe frames still 120/80/180 after feint from leftover drop", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after feint from leftover drop", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after feint from leftover drop", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after feint from leftover drop", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after feint from leftover drop", /game\.js\?v=313/.test(htmlTxt));
 
 toClose();
 freezeYouAI();
@@ -11079,7 +11079,7 @@ check("feint from leftover drop rival pull skips leftover block", rFldDid && V.r
 
 const fldThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after feint from leftover drop", fldThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0 && V.guardDropFade(V.rival)===0, `ok=${fldThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)} gf=${V.guardDropFade(V.rival)}`);
-check("cache v=296 after feint from leftover drop live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after feint from leftover drop live", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- v201 idle sheathe leftover: mashy Space/L/K after clash/tech sheathe ---
@@ -11097,7 +11097,7 @@ check("slash frames still 180/140/280 after idle sheathe leftover", V.STARTUP===
 check("golpe frames still 120/80/180 after idle sheathe leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after idle sheathe leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after idle sheathe leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after idle sheathe leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after idle sheathe leftover", /game\.js\?v=313/.test(htmlTxt));
 
 toClose();
 freezeYouAI();
@@ -11188,7 +11188,7 @@ check("connected slash-L leftover sheathe still eases after idle sheathe leftove
 
 const ishThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after idle sheathe leftover", ishThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0, `ok=${ishThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)}`);
-check("cache v=296 after idle sheathe leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after idle sheathe leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v202 spark origin leftover: clash-K / idle-sheathe-K cast puff rides leftover slash tip ---
 check("spark origin leftover eases cast puff with leftover slash fade", /Spark origin leftover/.test(srcTxt) && /clash-K \/ idle-sheathe-K cast puff used to sit on the/.test(srcTxt) && /Ease origin slash→windup/.test(srcTxt) && /castPlantXY/.test(srcTxt));
@@ -11201,7 +11201,7 @@ check("slash frames still 180/140/280 after spark origin leftover", V.STARTUP===
 check("golpe frames still 120/80/180 after spark origin leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after spark origin leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after spark origin leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after spark origin leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after spark origin leftover", /game\.js\?v=313/.test(htmlTxt));
 
 function poseTipWorldX(f, tipX){
   // tipX under plant fades: bladeTipX eases under link/clash fades, so do not
@@ -11300,7 +11300,7 @@ check("spark origin leftover empty K still windup tip", V.player.boltPhase==="st
 
 const soThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after spark origin leftover", soThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0, `ok=${soThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)}`);
-check("cache v=296 after spark origin leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after spark origin leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v205 wakeup→guard leftover: leftover crumple keeps through S-hold raise ---
 check("wakeup→guard leftover keeps leftover crumple through raise", /Wakeup→guard leftover/.test(srcTxt) && /leftover crumple fade used to die the tick/.test(srcTxt) && /S raised mid-getup/.test(srcTxt) && /Keep leftover crumple through leftover throw-invuln/.test(srcTxt) && /wakeupFade gated on guarding/.test(srcTxt));
@@ -11316,7 +11316,7 @@ check("slash frames still 180/140/280 after wakeup→guard leftover", V.STARTUP=
 check("golpe frames still 120/80/180 after wakeup→guard leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after wakeup→guard leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after wakeup→guard leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after wakeup→guard leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after wakeup→guard leftover", /game\.js\?v=313/.test(htmlTxt));
 
 toClose();
 freezeYouAI();
@@ -11413,7 +11413,7 @@ check("wakeup→reversal leftover throw still spends invuln", V.rival.throwInvul
 
 const wgThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after wakeup→guard leftover", wgThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0, `ok=${wgThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)}`);
-check("cache v=296 after wakeup→guard leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after wakeup→guard leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- v206 walk→guard leftover: leftover walk keeps through S-hold raise ---
@@ -11436,14 +11436,14 @@ check("slash frames still 180/140/280 after walk→guard destRect lean leftover"
 check("golpe frames still 120/80/180 after walk→guard destRect lean leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after walk→guard destRect lean leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after walk→guard destRect lean leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after walk→guard destRect lean leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after walk→guard destRect lean leftover", /game\.js\?v=313/.test(htmlTxt));
 check("walk→guard leftover stun still cuts", /Stun still cuts/.test(srcTxt) && /f\.stunT > 0/.test(sliceFn(codeOnly, "walkFade")));
 check("walk→guard leftover is not a new combat verb", V.WALK_SETTLE_MS===160 && V.WALK_STEP_MS===320 && V.HITSTUN===350 && V.THROW_KD_MS===520 && V.HITSTOP_HIT===140 && V.GUARD_COMMIT_MS===140 && V.PUSHBLOCK_STAM===25 && V.PUSHBLOCK_PX===240);
 check("slash frames still 180/140/280 after walk→guard leftover", V.STARTUP===180 && V.ACTIVE===140 && V.RECOVERY===280 && V.LUNGE_PX===36);
 check("golpe frames still 120/80/180 after walk→guard leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after walk→guard leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after walk→guard leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after walk→guard leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after walk→guard leftover", /game\.js\?v=313/.test(htmlTxt));
 
 bootPlay(); wait(1700);
 freezeYouAI(); freezeRivalAI();
@@ -11570,7 +11570,7 @@ check("walk→guard leftover rival AABB planted", Math.abs(V.bodyAABB(V.rival).y
 
 const wgThrowKd2 = landCloseThrow();
 check("throw knockdown still not KO crumple after walk→guard leftover", wgThrowKd2 && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0, `ok=${wgThrowKd2} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)}`);
-check("cache v=296 after walk→guard leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after walk→guard leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- v207 walk→guard destRect lean leftover: leftover lean eases through S-hold raise ---
@@ -11693,7 +11693,7 @@ check("walk→guard destRect lean leftover rival AABB planted", Math.abs(V.bodyA
 
 const wlThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after walk→guard destRect lean leftover", wlThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0, `ok=${wlThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)}`);
-check("cache v=296 after walk→guard destRect lean leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after walk→guard destRect lean leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -11716,7 +11716,7 @@ check("slash frames still 180/140/280 after wakeup→reversal leftover", V.START
 check("golpe frames still 120/80/180 after wakeup→reversal leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after wakeup→reversal leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after wakeup→reversal leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after wakeup→reversal leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after wakeup→reversal leftover", /game\.js\?v=313/.test(htmlTxt));
 
 toClose();
 freezeYouAI();
@@ -11826,7 +11826,7 @@ check("wakeup→guard still keeps crumple after wakeup→reversal leftover", V.p
 
 const wr208ThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after wakeup→reversal leftover", wr208ThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0, `ok=${wr208ThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)}`);
-check("cache v=296 after wakeup→reversal leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after wakeup→reversal leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- v209 feint end destRect leftover: leftover breath no longer dumps when sheatheT zeros ---
@@ -11843,7 +11843,7 @@ check("slash frames still 180/140/280 after feint end destRect leftover", V.STAR
 check("golpe frames still 120/80/180 after feint end destRect leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after feint end destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after feint end destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after feint end destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after feint end destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: feint end does not dump destRect breath
 toClose();
@@ -11924,7 +11924,7 @@ check("feint→guard still keeps windup after feint end destRect leftover", V.pl
 
 const fe209ThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after feint end destRect leftover", fe209ThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0, `ok=${fe209ThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)}`);
-check("cache v=296 after feint end destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after feint end destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- v210 stun end destRect leftover: leftover breath no longer dumps when stunT zeros ---
@@ -11939,7 +11939,7 @@ check("golpe frames still 120/80/180 after stun end destRect leftover", V.GOLPE_
 check("K frames still 200/280 after stun end destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after stun end destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
 check("feint end destRect leftover still skips sheathe amp after stun end", /f\.sheatheT > 0/.test(sliceFn(codeOnly, "idleBreath")) && /amp \* \(1 - feintFade\(f\)\)/.test(sliceFn(codeOnly, "idleBreath")) && !/amp \*= f\.sheatheT \/ SHEATHE_MS/.test(sliceFn(codeOnly, "idleBreath")));
-check("cache v=296 after stun end destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after stun end destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: chip stun end does not dump destRect breath
 toClose();
@@ -12052,7 +12052,7 @@ check("feint end still no breath dump after stun end destRect leftover", fe210Di
 
 const st210ThrowKd = landCloseThrow();
 check("throw knockdown still not KO crumple after stun end destRect leftover", st210ThrowKd && V.rival.hp===80 && V.rival.thrownT>0 && !V.rival.falling && V.crumpleFade(V.rival)===0, `ok=${st210ThrowKd} hp=${V.rival.hp} th=${V.rival.thrownT} cf=${V.crumpleFade(V.rival)}`);
-check("cache v=296 after stun end destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after stun end destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -12071,7 +12071,7 @@ check("K frames still 200/280 after camera punch end leftover", V.BOLT_STARTUP==
 check("no 6th button after camera punch end leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
 check("stun end destRect leftover still eases breath after camera punch end", /f\.stunT > 0/.test(sliceFn(codeOnly, "idleBreath")) && /f\.stunT \/ GUARD_RAISE_MS/.test(sliceFn(codeOnly, "idleBreath")));
 check("feint end destRect leftover still skips sheathe amp after camera punch end", /f\.sheatheT > 0/.test(sliceFn(codeOnly, "idleBreath")) && !/amp \*= f\.sheatheT \/ SHEATHE_MS/.test(sliceFn(codeOnly, "idleBreath")) && /amp \* \(1 - feintFade\(f\)\)/.test(sliceFn(codeOnly, "idleBreath")));
-check("cache v=296 after camera punch end leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after camera punch end leftover", /game\.js\?v=313/.test(htmlTxt));
 
 const punchEndHit = landCloseSlashPunch();
 check("camera punch end leftover arms on hit", punchEndHit && V.hitstopLeft===V.HITSTOP_HIT && V.shake===V.HITSTOP_HIT && V.shakeDur===V.HITSTOP_HIT && V.punchCover()===V.PUNCH_PX, `hit=${punchEndHit} hs=${V.hitstopLeft} shake=${V.shake} cover=${V.punchCover()}`);
@@ -12156,7 +12156,7 @@ for(let i=0;i<10;i++){
 }
 const st211Ddy = V.destRect(V.rival).dy - st211Dy0;
 check("stun end still no breath dump after camera punch end leftover", st211Hit && st211Near && V.rival.stunT===0 && Math.abs(st211Ddy)<0.85, `hit=${st211Hit} near=${st211Near} ddy=${st211Ddy.toFixed(3)} st=${V.rival.stunT}`);
-check("cache v=296 after camera punch end leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after camera punch end leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- v212 idle settle→guard destRect leftover: settle breath keeps suppressed through raise ---
@@ -12175,7 +12175,7 @@ check("no 6th button after idle settle→guard destRect leftover", (htmlTxt.matc
 check("camera punch end leftover still eases after idle settle→guard", /k > 0\.25/.test(sliceFn(codeOnly, "punchCover")) && /PUNCH_PX \* u \* u \* \(3 - 2 \* u\)/.test(sliceFn(codeOnly, "punchCover")));
 check("stun end destRect leftover still eases breath after idle settle→guard", /f\.stunT > 0/.test(sliceFn(codeOnly, "idleBreath")) && /f\.stunT \/ GUARD_RAISE_MS/.test(sliceFn(codeOnly, "idleBreath")));
 check("feint end destRect leftover still skips sheathe amp after idle settle→guard", /f\.sheatheT > 0/.test(sliceFn(codeOnly, "idleBreath")) && !/amp \*= f\.sheatheT \/ SHEATHE_MS/.test(sliceFn(codeOnly, "idleBreath")) && /amp \* \(1 - feintFade\(f\)\)/.test(sliceFn(codeOnly, "idleBreath")));
-check("cache v=296 after idle settle→guard destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after idle settle→guard destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 bootPlay(); wait(1700);
 freezeYouAI(); freezeRivalAI();
@@ -12285,7 +12285,7 @@ const sgPureB1=V.idleBreath(V.player);
 const sgPureRk=V.guardRaiseK(V.player);
 check("pure idle→guard breath not higher than idle", V.player.guarding && Math.abs(sgPureB1)<=Math.abs(sgPureB0)+0.15, `b0=${sgPureB0.toFixed(3)} b1=${sgPureB1.toFixed(3)} rk=${sgPureRk.toFixed(3)}`);
 
-check("cache v=296 after idle settle→guard destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after idle settle→guard destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -12303,7 +12303,7 @@ check("K frames still 200/280 after throw / cut recovery fade leftover", V.BOLT_
 check("no 6th button after throw / cut recovery fade leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
 check("idle settle→guard destRect leftover still max settle\/raise after fade leftover", /Math\.max\(sk, rk\)/.test(sliceFn(codeOnly, "idleBreath")) && /1 - Math\.max\(sk, rk\)/.test(sliceFn(codeOnly, "idleBreath")));
 check("camera punch end leftover still eases after fade leftover", /k > 0\.25/.test(sliceFn(codeOnly, "punchCover")) && /PUNCH_PX \* u \* u \* \(3 - 2 \* u\)/.test(sliceFn(codeOnly, "punchCover")));
-check("cache v=296 after throw / cut recovery fade leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after throw / cut recovery fade leftover", /game\.js\?v=313/.test(htmlTxt));
 
 bootPlay(); wait(1700);
 freezeYouAI(); freezeRivalAI();
@@ -12401,7 +12401,7 @@ check("idle sheathe fade leftover late tick still live under 0.02", isLate && is
 check("idle sheathe fade leftover late tick poseBitmap still slash", isLate && /slash/.test(isSheet), `src=${isSheet}`);
 check("idle sheathe fade leftover idle base gate still > 0", /restSheathe = fade > 0 && !f\.guarding && !restSheatheWalk && ready\(cut\) && ready\(idle\)/.test(sliceFn(codeOnly, "drawKnight")));
 
-check("cache v=296 after throw / cut recovery fade leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after throw / cut recovery fade leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v215 pushblock dust leftover: landBlock 1.0 plant no longer stacks under shove ---
 check("pushblock dust leftover skips landBlock plant when shove owns scrape",
@@ -12421,7 +12421,7 @@ check("golpe frames still 120\/80\/180 after pushblock dust leftover", V.GOLPE_S
 check("K frames still 200\/280 after pushblock dust leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280);
 check("throw\/cut recovery fade leftover idle base gate still > 0 after pushblock dust leftover", /restSheathe = fade > 0 && !f\.guarding && !restSheatheWalk && ready\(cut\) && ready\(idle\)/.test(sliceFn(codeOnly, "drawKnight")));
 check("idle sheathe fade leftover still smoothstep after pushblock dust leftover", /const u = 1 - Math\.max\(0, Math\.min\(1, f\.sheatheT \/ SHEATHE_MS\)\);\s*return 1 - u \* u \* \(3 - 2 \* u\)/.test(sliceFn(codeOnly, "sheatheFade")));
-check("cache v=296 after pushblock dust leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after pushblock dust leftover", /game\.js\?v=313/.test(htmlTxt));
 
 function captureConnectingRivalDust(cut, forcePb){
   armRivalPushblockAI();
@@ -12512,7 +12512,7 @@ const youBlock = (V.plantDust||[]).filter(p=>!p.speck && p.homeYou===true && !p.
 check("pushblock dust leftover player away shove still alone", V.player.guarding && V.player.pushT>0 && youShove.length===1 && youBlock.length===0 && Math.abs((youShove[0].power||0)-V.PUSHBLOCK_FX)<0.01 && (youStPbDust0-V.player.stamina)>=V.PUSHBLOCK_STAM-1, `g=${V.player.guarding} shove=${youShove.length} block=${youBlock.length} pow=${youShove[0]&&youShove[0].power} spent=${(youStPbDust0-V.player.stamina).toFixed(2)}`);
 V.keys.clear();
 
-check("cache v=296 after pushblock dust leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after pushblock dust leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- v216 player pushblock dust leftover: landBlock 1.0 plant culled when shove owns scrape ---
@@ -12537,7 +12537,7 @@ check("player pushblock dust leftover is not a new combat verb",
 check("rival landBlock still skips plant when shove owns scrape after player pushblock dust leftover",
   /let shoved = false/.test(sliceFn(codeOnly, "landBlock"))
   && /if \(!shoved\) spawnPlantDust\(def, 1\.0\)/.test(sliceFn(codeOnly, "landBlock")));
-check("cache v=296 after player pushblock dust leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after player pushblock dust leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // Synthetic: leftover block plant under boot dies when shove owns scrape
 bootPlay(); wait(1700);
@@ -12655,7 +12655,7 @@ freezeYouAI(); freezeRivalAI();
 const pbDustLive216 = captureConnectingRivalDust("slash", true);
 check("player pushblock dust leftover rival shove still scrape-only", pbDustLive216.pb && pbDustLive216.blockN===0 && pbDustLive216.shoveN>0, `pb=${pbDustLive216.pb} block=${pbDustLive216.blockN} shove=${pbDustLive216.shoveN}`);
 
-check("cache v=296 after player pushblock dust leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after player pushblock dust leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -12694,7 +12694,7 @@ check("K frames still 200/280 after clash dust leftover", V.BOLT_STARTUP===200 &
 check("player pushblock dust leftover still culls block plant after clash dust leftover",
   /dropBlockPlantUnderShove\(f\)/.test(sliceFn(codeOnly, "tryPushblock"))
   && /Player pushblock dust leftover/.test(srcTxt));
-check("cache v=296 after clash dust leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after clash dust leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // Synthetic: leftover lunge plants die when clash owns scrape
 bootPlay();
@@ -12713,7 +12713,7 @@ check("clash dust leftover synthetic culls lunge under scrape", clashLunge0>=2 &
 check("clash dust leftover synthetic scrape still 1.2 both boots", clashScrapes.length===2 && clashScrapes.every(p=>Math.abs((p.power||0)-1.2)<0.01), `scrape=${clashScrapes.map(p=>p.power).join(",")}`);
 check("clash dust leftover synthetic specks still fly", clashSpeck0>0 && clashSpeck1>=clashSpeck0, `speck0=${clashSpeck0} speck1=${clashSpeck1}`);
 check("clash dust leftover synthetic AABB planted", Math.abs(V.bodyAABB(V.player).y-clashAabb0.y)<0.05, `dy=${(V.bodyAABB(V.player).y-clashAabb0.y).toFixed(2)}`);
-check("cache v=296 after clash dust leftover synthetic", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after clash dust leftover synthetic", /game\.js\?v=313/.test(htmlTxt));
 
 // Live: both slash into clash — no stacked lunge under choque
 bootPlay();
@@ -12763,7 +12763,7 @@ check("clash dust leftover live clash fires", clashLive && V.player.clashRec && 
 check("clash dust leftover live no stacked lunge under scrape", clashLive && clashLiveLunge===0 && clashLiveScrape>=2, `live=${clashLive} lunge=${clashLiveLunge} scrape=${clashLiveScrape}`);
 check("clash dust leftover live specks still fly", clashLive && clashLiveSpeck>0, `speck=${clashLiveSpeck}`);
 check("clash dust leftover live AABB planted", clashLive && Math.abs(V.bodyAABB(V.player).y-clashLiveAabb0.y)<0.05, `dy=${(V.bodyAABB(V.player).y-clashLiveAabb0.y).toFixed(2)}`);
-check("cache v=296 after clash dust leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after clash dust leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -12829,7 +12829,7 @@ check("remap chord KeyF+Guarda still throw", V.throwEdge===true && V.attackEdge=
 V.resetBindsDefaults();
 check("restablecer restores Space+J", V.binds.slash[0]==="Space" && V.binds.slash.indexOf("KeyJ")>=0, "b="+V.binds.slash);
 
-check("cache v=295 menu remap", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=295 menu remap", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -12893,7 +12893,7 @@ check("damage number leftover is not a new combat verb",
 check("slash frames still 180/140/280 after damage number leftover", V.STARTUP===180 && V.ACTIVE===140 && V.RECOVERY===280 && V.LUNGE_PX===36);
 check("golpe frames still 120/80/180 after damage number leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after damage number leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
-check("cache v=296 after damage number leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after damage number leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // Live: slash connect −N rides hurt through knock (not spawn world xy)
 bootPlay(); wait(1700);
@@ -12943,7 +12943,7 @@ const pivMoved = Math.abs(a1.x - a0.x) > 20;
 check("damage number leftover live rides wound through knock", dmgNum1 && pivMoved && Math.abs(dmgNum1.x - (a1.x + (dmgNum1.plantDX||0))) < 2 && Math.abs(dmgNum1.x - dmgSpawnX) > 15, `x=${dmgNum1&&dmgNum1.x.toFixed(1)} spawn=${dmgSpawnX.toFixed(1)} a1=${a1.x.toFixed(1)} a0=${a0.x.toFixed(1)} moved=${pivMoved}`);
 check("damage number leftover live AABB planted", Math.abs(V.bodyAABB(V.rival).y - dmgAabb0.y) < 0.05, `dy=${(V.bodyAABB(V.rival).y - dmgAabb0.y).toFixed(2)}`);
 check("damage number leftover live rise still fades", dmgNum1 && dmgNum1.t > 0 && dmgNum1.t < V.DMG_NUM_MS && dmgNum1.amt === 10 && dmgNum1.chip === false, `t=${dmgNum1&&dmgNum1.t} amt=${dmgNum1&&dmgNum1.amt}`);
-check("cache v=296 after damage number leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after damage number leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- v224 knife tip plant leftover: throw_knife tip on blade, not helmet / mid-blade ---
@@ -12978,7 +12978,7 @@ check("knife tip plant leftover is not a new combat verb",
 check("slash frames still 180/140/280 after knife tip plant leftover", V.STARTUP===180 && V.ACTIVE===140 && V.RECOVERY===280 && V.LUNGE_PX===36);
 check("golpe frames still 120/80/180 after knife tip plant leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after knife tip plant leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
-check("cache v=296 after knife tip plant leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after knife tip plant leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // Live: idle K puff + tip sit on raised blade (not helmet / sheet-edge)
 bootPlay(); wait(1700);
@@ -13035,7 +13035,7 @@ const krKnifeX = krDest0.dx + 6 * (krDest0.dw / 877);
 // Tip under telegraphFade: bladeTip eases under tele; puff still on throwKnife tip.
 check("knife tip plant leftover live rival puff on forward tip", V.brasaFxKind==="cast" && Math.abs(V.brasaX-krPlant.x)<4 && Math.abs(krPlant.x-krKnifeX)<4 && Math.abs(krPlant.x-krOldMid)>15, `kind=${V.brasaFxKind} plant=${krPlant.x.toFixed(1)} blade=${krBlade.toFixed(1)} knife=${krKnifeX.toFixed(1)} oldMid=${krOldMid.toFixed(1)}`);
 check("knife tip plant leftover live rival AABB planted", Math.abs(V.bodyAABB(V.rival).y-krAabb0.y)<0.05, `dy=${(V.bodyAABB(V.rival).y-krAabb0.y).toFixed(2)}`);
-check("cache v=296 after knife tip plant leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after knife tip plant leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- v225 dart tip plant leftover: idle/walk K dart births on tipY, not chest ---
@@ -13067,7 +13067,7 @@ check("dart tip plant leftover is not a new combat verb",
 check("slash frames still 180/140/280 after dart tip plant leftover", V.STARTUP===180 && V.ACTIVE===140 && V.RECOVERY===280 && V.LUNGE_PX===36);
 check("golpe frames still 120/80/180 after dart tip plant leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after dart tip plant leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
-check("cache v=296 after dart tip plant leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after dart tip plant leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // Live: idle K dart births on knife tip (not chest)
 bootPlay(); wait(1700);
@@ -13145,7 +13145,7 @@ check("dart tip plant leftover live rival births", !!dtrBolt && !!dtrPlantAtBirt
 check("dart tip plant leftover live rival on tip Y", dtrBolt && Math.abs(dtrCy - dtrPlantAtBirth.y) < 4, `cy=${dtrCy.toFixed(1)} plantY=${dtrPlantAtBirth && dtrPlantAtBirth.y.toFixed(1)} chest=${dtrChest0.toFixed(1)}`);
 check("dart tip plant leftover live rival not chest Y", dtrBolt && Math.abs(dtrCy - dtrChest0) > 20, `cy=${dtrCy.toFixed(1)} chest=${dtrChest0.toFixed(1)}`);
 check("dart tip plant leftover live rival AABB planted", Math.abs(V.bodyAABB(V.rival).y - dtrAabb0.y) < 0.05, `dy=${(V.bodyAABB(V.rival).y - dtrAabb0.y).toFixed(2)}`);
-check("cache v=296 after dart tip plant leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after dart tip plant leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 check("slash tip plant leftover seats tipY on opaque tip", /Slash tip plant leftover/.test(srcTxt) && /function bladeTipY/.test(srcTxt) && /bladeTipY\(f\)/.test(srcTxt) && /tipX: 991, tipY: 270/.test(srcTxt) && /tipX: 0, tipY: 338/.test(srcTxt) && /tipX: 884, tipY: 338/.test(srcTxt));
@@ -13158,7 +13158,7 @@ check("slash frames still 180/140/280 after slash tip plant leftover", V.STARTUP
 check("golpe frames still 120/80/180 after slash tip plant leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after slash tip plant leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after slash tip plant leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after slash tip plant leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after slash tip plant leftover", /game\.js\?v=313/.test(htmlTxt));
 
 bootPlay(); wait(1700);
 freezeYouAI(); freezeRivalAI();
@@ -13243,7 +13243,7 @@ const stTipY = V.bladeTipY(V.player);
 const stChestMid = V.bladeBox(V.player).y + V.bladeBox(V.player).h * 0.45;
 check("slash tip plant leftover special-cancel still slash tip X", stHit && stWin && V.player.boltPhase==="startup" && V.player.boltHoldCut===true && Math.abs(stPlant.x-stEdge)<8, `hit=${stHit} win=${stWin} bph=${V.player.boltPhase} hold=${V.player.boltHoldCut} plantX=${stPlant.x.toFixed(1)} tipX=${stEdge.toFixed(1)}`);
 check("slash tip plant leftover special-cancel puff on tipY", stHit && stWin && V.player.boltPhase==="startup" && V.player.boltHoldCut===true && V.brasaFxKind==="cast" && Math.abs(V.brasaY-stTipY)<4 && Math.abs(V.brasaY-stChestMid)>8, `kind=${V.brasaFxKind} by=${V.brasaY.toFixed(1)} tipY=${stTipY.toFixed(1)} mid=${stChestMid.toFixed(1)}`);
-check("cache v=296 after slash tip plant leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after slash tip plant leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -13261,7 +13261,7 @@ check("slash frames still 180/140/280 after opening settle leftover", V.STARTUP=
 check("golpe frames still 120/80/180 after opening settle leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after opening settle leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after opening settle leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after opening settle leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after opening settle leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: drain any leftover settle, then re-arm via openLeft lift
 bootPlay();
@@ -13309,7 +13309,7 @@ const osGbHit = V.player.guardBreakT>0 && V.settleT===V.GUARD_BREAK_SETTLE && V.
 check("opening settle leftover live guard-break arms", osGbHit, `hit=${osGbHit} stt=${V.settleT} max=${V.settleMax} gbt=${V.player.guardBreakT}`);
 check("opening settle leftover live guard-break no dump on arm", osGbHit && Math.abs(V.settleDip())<0.15, `dip=${V.settleDip().toFixed(2)} dip0=${osGbDip0.toFixed(2)}`);
 check("opening settle leftover live guard-break AABB planted", osGbHit && Math.abs(V.bodyAABB(V.player).y-osGbAabb0.y)<0.05, `dy=${(V.bodyAABB(V.player).y-osGbAabb0.y).toFixed(2)}`);
-check("cache v=296 after opening settle leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after opening settle leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v228 block tip plant leftover: guard-break steel on tipY, not chest ---
 check("block tip plant leftover seats tipY on opaque tip",
@@ -13328,7 +13328,7 @@ check("slash frames still 180/140/280 after block tip plant leftover", V.STARTUP
 check("golpe frames still 120/80/180 after block tip plant leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after block tip plant leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after block tip plant leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after block tip plant leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after block tip plant leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: you hold-drain guard-break steel on tipY
 toClose();
@@ -13378,7 +13378,7 @@ V.player.guarding=false; V.player.phase="active"; V.player.phaseT=20; V.player.c
 const btCut0 = V.cutPoint(V.player, V.rival);
 V.landBlock(V.player, V.rival, 1);
 check("block tip plant leftover cut-block still cutPoint", V.steelFlashT>0 && Math.abs(V.steelX-btCut0.x)<12 && Math.abs(V.steelY-btCut0.y)<12, `steel=${V.steelX.toFixed(1)},${V.steelY.toFixed(1)} cut=${btCut0.x.toFixed(1)},${btCut0.y.toFixed(1)}`);
-check("cache v=296 after block tip plant leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after block tip plant leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- v229 block steel X plant leftover: guard-break steel on tipX, not chest fraction ---
@@ -13398,7 +13398,7 @@ check("slash frames still 180/140/280 after block steel X plant leftover", V.STA
 check("golpe frames still 120/80/180 after block steel X plant leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after block steel X plant leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after block steel X plant leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after block steel X plant leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after block steel X plant leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: you hold-drain steel X on opaque tip (near chest — ~6px)
 toClose();
@@ -13485,7 +13485,7 @@ V.player.guarding=false; V.player.phase="active"; V.player.phaseT=20; V.player.c
 const sxCut0 = V.cutPoint(V.player, V.rival);
 V.landBlock(V.player, V.rival, 1);
 check("block steel X plant leftover cut-block still cutPoint", V.steelFlashT>0 && Math.abs(V.steelX-sxCut0.x)<12 && Math.abs(V.steelY-sxCut0.y)<12, `steel=${V.steelX.toFixed(1)},${V.steelY.toFixed(1)} cut=${sxCut0.x.toFixed(1)},${sxCut0.y.toFixed(1)}`);
-check("cache v=296 after block steel X plant leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after block steel X plant leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v230 guard-break steel sync leftover: tip plant rides wound, not blade∩body mid ---
 check("guard-break steel sync leftover seats tipRide",
@@ -13502,7 +13502,7 @@ check("slash frames still 180/140/280 after guard-break steel sync leftover", V.
 check("golpe frames still 120/80/180 after guard-break steel sync leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after guard-break steel sync leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after guard-break steel sync leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after guard-break steel sync leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after guard-break steel sync leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: rival hold-drain tip plant sticks through sync (was ~37px hop onto blade∩body mid)
 toClose();
@@ -13583,7 +13583,7 @@ V.tripGuardBreak(V.rival, V.player);
 check("guard-break steel sync leftover live cut-block no tipRide", V.rival.guardBreakT>0 && V.steelFlashT>0 && V.steelTipRide===false, `gbt=${V.rival.guardBreakT} tipRide=${V.steelTipRide}`);
 V.syncSteelFlash();
 check("guard-break steel sync leftover live cut-block still cutPoint", V.steelFlashT>0 && Math.abs(V.steelX-gsCut0.x)<12 && Math.abs(V.steelY-gsCut0.y)<12, `steel=${V.steelX.toFixed(1)},${V.steelY.toFixed(1)} cut=${gsCut0.x.toFixed(1)},${gsCut0.y.toFixed(1)}`);
-check("cache v=296 after guard-break steel sync leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after guard-break steel sync leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- v231 windup tip plant leftover: cocked tip on opaque tip, not empty air ---
@@ -13618,7 +13618,7 @@ check("slash frames still 180/140/280 after windup tip plant leftover", V.STARTU
 check("golpe frames still 120/80/180 after windup tip plant leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after windup tip plant leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after windup tip plant leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after windup tip plant leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after windup tip plant leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: you slash startup tip on cocked opaque tip (was empty air 323/55)
 toClose();
@@ -13753,7 +13753,7 @@ V.player.phase="active"; V.player.phaseT=20; V.player.cut="slash"; V.player.guar
 const wuSlashSheet = V.poseSheet(V.player);
 check("windup tip plant leftover live slash tip unchanged", wuSlashSheet.tipX===991 && wuSlashSheet.tipY===270, `tip=${wuSlashSheet.tipX}/${wuSlashSheet.tipY}`);
 
-check("cache v=296 after windup tip plant leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after windup tip plant leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -13769,7 +13769,7 @@ check("slash frames still 180/140/280 after cut recovery destRect leftover", V.S
 check("golpe frames still 120/80/180 after cut recovery destRect leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after cut recovery destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after cut recovery destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after cut recovery destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after cut recovery destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: slash recovery stays breath 0; idle arm eases without dump
 toClose();
@@ -13932,7 +13932,7 @@ V.player.phase="recovery"; V.player.phaseT=40; V.player.cut="throw"; V.player.cl
 V.player.boltPhase=""; V.player.stunT=0; V.player.guarding=false; V.player.sheatheT=0; V.player.feintT=0; V.player.cutRecBreathT=0;
 check("cut recovery destRect leftover live throw still throwPlantFade", V.throwPlantFade(V.player)>0.5 && V.sheatheFade(V.player)===0 && V.player.cutRecBreathT===0, `tf=${V.throwPlantFade(V.player)} sf=${V.sheatheFade(V.player)} cbt=${V.player.cutRecBreathT}`);
 
-check("cache v=296 after cut recovery destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after cut recovery destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -13949,7 +13949,7 @@ check("slash frames still 180/140/280 after clash sheathe destRect leftover", V.
 check("golpe frames still 120/80/180 after clash sheathe destRect leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after clash sheathe destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after clash sheathe destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after clash sheathe destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after clash sheathe destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: clash recovery→idle keeps breath 0 (no seat on sheathe arm)
 toClose();
@@ -14106,7 +14106,7 @@ for(let i=0;i<160;i++){
 check("clash sheathe destRect leftover live rival recovery breath 0", cs233RRec && Math.abs(cs233RRecBr)<0.05, `rec=${cs233RRec} br=${cs233RRecBr.toFixed(3)}`);
 check("clash sheathe destRect leftover live rival sheathe end arms cutRecBreathT", cs233REnd && cs233REndCbt>0 && cs233REndCbt<=V.GUARD_RAISE_MS && Math.abs(cs233REndBr)<0.5, `end=${cs233REnd} cbt=${cs233REndCbt} br=${cs233REndBr.toFixed(3)}`);
 
-check("cache v=296 after clash sheathe destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after clash sheathe destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -14125,7 +14125,7 @@ check("slash frames still 180/140/280 after cut recovery settle→guard destRect
 check("golpe frames still 120/80/180 after cut recovery settle→guard destRect leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after cut recovery settle→guard destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after cut recovery settle→guard destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after cut recovery settle→guard destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after cut recovery settle→guard destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: S mid-cutRecBreath holds suppress (no seat), AABB planted
 toClose();
@@ -14197,7 +14197,7 @@ check("cut recovery settle→guard destRect leftover live idle ease still climbs
 // rival shares idleBreath max(ck,rk) + tickCutRecBreath (no kind gate)
 check("cut recovery settle→guard destRect leftover rival idleBreath shared", /Math\.max\(ck, rk\)/.test(sliceFn(codeOnly, "idleBreath")) && /tickCutRecBreath\(rival/.test(srcTxt) && /function tickCutRecBreath/.test(srcTxt) && !/f\.kind === "you"/.test(sliceFn(codeOnly, "tickCutRecBreath")));
 
-check("cache v=296 after cut recovery settle→guard destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after cut recovery settle→guard destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -14218,7 +14218,7 @@ check("slash frames still 180/140/280 after cut recovery settle→walk destRect 
 check("golpe frames still 120/80/180 after cut recovery settle→walk destRect leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after cut recovery settle→walk destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after cut recovery settle→walk destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after cut recovery settle→walk destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after cut recovery settle→walk destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: walk through cutRec keeps suppress (no mid-stride seat), AABB planted
 toClose();
@@ -14323,7 +14323,7 @@ check("cut recovery settle→walk destRect leftover live guard path still holds"
 // rival shares idleBreath max(ck,wk) + tickCutRecBreath walk branch (no kind gate)
 check("cut recovery settle→walk destRect leftover rival idleBreath shared", /Math\.max\(ck, wk\)/.test(sliceFn(codeOnly, "idleBreath")) && /walkRiseK\(f\) >= ck/.test(sliceFn(codeOnly, "tickCutRecBreath")) && /tickCutRecBreath\(rival/.test(srcTxt) && !/f\.kind === "you"/.test(sliceFn(codeOnly, "tickCutRecBreath")));
 
-check("cache v=296 after cut recovery settle→walk destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after cut recovery settle→walk destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -14345,7 +14345,7 @@ check("slash frames still 180/140/280 after feint settle→guard destRect leftov
 check("golpe frames still 120/80/180 after feint settle→guard destRect leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after feint settle→guard destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after feint settle→guard destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after feint settle→guard destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after feint settle→guard destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: raise mid-feint keeps suppress (no seat / dump), AABB planted
 toClose();
@@ -14429,7 +14429,7 @@ check("feint settle→guard destRect leftover live idle feint still climbs", fsg
 // rival shares idleBreath max(fk,rk) (no kind gate)
 check("feint settle→guard destRect leftover rival idleBreath shared", /Math\.max\(fk, rk\)/.test(sliceFn(codeOnly, "idleBreath")) && /const fk = feintFade\(f\)/.test(sliceFn(codeOnly, "idleBreath")) && /const rk = guardRaiseK\(f\)/.test(sliceFn(codeOnly, "idleBreath")) && /f\.feintT > 0/.test(sliceFn(codeOnly, "idleBreath")) && /startFeint\(f\)/.test(srcTxt));
 
-check("cache v=296 after feint settle→guard destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after feint settle→guard destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -14449,7 +14449,7 @@ check("slash frames still 180/140/280 after feint settle→walk destRect leftove
 check("golpe frames still 120/80/180 after feint settle→walk destRect leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after feint settle→walk destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after feint settle→walk destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after feint settle→walk destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after feint settle→walk destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: walk through mid-feint keeps suppress (no mid-stride seat / dump), AABB planted
 toClose();
@@ -14565,7 +14565,7 @@ check("feint settle→walk destRect leftover live guard path still holds", fsg23
 // rival shares idleBreath feint keep-0 walk-out (no kind gate); plant-release supersedes max(fk,wk)
 check("feint settle→walk destRect leftover rival idleBreath shared", /walking\(f\) \|\| recoveryWalkOut\(f\) \|\| f\.walkFadeHold > 0\.02/.test(sliceFn(codeOnly, "idleBreath")) && /f\.feintT > 0/.test(sliceFn(codeOnly, "idleBreath")) && /return amp \* \(1 - feintFade\(f\)\)/.test(sliceFn(codeOnly, "idleBreath")) && /startFeint\(f\)/.test(srcTxt) && !/f\.kind === "you"/.test(sliceFn(codeOnly, "idleBreath").slice(sliceFn(codeOnly, "idleBreath").indexOf("if (f.feintT > 0)"), sliceFn(codeOnly, "idleBreath").indexOf("if (f.feintT > 0)")+280)));
 
-check("cache v=296 after feint settle→walk destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after feint settle→walk destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -14588,7 +14588,7 @@ check("slash frames still 180/140/280 after clash sheathe settle→walk destRect
 check("golpe frames still 120/80/180 after clash sheathe settle→walk destRect leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after clash sheathe settle→walk destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after clash sheathe settle→walk destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after clash sheathe settle→walk destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after clash sheathe settle→walk destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: walk through mid-sheathe keeps suppress (no mid-stride seat), AABB planted
 toClose();
@@ -14706,7 +14706,7 @@ check("clash sheathe settle→walk destRect leftover live rise-full stays suppre
 // rival shares tickSheathe arm (no kind gate)
 check("clash sheathe settle→walk destRect leftover rival tickSheathe shared", /tickSheathe\(rival/.test(srcTxt) && /f\.cutRecBreathT = GUARD_RAISE_MS/.test(sliceFn(codeOnly, "tickSheathe")) && !/f\.kind === "you"/.test(sliceFn(codeOnly, "tickSheathe")) && /Math\.max\(ck, wk\)/.test(sliceFn(codeOnly, "idleBreath")));
 
-check("cache v=296 after clash sheathe settle→walk destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after clash sheathe settle→walk destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v239 clash sheathe settle→guard destRect leftover: arm cutRec mid-raise ---
 check("clash sheathe settle→guard destRect leftover seats no breath mid-raise", /Clash sheathe settle→guard destRect leftover/.test(srcTxt) && /leftover sheathe end used to/.test(srcTxt) && /seat ~0\.43 mid-raise/.test(srcTxt) && /skipped cutRecBreathT when guarding/.test(srcTxt) && /Same[\s\S]{0,40}hole clash sheathe settle→walk/.test(srcTxt) && /Arm cutRecBreathT when sheathe/.test(srcTxt) && /Math\.max\(ck, rk\)/.test(sliceFn(codeOnly, "idleBreath")));
@@ -14724,7 +14724,7 @@ check("slash frames still 180/140/280 after clash sheathe settle→guard destRec
 check("golpe frames still 120/80/180 after clash sheathe settle→guard destRect leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after clash sheathe settle→guard destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after clash sheathe settle→guard destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after clash sheathe settle→guard destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after clash sheathe settle→guard destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: raise through mid-sheathe keeps suppress (no mid-raise seat), AABB planted
 toClose();
@@ -14873,7 +14873,7 @@ check("clash sheathe settle→guard destRect leftover live walk mid-end still ar
 // rival shares tickSheathe arm (no kind gate)
 check("clash sheathe settle→guard destRect leftover rival tickSheathe shared", /tickSheathe\(rival/.test(srcTxt) && /f\.cutRecBreathT = GUARD_RAISE_MS/.test(sliceFn(codeOnly, "tickSheathe")) && !/f\.kind === "you"/.test(sliceFn(codeOnly, "tickSheathe")) && /Math\.max\(ck, rk\)/.test(sliceFn(codeOnly, "idleBreath")));
 
-check("cache v=296 after clash sheathe settle→guard destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after clash sheathe settle→guard destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- v240 wakeup settle→walk destRect leftover: keep 0 through walk-out getup; arm cutRec mid-end ---
@@ -14892,7 +14892,7 @@ check("slash frames still 180/140/280 after wakeup settle→walk destRect leftov
 check("golpe frames still 120/80/180 after wakeup settle→walk destRect leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after wakeup settle→walk destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after wakeup settle→walk destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after wakeup settle→walk destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after wakeup settle→walk destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: walk through getup keeps suppress (no mid-stride seat), AABB planted
 toClose();
@@ -15024,7 +15024,7 @@ check("wakeup settle→walk destRect leftover live guard AABB planted", wsw240Gu
 // rival shares tickThrowState arm (no kind gate)
 check("wakeup settle→walk destRect leftover rival tickThrowState shared", /tickThrowState\(rival/.test(srcTxt) && /f\.cutRecBreathT = GUARD_RAISE_MS/.test(sliceFn(codeOnly, "tickThrowState")) && !/f\.kind === "you"/.test(sliceFn(codeOnly, "tickThrowState")) && /Math\.max\(ck, wk\)/.test(sliceFn(codeOnly, "idleBreath")));
 
-check("cache v=296 after wakeup settle→walk destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after wakeup settle→walk destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v241 throw plant end destRect leftover: stay on plant ease through recovery (no fade~0 cliff) ---
 check("throw plant end destRect leftover seats no fade~0 hard-zero cliff", /Throw plant end destRect leftover/.test(srcTxt) && /fall through to/.test(srcTxt) && /phase!==idle hard-zero/.test(srcTxt) && /fade hit ~0/.test(srcTxt) && /last recovery frame/.test(srcTxt) && /dumped[\s\S]{0,40}~1\.6/.test(srcTxt) && /seated full on idle/.test(srcTxt) && /Stay on[\s\S]{0,40}plant ease through throw recovery/.test(srcTxt));
@@ -15040,7 +15040,7 @@ check("golpe frames still 120/80/180 after throw plant end destRect leftover", V
 check("K frames still 200/280 after throw plant end destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("throw frames still 80/40/220 after throw plant end destRect leftover", V.THROW_STARTUP===80 && V.THROW_ACTIVE===40 && V.THROW_RECOVERY===220 && V.THROW_RANGE===120);
 check("no 6th button after throw plant end destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after throw plant end destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after throw plant end destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: late throw recovery → idle has no fade~0 breath cliff / destRect hop
 toClose();
@@ -15146,7 +15146,7 @@ for(let i=0;i<16;i++){
 check("throw plant end destRect leftover live dart plant still eases", tpe241BoltAmp && tpe241BoltFade0>0.5 && tpe241BoltUp, `ready=${tpe241BoltAmp} fade0=${tpe241BoltFade0.toFixed(3)} br0=${tpe241BoltBr0.toFixed(3)} br1=${tpe241BoltBr1.toFixed(3)} up=${tpe241BoltUp}`);
 
 check("throw plant end destRect leftover rival idleBreath shared", /idleBreath\(rival/.test(srcTxt) || /idleBreath\(f\)/.test(srcTxt));
-check("cache v=296 after throw plant end destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after throw plant end destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -15168,7 +15168,7 @@ check("slash frames still 180/140/280 after guard drop settle→walk destRect le
 check("golpe frames still 120/80/180 after guard drop settle→walk destRect leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after guard drop settle→walk destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after guard drop settle→walk destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after guard drop settle→walk destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after guard drop settle→walk destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: walk mid-drop keeps suppress (no mid-stride seat), AABB planted
 toClose();
@@ -15292,7 +15292,7 @@ const gdw242SheetFade=V.guardDropFade(V.player);
 check("guard drop settle→walk destRect leftover live walk-out sheet still holds", gdw242SheetFade>0.5 && V.player.gait===-1 && V.player.guardPoseK>0 && V.player.guarding===false, `fade=${gdw242SheetFade.toFixed(3)} gait=${V.player.gait} gk=${V.player.guardPoseK.toFixed(3)}`);
 
 check("guard drop settle→walk destRect leftover rival idleBreath shared", /idleBreath\(rival/.test(srcTxt) || /idleBreath\(f\)/.test(srcTxt));
-check("cache v=296 after guard drop settle→walk destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after guard drop settle→walk destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v243 damage number trail leftover: ghosts along rise path (draw-only) ---
 check("damage number trail leftover seats no single-glyph teleport hop", /Damage number trail leftover/.test(srcTxt) && /rise as a single glyph/.test(srcTxt) && /teleport hop/.test(srcTxt) && /not a streak/.test(srcTxt) && /Ghosts along the rise path/.test(srcTxt) && /live −N still on top/.test(srcTxt));
@@ -15306,7 +15306,7 @@ check("slash frames still 180/140/280 after damage number trail leftover", V.STA
 check("golpe frames still 120/80/180 after damage number trail leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after damage number trail leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after damage number trail leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after damage number trail leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after damage number trail leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: trail ghosts sit below live −N along rise; ride still plants on wound
 toClose();
@@ -15358,7 +15358,7 @@ V.spawnDmgNum(640, 360, 2, true, V.rival);
 const dnt243Chip = V.dmgNums[0];
 check("damage number trail leftover live chip still spawns", dnt243Chip && dnt243Chip.amt===2 && dnt243Chip.chip===true && dnt243Chip.homeYou===false, `chip=${!!dnt243Chip} amt=${dnt243Chip&&dnt243Chip.amt}`);
 
-check("cache v=296 after damage number trail leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after damage number trail leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v244 special dart trail leftover: ghosts along flight path (draw-only) ---
 check("special dart trail leftover seats no single-body teleport hop", /Special dart trail leftover/.test(srcTxt) && /fly as a single body/.test(srcTxt) && /teleport hop across the yard/.test(srcTxt) && /not a streak/.test(srcTxt) && /Ghosts along the flight path/.test(srcTxt) && /live dart still on top/.test(srcTxt));
@@ -15372,7 +15372,7 @@ check("slash frames still 180/140/280 after special dart trail leftover", V.STAR
 check("golpe frames still 120/80/180 after special dart trail leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after special dart trail leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after special dart trail leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after special dart trail leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after special dart trail leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: empty K dart flies; trail step ghosts behind; fighters AABB planted
 toClose();
@@ -15432,7 +15432,7 @@ for(let i=0;i<120;i++){
 check("special dart trail leftover live super birth", sdt244SuperOk && V.bolt && V.bolt.super===true && V.bolt.w===V.BOLT_SUPER_W && /bolt\.super \? 18 : 12/.test(sliceFn(codeOnly, "drawBolt")) && /bolt\.super && !ghost/.test(sliceFn(codeOnly, "drawBoltBody")), `ok=${sdt244SuperOk} super=${V.bolt&&V.bolt.super} w=${V.bolt&&V.bolt.w}`);
 
 check("special dart trail leftover rival draw shared", /function drawBolt/.test(srcTxt) && /bolt\.facing/.test(sliceFn(codeOnly, "drawBolt")));
-check("cache v=296 after special dart trail leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after special dart trail leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v245 meter fill flash leftover: pulse well on stock land (draw-only) ---
 check("meter fill flash leftover seats no silent full pop", /Meter fill flash leftover/.test(srcTxt) && /full brasa pip used to pop/.test(srcTxt) && /gainMeter crossed/.test(srcTxt) && /hard-zeroed while full/.test(srcTxt) && /only spend armed meterFlashT/.test(srcTxt) && /spend freeze already flashes/.test(srcTxt) && /Arm meterFlashT on fill-to-full/.test(srcTxt));
@@ -15446,7 +15446,7 @@ check("slash frames still 180/140/280 after meter fill flash leftover", V.STARTU
 check("golpe frames still 120/80/180 after meter fill flash leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after meter fill flash leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after meter fill flash leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after meter fill flash leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after meter fill flash leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: fill-to-full arms flash; partial stays quiet; spend still flashes empty; AABB planted
 bootPlay(); wait(1700);
@@ -15486,7 +15486,7 @@ check("meter fill flash leftover live spend still flashes", V.player.boltPhase==
 V.rival.meter=80; V.rival.meterFlashT=0;
 V.gainMeter(V.rival, V.METER_HIT);
 check("meter fill flash leftover rival fill arms", V.rival.meter===V.METER_MAX && V.rival.meterFlashT===V.METER_FLASH_MS && V.meterFlashK(V.rival)>0.9, `m=${V.rival.meter} ft=${V.rival.meterFlashT} k=${V.meterFlashK(V.rival)}`);
-check("cache v=296 after meter fill flash leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after meter fill flash leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v246 yard switch pop leftover: Escenarios crossfade prev→next (draw-only) ---
 check("yard switch pop leftover seats no hard-cut patio pop", /Yard switch pop leftover/.test(srcTxt) && /Escenarios used to hard-cut/.test(srcTxt) && /courtyard the same tick/.test(srcTxt) && /setYardIndex armed/.test(srcTxt) && /yard popped/.test(srcTxt) && /a cut, not a settle/.test(srcTxt) && /Crossfade prev→next/.test(srcTxt) && /YARD_SWITCH_MS/.test(srcTxt));
@@ -15502,7 +15502,7 @@ check("slash frames still 180/140/280 after yard switch pop leftover", V.STARTUP
 check("golpe frames still 120/80/180 after yard switch pop leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after yard switch pop leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after yard switch pop leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after yard switch pop leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after yard switch pop leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: change yard arms fade; same yard quiet; drains; AABB planted; rematch path quiet
 bootPlay(); wait(400);
@@ -15544,7 +15544,7 @@ check("yard switch pop leftover live rematch keeps yard quiet", V.yardIndex===ys
 const ysp246Hit = landCloseSlashPunch();
 check("yard switch pop leftover live punch cover still arms", ysp246Hit && V.hitstopLeft>0 && V.shake>0 && V.punchCover()===V.PUNCH_PX, `hit=${ysp246Hit} cover=${V.punchCover()} shake=${V.shake} hs=${V.hitstopLeft}`);
 
-check("cache v=296 after yard switch pop leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after yard switch pop leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v247 title music pop leftover: crossfade title↔duel beds (juice-only) ---
 check("title music pop leftover seats no hard-cut bed pop", /Title music pop leftover/.test(srcTxt) && /hard-cut/.test(srcTxt) && /pause one \/ play the/.test(srcTxt) && /KO→over/.test(srcTxt) && /rematch/.test(srcTxt) && /Esc→title/.test(srcTxt) && /a pop, not a settle/.test(srcTxt) && /Crossfade beds over MUSIC_FADE_MS/.test(srcTxt));
@@ -15561,7 +15561,7 @@ check("slash frames still 180/140/280 after title music pop leftover", V.STARTUP
 check("golpe frames still 120/80/180 after title music pop leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after title music pop leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after title music pop leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after title music pop leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after title music pop leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: KO→over arms title fade; rematch arms duel fade; falling keeps duel; AABB planted
 bootPlay(); wait(200);
@@ -15608,7 +15608,7 @@ V.musicBed = "duel"; V.musicFadeFrom = ""; V.musicFadeT = 0;
 V.goTitleFromPlay();
 check("title music pop leftover live Esc→title arms fade", V.mode==="title" && V.musicBed==="title" && V.musicFadeFrom==="duel" && V.musicFadeT===V.MUSIC_FADE_MS, `mode=${V.mode} bed=${V.musicBed} from=${V.musicFadeFrom} t=${V.musicFadeT}`);
 
-check("cache v=296 after title music pop leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after title music pop leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v248 knife plant end destRect leftover: stay on plant ease through bolt recovery ---
 check("knife plant end destRect leftover seats no fade~0 hard-zero cliff", /Knife plant end destRect leftover/.test(srcTxt) && /boltPlantFade >0 gate used to/.test(srcTxt) && /fall through/.test(srcTxt) && /fade hit ~0/.test(srcTxt) && /last recovery frame/.test(srcTxt) && /Throw plant end already stayed/.test(srcTxt) && /Stay on[\s\S]{0,40}plant ease through bolt recovery/.test(srcTxt));
@@ -15624,7 +15624,7 @@ check("slash frames still 180/140/280 after knife plant end destRect leftover", 
 check("golpe frames still 120/80/180 after knife plant end destRect leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after knife plant end destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after knife plant end destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after knife plant end destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after knife plant end destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: late knife recovery → idle has no fade~0 breath cliff / destRect hop
 toClose();
@@ -15731,7 +15731,7 @@ for(let i=0;i<20;i++){
 check("knife plant end destRect leftover live throw plant still eases", kpe248ThrowAmp && kpe248ThrowFade0>0.7 && kpe248ThrowUp, `ready=${kpe248ThrowAmp} fade0=${kpe248ThrowFade0.toFixed(3)} br0=${kpe248ThrowBr0.toFixed(3)} br1=${kpe248ThrowBr1.toFixed(3)} up=${kpe248ThrowUp}`);
 
 check("knife plant end destRect leftover rival idleBreath shared", /idleBreath\(rival/.test(srcTxt) || /f\.boltPhase === "recovery" && !holdingCutBolt\(f\)/.test(sliceFn(codeOnly, "idleBreath")));
-check("cache v=296 after knife plant end destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after knife plant end destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -15751,7 +15751,7 @@ check("slash frames still 180/140/280 after feint walk-out pose leftover", V.STA
 check("golpe frames still 120/80/180 after feint walk-out pose leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after feint walk-out pose leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after feint walk-out pose leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after feint walk-out pose leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after feint walk-out pose leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D mid-feint rests windup on walk (no idle base while gaitWalkOn)
 toClose();
@@ -15818,7 +15818,7 @@ check("feint walk-out pose leftover live idle pull still idle", fwo249IdleOk && 
 
 // live: rival shares drawKnight restFeintWalk
 check("feint walk-out pose leftover rival draw shared", /restFeintWalk/.test(sliceFn(codeOnly, "drawKnight")) && /gaitWalkOn\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /startFeint\(f\)/.test(srcTxt) && /rivalTryFeint/.test(srcTxt));
-check("cache v=296 after feint walk-out pose leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after feint walk-out pose leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -15836,7 +15836,7 @@ check("slash frames still 180/140/280 after sheathe walk-out pose leftover", V.S
 check("golpe frames still 120/80/180 after sheathe walk-out pose leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after sheathe walk-out pose leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after sheathe walk-out pose leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after sheathe walk-out pose leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after sheathe walk-out pose leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D mid-sheathe rests slash on walk (poseBitmap walk; sheathing skipped)
 toClose();
@@ -15925,7 +15925,7 @@ check("sheathe walk-out pose leftover live sheathe→guard still block", swo250G
 
 // live: rival shares drawKnight restSheatheWalk
 check("sheathe walk-out pose leftover rival draw shared", /restSheatheWalk/.test(sliceFn(codeOnly, "drawKnight")) && /gaitWalkOn\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /sheathing\(f\)/.test(srcTxt));
-check("cache v=296 after sheathe walk-out pose leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after sheathe walk-out pose leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -15946,7 +15946,7 @@ check("slash frames still 180/140/280 after wakeup walk-out pose leftover", V.ST
 check("golpe frames still 120/80/180 after wakeup walk-out pose leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after wakeup walk-out pose leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after wakeup walk-out pose leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after wakeup walk-out pose leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after wakeup walk-out pose leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D mid-getup rests crumple on walk (poseBitmap walk; wakeupFade live)
 toClose();
@@ -16039,7 +16039,7 @@ check("wakeup walk-out pose leftover live wakeup→guard still block", wwo251Gua
 
 // live: rival shares drawKnight restWakeWalk
 check("wakeup walk-out pose leftover rival draw shared", /restWakeWalk/.test(sliceFn(codeOnly, "drawKnight")) && /gaitWalkOn\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /wakeupFade\(f\)/.test(srcTxt) && /throwInvulnT/.test(srcTxt));
-check("cache v=296 after wakeup walk-out pose leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after wakeup walk-out pose leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v252 guard drop walk-out pose leftover: rest block on walk when gaitWalkOn ---
 check("guard drop walk-out pose leftover seats no idle dump mid-stride", /Guard drop walk-out pose leftover/.test(srcTxt) && /leftover block used to rest on idle/.test(srcTxt) && /gaitWalkOn already flipped poseBitmap to walk/.test(srcTxt) && /A\/D mid-drop/.test(srcTxt) && /rival same/.test(srcTxt) && /popped the passing sheet/.test(srcTxt) && /fade[\s\S]{0,20}dropped under 0\.02/.test(srcTxt));
@@ -16055,7 +16055,7 @@ check("slash frames still 180/140/280 after guard drop walk-out pose leftover", 
 check("golpe frames still 120/80/180 after guard drop walk-out pose leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after guard drop walk-out pose leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after guard drop walk-out pose leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after guard drop walk-out pose leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after guard drop walk-out pose leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D mid-drop rests block on walk (poseBitmap walk; guardDropFade live)
 bootPlay(); wait(1700);
@@ -16137,7 +16137,7 @@ check("guard drop walk-out pose leftover live raise still block", gwo252RaiseOk 
 
 // live: rival shares drawKnight restGuardWalk
 check("guard drop walk-out pose leftover rival draw shared", /restGuardWalk/.test(sliceFn(codeOnly, "drawKnight")) && /gaitWalkOn\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /guardDropFade\(f\)/.test(srcTxt) && /guardPoseK/.test(srcTxt));
-check("cache v=296 after guard drop walk-out pose leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after guard drop walk-out pose leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v253 link plant sword raise leftover: Space/L/throw after sheathe rests windup not knife ---
 check("link plant sword raise leftover seats no knife snap mid-raise", /Link plant sword raise leftover/.test(srcTxt) && /leftover sheathe→windup used throw_knife/.test(srcTxt) && /boltPlant prefers knife/.test(srcTxt) && /mashy Space\/L\/throw after clash\/tech/.test(srcTxt) && /faded idle\+slash into knife then snapped windup/.test(srcTxt) && /fade dropped under 0\.02/.test(srcTxt));
@@ -16152,7 +16152,7 @@ check("slash frames still 180/140/280 after link plant sword raise leftover", V.
 check("golpe frames still 120/80/180 after link plant sword raise leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after link plant sword raise leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after link plant sword raise leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after link plant sword raise leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after link plant sword raise leftover", /game\.js\?v=313/.test(htmlTxt));
 
 function armIdleSheatheRaise(){
   freezeYouAI(); freezeRivalAI();
@@ -16233,7 +16233,7 @@ bootPlay(); wait(1700);
 
 // live: rival shares drawKnight linkSheet
 check("link plant sword raise leftover rival draw shared", /linkSheet/.test(sliceFn(codeOnly, "drawKnight")) && /restLink/.test(sliceFn(codeOnly, "drawKnight")) && /linkPlantFade\(f\)/.test(srcTxt) && /telePlant/.test(sliceFn(codeOnly, "drawKnight")));
-check("cache v=296 after link plant sword raise leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after link plant sword raise leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- v254 telegraph walk-in pose leftover: rest walk under telePlant when walkFadeHold ---
@@ -16250,7 +16250,7 @@ check("slash frames still 180/140/280 after telegraph walk-in pose leftover", V.
 check("golpe frames still 120/80/180 after telegraph walk-in pose leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after telegraph walk-in pose leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after telegraph walk-in pose leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after telegraph walk-in pose leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after telegraph walk-in pose leftover", /game\.js\?v=313/.test(htmlTxt));
 
 function armMidStrideTeleRaise(){
   freezeYouAI(); freezeRivalAI();
@@ -16363,7 +16363,7 @@ bootPlay(); wait(1700);
 
 // live: rival shares drawKnight restTeleWalk
 check("telegraph walk-in pose leftover rival draw shared", /restTeleWalk/.test(sliceFn(codeOnly, "drawKnight")) && /walkFadeHold/.test(sliceFn(codeOnly, "tickGait")) && /telegraphing\(f\)/.test(sliceFn(codeOnly, "tickGait")) && /telePlant/.test(sliceFn(codeOnly, "drawKnight")));
-check("cache v=296 after telegraph walk-in pose leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after telegraph walk-in pose leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -16385,7 +16385,7 @@ check("slash frames still 180/140/280 after link plant walk-in pose leftover", V
 check("golpe frames still 120/80/180 after link plant walk-in pose leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after link plant walk-in pose leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after link plant walk-in pose leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after link plant walk-in pose leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after link plant walk-in pose leftover", /game\.js\?v=313/.test(htmlTxt));
 
 function armMidStrideSheatheRaise(){
   freezeYouAI(); freezeRivalAI();
@@ -16483,7 +16483,7 @@ armMidStrideTeleRaise();
 }
 
 check("link plant walk-in pose leftover rival draw shared", /restLinkWalk/.test(sliceFn(codeOnly, "drawKnight")) && /linkPlanting\(f\)/.test(sliceFn(codeOnly, "tickGait")) && /linkPlantFade\(f\)/.test(sliceFn(codeOnly, "tickGait")) && /linkSheet/.test(sliceFn(codeOnly, "drawKnight")));
-check("cache v=296 after link plant walk-in pose leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after link plant walk-in pose leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v256 portrait pad leftover: bigger guarda/tajo/golpe/dardo hit targets in portrait letterbox ---
 check("portrait pad leftover seats no cramped zone mins next to big stick", /Portrait pad leftover/.test(srcTxt) && /landscape zone mins/.test(srcTxt) && /guarda 52 \/ tajo 52 \/ golpe 48/.test(srcTxt) && /dardo 56/.test(srcTxt) && /stayed cramped in the taller portrait letterbox/.test(srcTxt) && /bigger[\s\S]{0,20}stick/.test(srcTxt) && /stamp, not a thumb plant/.test(srcTxt) && /Same hole portrait stick already closed/.test(srcTxt));
@@ -16499,7 +16499,7 @@ check("slash frames still 180/140/280 after portrait pad leftover", V.STARTUP===
 check("golpe frames still 120/80/180 after portrait pad leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after portrait pad leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after portrait pad leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after portrait pad leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after portrait pad leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: pad zones still feed the same keys (unchanged combat path)
 bootPlay(); wait(1700);
@@ -16516,7 +16516,7 @@ bootPlay(); wait(1700);
   check("portrait pad leftover live destRect planted", Math.abs(V.destRect(V.player).dy-dest0.dy)<2.2, `ddy=${(V.destRect(V.player).dy-dest0.dy).toFixed(2)}`);
 }
 check("portrait pad leftover zone hierarchy unchanged", /\.zone-golpe[\s\S]*?height:\s*80%/.test(cssTxt) && /\.zone-slash[\s\S]*?height:\s*92%/.test(cssTxt) && /\.zone-guard[\s\S]*?height:\s*88%/.test(cssTxt) && /\.zone-dart[\s\S]*?height:\s*88%/.test(cssTxt));
-check("cache v=296 after portrait pad leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after portrait pad leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -16534,7 +16534,7 @@ check("slash frames still 180/140/280 after recovery walk-out pose leftover", V.
 check("golpe frames still 120/80/180 after recovery walk-out pose leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after recovery walk-out pose leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after recovery walk-out pose leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after recovery walk-out pose leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after recovery walk-out pose leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D mid slash recovery rests walk under sheathe fade
 toClose();
@@ -16647,7 +16647,7 @@ for (let i=0;i<12;i++){
 check("recovery walk-out pose leftover live stun A/D rests walk", rwo257Stun, `stun=${rwo257Stun} st=${V.player.stunT}`);
 
 check("recovery walk-out pose leftover rival draw shared", /restThrowWalk/.test(sliceFn(codeOnly, "drawKnight")) && /restBoltWalk/.test(sliceFn(codeOnly, "drawKnight")) && /recoveryWalkResting\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /recoveryWalkOut\(f\)/.test(srcTxt));
-check("cache v=296 after recovery walk-out pose leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after recovery walk-out pose leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v258 holdCut walk-in pose leftover: rest cut/link raise on walk when A/D through cancel plant ---
 check("holdCut walk-in pose leftover seats no walk dump under cancel plant", /HoldCut walk-in pose leftover/.test(srcTxt) && /leftover cut used to rest on idle while A\/D/.test(srcTxt) && /special-cancel K plant/.test(srcTxt) && /recovery walk-out already rested cut/.test(srcTxt) && /tickGait zeros walkFadeHold on boltPhase/.test(srcTxt) && /dumped walk→idle under the cut/.test(srcTxt) && /Same hole link/.test(srcTxt) && /restLinkWalk only walkFadeHold/.test(srcTxt));
@@ -16664,7 +16664,7 @@ check("slash frames still 180/140/280 after holdCut walk-in pose leftover", V.ST
 check("golpe frames still 120/80/180 after holdCut walk-in pose leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after holdCut walk-in pose leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after holdCut walk-in pose leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after holdCut walk-in pose leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after holdCut walk-in pose leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D through special-cancel K plant keeps recoveryWalkOut + holdCut
 landCloseSlash();
@@ -16718,7 +16718,7 @@ V.update(STEP);
 check("holdCut walk-in pose leftover live L keeps recoveryWalkOut", hcwiLinkGot && V.player.cut==="golpe" && V.player.phase==="startup" && V.player.linkPlant && V.linkPlantFade(V.player)>0.8 && V.recoveryWalkOut(V.player) && V.holdCutFade(V.player)===0 && hcwiLfSheathe>0.08 && /windup/.test(sheetSrc(V.player)), `got=${hcwiLinkGot} cut=${V.player.cut} lf=${V.linkPlantFade(V.player)} walkOut=${V.recoveryWalkOut(V.player)} sh0=${hcwiLfSheathe} src=${sheetSrc(V.player)}`);
 
 check("holdCut walk-in pose leftover rival draw shared", /restHoldCutWalk/.test(sliceFn(codeOnly, "drawKnight")) && /recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /f\.walkFadeHold > 0\.02 \|\| recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "drawKnight")));
-check("cache v=296 after holdCut walk-in pose leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after holdCut walk-in pose leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- v259 rival recovery walk-out pose leftover: rest cut/throw/bolt/stun on walk when closing ---
@@ -16734,7 +16734,7 @@ check("slash frames still 180/140/280 after rival recovery walk-out pose leftove
 check("golpe frames still 120/80/180 after rival recovery walk-out pose leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after rival recovery walk-out pose leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after rival recovery walk-out pose leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after rival recovery walk-out pose leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after rival recovery walk-out pose leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: rival chip stun + closing rests walk (no idle dump)
 toClose();
@@ -16829,7 +16829,7 @@ for (let i=0;i<16;i++){
 check("rival recovery walk-out pose leftover live bolt closing rests walk", rrwoBolt, `bolt=${rrwoBolt} bf=${V.boltPlantFade(V.rival)} bph=${V.rival.boltPhase}`);
 
 check("rival recovery walk-out pose leftover draw shared", /recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /recoveryWalkResting\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /return !!f\.closing/.test(sliceFn(codeOnly, "recoveryWalkOut")) && /restBoltWalk/.test(sliceFn(codeOnly, "drawKnight")));
-check("cache v=296 after rival recovery walk-out pose leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after rival recovery walk-out pose leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -16847,7 +16847,7 @@ check("slash frames still 180/140/280 after clash walk-in pose leftover", V.STAR
 check("golpe frames still 120/80/180 after clash walk-in pose leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after clash walk-in pose leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after clash walk-in pose leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after clash walk-in pose leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after clash walk-in pose leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D through clash-K plant keeps recoveryWalkOut + clashPlant
 landClash();
@@ -16929,7 +16929,7 @@ for (let i=0;i<40;i++){
 check("clash walk-in pose leftover live rival closing arms", cwiRival && cwiRivalCf>0.5, `rival=${cwiRival} cf=${cwiRivalCf} bph=${V.rival.boltPhase} plant=${V.rival.clashPlant} walkOut=${V.recoveryWalkOut(V.rival)} closing=${V.rival.closing}`);
 
 check("clash walk-in pose leftover draw shared", /restClashWalk/.test(sliceFn(codeOnly, "drawKnight")) && /f\.walkFadeHold > 0\.02 \|\| recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /restClash \|\| restClashWalk/.test(sliceFn(codeOnly, "drawKnight")));
-check("cache v=296 after clash walk-in pose leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after clash walk-in pose leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -16950,7 +16950,7 @@ check("slash frames still 180/140/280 after telegraph recovery walk-in pose left
 check("golpe frames still 120/80/180 after telegraph recovery walk-in pose leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after telegraph recovery walk-in pose leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after telegraph recovery walk-in pose leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after telegraph recovery walk-in pose leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after telegraph recovery walk-in pose leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D through recovery into buffered Space keeps walk under tele raise
 function armRecoveryTeleRaise(){
@@ -17053,7 +17053,7 @@ const trwRival = trwRivalBefore && V.telegraphing(V.rival) && V.rival.phase==="s
 check("telegraph recovery walk-in pose leftover live rival closing arms", trwRival, `rival=${trwRival} before=${trwRivalBefore} tf=${V.telegraphFade(V.rival)} ph=${V.rival.phase} walkOut=${V.recoveryWalkOut(V.rival)} closing=${V.rival.closing} wf=${V.rival.walkFadeHold}`);
 
 check("telegraph recovery walk-in pose leftover draw shared", /restTeleWalk/.test(sliceFn(codeOnly, "drawKnight")) && /recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /walkFadeHold > 0\.02 \|\| recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /restTele \|\| restTeleWalk/.test(sliceFn(codeOnly, "drawKnight")));
-check("cache v=296 after telegraph recovery walk-in pose leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after telegraph recovery walk-in pose leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -17073,7 +17073,7 @@ check("slash frames still 180/140/280 after reversal plant walk-in pose leftover
 check("golpe frames still 120/80/180 after reversal plant walk-in pose leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after reversal plant walk-in pose leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after reversal plant walk-in pose leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after reversal plant walk-in pose leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after reversal plant walk-in pose leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D through walk→guard reverse keeps walkFadeHold + restRevWalk
 bootPlay(); wait(1700);
@@ -17158,7 +17158,7 @@ const rwiRival = rwiRivalOk && V.rival.reversal && V.rival.phase==="startup" && 
 check("reversal plant walk-in pose leftover live rival closing arms", rwiRival && rwiRivalClosing, `rival=${rwiRival} closing0=${rwiRivalClosing} ok=${rwiRivalOk} rf=${V.reversalPlantFade(V.rival)} hold=${V.rival.walkFadeHold} walkOut=${V.recoveryWalkOut(V.rival)} closing=${V.rival.closing}`);
 
 check("reversal plant walk-in pose leftover draw shared", /restRevWalk/.test(sliceFn(codeOnly, "drawKnight")) && /recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /walkFadeHold > 0\.02 \|\| recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /restRev \|\| restRevWalk/.test(sliceFn(codeOnly, "drawKnight")));
-check("cache v=296 after reversal plant walk-in pose leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after reversal plant walk-in pose leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -17178,7 +17178,7 @@ check("slash frames still 180/140/280 after throw-from-guard plant walk-in pose 
 check("golpe frames still 120/80/180 after throw-from-guard plant walk-in pose leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after throw-from-guard plant walk-in pose leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after throw-from-guard plant walk-in pose leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after throw-from-guard plant walk-in pose leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after throw-from-guard plant walk-in pose leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D through walk→guard throw keeps walkFadeHold + restThrowGuardWalk
 bootPlay(); wait(1700);
@@ -17263,7 +17263,7 @@ const twiRival = twiRivalOk && V.rival.cut==="throw" && V.rival.phase==="startup
 check("throw-from-guard plant walk-in pose leftover live rival closing arms", twiRival && twiRivalClosing, `rival=${twiRival} closing0=${twiRivalClosing} ok=${twiRivalOk} tgf=${V.throwGuardPlantFade(V.rival)} hold=${V.rival.walkFadeHold} walkOut=${V.recoveryWalkOut(V.rival)} closing=${V.rival.closing}`);
 
 check("throw-from-guard plant walk-in pose leftover draw shared", /restThrowGuardWalk/.test(sliceFn(codeOnly, "drawKnight")) && /restTechGuardWalk/.test(sliceFn(codeOnly, "drawKnight")) && /recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /walkFadeHold > 0\.02 \|\| recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /restThrowGuard \|\| restThrowGuardWalk/.test(sliceFn(codeOnly, "drawKnight")));
-check("cache v=296 after throw-from-guard plant walk-in pose leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after throw-from-guard plant walk-in pose leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -17285,7 +17285,7 @@ check("slash frames still 180/140/280 after wakeup→reversal walk-in pose lefto
 check("golpe frames still 120/80/180 after wakeup→reversal walk-in pose leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after wakeup→reversal walk-in pose leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after wakeup→reversal walk-in pose leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after wakeup→reversal walk-in pose leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after wakeup→reversal walk-in pose leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D mid-getup L keeps walkFadeHold + restWakeRevWalk
 bootPlay(); wait(1700);
@@ -17369,7 +17369,7 @@ const wrwRival = wrwRivalOk && V.rival.reversal && V.rival.phase==="startup" && 
 check("wakeup→reversal walk-in pose leftover live rival closing arms", wrwRival && wrwRivalClosing, `rival=${wrwRival} closing0=${wrwRivalClosing} ok=${wrwRivalOk} fade=${V.wakeupFade(V.rival)} hold=${V.rival.walkFadeHold} walkOut=${V.recoveryWalkOut(V.rival)} closing=${V.rival.closing} rf=${V.reversalPlantFade(V.rival)}`);
 
 check("wakeup→reversal walk-in pose leftover draw shared", /restWakeRevWalk/.test(sliceFn(codeOnly, "drawKnight")) && /recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /walkFadeHold > 0\.02 \|\| recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /restWake \|\| restWakeGuard \|\| restWakeGuardWalk \|\| restWakeRev \|\| restWakeWalk \|\| restWakeRevWalk/.test(sliceFn(codeOnly, "drawKnight")));
-check("cache v=296 after wakeup→reversal walk-in pose leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after wakeup→reversal walk-in pose leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v265 wakeup→guard walk-in pose leftover: rest crumple raise on walk when A/D/closing through getup S ---
 check("wakeup→guard walk-in pose leftover seats no walk dump under getup raise", /Wakeup→guard walk-in pose leftover/.test(srcTxt) && /leftover walk used to dump the tick S raised mid-getup/.test(srcTxt) && /from A\/D \/ rival closing/.test(srcTxt) && /restWakeGuard rested crumple on block with no walk/.test(srcTxt) && /guarding made recoveryWalkOut false/.test(srcTxt) && /hopped walk→block/.test(srcTxt) && /Same hole wakeup→reversal walk-in/.test(srcTxt));
@@ -17388,7 +17388,7 @@ check("slash frames still 180/140/280 after wakeup→guard walk-in pose leftover
 check("golpe frames still 120/80/180 after wakeup→guard walk-in pose leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after wakeup→guard walk-in pose leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after wakeup→guard walk-in pose leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after wakeup→guard walk-in pose leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after wakeup→guard walk-in pose leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D mid-getup S keeps walkFadeHold + restWakeGuardWalk
 bootPlay(); wait(1700);
@@ -17478,7 +17478,7 @@ const wgwRival = V.rival.guarding && V.rival.phase==="idle" && V.rival.walkFadeH
 check("wakeup→guard walk-in pose leftover live rival closing arms", wgwRival && wgwRivalClosing && wgwWakeGuardWalk, `rival=${wgwRival} closing0=${wgwRivalClosing} ok=${wgwWakeGuardWalk} fade=${V.wakeupFade(V.rival)} hold=${V.rival.walkFadeHold} walkOut=${V.recoveryWalkOut(V.rival)} closing=${V.rival.closing} g=${V.rival.guarding} src=${sheetSrc(V.rival)}`);
 
 check("wakeup→guard walk-in pose leftover draw shared", /restWakeGuardWalk/.test(sliceFn(codeOnly, "drawKnight")) && /walkFadeHold > 0\.02/.test(sliceFn(codeOnly, "drawKnight")) && /restWake \|\| restWakeGuard \|\| restWakeGuardWalk \|\| restWakeRev \|\| restWakeWalk \|\| restWakeRevWalk/.test(sliceFn(codeOnly, "drawKnight")));
-check("cache v=296 after wakeup→guard walk-in pose leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after wakeup→guard walk-in pose leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -17497,7 +17497,7 @@ check("slash frames still 180/140/280 after feint walk-in pose leftover", V.STAR
 check("golpe frames still 120/80/180 after feint walk-in pose leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after feint walk-in pose leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after feint walk-in pose leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after feint walk-in pose leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after feint walk-in pose leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D through telegraph→feint keeps walkFadeHold + restFeintWalk (no idle dump)
 bootPlay(); wait(1700);
@@ -17599,7 +17599,7 @@ const fwiRival = fwiRivalOk && V.rival.feintT>0 && V.rival.walkFadeHold>0.02 && 
 check("feint walk-in pose leftover live rival closing arms", fwiRival && fwiRivalClosing0 && fwiRivalSlash && fwiRivalTele, `rival=${fwiRival} closing0=${fwiRivalClosing0} slash=${fwiRivalSlash} tele=${fwiRivalTele} holdTele=${fwiRivalHoldTele} hold=${V.rival.walkFadeHold} walkOut=${V.recoveryWalkOut(V.rival)} closing=${V.rival.closing} ff=${V.feintFade(V.rival)} src=${sheetSrc(V.rival)}`);
 
 check("feint walk-in pose leftover draw shared", /restFeintWalk/.test(sliceFn(codeOnly, "drawKnight")) && /walkFadeHold > 0\.02 \|\| recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /gaitWalkOn\(f\) \|\| f\.walkFadeHold > 0\.02 \|\| recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /restFeint \|\| restFeintGuard \|\| restFeintWalk/.test(sliceFn(codeOnly, "drawKnight")));
-check("cache v=296 after feint walk-in pose leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after feint walk-in pose leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v267 wakeup walk-out recoveryWalkOut pose leftover: rest crumple on walk when A/D early-step / rival closing ---
 check("wakeup walk-out recoveryWalkOut pose leftover seats no idle dump under closing", /Wakeup walk-out recoveryWalkOut pose leftover/.test(srcTxt) && /leftover crumple used to rest on idle while/.test(srcTxt) && /recoveryWalkOut \(A\/D early-step \/ rival closing\)/.test(srcTxt) && /restWakeWalk only checked gaitWalkOn/.test(srcTxt) && /popped walk[\s\S]{0,40}gaitWalkOn flipped/.test(srcTxt) && /Same hole rival recovery[\s\S]{0,30}feint walk-in/.test(srcTxt));
@@ -17614,7 +17614,7 @@ check("slash frames still 180/140/280 after wakeup walk-out recoveryWalkOut pose
 check("golpe frames still 120/80/180 after wakeup walk-out recoveryWalkOut pose leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after wakeup walk-out recoveryWalkOut pose leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after wakeup walk-out recoveryWalkOut pose leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after wakeup walk-out recoveryWalkOut pose leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after wakeup walk-out recoveryWalkOut pose leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D early-step mid-getup rests crumple on walk before gaitWalkOn (recoveryWalkOut)
 toClose();
@@ -17727,7 +17727,7 @@ const wroRival = wroRivalSaw && wroRivalHole && wroRivalClosing0 && wroRivalWalk
 check("wakeup walk-out recoveryWalkOut pose leftover live rival closing arms", wroRival, `rival=${wroRival} saw=${wroRivalSaw} hole=${wroRivalHole} closing0=${wroRivalClosing0} wake0=${wroRivalWake0} walkOut0=${wroRivalWalkOut0} gaitOn0=${wroRivalGaitOn0} src=${sheetSrc(V.rival)}`);
 
 check("wakeup walk-out recoveryWalkOut pose leftover draw shared", /restWakeWalk/.test(sliceFn(codeOnly, "drawKnight")) && /gaitWalkOn\(f\) \|\| f\.walkFadeHold > 0\.02 \|\| recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /restWake \|\| restWakeGuard \|\| restWakeGuardWalk \|\| restWakeRev \|\| restWakeWalk \|\| restWakeRevWalk/.test(sliceFn(codeOnly, "drawKnight")));
-check("cache v=296 after wakeup walk-out recoveryWalkOut pose leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after wakeup walk-out recoveryWalkOut pose leftover live", /game\.js\?v=313/.test(htmlTxt));
 // --- v268 guard drop walk-out recoveryWalkOut pose leftover: rest block on walk when A/D early-step / rival closing ---
 check("guard drop walk-out recoveryWalkOut pose leftover seats no idle dump under closing", /Guard drop walk-out recoveryWalkOut pose leftover/.test(srcTxt) && /leftover block used to rest on idle while/.test(srcTxt) && /recoveryWalkOut \(A\/D early-step \/ rival closing\)/.test(srcTxt) && /restGuardWalk only checked gaitWalkOn/.test(srcTxt) && /popped walk[\s\S]{0,40}gaitWalkOn flipped/.test(srcTxt) && /Same hole wakeup walk-out[\s\S]{0,30}recoveryWalkOut/.test(srcTxt));
 check("guard drop walk-out recoveryWalkOut pose leftover is draw-only", /Draw-only \(drawKnight\)/.test(srcTxt) && /restGuardWalk/.test(sliceFn(codeOnly, "drawKnight")) && /gaitWalkOn\(f\) \|\| f\.walkFadeHold > 0\.02 \|\| recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && !/restGuardWalk/.test(sliceFn(codeOnly, "destRect")) && !/restGuardWalk/.test(sliceFn(codeOnly, "bodyAABB")) && !/restGuardWalk/.test(sliceFn(codeOnly, "slashPose")) && !/restGuardWalk/.test(sliceFn(codeOnly, "idleBreath")) && !/restGuardWalk/.test(sliceFn(codeOnly, "poseBitmap")) && !/restGuardWalk/.test(sliceFn(codeOnly, "guardDropFade")));
@@ -17741,7 +17741,7 @@ check("slash frames still 180/140/280 after guard drop walk-out recoveryWalkOut 
 check("golpe frames still 120/80/180 after guard drop walk-out recoveryWalkOut pose leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after guard drop walk-out recoveryWalkOut pose leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after guard drop walk-out recoveryWalkOut pose leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after guard drop walk-out recoveryWalkOut pose leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after guard drop walk-out recoveryWalkOut pose leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D early-step mid-drop rests block on walk before gaitWalkOn (recoveryWalkOut)
 bootPlay(); wait(1700);
@@ -17850,7 +17850,7 @@ const gdroRival = gdroRivalSaw && gdroRivalHole && gdroRivalClosing0 && gdroRiva
 check("guard drop walk-out recoveryWalkOut pose leftover live rival closing arms", gdroRival, `rival=${gdroRival} saw=${gdroRivalSaw} hole=${gdroRivalHole} closing0=${gdroRivalClosing0} gf0=${gdroRivalGf0} walkOut0=${gdroRivalWalkOut0} gaitOn0=${gdroRivalGaitOn0} src=${sheetSrc(V.rival)}`);
 
 check("guard drop walk-out recoveryWalkOut pose leftover draw shared", /restGuardWalk/.test(sliceFn(codeOnly, "drawKnight")) && /gaitWalkOn\(f\) \|\| f\.walkFadeHold > 0\.02 \|\| recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /restGuard \|\| restGuardWalk/.test(sliceFn(codeOnly, "drawKnight")));
-check("cache v=296 after guard drop walk-out recoveryWalkOut pose leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after guard drop walk-out recoveryWalkOut pose leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -17870,7 +17870,7 @@ check("slash frames still 180/140/280 after clash walk-in walkFadeHold pose left
 check("golpe frames still 120/80/180 after clash walk-in walkFadeHold pose leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after clash walk-in walkFadeHold pose leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after clash walk-in walkFadeHold pose leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after clash walk-in walkFadeHold pose leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after clash walk-in walkFadeHold pose leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D through clash-K keeps walkFadeHold through plant (tickGait hold)
 landClash();
@@ -17960,7 +17960,7 @@ for (let i=0;i<40;i++){
 check("clash walk-in walkFadeHold pose leftover live rival closing arms hold", cwhRival && cwhRivalCf>0.5 && cwhRivalHold>0.02, `rival=${cwhRival} cf=${cwhRivalCf} hold=${cwhRivalHold} closing=${cwhRivalClosingAfter} walkOut=${cwhRivalWalkOutAfter} bph=${V.rival.boltPhase} plant=${V.rival.clashPlant}`);
 
 check("clash walk-in walkFadeHold pose leftover draw shared", /restClashWalk/.test(sliceFn(codeOnly, "drawKnight")) && /f\.walkFadeHold > 0\.02 \|\| recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /clashRecWalk/.test(sliceFn(codeOnly, "cancelIntoBolt")) && /clashPlanting\(f\) && \(f\.walkFadeHold > 0 \|\| f\.walkSettleT > 0\)/.test(sliceFn(codeOnly, "tickGait")) && /restClash \|\| restClashWalk/.test(sliceFn(codeOnly, "drawKnight")));
-check("cache v=296 after clash walk-in walkFadeHold pose leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after clash walk-in walkFadeHold pose leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -17981,7 +17981,7 @@ check("slash frames still 180/140/280 after holdCut walk-in walkFadeHold pose le
 check("golpe frames still 120/80/180 after holdCut walk-in walkFadeHold pose leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after holdCut walk-in walkFadeHold pose leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after holdCut walk-in walkFadeHold pose leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after holdCut walk-in walkFadeHold pose leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after holdCut walk-in walkFadeHold pose leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D through special-cancel K keeps walkFadeHold through plant (tickGait hold)
 landCloseSlash();
@@ -18060,7 +18060,7 @@ for (let i=0;i<40;i++){
 check("holdCut walk-in walkFadeHold pose leftover live rival closing arms hold", hcwhRival && hcwhRivalHf>0.5 && hcwhRivalHold>0.02, `rival=${hcwhRival} hf=${hcwhRivalHf} hold=${hcwhRivalHold} closing=${hcwhRivalClosingAfter} walkOut=${hcwhRivalWalkOutAfter} bph=${V.rival.boltPhase} plant=${V.rival.holdCutPlant}`);
 
 check("holdCut walk-in walkFadeHold pose leftover draw shared", /restHoldCutWalk/.test(sliceFn(codeOnly, "drawKnight")) && /f\.walkFadeHold > 0\.02 \|\| recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /clashRecWalk/.test(sliceFn(codeOnly, "cancelIntoBolt")) && /holdCutPlanting\(f\) && \(f\.walkFadeHold > 0 \|\| f\.walkSettleT > 0\)/.test(sliceFn(codeOnly, "tickGait")) && /restHoldCut \|\| restHoldCutWalk/.test(sliceFn(codeOnly, "drawKnight")));
-check("cache v=296 after holdCut walk-in walkFadeHold pose leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after holdCut walk-in walkFadeHold pose leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- v271 sheathe walk-out recoveryWalkOut pose leftover: rest slash on walk when A/D early-step / rival closing ---
@@ -18076,7 +18076,7 @@ check("slash frames still 180/140/280 after sheathe walk-out recoveryWalkOut pos
 check("golpe frames still 120/80/180 after sheathe walk-out recoveryWalkOut pose leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after sheathe walk-out recoveryWalkOut pose leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after sheathe walk-out recoveryWalkOut pose leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after sheathe walk-out recoveryWalkOut pose leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after sheathe walk-out recoveryWalkOut pose leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D early-step mid-sheathe rests slash on walk before gaitWalkOn (recoveryWalkOut)
 toClose();
@@ -18186,7 +18186,7 @@ const swo271Rival = swo271RivalSaw && swo271RivalHole && swo271RivalClosing0 && 
 check("sheathe walk-out recoveryWalkOut pose leftover live rival closing arms", swo271Rival, `rival=${swo271Rival} saw=${swo271RivalSaw} hole=${swo271RivalHole} closing0=${swo271RivalClosing0} sf0=${swo271RivalSf0} walkOut0=${swo271RivalWalkOut0} gaitOn0=${swo271RivalGaitOn0} src=${sheetSrc(V.rival)}`);
 
 check("sheathe walk-out recoveryWalkOut pose leftover draw shared", /restSheatheWalk/.test(sliceFn(codeOnly, "drawKnight")) && /gaitWalkOn\(f\) \|\| f\.walkFadeHold > 0\.02 \|\| recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "drawKnight")) && /else if \(restSheatheWalk\)/.test(sliceFn(codeOnly, "drawKnight")) && /fade > 0\.02 && ready\(cut\)/.test(sliceFn(codeOnly, "drawKnight")));
-check("cache v=296 after sheathe walk-out recoveryWalkOut pose leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after sheathe walk-out recoveryWalkOut pose leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v272 bolt recovery settle→walk destRect leftover: keep 0 through walk-out knife plant; arm cutRec mid-end ---
 check("bolt recovery settle→walk destRect leftover seats no breath mid-stride", /Bolt recovery settle→walk destRect leftover/.test(srcTxt) && /leftover boltPlantFade breath used to/.test(srcTxt) && /seat ~1\.1 mid-stride/.test(srcTxt) && /plant ease climbed to full amp/.test(srcTxt) && /Same[\s\S]{0,80}hole wakeup settle→walk/.test(srcTxt) && /Keep breath 0 through walk-out bolt recovery/.test(srcTxt) && /arm cutRecBreathT when[\s\S]{0,40}bolt recovery ends/.test(srcTxt));
@@ -18205,7 +18205,7 @@ check("slash frames still 180/140/280 after bolt recovery settle→walk destRect
 check("golpe frames still 120/80/180 after bolt recovery settle→walk destRect leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after bolt recovery settle→walk destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after bolt recovery settle→walk destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after bolt recovery settle→walk destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after bolt recovery settle→walk destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D through bolt recovery keeps suppress (no mid-stride seat), arms cutRec on end
 toClose();
@@ -18337,7 +18337,7 @@ for(let i=0;i<36;i++){
 check("bolt recovery settle→walk destRect leftover live rival closing arms", brsw272RivalSaw && brsw272RivalRwo0 && Math.abs(brsw272RivalBr0)<0.05 && brsw272RivalArmed && brsw272RivalMaxSeat<0.35, `saw=${brsw272RivalSaw} rwo0=${brsw272RivalRwo0} br0=${brsw272RivalBr0.toFixed(3)} armed=${brsw272RivalArmed} maxSeat=${brsw272RivalMaxSeat.toFixed(3)} cbt=${V.rival.cutRecBreathT}`);
 
 check("bolt recovery settle→walk destRect leftover rival advanceBolt shared", /advanceBoltFighter\(rival/.test(srcTxt) && /f\.cutRecBreathT = GUARD_RAISE_MS/.test(sliceFn(codeOnly, "advanceBoltFighter")) && !/f\.kind === "you"/.test(sliceFn(codeOnly, "advanceBoltFighter")) && /recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "idleBreath")) && /Math\.max\(ck, wk\)/.test(sliceFn(codeOnly, "idleBreath")));
-check("cache v=296 after bolt recovery settle→walk destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after bolt recovery settle→walk destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v273 throw recovery settle→walk destRect leftover: keep 0 through walk-out throw plant; arm cutRec mid-end ---
 check("throw recovery settle→walk destRect leftover seats no breath mid-stride", /Throw recovery settle→walk destRect leftover/.test(srcTxt) && /leftover throwPlantFade breath used to/.test(srcTxt) && /seat ~0\.96 mid-stride/.test(srcTxt) && /plant ease climbed to full amp/.test(srcTxt) && /Same[\s\S]{0,80}hole bolt recovery settle→walk/.test(srcTxt) && /Keep breath 0 through walk-out throw recovery/.test(srcTxt) && /arm cutRecBreathT when[\s\S]{0,40}throw recovery ends/.test(srcTxt));
@@ -18356,7 +18356,7 @@ check("golpe frames still 120/80/180 after throw recovery settle→walk destRect
 check("K frames still 200/280 after throw recovery settle→walk destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("throw frames still 80/40/220 after throw recovery settle→walk destRect leftover", V.THROW_STARTUP===80 && V.THROW_ACTIVE===40 && V.THROW_RECOVERY===220);
 check("no 6th button after throw recovery settle→walk destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after throw recovery settle→walk destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after throw recovery settle→walk destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D through throw recovery keeps suppress (no mid-stride seat), arms cutRec on end
 toClose();
@@ -18491,7 +18491,7 @@ for(let i=0;i<36;i++){
 check("throw recovery settle→walk destRect leftover live rival closing arms", trsw273RivalSaw && trsw273RivalRwo0 && Math.abs(trsw273RivalBr0)<0.05 && trsw273RivalArmed && trsw273RivalMaxSeat<0.35, `saw=${trsw273RivalSaw} rwo0=${trsw273RivalRwo0} br0=${trsw273RivalBr0.toFixed(3)} armed=${trsw273RivalArmed} maxSeat=${trsw273RivalMaxSeat.toFixed(3)} cbt=${V.rival.cutRecBreathT}`);
 
 check("throw recovery settle→walk destRect leftover rival advanceAttack shared", /advanceAttack\(rival/.test(srcTxt) && /else if \(walkOutEnd\) f\.cutRecBreathT = GUARD_RAISE_MS/.test(sliceFn(codeOnly, "advanceAttack")) && /wasThrow && \(walking\(f\) \|\| recoveryWalkOut\(f\) \|\| f\.walkFadeHold > 0\.02 \|\| f\.guarding \|\| f\.guardPoseK > 0\)/.test(sliceFn(codeOnly, "advanceAttack")) && /recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "idleBreath")) && /Math\.max\(ck, wk\)/.test(sliceFn(codeOnly, "idleBreath")));
-check("cache v=296 after throw recovery settle→walk destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after throw recovery settle→walk destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -18514,7 +18514,7 @@ check("golpe frames still 120/80/180 after chip stun settle→walk destRect left
 check("K frames still 200/280 after chip stun settle→walk destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("throw frames still 80/40/220 after chip stun settle→walk destRect leftover", V.THROW_STARTUP===80 && V.THROW_ACTIVE===40 && V.THROW_RECOVERY===220);
 check("no 6th button after chip stun settle→walk destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after chip stun settle→walk destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after chip stun settle→walk destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D through chip stun keeps suppress (no mid-stride seat), arms cutRec on end
 toClose();
@@ -18645,7 +18645,7 @@ for(let i=0;i<50;i++){
 check("chip stun settle→walk destRect leftover live rival closing arms", cssw274RivalSaw && cssw274RivalRwo0 && Math.abs(cssw274RivalBr0)<0.05 && cssw274RivalArmed && cssw274RivalMaxSeat<0.35, `saw=${cssw274RivalSaw} rwo0=${cssw274RivalRwo0} br0=${cssw274RivalBr0.toFixed(3)} armed=${cssw274RivalArmed} maxSeat=${cssw274RivalMaxSeat.toFixed(3)} cbt=${V.rival.cutRecBreathT}`);
 
 check("chip stun settle→walk destRect leftover rival tickStun shared", /tickStun\(rival/.test(srcTxt) && /f\.cutRecBreathT = GUARD_RAISE_MS/.test(sliceFn(codeOnly, "tickStun")) && /walking\(f\) \|\| recoveryWalkOut\(f\) \|\| f\.walkFadeHold > 0\.02 \|\| f\.guarding \|\| f\.guardPoseK > 0/.test(sliceFn(codeOnly, "tickStun")) && /recoveryWalkOut\(f\)/.test(sliceFn(codeOnly, "idleBreath")) && /Math\.max\(ck, wk\)/.test(sliceFn(codeOnly, "idleBreath")));
-check("cache v=296 after chip stun settle→walk destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after chip stun settle→walk destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v275 telegraph settle→walk destRect leftover: keep 0 through walk-out / walkFadeHold during telegraph ---
 check("telegraph settle→walk destRect leftover seats no breath mid-stride", /Telegraph settle→walk destRect leftover/.test(srcTxt) && /leftover telegraphFade breath used to seat ~1\.4 mid-stride/.test(srcTxt) && /Space\/L\/throw\/K armed from A\/D \/ rival closing/.test(srcTxt) && /Same[\s\S]{0,80}hole chip stun \/ bolt \/ throw recovery settle→walk/.test(srcTxt) && /Keep breath 0 through walk-out \/ leftover walkFadeHold during/.test(srcTxt) && /idle telegraph still eases with telegraphFade/.test(srcTxt));
@@ -18662,7 +18662,7 @@ check("golpe frames still 120/80/180 after telegraph settle→walk destRect left
 check("K frames still 200/280 after telegraph settle→walk destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("throw frames still 80/40/220 after telegraph settle→walk destRect leftover", V.THROW_STARTUP===80 && V.THROW_ACTIVE===40 && V.THROW_RECOVERY===220);
 check("no 6th button after telegraph settle→walk destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after telegraph settle→walk destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after telegraph settle→walk destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D into Space telegraph keeps suppress (no mid-stride seat)
 toClose();
@@ -18800,7 +18800,7 @@ for(let i=0;i<12;i++){
 check("telegraph settle→walk destRect leftover live rival closing arms", tsw275RivalSaw && tsw275RivalRwo0 && Math.abs(tsw275RivalBr0)<0.05 && tsw275RivalWfh0>0.02 && tsw275RivalMaxSeat<0.35, `saw=${tsw275RivalSaw} rwo0=${tsw275RivalRwo0} br0=${tsw275RivalBr0.toFixed(3)} wfh0=${tsw275RivalWfh0.toFixed(3)} maxSeat=${tsw275RivalMaxSeat.toFixed(3)} ph=${V.rival.phase} tel=${V.rival.telegraph}`);
 
 check("telegraph settle→walk destRect leftover rival idleBreath shared", /if \(telegraphing\(f\)\)/.test(sliceFn(codeOnly, "idleBreath")) && /recoveryWalkOut\(f\) \|\| f\.walkFadeHold > 0\.02/.test(sliceFn(codeOnly, "idleBreath")) && /return amp \* \(1 - telegraphFade\(f\)\)/.test(sliceFn(codeOnly, "idleBreath")) && !/f\.kind === "you"/.test(sliceFn(codeOnly, "idleBreath").slice(sliceFn(codeOnly, "idleBreath").indexOf("if (telegraphing(f))"), sliceFn(codeOnly, "idleBreath").indexOf("if (telegraphing(f))")+220)));
-check("cache v=296 after telegraph settle→walk destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after telegraph settle→walk destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- v276 feint settle→walk plant-release destRect leftover: keep 0 through walk-out / arm cutRec ---
@@ -18819,7 +18819,7 @@ check("golpe frames still 120/80/180 after feint settle→walk plant-release des
 check("K frames still 200/280 after feint settle→walk plant-release destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("throw frames still 80/40/220 after feint settle→walk plant-release destRect leftover", V.THROW_STARTUP===80 && V.THROW_ACTIVE===40 && V.THROW_RECOVERY===220);
 check("no 6th button after feint settle→walk plant-release destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after feint settle→walk plant-release destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after feint settle→walk plant-release destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D through tele→feint keeps breath 0 mid-stride; arms cutRec on end; AABB planted
 toClose();
@@ -18952,7 +18952,7 @@ for(let i=0;i<20;i++){
 check("feint settle→walk plant-release destRect leftover live rival closing arms", fsw276RivalDid && fsw276RivalSaw && fsw276RivalRwo0 && Math.abs(fsw276RivalBr0)<0.05 && fsw276RivalMaxSeat<0.35, `did=${fsw276RivalDid} saw=${fsw276RivalSaw} rwo0=${fsw276RivalRwo0} br0=${fsw276RivalBr0.toFixed(3)} maxSeat=${fsw276RivalMaxSeat.toFixed(3)} armed=${fsw276RivalArmed} ft=${V.rival.feintT}`);
 
 check("feint settle→walk plant-release destRect leftover rival idleBreath shared", /walking\(f\) \|\| recoveryWalkOut\(f\) \|\| f\.walkFadeHold > 0\.02/.test(sliceFn(codeOnly, "idleBreath")) && /prevFeint > 0/.test(sliceFn(codeOnly, "tickFeint")) && /f\.cutRecBreathT = GUARD_RAISE_MS/.test(sliceFn(codeOnly, "tickFeint")) && /f\.feintT > 0/.test(sliceFn(codeOnly, "idleBreath")));
-check("cache v=296 after feint settle→walk plant-release destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after feint settle→walk plant-release destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -18973,7 +18973,7 @@ check("golpe frames still 120/80/180 after wakeup settle→walk plant-release de
 check("K frames still 200/280 after wakeup settle→walk plant-release destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("throw frames still 80/40/220 after wakeup settle→walk plant-release destRect leftover", V.THROW_STARTUP===80 && V.THROW_ACTIVE===40 && V.THROW_RECOVERY===220);
 check("no 6th button after wakeup settle→walk plant-release destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after wakeup settle→walk plant-release destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after wakeup settle→walk plant-release destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D through getup keeps breath 0 mid-stride; arms cutRec on end; AABB planted
 toClose();
@@ -19148,7 +19148,7 @@ for(let i=0;i<20;i++){
 check("wakeup settle→walk plant-release destRect leftover live rival closing arms", wsw277RivalSaw && wsw277RivalRwo0 && Math.abs(wsw277RivalBr0)<0.05 && wsw277RivalMaxSeat<0.35, `saw=${wsw277RivalSaw} rwo0=${wsw277RivalRwo0} br0=${wsw277RivalBr0.toFixed(3)} maxSeat=${wsw277RivalMaxSeat.toFixed(3)} armed=${wsw277RivalArmed} inv=${V.rival.throwInvulnT}`);
 
 check("wakeup settle→walk plant-release destRect leftover rival idleBreath shared", /walking\(f\) \|\| recoveryWalkOut\(f\) \|\| f\.walkFadeHold > 0\.02/.test(sliceFn(codeOnly, "idleBreath")) && /prevInv > 0/.test(sliceFn(codeOnly, "tickThrowState")) && /f\.cutRecBreathT = GUARD_RAISE_MS/.test(sliceFn(codeOnly, "tickThrowState")) && /wakeupFade\(f\) > 0/.test(sliceFn(codeOnly, "idleBreath")));
-check("cache v=296 after wakeup settle→walk plant-release destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after wakeup settle→walk plant-release destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -19168,7 +19168,7 @@ check("golpe frames still 120/80/180 after chip stun settle→walk plant-release
 check("K frames still 200/280 after chip stun settle→walk plant-release destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("throw frames still 80/40/220 after chip stun settle→walk plant-release destRect leftover", V.THROW_STARTUP===80 && V.THROW_ACTIVE===40 && V.THROW_RECOVERY===220);
 check("no 6th button after chip stun settle→walk plant-release destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after chip stun settle→walk plant-release destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after chip stun settle→walk plant-release destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: A/D through chip stun keeps breath 0 mid-stride; arms cutRec on end; AABB planted
 toClose();
@@ -19351,7 +19351,7 @@ for(let i=0;i<20;i++){
 check("chip stun settle→walk plant-release destRect leftover live rival closing arms", cssw278RivalSaw && cssw278RivalRwo0 && Math.abs(cssw278RivalBr0)<0.05 && cssw278RivalMaxSeat<0.35, `saw=${cssw278RivalSaw} rwo0=${cssw278RivalRwo0} br0=${cssw278RivalBr0.toFixed(3)} maxSeat=${cssw278RivalMaxSeat.toFixed(3)} armed=${cssw278RivalArmed} st=${V.rival.stunT}`);
 
 check("chip stun settle→walk plant-release destRect leftover rival idleBreath shared", /walking\(f\) \|\| recoveryWalkOut\(f\) \|\| f\.walkFadeHold > 0\.02/.test(sliceFn(codeOnly, "idleBreath")) && /prevStun > 0/.test(sliceFn(codeOnly, "tickStun")) && /f\.cutRecBreathT = GUARD_RAISE_MS/.test(sliceFn(codeOnly, "tickStun")) && /if \(f\.stunT > 0\)/.test(sliceFn(codeOnly, "idleBreath")));
-check("cache v=296 after chip stun settle→walk plant-release destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after chip stun settle→walk plant-release destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -19377,7 +19377,7 @@ check("golpe frames still 120/80/180 after throw+bolt recovery settle→walk pla
 check("K frames still 200/280 after throw+bolt recovery settle→walk plant-release destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("throw frames still 80/40/220 after throw+bolt recovery settle→walk plant-release destRect leftover", V.THROW_STARTUP===80 && V.THROW_ACTIVE===40 && V.THROW_RECOVERY===220);
 check("no 6th button after throw+bolt recovery settle→walk plant-release destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after throw+bolt recovery settle→walk plant-release destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after throw+bolt recovery settle→walk plant-release destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: throw walkFadeHold-only keep-0 + arms cutRec on end
 toClose();
@@ -19586,7 +19586,7 @@ for(let i=0;i<40;i++){
 check("throw recovery settle→walk plant-release destRect leftover live A/D keep-0 arms", trsw279AdAmpReady && Math.abs(trsw279AdBr0)<0.05 && trsw279AdRwo0 && trsw279AdSaw && trsw279AdArmed && trsw279AdMaxSeat<0.35, `ready=${trsw279AdAmpReady} br0=${trsw279AdBr0.toFixed(3)} rwo=${trsw279AdRwo0} saw=${trsw279AdSaw} armed=${trsw279AdArmed} maxSeat=${trsw279AdMaxSeat.toFixed(3)} cbt=${V.player.cutRecBreathT}`);
 
 check("throw+bolt recovery settle→walk plant-release destRect leftover rival advance shared", /advanceAttack\(rival/.test(srcTxt) && /advanceBoltFighter\(rival/.test(srcTxt) && /walking\(f\) \|\| recoveryWalkOut\(f\) \|\| f\.walkFadeHold > 0\.02/.test(sliceFn(codeOnly, "idleBreath")) && /else if \(walkOutEnd\) f\.cutRecBreathT = GUARD_RAISE_MS/.test(sliceFn(codeOnly, "advanceAttack")) && /else if \(walkOutEnd\) f\.cutRecBreathT = GUARD_RAISE_MS/.test(sliceFn(codeOnly, "advanceBoltFighter")));
-check("cache v=296 after throw+bolt recovery settle→walk plant-release destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after throw+bolt recovery settle→walk plant-release destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -19607,7 +19607,7 @@ check("golpe frames still 120/80/180 after cut recovery settle→walk plant-rele
 check("K frames still 200/280 after cut recovery settle→walk plant-release destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("throw frames still 80/40/220 after cut recovery settle→walk plant-release destRect leftover", V.THROW_STARTUP===80 && V.THROW_ACTIVE===40 && V.THROW_RECOVERY===220);
 check("no 6th button after cut recovery settle→walk plant-release destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after cut recovery settle→walk plant-release destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after cut recovery settle→walk plant-release destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: walkFadeHold / recoveryWalkOut keep-0 + hold cutRec (no plant-release hop)
 toClose();
@@ -19749,7 +19749,7 @@ for(let i=0;i<10;i++){
 check("cut recovery settle→walk plant-release destRect leftover live rival closing keep-0", crsw280RivalAmpReady && crsw280RivalRwo0 && Math.abs(crsw280RivalBr0)<0.05 && crsw280RivalMaxSeat<0.35 && crsw280RivalHeld && V.rival.cutRecBreathT===crsw280RivalCbt0, `ready=${crsw280RivalAmpReady} rwo0=${crsw280RivalRwo0} br0=${crsw280RivalBr0.toFixed(3)} maxSeat=${crsw280RivalMaxSeat.toFixed(3)} held=${crsw280RivalHeld} cbt=${V.rival.cutRecBreathT}`);
 
 check("cut recovery settle→walk plant-release destRect leftover rival idleBreath shared", /recoveryWalkOut\(f\) \|\| f\.walkFadeHold > 0\.02\) return 0/.test(sliceFn(codeOnly, "idleBreath")) && /else if \(recoveryWalkOut\(f\) \|\| f\.walkFadeHold > 0\.02\)/.test(sliceFn(codeOnly, "tickCutRecBreath")) && /tickCutRecBreath\(rival/.test(srcTxt) && !/f\.kind === "you"/.test(sliceFn(codeOnly, "tickCutRecBreath")));
-check("cache v=296 after cut recovery settle→walk plant-release destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after cut recovery settle→walk plant-release destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -19773,7 +19773,7 @@ check("golpe frames still 120/80/180 after guard drop settle→walk plant-releas
 check("K frames still 200/280 after guard drop settle→walk plant-release destRect leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("throw frames still 80/40/220 after guard drop settle→walk plant-release destRect leftover", V.THROW_STARTUP===80 && V.THROW_ACTIVE===40 && V.THROW_RECOVERY===220);
 check("no 6th button after guard drop settle→walk plant-release destRect leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after guard drop settle→walk plant-release destRect leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after guard drop settle→walk plant-release destRect leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: drop + D keep-0 + arms cutRec
 toClose();
@@ -19884,7 +19884,7 @@ check("guard drop settle→walk plant-release destRect leftover live walkFadeHol
 check("guard drop settle→walk plant-release destRect leftover live walkFadeHold arms cutRec", gdsw281WfhArmed, `armed=${gdsw281WfhArmed} cbt=${V.player.cutRecBreathT}`);
 
 check("guard drop settle→walk plant-release destRect leftover rival idleBreath shared", /f\.guardPoseK > 0 && !f\.guarding && \(walking\(f\) \|\| recoveryWalkOut\(f\) \|\| f\.walkFadeHold > 0\.02\)/.test(sliceFn(codeOnly, "idleBreath")) && /prevGuardK > 0/.test(sliceFn(codeOnly, "tickGuardPose")) && /tickGuardPose\(/.test(srcTxt) && !/f\.kind === "you"/.test(sliceFn(codeOnly, "tickGuardPose")));
-check("cache v=296 after guard drop settle→walk plant-release destRect leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after guard drop settle→walk plant-release destRect leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- v282 plant walk-in destRect lean leftover: keep settle through plant fades ---
@@ -19901,7 +19901,7 @@ check("slash frames still 180/140/280 after plant walk-in destRect lean leftover
 check("golpe frames still 120/80/180 after plant walk-in destRect lean leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after plant walk-in destRect lean leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after plant walk-in destRect lean leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after plant walk-in destRect lean leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after plant walk-in destRect lean leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: mid-stride telegraph Space keeps destRect lean (no dump)
 bootPlay(); wait(1700);
@@ -19980,7 +19980,7 @@ check("plant walk-in destRect lean leftover live idle plant still no settle", V.
 
 check("plant walk-in destRect lean leftover rival tickGait shared", /tickGait\(rival/.test(srcTxt) && /drainWalkSettleUnderPlant/.test(sliceFn(codeOnly, "tickGait")) && /linkPlanting\(f\)/.test(sliceFn(codeOnly, "walkSettleK")) && !/f\.kind === "you"/.test(sliceFn(codeOnly, "drainWalkSettleUnderPlant")) && !/f\.kind === "you"/.test(sliceFn(codeOnly, "walkSettleK")));
 
-check("cache v=296 after plant walk-in destRect lean leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after plant walk-in destRect lean leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v283 sheathe settle lean under walkFadeHold: keep settle through sheathe ---
 check("sheathe settle lean under walkFadeHold seats no lean dump mid-hump release", /Sheathe settle lean under walkFadeHold/.test(srcTxt) && /A\/D release mid-clash-sheathe/.test(srcTxt) && /gated usingDedicatedPose while sheathing\(\) held slash/.test(srcTxt) && /tickGait already armed walkSettleT/.test(srcTxt) && /sheatheDip still rode the hump/.test(srcTxt) && /Same hole plant walk-in \/ walk→guard/.test(srcTxt));
@@ -19994,7 +19994,7 @@ check("slash frames still 180/140/280 after sheathe settle lean under walkFadeHo
 check("golpe frames still 120/80/180 after sheathe settle lean under walkFadeHold", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after sheathe settle lean under walkFadeHold", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after sheathe settle lean under walkFadeHold", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after sheathe settle lean under walkFadeHold", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after sheathe settle lean under walkFadeHold", /game\.js\?v=313/.test(htmlTxt));
 
 // live: release mid clash-sheathe hump keeps destRect lean (no dump while dip rides)
 bootPlay(); wait(1700);
@@ -20081,7 +20081,7 @@ const sslIdleSk=V.walkSettleK(V.player);
 check("sheathe settle lean under walkFadeHold live idle sheathe still no settle", V.player.sheatheT>0 && V.player.gait===0 && V.player.walkT===0 && sslIdleSettle===0 && sslIdleSk===0 && Math.abs(sslIdleRot)<0.02, `ready=true settle=${sslIdleSettle} sk=${sslIdleSk} rot=${sslIdleRot.toFixed(4)} sh=${V.player.sheatheT|0}`);
 
 check("sheathe settle lean under walkFadeHold rival walkSettleK shared", /tickGait\(rival/.test(srcTxt) && /if \(f\.sheatheT > 0\)/.test(sliceFn(codeOnly, "walkSettleK")) && !/f\.kind === "you"/.test(sliceFn(codeOnly, "walkSettleK")));
-check("cache v=296 after sheathe settle lean under walkFadeHold live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after sheathe settle lean under walkFadeHold live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -20098,7 +20098,7 @@ check("slash frames still 180/140/280 after settle→plant destRect breath lefto
 check("golpe frames still 120/80/180 after settle→plant destRect breath leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after settle→plant destRect breath leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after settle→plant destRect breath leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after settle→plant destRect breath leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after settle→plant destRect breath leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: mid-settle Space keeps settle breath (no dump under restTeleWalk lean)
 bootPlay(); wait(1700);
@@ -20206,7 +20206,7 @@ check("settle→plant destRect breath leftover live idle tele still eases", spbI
 
 check("settle→plant destRect breath leftover rival idleBreath shared", /if \(telegraphing\(f\)\)/.test(sliceFn(codeOnly, "idleBreath")) && /Math\.max\(sk, tk\)/.test(sliceFn(codeOnly, "idleBreath")) && !/f\.kind === "you"/.test(sliceFn(codeOnly, "idleBreath").slice(sliceFn(codeOnly, "idleBreath").indexOf("if (telegraphing(f))"), sliceFn(codeOnly, "idleBreath").indexOf("if (telegraphing(f))")+480)));
 
-check("cache v=296 after settle→plant destRect breath leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after settle→plant destRect breath leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -20225,7 +20225,7 @@ check("slash frames still 180/140/280 after feint settle→plant destRect breath
 check("golpe frames still 120/80/180 after feint settle→plant destRect breath leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after feint settle→plant destRect breath leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after feint settle→plant destRect breath leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after feint settle→plant destRect breath leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after feint settle→plant destRect breath leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: mid-settle Space→feint keeps settle breath (no dump under restFeintWalk lean)
 bootPlay(); wait(1700);
@@ -20352,7 +20352,7 @@ const fspIdleFk=V.feintFade(V.player);
 check("feint settle→plant destRect breath leftover live idle feint still eases", fspIdleAmp && fspIdleOk && V.player.feintT>0 && V.player.walkSettleT===0 && fspIdleFk>0.8 && Math.abs(fspIdleBr1) <= Math.abs(fspIdleBr0)+0.05 + Math.abs(Math.sin((V.modeT/2400)*Math.PI*2)*1.6)*(1-fspIdleFk)+0.05, `ready=${fspIdleAmp} ok=${fspIdleOk} br0=${fspIdleBr0.toFixed(3)} br1=${fspIdleBr1.toFixed(3)} fk=${fspIdleFk.toFixed(3)} settle=${V.player.walkSettleT}`);
 
 check("feint settle→plant destRect breath leftover rival idleBreath shared", /if \(f\.feintT > 0\)/.test(sliceFn(codeOnly, "idleBreath")) && /Math\.max\(sk, fk\)/.test(sliceFn(codeOnly, "idleBreath")) && !/f\.kind === "you"/.test(sliceFn(codeOnly, "idleBreath").slice(sliceFn(codeOnly, "idleBreath").indexOf("if (f.feintT > 0)"), sliceFn(codeOnly, "idleBreath").indexOf("if (f.feintT > 0)")+680)));
-check("cache v=296 after feint settle→plant destRect breath leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after feint settle→plant destRect breath leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -20370,7 +20370,7 @@ check("slash frames still 180\/140\/280 after tipX under plant fades leftover", 
 check("golpe frames still 120\/80\/180 after tipX under plant fades leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180);
 check("K frames still 200\/280 after tipX under plant fades leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280);
 check("no 6th button after tipX under plant fades leftover", !/KeyM/.test(codeOnly));
-check("cache v=296 after tipX under plant fades leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after tipX under plant fades leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: connected slash-L tip eases under linkPlantFade (mirror landCloseSlash path)
 landCloseSlash();
@@ -20413,7 +20413,7 @@ const hf0 = V.holdCutFade(V.player);
 check("tipX under plant fades leftover live holdCut still slash tip", tipHcWin && V.player.boltPhase === "startup" && V.holdCutPlanting(V.player) && hf0 > 0.8 && Math.abs(tipHc0 - tipHcPre) < 1.5, `win=${tipHcWin} bph=${V.player.boltPhase} hc=${V.holdCutPlanting(V.player)} hf=${hf0} tip0=${tipHcPre.toFixed(2)} tip1=${tipHc0.toFixed(2)}`);
 
 check("tipX under plant fades leftover rival bladeTip shared", /function bladeTipX/.test(srcTxt) && /clashPlantFade\(f\)/.test(sliceFn(codeOnly, "bladeTipX")) && /linkPlantFade\(f\)/.test(sliceFn(codeOnly, "bladeTipX")));
-check("cache v=296 after tipX under plant fades leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after tipX under plant fades leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v287 reversal/throw-guard settle→plant destRect breath leftover ---
 check("reversal/throw-guard settle→plant destRect breath leftover seats no breath dump mid-settle reverse", /Reversal\/throw-guard settle→plant destRect breath leftover/.test(srcTxt) && /mid-settle L \/ Space\+S/.test(srcTxt) && /dump leftover settle breath/.test(srcTxt) && /phase!==idle hard-0 while walkSettleK still kept lean/.test(srcTxt) && /restRevWalk \/ restThrowGuardWalk/.test(srcTxt) && /Same hole tele\/feint[\s\S]{0,40}settle→plant/.test(srcTxt));
@@ -20432,7 +20432,7 @@ check("slash frames still 180/140/280 after reversal/throw-guard settle→plant 
 check("golpe frames still 120/80/180 after reversal/throw-guard settle→plant destRect breath leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after reversal/throw-guard settle→plant destRect breath leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after reversal/throw-guard settle→plant destRect breath leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=296 after reversal/throw-guard settle→plant destRect breath leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after reversal/throw-guard settle→plant destRect breath leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: mid-settle → guard → reverse keeps settle breath (no dump) + tip eases
 bootPlay(); wait(1700);
@@ -20547,7 +20547,7 @@ check("reversal/throw-guard settle→plant destRect breath leftover live idle re
 check("reversal/throw-guard settle→plant destRect breath leftover live idle reverse tip stays planted", rspIdleOk && rspIdleRf>0.8 && Math.abs(rspIdleTip1-rspIdleTip0)<25, `ok=${rspIdleOk} tip0=${rspIdleTip0.toFixed(2)} tip1=${rspIdleTip1.toFixed(2)} rf=${rspIdleRf.toFixed(3)}`);
 
 check("reversal/throw-guard settle→plant destRect breath leftover rival idleBreath shared", /if \(reversalPlanting\(f\)\)/.test(sliceFn(codeOnly, "idleBreath")) && /Math\.max\(sk, rf\)/.test(sliceFn(codeOnly, "idleBreath")) && /if \(throwGuardPlanting\(f\)\)/.test(sliceFn(codeOnly, "idleBreath")) && !/f\.kind === "you"/.test(sliceFn(codeOnly, "idleBreath").slice(sliceFn(codeOnly, "idleBreath").indexOf("if (reversalPlanting(f))"), sliceFn(codeOnly, "idleBreath").indexOf("if (reversalPlanting(f))")+720)));
-check("cache v=296 after reversal/throw-guard settle→plant destRect breath leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after reversal/throw-guard settle→plant destRect breath leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -20564,7 +20564,7 @@ check("slash frames still 180\/140\/280 after tip under telegraphFade leftover",
 check("golpe frames still 120\/80\/180 after tip under telegraphFade leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180);
 check("K frames still 200\/280 after tip under telegraphFade leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280);
 check("no 6th button after tip under telegraphFade leftover", !/KeyM/.test(codeOnly));
-check("cache v=296 after tip under telegraphFade leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after tip under telegraphFade leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: idle Space tele tip eases not dumps
 bootPlay(); wait(1700);
@@ -20636,7 +20636,7 @@ V.rival.phaseT = 40;
 const rTip1 = V.bladeTipX(V.rival); const rTf1 = V.telegraphFade(V.rival);
 check("tip under telegraphFade leftover rival tip eases not dumps", rTel && V.telegraphing(V.rival) && Math.abs(rTipArm-rTip0)<25 && Math.abs(rTip1-rTip0)>15 && Math.abs(rTip1-rTipArm)>10, `tip0=${rTip0.toFixed(2)} tipArm=${rTipArm.toFixed(2)} tip1=${rTip1.toFixed(2)} tf1=${rTf1.toFixed(3)} dArm=${(rTipArm-rTip0).toFixed(2)} d1=${(rTip1-rTip0).toFixed(2)}`);
 check("tip under telegraphFade leftover rival bladeTip shared", /function bladeTipX/.test(srcTxt) && /telegraphing\(f\)/.test(sliceFn(codeOnly, "bladeTipX")) && /telegraphFade\(f\)/.test(sliceFn(codeOnly, "bladeTipX")));
-check("cache v=296 after tip under telegraphFade leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after tip under telegraphFade leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- tip under feintFade leftover (v289) ---
 check("tip under feintFade leftover seats no tip dump mid-pull", /Tip under feintFade leftover/.test(srcTxt) && /windup→idle \(Space feint\) used to dump/.test(srcTxt) && /bladeTip onto idle-edge/.test(srcTxt) && /leftover windup still owned the sheet \(feintFade\)/.test(srcTxt) && /tip juice hopped ~304px while/.test(srcTxt));
@@ -20653,7 +20653,7 @@ check("slash frames still 180\/140\/280 after tip under feintFade leftover", V.S
 check("golpe frames still 120\/80\/180 after tip under feintFade leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180);
 check("K frames still 200\/280 after tip under feintFade leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280);
 check("no 6th button after tip under feintFade leftover", !/KeyM/.test(codeOnly));
-check("cache v=296 after tip under feintFade leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after tip under feintFade leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: windup→idle feint tip eases not dumps
 bootPlay(); wait(1700);
@@ -20744,7 +20744,7 @@ const rFfFk = V.feintFade(V.rival);
 if (V.rival.feintT>0) V.rival.feintT = Math.max(1, Math.floor(V.FEINT_RECOVERY*0.5));
 const rFf1 = V.bladeTipX(V.rival); const rFfFk1 = V.feintFade(V.rival);
 check("tip under feintFade leftover rival tip eases not dumps", rFfDid && rFfFk>0.9 && Math.abs(rFfArm-rFfTip0)<40 && Math.abs(rFf1-rFfArm)>10 && rFfFk1<rFfFk, `tip0=${rFfTip0.toFixed(2)} tipArm=${rFfArm.toFixed(2)} tip1=${rFf1.toFixed(2)} fk=${rFfFk.toFixed(3)} fk1=${rFfFk1.toFixed(3)} dArm=${(rFfArm-rFfTip0).toFixed(2)} d1=${(rFf1-rFfArm).toFixed(2)} can=${rFfCan} ph=${V.rival.phase}`);
-check("cache v=296 after tip under feintFade leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after tip under feintFade leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -20765,7 +20765,7 @@ check("slash frames still 180\/140\/280 after tip under throw-guard short raise 
 check("golpe frames still 120\/80\/180 after tip under throw-guard short raise leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180);
 check("K frames still 200\/280 after tip under throw-guard short raise leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280);
 check("no 6th button after tip under throw-guard short raise leftover", !/KeyM/.test(codeOnly));
-check("cache v=296 after tip under throw-guard short raise leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after tip under throw-guard short raise leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: short raise Space+S tip eases over GUARD_RAISE_MS, no ~304px dump
 bootPlay(); wait(900);
@@ -20866,7 +20866,7 @@ V.startBolt(V.player);
 const tgKArm = V.castPlantXY(V.player).x;
 check("tip under throw-guard short raise leftover live castPlantXY K snap intentional", V.player.boltPhase==="startup" && Math.abs(tgKArm-tgK0)>1, `plant0=${tgK0.toFixed(2)} plantArm=${tgKArm.toFixed(2)} bph=${V.player.boltPhase}`);
 
-check("cache v=296 after tip under throw-guard short raise leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after tip under throw-guard short raise leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- tip under reverse short raise leftover (v291) ---
@@ -20886,7 +20886,7 @@ check("slash frames still 180\/140\/280 after tip under reverse short raise left
 check("golpe frames still 120\/80\/180 after tip under reverse short raise leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180);
 check("K frames still 200\/280 after tip under reverse short raise leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280);
 check("no 6th button after tip under reverse short raise leftover", !/KeyM/.test(codeOnly));
-check("cache v=296 after tip under reverse short raise leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after tip under reverse short raise leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: short raise L+S tip eases over GUARD_RAISE_MS, no ~304px dump
 bootPlay(); wait(900);
@@ -20990,7 +20990,7 @@ const rvTeleArm = V.bladeTipX(V.player);
 const rvTeleTf = V.telegraphFade(V.player);
 check("tip under reverse short raise leftover live tele tip still eases", V.telegraphing(V.player) && V.player.phase==="startup" && Math.abs(rvTeleArm-rvTele0)<40 && Math.abs(rvTeleArm-rvTeleWu)>20 && rvTeleTf>0 && rvTeleTf<0.3, `tip0=${rvTele0.toFixed(2)} tipArm=${rvTeleArm.toFixed(2)} wu=${rvTeleWu.toFixed(2)} tf=${rvTeleTf.toFixed(3)}`);
 
-check("cache v=296 after tip under reverse short raise leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after tip under reverse short raise leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -21015,7 +21015,7 @@ check("slash frames still 180\/140\/280 after tip under tech-guard short raise l
 check("golpe frames still 120\/80\/180 after tip under tech-guard short raise leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180);
 check("K frames still 200\/280 after tip under tech-guard short raise leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280);
 check("no 6th button after tip under tech-guard short raise leftover", !/KeyM/.test(codeOnly));
-check("cache v=296 after tip under tech-guard short raise leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after tip under tech-guard short raise leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: short raise Space+S tech tip eases over GUARD_RAISE_MS, no ~304px dump
 bootPlay(); wait(900);
@@ -21174,7 +21174,7 @@ const tecGTipTeleArm = V.bladeTipX(V.player);
 const tecGTipTeleTf = V.telegraphFade(V.player);
 check("tip under tech-guard short raise leftover live tele tip still eases", V.telegraphing(V.player) && V.player.phase==="startup" && Math.abs(tecGTipTeleArm-tecGTipTele0)<40 && Math.abs(tecGTipTeleArm-tecGTipTeleWu)>20 && tecGTipTeleTf>0 && tecGTipTeleTf<0.3, `tip0=${tecGTipTele0.toFixed(2)} tipArm=${tecGTipTeleArm.toFixed(2)} wu=${tecGTipTeleWu.toFixed(2)} tf=${tecGTipTeleTf.toFixed(3)}`);
 
-check("cache v=296 after tip under tech-guard short raise leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after tip under tech-guard short raise leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -21199,7 +21199,7 @@ check("slash frames still 180\/140\/280 after tip under slash/golpe leftover sho
 check("golpe frames still 120\/80\/180 after tip under slash/golpe leftover short raise leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180);
 check("K frames still 200\/280 after tip under slash/golpe leftover short raise leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280);
 check("no 6th button after tip under slash/golpe leftover short raise leftover", !/KeyM/.test(codeOnly));
-check("cache v=296 after tip under slash/golpe leftover short raise leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after tip under slash/golpe leftover short raise leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: short raise leftover-drop slash tip eases over GUARD_RAISE_MS with tele off (no ~304px dump)
 bootPlay(); wait(900);
@@ -21392,7 +21392,7 @@ const sgTeleArm = V.bladeTipX(V.player);
 const sgTeleTf = V.telegraphFade(V.player);
 check("tip under slash/golpe leftover short raise leftover live tele tip still eases", V.telegraphing(V.player) && V.player.phase==="startup" && V.player.leftoverPlantTip===false && Math.abs(sgTeleArm-sgTele0)<40 && Math.abs(sgTeleArm-sgTeleWu)>20 && sgTeleTf>0 && sgTeleTf<0.3, `tip0=${sgTele0.toFixed(2)} tipArm=${sgTeleArm.toFixed(2)} wu=${sgTeleWu.toFixed(2)} tf=${sgTeleTf.toFixed(3)} latch=${V.player.leftoverPlantTip}`);
 
-check("cache v=296 after tip under slash/golpe leftover short raise leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after tip under slash/golpe leftover short raise leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -21419,7 +21419,7 @@ check("slash frames still 180\/140\/280 after tip under bolt leftover short rais
 check("golpe frames still 120\/80\/180 after tip under bolt leftover short raise leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180);
 check("K frames still 200\/280 after tip under bolt leftover short raise leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280);
 check("no 6th button after tip under bolt leftover short raise leftover", !/KeyM/.test(codeOnly));
-check("cache v=296 after tip under bolt leftover short raise leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after tip under bolt leftover short raise leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: short raise leftover-drop empty-K tip eases over GUARD_RAISE_MS with tele off (no ~304px dump)
 bootPlay(); wait(900);
@@ -21577,7 +21577,7 @@ const bltTeleArm = V.bladeTipX(V.player);
 const bltTeleTf = V.telegraphFade(V.player);
 check("tip under bolt leftover short raise leftover live tele tip still eases", bltTeleOk && V.telegraphing(V.player) && V.player.boltPhase==="startup" && V.player.leftoverPlantTip===false && Math.abs(bltTeleArm-bltTele0)<40 && Math.abs(bltTeleArm-bltTeleWu)>20 && bltTeleTf>0 && bltTeleTf<0.3, `tip0=${bltTele0.toFixed(2)} tipArm=${bltTeleArm.toFixed(2)} wu=${bltTeleWu.toFixed(2)} tf=${bltTeleTf.toFixed(3)} latch=${V.player.leftoverPlantTip}`);
 
-check("cache v=296 after tip under bolt leftover short raise leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after tip under bolt leftover short raise leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -21607,7 +21607,7 @@ check("slash frames still 180\/140\/280 after tip under stun leftover short rais
 check("golpe frames still 120\/80\/180 after tip under stun leftover short raise leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180);
 check("K frames still 200\/280 after tip under stun leftover short raise leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280);
 check("no 6th button after tip under stun leftover short raise leftover", !/KeyM/.test(codeOnly));
-check("cache v=296 after tip under stun leftover short raise leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after tip under stun leftover short raise leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: stun/throwKd leftover tipY plant (harness may lack block bitmap ready;
 // tipPlantK still seats POSE.block tipY; compare plant vs dump, not guarding tipY0)
@@ -21759,7 +21759,7 @@ V.player.thrownT=V.THROW_KD_MS; V.player.guardPoseK=0;
 const tkdSnapArm = V.bladeTipY(V.player);
 check("tip under throwKd leftover short raise leftover live no-leftover snaps tip", V.throwKdLeftoverPlanting(V.player)===false && V.guardRaiseK(V.player)===0 && Math.abs(tkdSnapArm-tkdSnap0)<12, `tkd=${V.throwKdLeftoverPlanting(V.player)} tipY0=${tkdSnap0.toFixed(2)} tipArm=${tkdSnapArm.toFixed(2)}`);
 
-check("cache v=296 after tip under stun/throwKd leftover short raise leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after tip under stun/throwKd leftover short raise leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- tip under guard drop leftover (v296) ---
@@ -21786,7 +21786,7 @@ check("slash frames still 180\/140\/280 after tip under guard drop leftover", V.
 check("golpe frames still 120\/80\/180 after tip under guard drop leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180);
 check("K frames still 200\/280 after tip under guard drop leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280);
 check("no 6th button after tip under guard drop leftover", !/KeyM/.test(codeOnly));
-check("cache v=296 after tip under guard drop leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after tip under guard drop leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: tip under guard drop (S-release leftover) tipY plant vs dump
 bootPlay(); wait(900);
@@ -21900,7 +21900,7 @@ const gdStDump = V.bladeTipY(V.player);
 V.player.guardPoseK=1;
 check("tip under guard drop leftover live stun leftover tip still holds", V.stunLeftoverPlanting(V.player) && Math.abs(gdStPlant-gdStDump)>20, `slp=${V.stunLeftoverPlanting(V.player)} plant=${gdStPlant.toFixed(2)} dump=${gdStDump.toFixed(2)}`);
 
-check("cache v=296 after tip under guard drop leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=296 after tip under guard drop leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -21921,7 +21921,7 @@ check("slash frames still 180/140/280 after tech-guard settle→plant destRect b
 check("golpe frames still 120/80/180 after tech-guard settle→plant destRect breath leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after tech-guard settle→plant destRect breath leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after tech-guard settle→plant destRect breath leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=297 after tech-guard settle→plant destRect breath leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=297 after tech-guard settle→plant destRect breath leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: mid-settle → guard → tech keeps settle breath (no dump through throw recovery)
 // Walk far first (GAP would zero gait if rival already in throw range), then snap
@@ -22058,7 +22058,7 @@ const tspRevExp=Math.sin((V.modeT/2400)*Math.PI*2)*1.6*(1-Math.max(tspRevSk1, ts
 check("tech-guard settle→plant destRect breath leftover live reverse still max settle\/fade", tspRevReady && tspRevMid && V.player.reversal===true && Math.abs(tspRevBr1-tspRevExp)<0.08 && !(Math.abs(tspRevBr1)<0.01 && tspRevRf1<0.95 && tspRevSk1>0.2 && Math.abs(tspRevBrG)>0.15), `ready=${tspRevReady} mid=${tspRevMid} rev=${V.player.reversal} brG=${tspRevBrG.toFixed(3)} br1=${tspRevBr1.toFixed(3)} exp=${tspRevExp.toFixed(3)} rf=${tspRevRf1.toFixed(3)}`);
 
 check("tech-guard settle→plant destRect breath leftover rival idleBreath shared", /if \(techGuardPlanting\(f\)\)/.test(sliceFn(codeOnly, "idleBreath")) && /Math\.max\(sk, tef\)/.test(sliceFn(codeOnly, "idleBreath")) && !/f\.kind === "you"/.test(sliceFn(codeOnly, "idleBreath").slice(sliceFn(codeOnly, "idleBreath").indexOf("if (techGuardPlanting(f))"), sliceFn(codeOnly, "idleBreath").indexOf("if (techGuardPlanting(f))")+480)));
-check("cache v=297 after tech-guard settle→plant destRect breath leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=297 after tech-guard settle→plant destRect breath leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -22074,7 +22074,7 @@ check("slash frames still 180/140/280 after KO caida audio sync leftover", V.STA
 check("golpe frames still 120/80/180 after KO caida audio sync leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after KO caida audio sync leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after KO caida audio sync leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=298 after KO caida audio sync leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=298 after KO caida audio sync leftover", /game\.js\?v=313/.test(htmlTxt));
 
 bootPlay(); wait(1700);
 freezeYouAI(); freezeRivalAI();
@@ -22104,7 +22104,7 @@ for(let i=0;i<Math.ceil(V.FALL_MS/STEP)+4;i++){
 }
 check("KO caida audio sync leftover live land arms caida", koCaidaLanded && V.koLanded===true && V.lastKoSfx==="caida" && V.rival.fallT>=V.FALL_MS*0.72-STEP, `land=${koCaidaLanded} sfx=${V.lastKoSfx} fallT=${V.rival&&V.rival.fallT} mode=${V.mode}`);
 check("KO caida audio sync leftover live land dust\/punch path", /spawnPlantDust\(koTarget, 2\.4\)/.test(srcTxt) && /bumpShake\(5/.test(srcTxt) && V.FALL_MS===720);
-check("cache v=298 after KO caida audio sync leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=298 after KO caida audio sync leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v299 Stick Esc→JUGAR leftover: resetRound re-feeds stick A/D after keys.clear ---
 check("stick Esc→JUGAR leftover seats no stickHeld without KeyA after Esc→JUGAR", /Stick Esc→JUGAR leftover/.test(srcTxt) && /goTitleFromPlay keys\.clear used to leave/.test(srcTxt) && /stickHeldA\/D true while KeyA\/D were gone/.test(srcTxt) && /JUGAR with the thumb still on/.test(srcTxt) && /did not walk until release\+re-nudge/.test(srcTxt) && /stickApply only edges/.test(srcTxt));
@@ -22119,7 +22119,7 @@ check("slash frames still 180/140/280 after stick Esc→JUGAR leftover", V.START
 check("golpe frames still 120/80/180 after stick Esc→JUGAR leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after stick Esc→JUGAR leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after stick Esc→JUGAR leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=299 after stick Esc→JUGAR leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=299 after stick Esc→JUGAR leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: Esc→title drops walk; JUGAR refeeds stick A/D without release+re-nudge
 bootPlay(); wait(50);
@@ -22149,7 +22149,7 @@ check("stick Esc→JUGAR leftover live freezeYouAI still drops", !V.keys.has("Ke
 V.resetRound();
 check("stick Esc→JUGAR leftover live harness stickApply no rearm", !V.keys.has("KeyA") && !V.actionHeld("left"), `a=${V.keys.has("KeyA")} held=${V.actionHeld("left")}`);
 V.stickApply(0);
-check("cache v=299 after stick Esc→JUGAR leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=299 after stick Esc→JUGAR leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -22170,7 +22170,7 @@ check("slash frames still 180/140/280 after portrait pad horizontal pack leftove
 check("golpe frames still 120/80/180 after portrait pad horizontal pack leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after portrait pad horizontal pack leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after portrait pad horizontal pack leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=300 after portrait pad horizontal pack leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=300 after portrait pad horizontal pack leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: pad path + AABB still planted (draw-only css; stick wiring unchanged)
 bootPlay(); wait(50);
@@ -22189,7 +22189,7 @@ V.stickRelease();
 check("portrait pad horizontal pack leftover live AABB planted", Math.abs(V.bodyAABB(V.player).y-packAabb0.y)<0.05 && Math.abs(V.bodyAABB(V.player).h-packAabb0.h)<0.05, `dy=${(V.bodyAABB(V.player).y-packAabb0.y).toFixed(2)}`);
 check("portrait pad horizontal pack leftover live destRect planted", Math.abs(V.destRect(V.player).dy-packDest0.dy)<2.2, `ddy=${(V.destRect(V.player).dy-packDest0.dy).toFixed(2)}`);
 check("portrait pad horizontal pack leftover zone hierarchy unchanged", /\.zone-golpe[\s\S]*?height:\s*80%/.test(cssTxt) && /\.zone-slash[\s\S]*?height:\s*92%/.test(cssTxt) && /\.zone-guard[\s\S]*?height:\s*88%/.test(cssTxt) && /\.zone-dart[\s\S]*?height:\s*88%/.test(cssTxt));
-check("cache v=300 after portrait pad horizontal pack leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=300 after portrait pad horizontal pack leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -22205,7 +22205,7 @@ check("slash frames still 180/140/280 after hit flash vs knock resume leftover",
 check("golpe frames still 120/80/180 after hit flash vs knock resume leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after hit flash vs knock resume leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after hit flash vs knock resume leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=301 after hit flash vs knock resume leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=301 after hit flash vs knock resume leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: chip hit — freeze holds flash; resume holds peak with cover; dies with cover
 toMeasure();
@@ -22241,7 +22241,7 @@ for(let i=0;i<30;i++){
 check("hit flash vs knock resume leftover live ease with cover last quarter", hfEaseFlash===V.HIT_FLASH_MS && hfEaseCover<V.PUNCH_PX && hfEaseCover>0 && hfEaseK>0 && hfEaseK<1, `flash=${hfEaseFlash} cover=${hfEaseCover} k=${hfEaseK}`);
 for(let i=0;i<40;i++){ if(V.shake<=0) break; V.update(STEP); }
 check("hit flash vs knock resume leftover live dies with cover", V.shake===0 && V.punchCover()===0 && V.hitFlashT===0 && V.hurtFlashK(V.rival)===0, `shake=${V.shake} cover=${V.punchCover()} flash=${V.hitFlashT} k=${V.hurtFlashK(V.rival)}`);
-check("cache v=301 after hit flash vs knock resume leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=301 after hit flash vs knock resume leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- v302 Portrait pad 2x2 clarity leftover: equal thumb cells on ~390px ---
@@ -22263,7 +22263,7 @@ check("slash frames still 180/140/280 after portrait pad 2x2 clarity leftover", 
 check("golpe frames still 120/80/180 after portrait pad 2x2 clarity leftover", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after portrait pad 2x2 clarity leftover", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("no 6th button after portrait pad 2x2 clarity leftover", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=302 after portrait pad 2x2 clarity leftover", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=302 after portrait pad 2x2 clarity leftover", /game\.js\?v=313/.test(htmlTxt));
 
 // live: pad path + AABB still planted (draw-only css; stick wiring unchanged)
 bootPlay(); wait(50);
@@ -22282,7 +22282,7 @@ V.stickRelease();
 check("portrait pad 2x2 clarity leftover live AABB planted", Math.abs(V.bodyAABB(V.player).y-pad2x2Aabb0.y)<0.05 && Math.abs(V.bodyAABB(V.player).h-pad2x2Aabb0.h)<0.05, `dy=${(V.bodyAABB(V.player).y-pad2x2Aabb0.y).toFixed(2)}`);
 check("portrait pad 2x2 clarity leftover live destRect planted", Math.abs(V.destRect(V.player).dy-pad2x2Dest0.dy)<2.2, `ddy=${(V.destRect(V.player).dy-pad2x2Dest0.dy).toFixed(2)}`);
 check("portrait pad 2x2 clarity leftover landscape zone hierarchy unchanged", /\.zone-golpe[\s\S]*?height:\s*80%/.test(cssTxt) && /\.zone-slash[\s\S]*?height:\s*92%/.test(cssTxt) && /\.zone-guard[\s\S]*?height:\s*88%/.test(cssTxt) && /\.zone-dart[\s\S]*?height:\s*88%/.test(cssTxt));
-check("cache v=302 after portrait pad 2x2 clarity leftover live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=302 after portrait pad 2x2 clarity leftover live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -22301,7 +22301,7 @@ check("riposte is not a 6th button", (htmlTxt.match(/data-tap=/g)||[]).length===
 check("slash frames still 180/140/280 after riposte", V.STARTUP===180 && V.ACTIVE===140 && V.RECOVERY===280 && V.LUNGE_PX===36);
 check("golpe frames still 120/80/180 after riposte", V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.GOLPE_LUNGE_PX===18);
 check("K frames still 200/280 after riposte", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
-check("cache v=304 after riposte", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=304 after riposte", /game\.js\?v=313/.test(htmlTxt));
 
 // live: perfect parry (raise-edge) → window → Space fires 130 startup riposte, same −10
 toMeasure();
@@ -22386,7 +22386,7 @@ V.rival.cut = "throw";
 V.landBlock(V.rival, V.player, -1);
 check("riposte live throw-cut landBlock does not arm", V.player.riposteWindowT === 0, `win=${V.player.riposteWindowT}`);
 
-check("cache v=304 after riposte live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=304 after riposte live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v304 Arte regen fighter cache-bust ?v=304 (courtyard untouched) ---
 check("arte v4 fighter loadImg cache-bust ?v=304", /you\.png\?v=304/.test(srcTxt) && /rival\.png\?v=304/.test(srcTxt) && /rival_flip\.png\?v=304/.test(srcTxt) && /you_windup\.png\?v=304/.test(srcTxt) && /you_slash\.png\?v=304/.test(srcTxt) && /you_block\.png\?v=304/.test(srcTxt) && /you_hurt\.png\?v=304/.test(srcTxt) && /you_walk\.png\?v=304/.test(srcTxt) && /you_throw_knife\.png\?v=304/.test(srcTxt));
@@ -22395,7 +22395,7 @@ check("arte v4 flip + rival combat sheets ?v=304", /rival_windup\.png\?v=304/.te
 check("arte v4 courtyard loads untouched", /courtyard\.png"\)/.test(srcTxt) && /courtyard2\.png"\)/.test(srcTxt) && !/courtyard\.png\?v=/.test(srcTxt));
 check("arte v4 tipX / plant locks hold", /tipX: 991/.test(srcTxt) && /tipX: 0/.test(srcTxt) && /tipX: 884/.test(srcTxt));
 check("plant you idle still footX 75", V.poseSheet({kind:"you",facing:1,phase:"idle",stunT:0,guarding:false,falling:false,img:null}).footX===75);
-check("cache v=304 after arte fighter cache-bust", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=304 after arte fighter cache-bust", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -22422,7 +22422,7 @@ check("golpe frames still 120/80/180 after teach HUD", V.GOLPE_STARTUP===120 && 
 check("K frames still 200/280 after teach HUD", V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.BOLT_SUPER_RECOVERY===380 && V.BOLT_SUPER_STOP===60);
 check("riposte frames still 130/140/280 after teach HUD", V.RIPOSTE_STARTUP===130 && V.RIPOSTE_ACTIVE===140 && V.RIPOSTE_RECOVERY===280 && V.RIPOSTE_WIN_MS===280);
 check("no 6th button after teach HUD", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=305 after teach HUD", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=305 after teach HUD", /game\.js\?v=313/.test(htmlTxt));
 check("arte fighters still ?v=304 after teach HUD", /you\.png\?v=304/.test(srcTxt) && /rival\.png\?v=304/.test(srcTxt) && /courtyard\.png"\)/.test(srcTxt) && !/courtyard\.png\?v=/.test(srcTxt));
 
 // CONTROLES title page teaches chords (remap-aware) + riposte; VOLVER still fits
@@ -22474,7 +22474,7 @@ for(let i=0;i<80;i++){ V.update(STEP); if(V.hitstopLeft>0 || V.rival.hp<100){ te
 check("teach HUD live connect still fades", teachHit && V.hintDone && V.hintFade>0, `hit=${teachHit} done=${V.hintDone} fade=${V.hintFade}`);
 V.resetRound();
 check("teach HUD rematch stays gone", V.hintDone && V.hintFade===0, `done=${V.hintDone} fade=${V.hintFade}`);
-check("cache v=305 after teach HUD live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=305 after teach HUD live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -22495,7 +22495,7 @@ check("K frames still 200/280 after meter combo feedback", V.BOLT_STARTUP===200 
 check("riposte frames still 130/140/280 after meter combo feedback", V.RIPOSTE_STARTUP===130 && V.RIPOSTE_ACTIVE===140 && V.RIPOSTE_RECOVERY===280 && V.RIPOSTE_WIN_MS===280);
 check("no 6th button after meter combo feedback", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
 check("arte fighters still ?v=304 after meter combo feedback", /you\.png\?v=304/.test(srcTxt) && /rival\.png\?v=304/.test(srcTxt) && /courtyard\.png"\)/.test(srcTxt) && !/courtyard\.png\?v=/.test(srcTxt));
-check("cache v=306 after meter combo feedback", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=306 after meter combo feedback", /game\.js\?v=313/.test(htmlTxt));
 
 // live: partial gain pulses meterGainT, meterFlashT stays quiet
 toMeasure();
@@ -22551,7 +22551,7 @@ V.rival.meter = 40; V.rival.meterFlashT = 0; V.rival.meterGainT = 0; V.rival.met
 V.gainMeter(V.rival, V.METER_BLOCK_SPECIAL);
 check("meter combo feedback rival partial gain pulse", V.rival.meter===50 && V.rival.meterGainT===V.METER_GAIN_MS && V.rival.meterFlashT===0, `m=${V.rival.meter} gt=${V.rival.meterGainT} ft=${V.rival.meterFlashT}`);
 
-check("cache v=306 after meter combo feedback live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=306 after meter combo feedback live", /game\.js\?v=313/.test(htmlTxt));
 
 
 // --- v307 Riposte SFX + connect juice: sfx_riposte on spend, punchier hit ---
@@ -22571,7 +22571,7 @@ check("plant you idle still footX 75 after riposte SFX", V.poseSheet({kind:"you"
 check("no 6th button after riposte SFX", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
 check("arte fighters still ?v=304 after riposte SFX", /you\.png\?v=304/.test(srcTxt) && /rival\.png\?v=304/.test(srcTxt) && /courtyard\.png"\)/.test(srcTxt) && !/courtyard\.png\?v=/.test(srcTxt));
 check("riposte credits not regress", /sfx_riposte\.wav/.test(fs.readFileSync("/workspace/estudio/vispera/AUDIO_CREDITS.md","utf8")) && /sfx_riposte\.wav/.test(fs.readFileSync("/workspace/estudio/vispera/sfx/README.md","utf8")));
-check("cache v=307 after riposte SFX", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=307 after riposte SFX", /game\.js\?v=313/.test(htmlTxt));
 
 // live: perfect parry → spend fires riposte SFX, connect punches shake 12 + hit sting
 toClose();
@@ -22646,7 +22646,7 @@ for (let i = 0; i < 80; i++) {
 }
 check("normal slash still mag 10 not riposte sting", nHit && V.shakeMag === 10 && V.player.riposte === false && V.HITSTOP_HIT === 140, `ok=${nHit} mag=${V.shakeMag} rip=${V.player.riposte} sfx=${V.lastRiposteSfx}`);
 
-check("cache v=307 after riposte SFX live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=307 after riposte SFX live", /game\.js\?v=313/.test(htmlTxt));
 
 
 
@@ -22663,7 +22663,7 @@ check("parry does not steal throw/dart/reversal", /THROW_STARTUP/.test(srcTxt) &
 check("parry tipX / frames locks", /tipX: 991/.test(srcTxt) && /tipX: 0/.test(srcTxt) && /tipX: 884/.test(srcTxt) && V.STARTUP===180 && V.ACTIVE===140 && V.RECOVERY===280 && V.GOLPE_STARTUP===120 && V.GOLPE_ACTIVE===80 && V.GOLPE_RECOVERY===180 && V.BOLT_STARTUP===200 && V.BOLT_RECOVERY===280 && V.RIPOSTE_STARTUP===130 && V.RIPOSTE_ACTIVE===140 && V.RIPOSTE_RECOVERY===280);
 check("parry no 6th button", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
 check("parry teach HUD PARRY>", (()=>{ const L=V.controlsHintLines(); return /PARRY>/.test(L[1]) && /RIPOSTE/.test(L[1]) && !/BLOQUEO>/.test(L[1]); })(), V.controlsHintLines().join(" | "));
-check("cache v=308 after parry", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=308 after parry", /game\.js\?v=313/.test(htmlTxt));
 check("arte fighters still ?v=304 after parry", /you\.png\?v=304/.test(srcTxt) && /rival\.png\?v=304/.test(srcTxt) && /courtyard\.png"\)/.test(srcTxt) && !/courtyard\.png\?v=/.test(srcTxt));
 
 // live: raise-edge vs melee → perfect parry arms riposte + stagger + gleam
@@ -22776,7 +22776,7 @@ for (let i = 0; i < 200; i++) {
 }
 check("parry live dart chip not parry", chip && V.player.riposteWindowT === 0 && V.player.hp === 100 - V.BOLT_CHIP, `chip=${chip} hp=${V.player.hp} win=${V.player.riposteWindowT}`);
 
-check("cache v=310 after parry live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=310 after parry live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v310 rival AI variety (no rival parry) + mid dart/pause ---
 check("AI variety seats no rival parry", /Rival AI variety \(v310\)/.test(srcTxt) && /no rival parry/.test(srcTxt) && /rival AI does not parry/.test(srcTxt) && V.GUARD_COMMIT_MS===140 && V.PARRY_WIN_MS===140);
@@ -22874,7 +22874,7 @@ V.rival.standWait = 0; V.rival.standGoal = 1; V.rival.closing = false; V.rival.p
 for (let i = 0; i < 12; i++) { V.update(STEP); if (V.rival.aiRetreatT > 0 || V.rival.boltPhase || V.rival.phase==="startup") break; }
 check("AI variety live post-reset retreat", V.rival.aiRetreatT>0 || V.rival.x>xAiReset+1 || V.rival.gait!==0, `ret=${V.rival.aiRetreatT} dx=${(V.rival.x-xAiReset).toFixed(1)} gait=${V.rival.gait} ph=${V.rival.phase} cut=${V.rival.cut} bph=${V.rival.boltPhase}`);
 
-check("cache v=310 after AI variety", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=310 after AI variety", /game\.js\?v=313/.test(htmlTxt));
 check("arte fighters still ?v=304 after AI variety", /you\.png\?v=304/.test(srcTxt) && /rival\.png\?v=304/.test(srcTxt) && /courtyard\.png"\)/.test(srcTxt) && !/courtyard\.png\?v=/.test(srcTxt));
 
 // --- v311 tutorial nudge + escenarios contrast ---
@@ -22893,7 +22893,7 @@ check("K frames still 200/280 after tutorial contrast", V.BOLT_STARTUP===200 && 
 check("riposte frames still 130/140/280 after tutorial contrast", V.RIPOSTE_STARTUP===130 && V.RIPOSTE_ACTIVE===140 && V.RIPOSTE_RECOVERY===280 && V.RIPOSTE_WIN_MS===280);
 check("parry constants still 140/180/80 after tutorial contrast", V.PARRY_WIN_MS===140 && V.PARRY_STAGGER_MS===180 && V.PARRY_GLEAM_MS===80);
 check("no 6th button after tutorial contrast", (htmlTxt.match(/data-tap=/g)||[]).length===3 && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt));
-check("cache v=311 after tutorial contrast", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=311 after tutorial contrast", /game\.js\?v=313/.test(htmlTxt));
 check("arte fighters still ?v=304 after tutorial contrast", /you\.png\?v=304/.test(srcTxt) && /rival\.png\?v=304/.test(srcTxt) && /courtyard\.png"\)/.test(srcTxt) && !/courtyard\.png\?v=/.test(srcTxt));
 
 // live: rematch from over rotates yard; title JUGAR keeps yard
@@ -22926,7 +22926,7 @@ V.yardSwitchT = 0; V.yardPrevIndex = -1;
 V.mode = "play";
 V.resetRound();
 check("tutorial contrast live play resetRound quiet", V.yardIndex===y311keep && V.yardSwitchT===0, `y=${V.yardIndex} keep=${y311keep} t=${V.yardSwitchT}`);
-check("cache v=312 after tutorial contrast live", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=312 after tutorial contrast live", /game\.js\?v=313/.test(htmlTxt));
 
 // --- v312 pushblock / clash readability juice ---
 check("pushblock shake stronger than hold-block", V.PUSHBLOCK_SHAKE===8 && V.PUSHBLOCK_SHAKE>4 && V.PUSHBLOCK_SHAKE<V.RIPOSTE_HIT_SHAKE, `pb=${V.PUSHBLOCK_SHAKE}`);
@@ -23040,7 +23040,104 @@ check("clash juice keeps 1.2 scrape both boots", cScrapes312.length===2, `scrape
 check("clash juice adds CLASH_FX shove stamps", cShoves312.filter(p=>Math.abs((p.power||0)-V.CLASH_FX)<0.01).length>=2, `shoves=${cShoves312.map(p=>p.power).join(",")}`);
 check("clash juice shake mag", V.shakeMag===V.CLASH_SHAKE && V.hitstopLeft===V.HITSTOP_BLOCK, `mag=${V.shakeMag} stop=${V.hitstopLeft}`);
 check("clash juice layered sting flag", V.lastClashSfx==="clash", `sfx=${V.lastClashSfx}`);
-check("cache v=312 after pushblock/clash juice", /game\.js\?v=312/.test(htmlTxt));
+check("cache v=312 after pushblock/clash juice", /game\.js\?v=313/.test(htmlTxt));
+
+
+// --- v313 throw-tech / tech-clash readability juice ---
+check("tech shake between pushblock and clash", V.TECH_SHAKE===9 && V.TECH_SHAKE>V.PUSHBLOCK_SHAKE && V.TECH_SHAKE<V.CLASH_SHAKE, `tech=${V.TECH_SHAKE} pb=${V.PUSHBLOCK_SHAKE} cl=${V.CLASH_SHAKE}`);
+check("tech grit above locked scrape 1.1 under clash", V.TECH_FX===1.5 && V.TECH_FX>1.1 && V.TECH_FX<V.CLASH_FX && V.TECH_FX<V.PUSHBLOCK_FX, `fx=${V.TECH_FX}`);
+const landTech313 = sliceFn(codeOnly, "landThrowTech");
+const techSting313 = sliceFn(codeOnly, "playThrowTechSting");
+const drawSteel313 = sliceFn(codeOnly, "drawSteelFlash");
+const landThrow313 = sliceFn(codeOnly, "landThrow");
+const landBlock313b = sliceFn(codeOnly, "landBlock");
+check("throw tech keeps locked 1.1 scrape + unpitched choque",
+  /spawnPlantDust\(atk, 1\.1\)/.test(landTech313)
+  && /spawnPlantDust\(def, 1\.1\)/.test(landTech313)
+  && /playSfx\(SFX\.choque\);/.test(landTech313)
+);
+check("throw tech adds TECH_FX shove grit + TECH_SHAKE + tech steel + sting",
+  /spawnPlantDust\(atk, TECH_FX, -dir\)/.test(landTech313)
+  && /spawnPlantDust\(def, TECH_FX, dir\)/.test(landTech313)
+  && /bumpShake\(TECH_SHAKE, dir, HITSTOP_BLOCK\)/.test(landTech313)
+  && /"tech"/.test(landTech313)
+  && /spawnSteelFlash\(/.test(landTech313)
+  && /playThrowTechSting\(\)/.test(landTech313)
+  && landTech313.indexOf("playSfx(SFX.choque)") < landTech313.indexOf("playThrowTechSting()")
+);
+check("throw tech sting pitches layered choque+bloqueo",
+  /function playThrowTechSting/.test(srcTxt)
+  && /SFX\.choque/.test(techSting313)
+  && /SFX\.bloqueo/.test(techSting313)
+  && /rate:/.test(techSting313)
+  && (techSting313.match(/playSfx\(SFX\.choque/g)||[]).length>=2
+  && /lastThrowTechSfx = "tech"/.test(techSting313)
+  && !/new Audio/.test(techSting313)
+);
+check("failed throw still unpitched impacto + shake 10",
+  /playSfx\(SFX\.impacto\);/.test(landThrow313)
+  && /bumpShake\(10,/.test(landThrow313)
+  && !/TECH_SHAKE/.test(landThrow313)
+  && !/playThrowTechSting/.test(landThrow313)
+  && !/"tech"/.test(landThrow313)
+);
+check("normal block still unpitched bloqueo after tech juice",
+  /playSfx\(SFX\.bloqueo\);/.test(landBlock313b) && !/rate:/.test(landBlock313b)
+  && /lastPushblockSfx = "block"/.test(landBlock313b)
+  && !/TECH_SHAKE/.test(landBlock313b)
+  && !/playThrowTechSting/.test(landBlock313b)
+);
+check("tech steel draw uses hueso/brasa/pizarra palette",
+  /steelKind === "tech"/.test(drawSteel313)
+  && /COL_HUESO/.test(drawSteel313)
+  && /COL_BRASA/.test(drawSteel313)
+  && /COL_PIZARRA/.test(drawSteel313)
+);
+check("v313 juice does not retune frames/damage/tech window",
+  V.THROW_STARTUP===80 && V.THROW_ACTIVE===40 && V.THROW_RECOVERY===220
+  && V.THROW_DMG===20 && V.THROW_TECH_MS===80 && V.THROW_TECH_REC===160
+  && V.THROW_TECH_CHANCE===0.45 && V.HITSTOP_BLOCK===60
+  && V.PUSHBLOCK_SHAKE===8 && V.CLASH_SHAKE===14 && V.CLASH_FX===1.7
+  && V.PUSHBLOCK_STAM===25 && V.PUSHBLOCK_PX===240 && V.STEEL_FLASH_MS===60
+);
+check("v313 no new combat verb / no 6th button",
+  (htmlTxt.match(/data-tap=/g)||[]).length===3
+  && /data-tap="KeyL"/.test(htmlTxt) && /data-hold="KeyS"/.test(htmlTxt)
+  && !/zone-tech|zone-crush/.test(htmlTxt)
+);
+
+// live: tech arms TECH_SHAKE + tech steel + sting (tryThrowTech path)
+toClose();
+freezeYouAI();
+freezeRivalAI();
+holdRivalStill();
+V.player.hp = 100; V.rival.hp = 100;
+V.player.stamina = 100; V.rival.stamina = 100;
+V.player.thrownT = 0; V.rival.thrownT = 0;
+V.plantDust.splice(0);
+fireThrow();
+let sawThrowStart313=false;
+for(let i=0;i<20;i++){
+  holdRivalStill();
+  V.update(STEP);
+  if(V.player.cut==="throw" && V.player.phase==="startup"){ sawThrowStart313=true; break; }
+}
+const techLive313 = sawThrowStart313 && V.tryThrowTech(V.rival);
+check("throw tech live shake mag", techLive313 && V.lastThrowTechSfx==="tech" && V.shakeMag===V.TECH_SHAKE && V.player.techRec && V.rival.techRec, `ok=${techLive313} sfx=${V.lastThrowTechSfx} mag=${V.shakeMag} ptech=${V.player.techRec}`);
+check("throw tech live hueso/brasa steel kind", techLive313 && V.steelKind==="tech" && V.steelFlashT>0, `ok=${techLive313} kind=${V.steelKind} t=${V.steelFlashT}`);
+
+// synthetic landThrowTech: locked 1.1 + TECH_FX shove + shake
+bootPlay();
+V.plantDust.splice(0);
+V.landThrowTech(V.player, V.rival);
+const tStamps313 = (V.plantDust||[]).filter(p=>!p.speck && !p.shove);
+const tScrapes313 = tStamps313.filter(p=>Math.abs((p.power||0)-1.1)<0.01);
+const tShoves313 = (V.plantDust||[]).filter(p=>p.shove && !p.speck);
+check("tech juice keeps 1.1 scrape both boots", tScrapes313.length===2, `scrape=${tScrapes313.length}`);
+check("tech juice adds TECH_FX shove stamps", tShoves313.filter(p=>Math.abs((p.power||0)-V.TECH_FX)<0.01).length>=2, `shoves=${tShoves313.map(p=>p.power).join(",")}`);
+check("tech juice shake mag", V.shakeMag===V.TECH_SHAKE, `mag=${V.shakeMag}`);
+check("tech juice layered sting flag", V.lastThrowTechSfx==="tech", `sfx=${V.lastThrowTechSfx}`);
+check("cache v=313 after throw-tech juice", /game\.js\?v=313/.test(htmlTxt));
 
 console.log("pass", pass.length, "fail", fail.length);
 fail.forEach(f=>console.log("  FAIL", f));
