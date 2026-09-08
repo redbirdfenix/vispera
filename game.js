@@ -270,6 +270,16 @@
  * HUD_FLASH_MS 220 / COMBO_SHOW_MS 640 unchanged. Juice only — grit/dmg v330 / hitSparkK v329 /
  * clashSparkK v328 / pad v327 / parry gleam v326 / steel v323 / meter v324 / hitFlash v301 /
  * tipX / plants / frames / pad / parry-riposte locked.
+ * Steel / parry gleam / clash spark clocks ↔ punchCover (v332): steelFlashT /
+ * parryGleamT / clashSparkT used to keep draining on their own STEEL_FLASH_MS /
+ * PARRY_GLEAM_MS / CLASH_SPARK_MS linear clocks while punchCover held full —
+ * short T could zero mid-cover even though draw-K peaked (v323/v326/v328).
+ * Hold armed clocks through live punch; clear when cover dies (same as
+ * hitSparkT / hudFlashT / brasaHit). Draw-K envelopes unchanged. No punch
+ * keeps linear fade. STEEL_FLASH_MS 60 / PARRY_GLEAM_MS 80 / CLASH_SPARK_MS 110
+ * unchanged. Juice only — hud/combo v331 / grit/dmg v330 / hitSparkK v329 /
+ * clashSparkK v328 / pad v327 / parry gleam v326 / steel v323 / meter v324 /
+ * hitFlash v301 / tipX / plants / frames / pad / parry-riposte locked.
  * Rematch (KO→REVANCHA) rotates yard +1 so consecutive bouts never repeat the same patio
  * (yards 2–5 get airtime; Escenarios picker still sticky for JUGAR / title start).
  * Escenarios labels carry a brief light tag (SOL/SOMBRA/OCASO/BRASA/LUNA). Draw-only.
@@ -6977,11 +6987,44 @@
           hitFlashT = Math.max(0, hitFlashT - dt);
         }
       }
-      if (steelFlashT > 0) steelFlashT = Math.max(0, steelFlashT - dt);
-      if (parryGleamT > 0) parryGleamT = Math.max(0, parryGleamT - dt);
+      // Steel / parry gleam / clash spark clocks ↔ punchCover (v332): linear
+      // steelFlashT / parryGleamT / clashSparkT used to start draining the tick
+      // freeze ended while punchCover still held full, so short T (60/80/110)
+      // could zero mid-cover even though draw-K peaked (v323/v326/v328). Hold
+      // armed clocks through the live punch; clear when cover dies (same as
+      // hitSparkT / hudFlashT). No-punch fallback still linear. Freeze already held.
+      if (steelFlashT > 0) {
+        if (shake > 0 && shakeDur > 0) {
+          /* hold through live cover */
+        } else if (shakeDur > 0) {
+          // Cover just died — die with it.
+          steelFlashT = 0;
+        } else {
+          steelFlashT = Math.max(0, steelFlashT - dt);
+        }
+      }
+      if (parryGleamT > 0) {
+        if (shake > 0 && shakeDur > 0) {
+          /* hold through live cover */
+        } else if (shakeDur > 0) {
+          // Cover just died — die with it.
+          parryGleamT = 0;
+        } else {
+          parryGleamT = Math.max(0, parryGleamT - dt);
+        }
+      }
       if (player.parryFadeT > 0) player.parryFadeT = Math.max(0, player.parryFadeT - dt);
       if (rival.parryFadeT > 0) rival.parryFadeT = Math.max(0, rival.parryFadeT - dt);
-      if (clashSparkT > 0) clashSparkT = Math.max(0, clashSparkT - dt);
+      if (clashSparkT > 0) {
+        if (shake > 0 && shakeDur > 0) {
+          /* hold through live cover */
+        } else if (shakeDur > 0) {
+          // Cover just died — die with it.
+          clashSparkT = 0;
+        } else {
+          clashSparkT = Math.max(0, clashSparkT - dt);
+        }
+      }
       // Flesh hit spark ↔ punchCover (v329): linear hitSparkT used to start
       // draining the tick freeze ended while punchCover still held full, so
       // shards died on their own clock — not with cover (HIT_SPARK_MS 100 <
@@ -8235,8 +8278,9 @@
     // linear clock while punchCover held full through the slam — asterisk
     // died mid-cover. Hold peak while cover is full; ease out over cover's
     // last quarter (same smoothstep as punchCover / hurtFlashK). No punch
-    // keeps linear steelFlashT fade. push/tech/block steelKind unchanged.
-    // destRect/AABB planted.
+    // keeps linear steelFlashT fade. Armed clock holds through live punch
+    // and clears when cover dies (update, v332). push/tech/block steelKind
+    // unchanged. destRect/AABB planted.
     if (steelFlashT <= 0) return 0;
     if (shake > 0 && shakeDur > 0) {
       const k = Math.min(1, shake / shakeDur);
@@ -8253,7 +8297,8 @@
     // the slam — gleam died mid-cover (steel asterisk sibling). Hold peak
     // while cover is full; ease out over cover's last quarter (same
     // smoothstep as punchCover / steelFlashK / hurtFlashK). No punch keeps
-    // linear parryGleamT fade. destRect/AABB planted.
+    // linear parryGleamT fade. Armed clock holds through live punch and
+    // clears when cover dies (update, v332). destRect/AABB planted.
     if (parryGleamT <= 0) return 0;
     if (shake > 0 && shakeDur > 0) {
       const k = Math.min(1, shake / shakeDur);
@@ -8270,7 +8315,8 @@
     // the slam — shards died mid-cover (steel asterisk / parry gleam siblings).
     // Hold peak while cover is full; ease out over cover's last quarter (same
     // smoothstep as punchCover / steelFlashK / hurtFlashK / parryGleamK). No
-    // punch keeps linear clashSparkT fade. destRect/AABB planted.
+    // punch keeps linear clashSparkT fade. Armed clock holds through live punch
+    // and clears when cover dies (update, v332). destRect/AABB planted.
     if (clashSparkT <= 0) return 0;
     if (shake > 0 && shakeDur > 0) {
       const k = Math.min(1, shake / shakeDur);
