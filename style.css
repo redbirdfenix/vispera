@@ -1,4 +1,22 @@
-/* Víspera — PC 16:9. Teclado. Sin táctil, sin retrato. */
+/* Víspera — 16:9. Teclado. Pad landscape bajo el canvas; portrait en letterbox inferior.
+   Portrait stick leftover: bigger thumb in the bottom strip (pad-h / --stick-size).
+   Portrait pad leftover: bigger guarda/tajo/golpe/dardo hit targets in that strip.
+   Portrait pad horizontal pack leftover: pack mins+cluster so ~390px does not overflow. Canvas stays 16:9.
+   Portrait pad 2x2 clarity leftover: guarda/tajo/golpe/dardo as a 2x2 grid on the right
+   so ~390px portrait shows all four verbs equally. Slightly taller strip.
+   cut-cluster display:contents. Landscape row unchanged. No 6th button.
+   Stick/pad release linger leftover (v355): JS eases stick-knob + tap .held (not CSS).
+   Stick .held chrome linger leftover (v356): stick keeps .held while knob eases;
+   zone pressed look is .held-only (no CSS :active sticky ghost after linger). */
+:root {
+  --pizarra: #3a342c;
+  --oxido: #8a4a28;
+  --brasa: #c42818;
+  --hueso: #cfc3a8;
+  --negro: #0c0a08;
+  --pad-h: calc(clamp(64px, 18vh, 96px) + env(safe-area-inset-bottom, 0px));
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -10,12 +28,23 @@ html, body {
   font-family: Palatino, "Palatino Linotype", Georgia, serif;
   user-select: none;
   -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
+body.touch-on,
+body.touch-on #stage,
+body.touch-on #game {
+  touch-action: none;
+  overscroll-behavior: none;
 }
 
 #stage {
   position: absolute;
   inset: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   background: #050505;
@@ -26,4 +55,379 @@ html, body {
   width: min(100vw, calc(100vh * 16 / 9));
   height: min(100vh, calc(100vw * 9 / 16));
   background: #000;
+  flex: 0 0 auto;
+}
+
+#pad,
+#giro {
+  display: none;
+}
+
+@media (orientation: landscape) {
+  body.touch-on #game {
+    width: min(100vw, calc((100vh - var(--pad-h)) * 16 / 9));
+    width: min(100vw, calc((100dvh - var(--pad-h)) * 16 / 9));
+    height: min(calc(100vh - var(--pad-h)), calc(100vw * 9 / 16));
+    height: min(calc(100dvh - var(--pad-h)), calc(100vw * 9 / 16));
+  }
+  body.touch-on #pad {
+    display: flex;
+    box-sizing: border-box;
+    width: min(100vw, calc((100vh - var(--pad-h)) * 16 / 9));
+    width: min(100vw, calc((100dvh - var(--pad-h)) * 16 / 9));
+    height: var(--pad-h);
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
+    gap: 10px;
+    align-items: stretch;
+    justify-content: space-between;
+    background: var(--negro);
+    touch-action: none;
+    overscroll-behavior: none;
+  }
+}
+
+@media (orientation: portrait) {
+  /* Portrait stick leftover: landscape 84px / 26vw was a cramped thumb in the
+     thin letterbox strip. Taller strip, bigger stick. Canvas stays 16:9. */
+  body.touch-on {
+    --pad-h: calc(clamp(96px, 20vh, 140px) + env(safe-area-inset-bottom, 0px));
+    --pad-h: calc(clamp(96px, 20dvh, 140px) + env(safe-area-inset-bottom, 0px));
+  }
+  body.touch-on #giro {
+    display: none;
+  }
+  body.touch-on #pad {
+    display: flex;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    box-sizing: border-box;
+    width: min(100vw, calc(100vh * 16 / 9));
+    height: var(--pad-h);
+    /* Portrait pad horizontal pack: 8/10 padding+gap left ~240px right budget
+       beside the 120px stick on ~390px — mins spilled. Pack strip chrome. */
+    padding: 6px 6px calc(6px + env(safe-area-inset-bottom, 0px));
+    gap: 6px;
+    align-items: stretch;
+    justify-content: space-between;
+    background: var(--negro);
+    touch-action: none;
+    overscroll-behavior: none;
+  }
+  body.touch-on .stick {
+    --stick-size: min(120px, calc(var(--pad-h) - 10px), 38vw);
+  }
+  /* Portrait pad leftover: landscape zone mins (52/48/56) stayed cramped in the
+     taller letterbox next to the bigger stick — a stamp, not a thumb plant.
+     Bigger hit targets for guarda / tajo / golpe / dardo. Stick size unchanged.
+     Landscape mins unchanged. Canvas stays 16:9. No 6th button.
+     Portrait pad horizontal pack leftover: those bigger mins (64/64/58/68) +
+     cluster 130/42% still overflowed the right budget beside the 120px stick on
+     ~390px phones — buttons spilled past the strip. Pack gaps + mins so
+     guarda/tajo/golpe/dardo fit (56/56/50/56, cluster 112/40%, right gap 4).
+     Stick size unchanged. Landscape mins unchanged. Letterbox + canvas 16:9
+     unchanged. No 6th button. */
+  body.touch-on .pad-right {
+    gap: 4px;
+  }
+  body.touch-on .zone-guard {
+    min-width: 56px;
+  }
+  body.touch-on .zone-slash {
+    min-width: 56px;
+  }
+  body.touch-on .zone-golpe {
+    min-width: 50px;
+  }
+  body.touch-on .zone-dart {
+    min-width: 56px;
+  }
+  body.touch-on .cut-cluster {
+    min-width: 112px;
+    width: 40%;
+    gap: 4px;
+  }
+  /* Portrait pad 2x2 clarity leftover: row pack still lost golpe+dardo on ~390px
+     (golpe stamp inside cut-cluster; dardo a side stamp) — not equal to guarda/tajo.
+     2x2 grid on pad-right; cut-cluster display:contents so all four zones are cells.
+     Order: TL guarda | TR tajo / BL golpe | BR dardo — throw hold-guarda+tap-tajo
+     (top row); reversal hold-guarda+tap-golpe (left column). Equal mins ≥56.
+     Slightly taller --pad-h so two rows fit. Stick size formula unchanged (grows
+     with pad-h). Landscape row + base mins unchanged. No 6th button. */
+  body.touch-on {
+    --pad-h: calc(clamp(132px, 24vh, 168px) + env(safe-area-inset-bottom, 0px));
+    --pad-h: calc(clamp(132px, 24dvh, 168px) + env(safe-area-inset-bottom, 0px));
+  }
+  body.touch-on .pad-right {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 4px;
+    align-items: stretch;
+    justify-content: stretch;
+    align-content: stretch;
+  }
+  body.touch-on .cut-cluster {
+    display: contents; /* landscape keeps flex cluster; portrait flattens into 2x2 */
+  }
+  body.touch-on .zone-guard,
+  body.touch-on .zone-slash,
+  body.touch-on .zone-golpe,
+  body.touch-on .zone-dart {
+    width: auto;
+    height: auto;
+    min-width: 56px;
+    min-height: 56px;
+    max-width: 100%;
+    max-height: 100%;
+    aspect-ratio: 1;
+    flex: none;
+    align-self: center;
+    justify-self: center;
+  }
+  body.touch-on .zone .lab {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    opacity: 1;
+  }
+  body.touch-on .zone-golpe .lab {
+    font-size: 11px;
+  }
+  body.touch-on .ember {
+    width: 12px;
+    height: 12px;
+  }
+  body.touch-on .blade-sm {
+    width: 16px;
+  }
+}
+
+.pad-side {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+}
+.pad-left {
+  flex: 1 1 38%;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 4px;
+}
+.pad-right {
+  flex: 1 1 54%;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.stick {
+  --stick-size: min(84px, calc(var(--pad-h) - 14px), 26vw);
+  position: relative;
+  width: var(--stick-size);
+  height: var(--stick-size);
+  flex: 0 0 auto;
+  touch-action: none;
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.stick-base {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 32%, #524a40 0%, var(--pizarra) 46%, var(--negro) 100%);
+  border: 2px solid rgba(207, 195, 168, 0.32);
+  box-shadow: inset 0 2px 0 rgba(207, 195, 168, 0.16), inset 0 -4px 0 var(--negro);
+  pointer-events: none;
+}
+.stick-knob {
+  position: absolute;
+  width: 42%;
+  height: 42%;
+  left: 29%;
+  top: 29%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 36% 30%, var(--hueso) 0%, #8a8072 40%, var(--pizarra) 78%, var(--negro) 100%);
+  border: 1px solid rgba(207, 195, 168, 0.5);
+  box-shadow: 0 2px 0 var(--negro), inset 0 1px 0 rgba(207, 195, 168, 0.45);
+  pointer-events: none;
+  will-change: transform;
+}
+.stick.held .stick-knob {
+  background: radial-gradient(circle at 36% 30%, var(--hueso) 0%, var(--oxido) 55%, var(--negro) 100%);
+  border-color: var(--hueso);
+}
+
+.zone {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  background: radial-gradient(circle at 38% 30%, #4a443c 0%, var(--pizarra) 58%, #16120e 100%);
+  border: 1px solid rgba(207, 195, 168, 0.22);
+  border-radius: 50%;
+  min-width: 0;
+  touch-action: none;
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: inset 0 2px 0 rgba(207, 195, 168, 0.14), inset 0 -3px 0 var(--negro), 0 2px 0 #050505;
+}
+.zone-walk {
+  flex: 1 1 50%;
+}
+.zone-guard {
+  width: 22%;
+  min-width: 52px;
+  height: 88%;
+  aspect-ratio: 1;
+  align-self: center;
+}
+.cut-cluster {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  width: 38%;
+  min-width: 110px;
+  height: 100%;
+}
+.zone-slash {
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 52px;
+  height: 92%;
+  align-self: center;
+  aspect-ratio: 1;
+  border-color: rgba(196, 40, 24, 0.45);
+}
+.zone-golpe {
+  flex: 0 0 42%;
+  width: auto;
+  min-width: 48px;
+  height: 80%;
+  align-self: center;
+  aspect-ratio: 1;
+  border-color: rgba(196, 40, 24, 0.32);
+}
+.zone-dart {
+  width: 22%;
+  min-width: 56px;
+  height: 88%;
+  align-self: center;
+  aspect-ratio: 1;
+  border-color: rgba(138, 74, 40, 0.55);
+}
+.zone.held {
+  background: radial-gradient(circle at 38% 30%, var(--oxido) 0%, #5a3018 68%, var(--negro) 100%);
+  border-color: var(--hueso);
+  box-shadow: inset 0 3px 0 var(--negro);
+}
+.zone-slash.held,
+.zone-golpe.held {
+  background: radial-gradient(circle at 38% 30%, var(--brasa) 0%, var(--oxido) 70%, var(--negro) 100%);
+}
+.zone-dart.held {
+  background: radial-gradient(circle at 38% 30%, var(--brasa) 0%, var(--oxido) 70%, var(--negro) 100%);
+}
+
+.lab {
+  display: block;
+  pointer-events: none;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  color: var(--hueso);
+  text-transform: lowercase;
+}
+.zone-walk .lab {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+.zone.held .lab {
+  color: var(--negro);
+}
+
+.shape {
+  display: block;
+  pointer-events: none;
+}
+.chev-l,
+.chev-r {
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+.chev-l {
+  border-width: 11px 16px 11px 0;
+  border-color: transparent var(--hueso) transparent transparent;
+}
+.chev-r {
+  border-width: 11px 0 11px 16px;
+  border-color: transparent transparent transparent var(--hueso);
+}
+.shield {
+  width: 16px;
+  height: 20px;
+  background: var(--oxido);
+  clip-path: polygon(50% 0, 100% 18%, 84% 100%, 16% 100%, 0 18%);
+}
+.zone-guard.held .shield {
+  background: var(--hueso);
+}
+.blade {
+  width: 26px;
+  height: 3px;
+  background: var(--hueso);
+  transform: rotate(-38deg);
+  box-shadow: 0 0 0 1px var(--brasa);
+}
+.zone-slash.held .blade {
+  background: var(--negro);
+  box-shadow: none;
+}
+.blade-sm {
+  width: 14px;
+  height: 3px;
+  background: var(--hueso);
+  transform: rotate(-38deg);
+  box-shadow: 0 0 0 1px var(--oxido);
+}
+.zone-golpe.held .blade-sm {
+  background: var(--negro);
+  box-shadow: none;
+}
+.zone-golpe .lab {
+  font-size: 9px;
+}
+.ember {
+  width: 11px;
+  height: 11px;
+  background: var(--brasa);
+  transform: rotate(45deg);
+}
+.zone-dart.held .ember {
+  background: var(--hueso);
+}
+.land {
+  width: 36px;
+  height: 20px;
+  border: 1px solid var(--hueso);
+  border-radius: 2px;
+  opacity: 0.55;
+  box-shadow: inset 0 -5px 0 0 var(--pizarra);
+}
+
+/* Riposte window hint on guarda (pizarra/brasa). No 6th button. */
+.zone-guard.riposte {
+  border-color: var(--brasa);
+  box-shadow: inset 0 2px 0 rgba(196, 40, 24, 0.3), inset 0 -3px 0 var(--negro), 0 0 10px rgba(196, 40, 24, 0.42);
+}
+.zone-guard.riposte .shield {
+  background: var(--brasa);
+}
+.zone-guard.riposte .lab {
+  color: var(--brasa);
 }
