@@ -116,7 +116,7 @@
  * Reuses slash sheets (time). One cancel: tajo→golpe in last 100ms of Space recovery, hit/block only (whiff keeps full recovery). Late active / early recovery still buffer into that window; idle otherwise. Clash late recovery (~last 100ms of the 200ms clash recovery) also doors into L. Early clash recovery still locked. Not a free mash on clash. Rival uses that same connected tajo→golpe door (chance after hit/block, not a mash, not from idle, not on whiff). Rival clash-cancels into L the same late door (40% once-per-clash, not a mash, not from early clash recovery).
  * Reverse door: golpe→tajo in last 100ms of L recovery, hit/block only (whiff keeps full recovery). Space from L still waits for idle until that window. Clash late recovery also doors into Space slash the same way. Not a combo list, not juggles. Rival uses that same connected golpe→tajo door (chance after hit/block, not a mash, not from idle, not on whiff). Rival clash-cancels into Space the same late door (40% once-per-clash, not a mash, not from early clash recovery).
  * Special cancel uses that same late-recovery door: tajo or golpe into K, hit/block only. Clash late recovery doors into Space slash, L golpe, and K the same way. Rival uses that same connected tajo/golpe → K door (40% once-per-connect, hit/block only, not a mash, not from idle, not on whiff). Clash late K is the same door for you and the rival (40% once-per-clash, respects BOLT_AI_CD). Clash late Space/L is the same door for you and the rival (40% once-per-clash). Clash-K keeps priority so that dart door is not stolen.
- * Special-cancel K holds the cut pose (slash/golpe sheet + destRect plant) through the 200ms startBolt plant and through K recovery. Dart still births from that live tip and leaves it. Recovery sheathes from the cut (existing 140ms envelope) instead of popping idle — breath used to seat destRect ~1.5px. No destRect hop. Idle/walk K still uses the windup plant.
+ * Special-cancel K holds the cut pose (slash/golpe sheet + destRect plant) through the 200ms startBolt plant and through K recovery. Hold-S during holdCut recovery does not hop the unfinished cut sheet to block (empty-K / clash-K recovery raise kept). Dart still births from that live tip and leaves it. Recovery sheathes from the cut (existing 140ms envelope) instead of popping idle — breath used to seat destRect ~1.5px. No destRect hop. Idle/walk K still uses the windup plant.
  * Touch: golpe sits next to tajo in the right cluster (still smaller, both thumbable), not a sixth top-level button. Dart zone is a larger round hit target. KeyK tap still plants.
  * Rival uses golpe at close as a faster punish, not as their only cut. After a connected tajo (hit/block, not whiff) they can cancel into golpe in the last 100ms — same window as you, not every slash, not from idle. After a connected golpe they can reverse into tajo the same way — last 100ms, hit/block only, 40% once-per-connect, not a mash, not from idle, not on whiff. After a connected tajo or golpe they can special-cancel into K the same way — last 100ms, hit/block only, 40% once-per-connect, same −30 / 200 startup, respects BOLT_AI_CD, not a dart robot, not from idle, not on whiff. After a clash they can cancel into K in the last 100ms of clash recovery the same way — 40% once-per-clash, same −30 / 200, respects BOLT_AI_CD, not from early clash recovery. After a clash they can cancel into Space or L in that same last 100ms — 40% once-per-clash, not a mash, not from early clash recovery. Clash-K keeps priority so that dart door is not stolen. Space/J stay 180/140/280.
  * Close throw: Space+S chord (not a 6th button). Pad hold-guarda + tap-tajo is that same chord while absGap<=120.
@@ -128,7 +128,7 @@
  * On hit: snap together + hurt-sheet knockdown (existing KO art, no redraw). Not a full KO from 100.
  * Throw will not grab knockdown or stun (stunT / thrownT). Short throw-invuln on wakeup so the first grounded frame is not a free re-grab. Not a wakeup super. Same-frame both-active throws tech (throw-break), not P1-wins. Rival still gated by THROW_AI_CD 1800.
  * Reversal from guard: hold S, tap L (not Space — Space+S is throw). Same L golpe frames/art (120/80/180). Short startup invuln so it beats a meaty Space slash. Costs REVERSAL_STAM 30 (a real chunk, not free). Loses to throw. On wakeup, L+S spends throw-invuln the same way (not a wakeup super). Far / out of throw range: L-from-guard still reverses, does not throw. Close: Space+S stays throw, L+S stays reversal. Chords do not collide. Pad: hold-guarda + tap-golpe, no 6th face button. Rival reversals that same L-from-guard: only while actually guarding AND a meaty Space slash or L golpe is coming (inThreat / incoming Space or L), REVERSAL_AI_CD 1800 + 40% once-per-swing so they are not a reversal robot. Not every block, not every L, not vs dart, not vs throw (throw still beats a bad reversal). Same 30 stam, same 120ms invuln, same L frames.
- * Wakeup reversal: after knockdown (thrownT/stunT expiry / throwInvuln window), tap L without holding S. Same 30 stam, same 120ms strike-invuln, same L frames (startReversal path). Still loses to throw — spends the throw-invuln so it is not a wakeup super. Hold-S tap-L on getup is that same spend (startReversal), not a second invuln. Too early (still down / thrownT) does nothing. Too late (window gone) is a normal L. One wakeup attempt per getup (wakeRev) so leftover throw-invuln cannot loop a free reversal. Pad: tap golpe on getup, no 6th button. Rival wakeup-reversals that same startReversal path: only on getup vs a meaty Space or L in pocket (incoming Space/L startup/active), REVERSAL_AI_CD 1800 + 40% once-per-getup so they are not a reversal robot. Not every wakeup, not every L, not vs dart, not vs throw (throw still beats a bad reversal). Same 30 stam, same 120ms invuln, same L frames.
+ * Wakeup reversal: after knockdown (thrownT/stunT expiry / throwInvuln window), tap L without holding S. Same 30 stam, same 120ms strike-invuln, same L frames (startReversal path). Still loses to throw — spends the throw-invuln so it is not a wakeup super. Hold-S tap-L on getup is that same spend (startReversal), not a second invuln. L buffers through thrownT (v472); flush on wakeupWindow. Too late (window gone) is a normal L. One wakeup attempt per getup (wakeRev) so leftover throw-invuln cannot loop a free reversal. Pad: tap golpe on getup, no 6th button. Rival wakeup-reversals that same startReversal path: only on getup vs a meaty Space or L in pocket (incoming Space/L startup/active), REVERSAL_AI_CD 1800 + 40% once-per-getup so they are not a reversal robot. Not every wakeup, not every L, not vs dart, not vs throw (throw still beats a bad reversal). Same 30 stam, same 120ms invuln, same L frames.
  * Super meter: one stock. Connecting hits fill that fighter (slash/golpe/dart/throw) +20. Blocked specials fill a little (+10). Five connects fill one stock; two no longer dump a dart. Full bar: next K spends it for a heavier dart (−28, not a 100-to-0). Empty K is the normal −10 dart. Same 200 plant / −30 stam; super recovery 380 so it is a read. Empty chip stays −2; spent super blocked chips −6 (not −28). Pad still K, no 6th button. HUD: small brasa pip under stam fills while charging (pizarra/óxido/brasa/hueso), no new art.
  * Rival fills and spends the same stock. Range super only after a connect and inside SUPER_RANGE, never every full bar from fullscreen. Special-cancel K may spend (close, can hit). Still respects BOLT_AI_CD. Not a super robot.
  * Super spend sting: full-meter K (you + rival) layers pitched brasa/cast, not tajo whoosh. Empty K keeps the plant cast.
@@ -139,7 +139,7 @@
  * Spent dart in the air (you + rival) is bigger and faster so it reads as a round closer, still −28, one stock, no new art. Empty dart stays 58×13 at 880. Comet tail is existing brasa/oxido/hueso rects (not a tick spawnBrasaFx). SUPER_RANGE 380. BOLT_AI_CD stays.
  * Spent dart land VFX (you + rival) reuses brasa hit/block puff at BOLT_SUPER_FX 1.55 so the ember matches the 96×24 bolt. Empty dart keeps the current puff. Clash puff uses that same scale. No new art.
  * Spent-super plant puff (you + rival) reuses spawnBrasaFx "cast" at BOLT_SUPER_FX 1.55 like the land puff. Empty K plant puff stays the current ember. Same tip, same 220 life. No new art.
- * Pushblock: hold S (guard), tap away from the rival (A if you face right, D if you face left). Extra guard push — more space than a normal block push. Costs PUSHBLOCK_STAM 25 (a real chunk, not free). Cannot if stam is empty / below 25. Toward is not pushblock. Walk-into-guard (A held, then S) is not a tap, not a teleport. Walk while not guarding unchanged. Space+S close stays throw, not pushblock. L+S stays reversal. Pad: hold guarda + tap the away walk button (same A/D keys, no 6th button). Rival pushblocks that same away extra push on a connecting block (landBlock), not the windup: startup shove used to make a meaty L/Space whiff the 240px before active. PUSHBLOCK_AI_CD 1800 + 40% once-per-block so they are not a pushblock robot. Not every block, not vs dart, not vs throw, not during startup. Same 25 stam, same 240px. Toward is not pushblock. landBlock's normal scrape does not overwrite that live shove.
+ * Pushblock: hold S (guard), tap away from the rival (A if you face right, D if you face left). Extra guard push — more space than a normal block push. Costs PUSHBLOCK_STAM 25 (a real chunk, not free). Cannot if stam is empty / below 25. Toward is not pushblock. Walk-into-guard (A held, then S) is not a tap, not a teleport. Walk while not guarding unchanged. Space+S close stays throw, not pushblock. L+S stays reversal. Pad: hold guarda + tap the away walk button (same A/D keys, no 6th button). Rival pushblocks that same away extra push on a connecting block (landBlock), not the windup: startup shove used to make a meaty L/Space whiff the 240px before active. PUSHBLOCK_AI_CD 1800 + 40% once-per-block so they are not a pushblock robot. Not every block, not vs throw, not during startup (dart connect re-arms via rivalPushblockOnBlock like Space/L; startup still Space/L-only). Same 25 stam, same 240px. Toward is not pushblock. landBlock's normal scrape does not overwrite that live shove.
  * Pushblock sting: successful shove (you + rival) pitches/layers block steel + clash scrape so the extra push reads. Normal block keeps the current bloqueo.
  * Pushblock dust: successful shove (you + rival) reuses plant dust at PUSHBLOCK_FX, scaled and offset along the away scrape so the 240px shove reads. Normal block keeps the current 1.0 plant. No new art.
  * Teach HUD (first fight): two discreet pixel lines — remap-aware BIND_ACTIONS labels —
@@ -1155,7 +1155,7 @@
  * destRect-only (idleBreath / cutRecBreathT). Keep breath 0 through walking / walk-out / leftover
  * walkFadeHold during bolt plant; advanceBoltFighter arm cutRecBreathT when bolt recovery ends
  * mid-stride / mid-raise / under walkFadeHold so max(ck, wk) / hold-under-rise own the post-recovery seat.
- * Idle knife plant still eases with boltPlantFade. Bolt recovery settle→guard unchanged.
+ * Idle knife plant still eases with boltPlantFade. Bolt recovery settle→guard (max bf, rk).
  * Special-cancel still zeros (holdingCutBolt). Sheet still boltPlantFade / restBoltWalk.
  * Tip / steel markers unchanged. AABB planted. No new combat verb.
  * Throw recovery settle→walk destRect leftover: leftover throwPlantFade breath used to seat ~0.96
@@ -1238,15 +1238,16 @@
  * raise k. Pure idle→walk still eases with rise. Walk-out sheet leftover unchanged (guardDropFade).
  * AABB planted. No new combat verb.
  * Plant walk-in destRect lean leftover: mid-stride Space/L/K / clash / holdCut / reverse /
- * throw-guard / tech / feint used to dump walkSettleRot/Oy the same tick plant armed
- * (tickGait kept walkFadeHold for the sheet but zeroed walkSettleT; walkSettleK also gated
- * phase!==idle), so destRect lean hopped ~0.05 while restLinkWalk/restClashWalk/restTeleWalk
- * still showed walk under the raise — a hop, not a plant. Same hole walk→guard destRect lean
- * leftover already closed. destRect-only ease (walkSettleK). Keep leftover settle through
- * leftover walkSettleT under plant fades (arm on was-walk; drain; do not invent from bare
- * walkFadeHold). walkSettleK keeps through telegraph/link/clash/holdCut/reversal/throw-guard/
- * tech/feint like guarding. Idle plant still rests. Stun / non-plant combat still snap.
- * sheatheDip hump unchanged. AABB planted. No new combat verb.
+ * throw-guard / tech / feint / bolt recovery used to dump walkSettleRot/Oy the same tick plant
+ * armed (tickGait kept walkFadeHold for the sheet but zeroed walkSettleT; walkSettleK also gated
+ * phase!==idle), so destRect lean hopped ~0.05 while restLinkWalk/restClashWalk/restTeleWalk /
+ * restBolt/restBoltWalk/restBoltGuard still showed walk/knife under the raise — a hop, not a
+ * plant. Same hole walk→guard destRect lean leftover already closed. destRect-only ease
+ * (walkSettleK). Keep leftover settle through leftover walkSettleT under plant fades (arm on
+ * was-walk; drain; do not invent from bare walkFadeHold). walkSettleK keeps through
+ * telegraph/link/clash/holdCut/reversal/throw-guard/tech/feint/bolt-recovery like guarding.
+ * Idle plant still rests. holdingCutBolt recovery still snaps. Stun / non-plant combat still
+ * snap. sheatheDip hump unchanged. AABB planted. No new combat verb.
  * Sheathe settle lean under walkFadeHold: A/D release mid-clash-sheathe (and
  * other idle sheathe under walkFadeHold) used to dump walkSettleRot/Oy the same
  * tick settle armed (tickGait armed walkSettleT on the idle path, but walkSettleK
@@ -1501,7 +1502,8 @@
  * 130/140/280 locked). Reuses impacto buffer; no procedural beep.
  * Rival AI variety (v310): no rival parry (still hold-block / GUARD_COMMIT 140).
  * Soft mix — not random every frame, not a cancel robot. Mid: AI_MID_DART /
- * AI_MID_WALK_PAUSE soft roll (high roll still darts for harness 0.99). Close: mix golpe punish + throw (existing
+ * AI_MID_WALK_PAUSE soft roll (high roll still darts for harness 0.99; v567 armed
+ * ready-band pause honors its standGoal/standWait beat before re-rolling). Close: mix golpe punish + throw (existing
  * THROW_AI_CD) + occasional hold-guard bait, cut pure Space mash. After player
  * blocks their cut or after a whiff: bias reset (backstep / dart) instead of
  * another slash. Cancel doors stay chance-based (base AI_LINK_CHANCE 0.4); when
@@ -1582,7 +1584,8 @@
  * Soft mix: AI_MID_CD_PAUSE stands a beat (rollStandoff), AI_MID_CD_RETREAT
  * occasional backstep (prefer dart after), remainder short walk commit
  * (AI_MID_APPROACH_MS) then re-mix. Ready-band AI_MID_DART / AI_MID_WALK_PAUSE
- * unchanged (harness 0.99 still darts). Not a feint robot / not Space mash from
+ * v567 honors an armed standGoal/standWait beat before re-rolling (harness 0.99
+ * still darts after the completed beat). Not a feint robot / not Space mash from
  * mid. BOLT_AI_CD 1800 / AI_MID_* / close mix / cancel doors locked. No new
  * combat verb.
  * Empty-K cast sibling leftover (v370): interrupted empty-K (and spent) plant
@@ -1909,8 +1912,8 @@
  * shove already owns (|pushVel|·GUARD_PUSH_MS ≈ PUSHBLOCK_PX), keep pushVel,
  * refresh pushT + PUSHBLOCK_SHAKE + óxido steel, skip bolt-block sting / brasa
  * block / 1.0 plant. Chip HP / stam / HITSTOP_BLOCK / tripGuardBreak unchanged.
- * Rival still does not pushblock vs dart. PUSHBLOCK 240/25/1.85 / tipX / plants /
- * pad / RIPOSTE_WIN / AI_CD / BOLT chip locked. No new combat verb.
+ * Rival dart connect acquired the same re-arm in v478. PUSHBLOCK 240/25/1.85 /
+ * tipX / plants / pad / RIPOSTE_WIN / AI_CD / BOLT chip locked. No new combat verb.
  * Tick-throw buffer fairness leftover (v408): buffered throw during your recovery
  * (or idle flush) used to die the same tick phase popped idle while the foe was
  * still throwLocked (stunT / thrownT / throwInvuln) — throwBuf cleared then
@@ -2275,6 +2278,2496 @@
  * golpe/slashLunge / Space/L meaty / inThreat/stam-threat / plants / pad /
  * AI_CD / BOLT / OPENING_MS / VERSUS_2P_READY / ONLINE_2P_READY /
  * ROSTER_SELECT_READY locked. No new combat verb.
+ * Online human-P2 seat leftover (v451): matchKind "online" was reserved since
+ * v427 / menu-stubbed v434, and beginMatchFromTitle already seats it, but every
+ * human-P2 gate (tickVersusP2 / tickAI skip / open-mix skip / auto-link /
+ * HUD P1/P2 tags / especial P2 teach) stayed versus-only — so an online seat
+ * was a silent CPU duel (AI walk-in measured at mid). Soft: those gates also
+ * admit matchKind "online" (same DEFAULT_P2_BINDS / secondGamepad path as
+ * versus). ONLINE_2P_READY stays false (menu PRÓXIMAMENTE; no net path).
+ * VERSUS_2P_READY / ROSTER_SELECT / kit walk/golpe/slashLunge / tipX / plants /
+ * pad / AI_CD / BOLT / OPENING_MS locked. No new combat verb.
+ * Versus/online P2 mid-combat buffer fairness leftover (v452): human P2 (versus +
+ * online seat) only armed rising edges while idle — O/P/[ taps during recovery /
+ * stun / boltPhase / feint / guardBreak died the same tick (p2Held ate the edge,
+ * no p2SlashBuf), while P1 slashBuf/golpeBuf/boltBuf already held through those
+ * locks and flushed on the free frame. Soft: p2SlashBuf / p2GolpeBuf / p2BoltBuf /
+ * p2ThrowBuf / p2ReversalBuf mirror P1; arm on locked edges; flush after
+ * advanceAttack with the same hold-gates (!boltPhase / stun wait / range).
+ * Open p2Open* kept. ONLINE_2P_READY stays false. VERSUS_2P_READY / ROSTER /
+ * kit walk/golpe/slashLunge / tipX / plants / pad / AI_CD / BOLT / OPENING_MS
+ * locked. No new combat verb.
+ * size false mass pass2 wire leftover (v453): Arte regenerated block/slash mass
+ * toward idle; bump ART loadImg ?v=304→453 on fighter sheets (you/rival families)
+ * so browsers drop stale v=304 cache. No tipX/plant/courtyard change.
+ * Versus/online P2 perfect-parry / riposte fairness leftover (v454): isPerfectParry /
+ * trySpendRiposteInput / tryFireRiposte / drawRiposteHint stayed player-only while
+ * human P2 (versus + online seat) already owns rising-guard guardRaiseElapsed —
+ * so P1 raise-edge arms RIPOSTE_WIN and Space/L spend the reward slash
+ * (130/140/280 −10), but P2 rising ArrowDown never perfect-parries and O/P never
+ * spend (window silent; drawEspecialHintP2 already yields to rival.riposteWindowT).
+ * Soft: isPerfectParry admits def===rival when matchKind versus|online (CPU stays
+ * player-only); trySpendRiposteP2 / tryFireRiposteP2 mirror P1 (O/P spend, throw/
+ * rev chords refuse; hitstop spend too); drawRiposteHint seats rival with
+ * p2BindPrimary. ONLINE_2P_READY stays false. RIPOSTE_WIN 280 / PARRY_WIN 140 /
+ * riposte frames 130/140/280 / tipX / plants / pad / AI_CD / kit / VERSUS /
+ * ROSTER locked. No new combat verb.
+ * Versus/online P2 hitstop buffer fairness leftover (v455): v452 armed p2SlashBuf /
+ * p2GolpeBuf / p2BoltBuf / p2ThrowBuf / p2ReversalBuf in tickVersusP2 (skipped while
+ * hitstop), and v454 only added trySpendRiposteP2 under freeze — so O/P/[ taps during
+ * hitstop still die (p2Held eats slash/golpe edge with no p2*Buf; dart untracked),
+ * while P1 slashBuf/golpeBuf/boltBuf already hold through HITSTOP_HIT / HITSTOP_BLOCK.
+ * Soft: under hitstop versus|online, after riposte spend try, arm the same mid-combat
+ * bufs on O/P/[ edges (throw/rev chords; thrownT refuses wakeup mash) and track full
+ * p2Held (dart/left/right too). Flush still flushVersusP2CombatBufs. ONLINE_2P_READY
+ * stays false. RIPOSTE_WIN / HITSTOP / tipX / plants / pad / AI_CD / kit / VERSUS /
+ * ROSTER locked. No new combat verb.
+ * Versus/online P2 pushblock hitstop buffer fairness leftover (v456): v455 armed
+ * p2SlashBuf/p2GolpeBuf/p2BoltBuf/p2ThrowBuf/p2ReversalBuf under freeze and tracked
+ * p2Held.left/right, but away-tap EMPUJON still died — rising ArrowLeft/Right under
+ * HITSTOP_BLOCK was eaten by p2Held with no p2PushblockBuf, while P1 already arms
+ * pushblockBuf on walk edges while guarding through freeze and flushes after.
+ * Soft: p2PushblockBuf mirrors pushblockBuf; under hitstop versus|online when
+ * rival.guarding, arm on left/right edges; tickVersusP2 flushes after open (edge
+ * try, else buffered dir). Combat O/P/[ hitstop bufs / riposte / ONLINE_2P_READY
+ * false kept. PUSHBLOCK_STAM 25 / PUSHBLOCK_PX 240 / HITSTOP / tipX / plants / pad /
+ * AI_CD / kit / VERSUS / ROSTER locked. No new combat verb.
+ * Versus/online P2 clash-K / hit-confirm K cancel priority leftover (v457):
+ * human P2 (versus + online seat) already flushes buffered [ ahead of O/P in
+ * flushVersusP2CombatBufs (mirror P1 boltBuf cancel flush), but tickVersusP2
+ * edge doors still ran cancelIntoGolpe / cancelIntoSlash before that flush —
+ * so a late O/P on the cut→K window stole the dart while p2BoltBuf was armed,
+ * while P1 Space/L already yields via playerClashBoltPriority /
+ * playerHitConfirmBoltPriority when boltBuf/boltEdge + cutToBoltWindow.
+ * Soft: when p2BoltBuf && cutToBoltWindow, O/P edges yield (clear slash/golpe
+ * bufs; do not cancelIntoSlash/Golpe) so flush cancelIntoBolt owns the door
+ * (clash late + hit-confirm). Same-frame [ still checked first. ONLINE_2P_READY
+ * stays false. BOLT_CANCEL_MS 100 / SLASH/GOLPE_CANCEL_MS / tipX / plants / pad /
+ * AI_CD / kit / VERSUS / ROSTER / HITSTOP bufs / riposte locked. No new combat verb.
+ * Versus/online P2 cancel teach fairness leftover (v458): drawCancelHint stayed
+ * player-only while human P2 (versus + online seat) already owns slash↔golpe /
+ * cut→K cancel doors (v430+) and drawEspecialHintP2 already yields to rival
+ * cancel windows — so hit-confirm / clash-late / especial-cancel doors on the
+ * right seat stayed silent (P1 K-first brasa cue unread for O/P/[). Soft:
+ * drawCancelHintFor seats rival when matchKind versus|online with p2BindPrimary
+ * (K-first + leading COL_BRASA). drawComboCount yields rival stamp during own
+ * cancel door / plant resolve (mirror v384/v386/v388) so the cue is not muddy.
+ * CPU still silent. ONLINE_2P_READY stays false. BOLT/SLASH/GOLPE_CANCEL_MS 100 /
+ * tipX / plants / pad / AI_CD / kit / VERSUS / ROSTER / HITSTOP bufs / riposte /
+ * clash-K priority locked. No new combat verb.
+ * Versus/online P2 throw-tech teach fairness leftover (v459): drawThrowTechHint stayed
+ * player-only while human P2 (versus + online seat) already techs on O+DOWN
+ * (tryThrowTech in tickVersusP2 / flush) — so the 80ms Space+S door on the right
+ * seat stayed unread (P1 remap cue silent for P2). Soft: drawThrowTechHintFor seats
+ * rival when matchKind versus|online with p2BindPrimary slash+guard. drawComboCount
+ * + drawEspecialHintP2 + P2 cancel seat yield during that door (mirror v389/v458) so
+ * the cue is not muddy. CPU still silent. ONLINE_2P_READY stays false. THROW_TECH 80 /
+ * THROW_RANGE 120 / tipX / plants / pad / AI_CD / kit / VERSUS / ROSTER / HITSTOP bufs /
+ * riposte / cancel teach locked. No new combat verb.
+ * Versus/online P2 feint teach fairness leftover (v460): drawFeintHint stayed
+ * player-only while human P2 (versus + online seat) already feints on rising
+ * ArrowDown during slash startup (tickVersusP2 edgeGuard + canFeint) — so the
+ * tap-guarda FINTA door on the right seat stayed unread (P1 remap cue silent
+ * for P2). Soft: drawFeintHintFor seats rival when matchKind versus|online with
+ * p2BindPrimary guard. drawComboCount + drawEspecialHintP2 + P2 cancel seat
+ * already yield during canFeint(rival) (v458/v459 mirror) so the cue is not muddy.
+ * CPU still silent. ONLINE_2P_READY stays false. FEINT_RECOVERY 100 / Space startup
+ * 180 / tipX / plants / pad / AI_CD / kit / VERSUS / ROSTER / HITSTOP bufs /
+ * riposte / cancel / throw-tech teach locked. No new combat verb.
+ * Versus/online P2 parry teach fairness leftover (v461): drawParryHint stayed
+ * player-only while human P2 (versus + online seat) already perfect-parries on
+ * rising ArrowDown (isPerfectParry + guardRaiseElapsed since v454) — so the
+ * rising-guarda PARRY door (PARRY_WIN 140) on the right seat stayed unread
+ * (P1 remap cue silent for P2; riposte teach already seats after the gleam).
+ * Soft: meatyMeleeAtRivalOpen + drawParryHintFor seats rival when matchKind
+ * versus|online with p2BindPrimary guard. drawComboCount + drawEspecialHintP2
+ * + P2 cancel/feint seats yield during that door (mirror v422/v458–v460) so the
+ * cue is not muddy. Wakeup REV still owns getup (no P2 parry over wake). CPU
+ * still silent. ONLINE_2P_READY stays false. PARRY_WIN 140 / PARRY_STAGGER 180 /
+ * PARRY_GLEAM 80 / RIPOSTE_WIN 280 / tipX / plants / pad / AI_CD / kit / VERSUS /
+ * ROSTER / HITSTOP bufs / riposte / cancel / throw-tech / feint teach locked.
+ * No new combat verb.
+ * CID/ROAN K-bolt SUPER_RANGE kit leftover (v462): v445–v449 seated CORTO/LARGO
+ * walk+golpe+slash+meaty pads but rivalShouldSuper still used global SUPER_RANGE
+ * 380 — CID CORTO (pocket) and ROAN LARGO (poke) spent from the same fullscreen
+ * band, so kit identity unread on especial range. Soft: ROSTER superRange (roan LARGO 420;
+ * cid CORTO 360); superRangeOf(f) for rivalShouldSuper. Human full-bar
+ * always-spend kept. SUPER_RANGE 380 baseline / tipX / plants / pad / AI_CD /
+ * BOLT frames / walk+golpe+slash kit / Space/L meaty / VERSUS / ONLINE_2P_READY
+ * false / ROSTER locked. No new combat verb.
+ * Player super buffer leftover (v463): mid-combat boltBuf (P1 + versus/online P2)
+ * idle flush still used blade+lunge hold-gate / else-clear — so a buffered full-meter
+ * especial died in the superRangeOf band (CID 360 / ROAN 420 / baseline 380) where
+ * rivalShouldSuper already spends, while same-frame boltEdge always-spent and
+ * openBoltBuf already persisted walk-in. Soft: when meterFull, fire startBolt when
+ * absGap <= superRangeOf(f) && canStartBolt; persist out of kit range (walk-in);
+ * canStartBolt refuse still clears. Empty K keeps blade+lunge fire / else-clear
+ * (whiff-fullscreen not a free dart). Edge tap always-spend kept. Cancel-window /
+ * clash-K / hit-confirm K / SUPER_RANGE kit / tipX / plants / pad / AI_CD / BOLT
+ * frames / VERSUS / ONLINE_2P_READY false / ROSTER locked. No new combat verb.
+ * KO Esc→title teach leftover (v464): v417 armed Escape on falling/over →
+ * goTitleFromPlay, but drawOverPrompt still only painted "> REVANCHA / R" —
+ * so the title-exit path stayed unread on the crumple while Space/R rematch
+ * owned the only cue. Soft: quieter "ESC  MENÚ" under REVANCHA (same pixel
+ * language; tip stays). Space/R rematch kept. Draw-only (drawOverPrompt).
+ * tipX / plants / pad / frames / AI_CD / VERSUS / ONLINE_2P_READY false /
+ * ROSTER locked. No new combat verb.
+ * KO falling Space rematch leftover (v465): v410/v417 armed KeyR + Esc on
+ * falling, and over accepts Space/throw/tap rematch — but falling still
+ * cleared attackEdge/throwEdge/requestStart with no resetRound, so Space
+ * (and canvas tap) rematch died through the whole crumple while R rematch
+ * and Esc→title stayed live. Soft: falling rematches on attackEdge /
+ * throwEdge / requestStart (mirror over); canvas pointerdown arms
+ * requestStart on falling too. KeyR / Esc kept. DrawOverPrompt Esc MENÚ
+ * on over unchanged. tipX / plants / pad / frames / AI_CD / VERSUS /
+ * ONLINE_2P_READY false / ROSTER locked. No new combat verb.
+ * KO falling rematch teach leftover (v466): v465 armed Space/tap rematch on
+ * crumple and v464 painted Esc MENÚ under REVANCHA — but drawOverPrompt still
+ * gated mode!=="over", so the whole falling window (live Space/R rematch +
+ * Esc→title) stayed silent while teach only appeared after FALL_MS→over.
+ * Soft: paint the same REVANCHA / ESC MENÚ / tip on falling after koLanded
+ * (fade on post-land fallT / 100; modeT stays 0 through crumple). On
+ * FALL_MS→over seed modeT=400 so the teach does not dip. Over copy kept.
+ * Space/R/Esc paths kept. Draw-only (drawOverPrompt). tipX / plants / pad /
+ * frames / AI_CD / VERSUS / ONLINE_2P_READY false / ROSTER locked. No new
+ * combat verb.
+ * CID/ROAN bolt recovery kit leftover (v467): v445–v462 seated CORTO/LARGO
+ * walk+golpe+slash+meaty+superRange but boltRecMs still used global
+ * BOLT_RECOVERY 280 — CID CORTO pocket and ROAN LARGO poke recovered on the
+ * same especial clock, so kit identity unread on especial recovery
+ * (range owned; recovery tip-only). Soft: ROSTER boltRec (roan LARGO 280
+ * baseline; cid CORTO 250); boltRecOf; boltRecMs empty rides kit
+ * (super still BOLT_SUPER_RECOVERY 380). Slash/golpe RECOVERY/GOLPE_RECOVERY
+ * baselines locked (cancel doors). tipX / plants / pad / Space/L/SUPER_RANGE/
+ * boltBuf / AI_CD / VERSUS / ONLINE_2P_READY false / ROSTER locked. No new
+ * combat verb.
+ * CID/ROAN walk cadence kit leftover (v468): v445 seated CORTO/LARGO walk
+ * speed (cid 288 / roan 240) but gaitWalkOn / walkCadence / walkPose /
+ * tickGait still used global WALK_STEP_MS 320 — CID CORTO pocket and ROAN
+ * LARGO poke strode on the same boot clock, so kit identity unread on walk cadence (speed owned; step tip-only — CORTO skated long strides). Soft:
+ * ROSTER walkStep (roan LARGO 320 baseline; cid CORTO 267 ≈320·240/288);
+ * walkStepOf; gait/cadence/pose/tickGait ride kit. WALK 240 / WALK_STEP_MS
+ * 320 baseline / walkSpeed / Space/L/SUPER_RANGE/boltRec / tipX / plants /
+ * pad / AI_CD / VERSUS / ONLINE_2P_READY false / ROSTER locked. No new
+ * combat verb.
+ * CID/ROAN bolt dash kit leftover (v469): v445–v468 seated CORTO/LARGO
+ * walk+cadence+golpe+slash+meaty+superRange+boltRec but spawnBolt empty
+ * still used global BOLT_SPEED 880 — CID CORTO pocket and ROAN LARGO poke
+ * darts dashed on the same px/s, so kit identity unread on especial dash
+ * (range/recovery owned; travel tip-only — CORTO crawled ROAN pace across
+ * a shorter band). Soft: ROSTER boltSpeed (roan LARGO 880 baseline; cid CORTO 1056 ≈880·288/240);
+ * boltSpeedOf; spawnBolt empty rides kit (super still BOLT_SUPER_SPEED 1280).
+ * BOLT_SPEED 880 baseline / SUPER_RANGE/boltRec/walkStep / tipX / plants /
+ * pad / AI_CD / VERSUS / ONLINE_2P_READY false / ROSTER locked. No new
+ * combat verb.
+ * CID/ROAN throw range kit leftover (v470): v445–v469 seated CORTO/LARGO
+ * walk+cadence+golpe+slash+meaty+superRange+boltRec+boltSpeed but throwInRange
+ * still used global THROW_RANGE 120 — CID CORTO pocket and ROAN LARGO poke
+ * grabbed on the same band, so kit identity unread on throw reach (LARGO poke
+ * owned on slash/superRange; grab tip-only — LARGO could not convert a farther
+ * snatch than CORTO). Soft: ROSTER throwRange (cid CORTO 120 baseline; roan LARGO 132); throwRangeOf; throwInRange(atk) rides kit (omit atk → player pad
+ * chord). rivalTryThrow / resolveThrow / tryThrowTech / riposte refuse / mutual
+ * / teach seats pass atk. THROW_RANGE 120 baseline / Space/L/K/SUPER_RANGE/
+ * boltRec/boltSpeed/walkStep / tipX / plants / pad / AI_CD / VERSUS /
+ * ONLINE_2P_READY false / ROSTER locked. No new combat verb.
+ * Link-cancel combo counter leftover (v471): connected Space→golpe (and
+ * golpe→Space) used to drop the 2+ combo stamp back to a silent 1 when the
+ * first hit landed early in active — Space remaining active + recovery-to-door
+ * + L startup ≈440ms > HITSTUN 350, so noteCombo saw stunT 0 and restarted
+ * while late-active Soft still chained. Same hole v424 closed for Space→K
+ * (comboBolt on holdCut). Soft: arm comboBolt on linkPlant Space↔L cancels
+ * while the foe is still in hitstun/KD; noteCombo treats that as a chain then
+ * clears it. Clash Space/L / idle cancels unchanged. HITSTUN 350 /
+ * Space 180/140/280 / L 120/80/180 / cancel doors / tipX / plants / pad /
+ * AI_CD / VERSUS / ONLINE_2P_READY false / ROSTER locked. No new combat verb.
+ * Wake KD→L buffer fairness leftover (v472): after throw KD, thrownT freeze
+ * correctly locks the body for THROW_KD_MS 520, but L taps in KD / hitstop were
+ * eaten (golpeEdge refuse + per-tick golpeBuf/reversalBuf clear while thrownT > 0)
+ * while Space slashBuf and K boltBuf already buffer under freeze in thrownT —
+ * mash-L on crumple did nothing; must nail the 80ms THROW_WAKE_INVULN getup door
+ * that AI already meaties (v401). Sibling of throwBuf keep-through-throwLocked
+ * (v408). Soft: arm golpeBuf / p2GolpeBuf (and reversalBuf / p2ReversalBuf for
+ * hold-S+L) on L edges during thrownT; keep through KD (no per-tick clear / no
+ * idle-flush clear); on idle flush if wakeupWindow → startWakeReversal. Still 1
+ * attempt (wakeRev); still spends invuln / loses vs throw; late after invuln =
+ * normal L. THROW_KD_MS 520 / THROW_WAKE_INVULN 80 / L frames / tipX / plants /
+ * pad / AI_CD / VERSUS / ONLINE_2P_READY false / ROSTER locked. No new combat verb.
+ * Wake getup buffer priority leftover (v473): v472 armed L through KD into
+ * wakeupWindow → startWakeReversal, but idle flush still ran Space slashBuf
+ * (and K boltBuf / throwBuf) before the golpeBuf/reversalBuf wake door — so
+ * mash-Space (or Space+L / hitstop dual-arm) on crumple stole the getup and
+ * left wakeRev unspent, while mash-L alone reversed. Sibling of Clash-K /
+ * hit-confirm K priority (v382/v383). Soft: yield slashBuf / boltBuf / throwBuf
+ * idle meaty flush while wakeupWindow && (golpeBuf || reversalBuf); same for
+ * p2SlashBuf / p2BoltBuf / p2ThrowBuf vs p2GolpeBuf / p2ReversalBuf. Wake L still
+ * 1 attempt / spends invuln / loses vs throw; Space-only / K-only getup meaty
+ * kept. THROW_KD_MS 520 / THROW_WAKE_INVULN 80 / L frames / tipX / plants / pad /
+ * AI_CD / VERSUS / ONLINE_2P_READY false / ROSTER locked. No new combat verb.
+ * Answer-plant→K full-meter forced spend leftover (v474): tap K to war their
+ * knife plant (boltPhase startup) or live dart — with full meter, player idle/
+ * edge startBolt(player) and meterFull boltBuf flush + versus/online P2
+ * startBolt(rival, true) auto-spent especial (kind===you spendSuper !== false /
+ * P2 forced true), so stock dumped in spend-freeze + super dart (equal-cancel or
+ * spent-beats-empty) while CPU answers the same plant with startBolt(rival, false)
+ * (v438 AI_DART_ANSWER) and keeps meter. Mash-K on their plant felt like an
+ * answer but stole the only stock; AI paid no tax. Soft: boltAnswerEmpty — opposing
+ * boltPhase startup OR live bolt.kind !== self; player + P2 idle/edge/meterFull
+ * boltBuf flush startBolt pass !boltAnswerEmpty (false → empty answer). Leave
+ * cancelIntoBolt → startBolt(f, true) and neutral full-meter K spend alone
+ * (hit-confirm especial / next K spends). No new combat verb. tipX / plants / pad /
+ * Space/L/K frames / SUPER_RANGE / boltRec / boltSpeed / THROW_KD_MS /
+ * THROW_WAKE_INVULN / AI_CD / VERSUS / ONLINE_2P_READY false / ROSTER locked.
+ * Opening-K answer-plant full-meter forced spend leftover (v475): v474 emptied
+ * idle/edge/meterFull boltBuf vs opposing plant/live dart, but opening openBoltBuf
+ * flush still startBolt(player) (spendSuper !== false → full stock dump) and
+ * versus/online p2OpenBoltBuf flush still startBolt(rival, true) — so mash-K in
+ * OPENING_MS walk-in vs their plant/open dart stole especial while mid-combat
+ * answer already kept meter. Soft: openBoltBuf / p2OpenBoltBuf flush startBolt
+ * pass !boltAnswerEmpty (mirror v474 idle/edge/meterFull). Neutral open full-meter
+ * K still spends; cancelIntoBolt still true; AI empty answer kept. No new combat verb.
+ * tipX / plants / pad / Space/L/K frames / OPENING_MS / SUPER_RANGE /
+ * boltRec / boltSpeed / THROW_KD_MS / THROW_WAKE_INVULN / AI_CD / VERSUS /
+ * ONLINE_2P_READY false / ROSTER locked.
+ * Throw-buffer tech-from-recovery leftover (v476): rising-edge Space+S (O+DOWN)
+ * calls tryThrowTech before the locked check, so a fresh chord techs in
+ * recovery/startup — but buffered throwBuf / p2ThrowBuf only flushed
+ * tryThrowTech when phase==="idle" || guarding. Mash-throw in slash recovery
+ * never teched a grab that started mid-recovery; the 80ms THROW_TECH window
+ * died and you had to re-tap. Sibling of boltBuf→cancelIntoBolt / slashBuf /
+ * golpeBuf cancel flushes that already fire mid-recovery when their door
+ * opens. v408 left tech only on edge/idle. Soft: while throwBuf / p2ThrowBuf
+ * armed, also flush tryThrowTech when it would succeed (any phase tryThrowTech
+ * allows) — clear sibling bufs on spend; DO NOT startThrow from
+ * non-idle/non-guard. Mirror edge path. P1 + versus/online P2. No frame/range/
+ * stam retune. THROW_TECH_MS 80 / THROW_KD_MS 520 / THROW_WAKE_INVULN 80 /
+ * tipX / plants / pad / AI_CD / VERSUS / ONLINE_2P_READY false / ROSTER locked.
+ * No new combat verb.
+ * Cancel→K answer-plant full-meter forced spend leftover (v477): hit-confirm /
+ * clash late Space|L→K (cancelIntoBolt) still always spent meter via
+ * startBolt(f, true). Idle/edge/meterFull boltBuf and openBoltBuf already pass
+ * !boltAnswerEmpty (v474/v475); AI war-answer empty (v438). Same answer-plant
+ * intent: cancel gate taxed stock, idle/open did not. v474 deferred this door
+ * on purpose. Soft: cancelIntoBolt → startBolt(f, !boltAnswerEmpty(f)). Neutral
+ * cancel (no plant/live rival) still spends; answer empty like idle/open.
+ * Covers P1 + versus/online P2 + AI rivalTryCutBolt (shared fn). No frame/
+ * range/stam retune. BOLT_CANCEL_MS 100 / tipX / plants / pad / AI_CD /
+ * VERSUS / ONLINE_2P_READY false / ROSTER locked. No new combat verb.
+ * Rival pushblock vs dart leftover (v478): player hold-S tap-away vs dart already
+ * keeps shoveOwns through landBoltBlock (v407), and rival PB on Space/L connect
+ * already re-arms via rivalPushblockOnBlock after landBlock applyPush — but
+ * landBoltBlock never called rivalPushblockOnBlock, so AI chip-blocked darts
+ * with no 240px shove (comments admitted "Rival still does not pushblock vs dart").
+ * Soft: after shoveOwns/steel in landBoltBlock, if (def === rival)
+ * shoved = rivalPushblockOnBlock() || shoved; then keep if (!shoved &&
+ * def.guardBreakT <= 0) spawnPlantDust(...). Same 40%/CD/25/240; no every block;
+ * no startup shove; no throw. No retune. tipX / plants / pad /
+ * PUSHBLOCK / BOLT chip / AI_CD / VERSUS / ONLINE_2P_READY false / ROSTER locked.
+ * No new combat verb.
+ * Rival PB once-per-block pbArmed sticky leftover (v479): header promises
+ * PUSHBLOCK_AI_CHANCE 40% once-per-block + CD 1800, but live connect
+ * (landBlock / landBoltBlock → rivalPushblockOnBlock → armRivalPushblock) never
+ * cleared pbArmed — only clear sat in dead rivalTryPushblock (!meatySpaceAtGuard,
+ * never called). First roll of the round stuck: −1 → never shove; +1 after CD →
+ * 100% shove robot. Soft: rivalPushblockOnBlock zeros pbArmed before
+ * armRivalPushblock so each connecting block re-rolls 40%. Keep 40%/CD/25/240;
+ * no startup shove; no dart-connect redo (v478 stays). tipX / plants / pad /
+ * PUSHBLOCK / AI_CD / VERSUS / ONLINE_2P_READY false / ROSTER locked.
+ * No new combat verb.
+ * Dart flesh-interrupt dump leftover (v480): landHit / landThrow zero
+ * def.reversal + riposteWindowT / riposteArmed / riposte on flesh/grab interrupt,
+ * but landBoltHit only cleared guarding — spent riposte / live RIPOSTE_WIN /
+ * reversal sat through dart HITSTUN and tryFireRiposte still started a riposte
+ * slash after stun. Soft: after guarding=false in landBoltHit, mirror landHit
+ * dump. landBoltBlock chip keeps window (sibling of landBlock). No frame/dmg
+ * retune. HITSTUN 350 / HITSTOP_HIT 140 / RIPOSTE_WIN 280 / RIPOSTE frames
+ * 130/140/280 / tipX / plants / pad / AI_CD / VERSUS / ONLINE_2P_READY false /
+ * ROSTER locked. No new combat verb.
+ * Tech-interrupt riposte dump leftover (v481): landHit / landThrow / landBoltHit
+ * (v480) zero reversal + riposteWindowT / riposteArmed / riposte on flesh/grab /
+ * dart interrupt, and doClash already zeros riposte both — but landThrowTech's
+ * for (const f of [atk, def]) cleared guarding / boltPhase / wakeRev / stun-KD
+ * and never dumped riposte nor reversal. After parry→RIPOSTE_WIN 280, a tech
+ * could arm riposteArmed under freeze while tryFireRiposte refused
+ * (phase!==idle); armed survived tech recovery → free riposte slash on idle.
+ * Soft: in landThrowTech dump loop, mirror landHit/landBoltHit —
+ * f.reversal=false; f.riposteWindowT=0; f.riposteArmed=false; f.riposte=false.
+ * No frame/dmg retune. P1+P2 shared fn. THROW_TECH_REC / THROW_TECH_MS /
+ * RIPOSTE_WIN 280 / RIPOSTE frames 130/140/280 / tipX / plants / pad / AI_CD /
+ * VERSUS / ONLINE_2P_READY false / ROSTER locked. No new combat verb.
+ * Clash/connect reversal sticky leftover (v482): landHit / landThrow / landBoltHit /
+ * landThrowTech (v481) dump def.reversal on interrupt, and landParry zeros
+ * atk.reversal — but doClash only zeroed riposte (v481 header claimed reversal
+ * too), and landHit / landBlock left atk.reversal live in recovery. Spent
+ * REVERSAL_STAM 30 + REVERSAL_INVULN 120 golpe could clash or connect, then
+ * cancelIntoGolpe with sticky reversal → free REVERSAL_INVULN with no second
+ * stam spend. Soft: f.reversal=false in doClash dump loop (both); atk.reversal
+ * =false in landHit + landBlock on resolve. landParry / advanceAttack idle
+ * clear stay. No frame/dmg retune. P1+P2 shared. REVERSAL_STAM 30 /
+ * REVERSAL_INVULN 120 / CLASH_RECOVERY / cancel 100 / tipX / plants / pad /
+ * AI_CD / VERSUS / ONLINE_2P_READY false / ROSTER locked. No new combat verb.
+ * Clash/connect riposte sticky leftover (v483): twin of v482 atk.reversal sticky.
+ * landParry + doClash already zero atk.riposte; landHit only READS atk.riposte for
+ * RIPOSTE_HIT_SHAKE / playRiposteHitSting and never clears; landBlock never touches
+ * it. cancelIntoGolpe sets cut=golpe and does NOT clear f.riposte. cutStartup /
+ * cutActive / cutRecovery prefer f.riposte over golpe — spent riposte slash →
+ * connect/block → late slashToGolpeWindow → cancelIntoGolpe mounts RIPOSTE
+ * 130/140/280 instead of GOLPE 120/80/180 (free +60ms active). Soft: after landHit
+ * juice branch keep if (atk.riposte) sting, then atk.riposte=false in landHit +
+ * landBlock (mirror v482 atk.reversal). Belt: f.riposte=false in cancelIntoGolpe.
+ * No frame/dmg retune. P1+P2 shared. RIPOSTE 130/140/280 / GOLPE 120/80/180 /
+ * SLASH_CANCEL_MS 100 / tipX / plants / pad / AI_CD / VERSUS / ONLINE_2P_READY
+ * false / ROSTER locked. No new combat verb.
+ * Space→K hit-confirm stun gap leftover (v484): connected Space recovery opens
+ * the K door at phaseT≥180 (RECOVERY 280 − BOLT_CANCEL_MS 100) with only
+ * ~170ms HITSTUN left; BOLT_STARTUP 200 plant so the dart births ~30ms after
+ * stunT dies — defender can guard/walk before landBoltHit. Golpe→K already
+ * connects (GOLPE_RECOVERY 180 → open at 80, ~270ms stun left). v424 only
+ * armed comboBolt for noteCombo (HUD string); flesh lock unread. Soft: on
+ * holdCut success in cancelIntoBolt (same foe as comboBolt), when foe.stunT
+ * > 0: foe.stunT = Math.max(foe.stunT, BOLT_STARTUP). Hit-confirm only (block
+ * stunT 0). No HITSTUN / BOLT_STARTUP / RECOVERY retune. Clash-K / idle K
+ * unchanged. P1+P2 shared. HITSTUN 350 / Space 180/140/280 / K 200/280 /
+ * BOLT_CANCEL_MS 100 / tipX / plants / pad / AI_CD / VERSUS / ONLINE_2P_READY
+ * false / ROSTER locked. No new combat verb.
+ * Space→L hit-confirm stun gap leftover (v485): twin of v484 Space→K. Connected
+ * Space recovery opens the L door at phaseT≥180 (RECOVERY 280 − SLASH_CANCEL_MS
+ * 100); early cancel still has ~170ms HITSTUN (> GOLPE_STARTUP 120) but late
+ * cancel (~phaseT 250) leaves only ~100ms — golpe active births ~20ms after
+ * stunT dies, defender guards/walks before landHit. v471 only armed comboBolt
+ * for noteCombo (HUD string); flesh lock unread. Soft: on linkPlant success in cancelIntoGolpe
+ * (same foe as comboBolt), when foe.stunT > 0: foe.stunT =
+ * Math.max(foe.stunT, GOLPE_STARTUP). Hit-confirm only (block stunT 0). Clash L skip
+ * (no linkPlant). No HITSTUN / GOLPE_STARTUP / RECOVERY / SLASH_CANCEL
+ * retune. P1+P2 shared. HITSTUN 350 / Space 180/140/280 / L 120/80/180 /
+ * SLASH_CANCEL_MS 100 / tipX / plants / pad / AI_CD / VERSUS / ONLINE_2P_READY
+ * false / ROSTER locked. No new combat verb.
+ * L→Space hit-confirm stun gap leftover (v486): twin of v485 Space→L. Connected
+ * golpe recovery opens the Space door at phaseT≥80 (GOLPE_RECOVERY 180 −
+ * GOLPE_CANCEL_MS 100); early cancel still has ~190ms HITSTUN (> STARTUP 180)
+ * but late cancel (~phaseT 170) leaves only ~91ms — slash active births ~89ms
+ * after stunT dies, defender guards/walks before landHit. v471 only armed
+ * comboBolt for noteCombo (HUD string); flesh lock unread. Soft: on linkPlant success in cancelIntoSlash
+ * (same foe as comboBolt), when foe.stunT > 0: foe.stunT =
+ * Math.max(foe.stunT, STARTUP). Hit-confirm only (block stunT 0). Clash Space skip
+ * (no linkPlant). No HITSTUN / STARTUP / GOLPE_RECOVERY / GOLPE_CANCEL
+ * retune. P1+P2 shared. HITSTUN 350 / Space 180/140/280 / L 120/80/180 /
+ * GOLPE_CANCEL_MS 100 / tipX / plants / pad / AI_CD / VERSUS / ONLINE_2P_READY
+ * false / ROSTER locked. No new combat verb.
+ * Versus/online P2 reversal teach fairness leftover (v487): drawReversalHint stayed
+ * player-only while human P2 (versus + online seat) already startReversal on
+ * hold-guarda + golpe (tickVersusP2 / p2ReversalBuf since v430/v452) — so the
+ * guard+golpe REV door (REVERSAL_STAM 30) on the right seat stayed unread
+ * (P1 remap cue silent for P2; open-meaty PARRY already seats after v461).
+ * Soft: meatyMeleeAtRivalGuard + drawReversalHintFor seats rival when matchKind
+ * versus|online with p2BindPrimary guard+golpe. drawComboCount + drawEspecialHintP2
+ * + P2 cancel/feint/parry seats yield during that door (mirror v390/v458–v461) so
+ * the cue is not muddy. Throw-tech still owns; PB teach stays P1 (coexist later).
+ * CPU still silent. ONLINE_2P_READY stays false. REVERSAL_STAM 30 / REVERSAL_INVULN
+ * 120 / L frames / tipX / plants / pad / AI_CD / kit / VERSUS / ROSTER / HITSTOP
+ * bufs / riposte / cancel / throw-tech / feint / parry teach locked.
+ * No new combat verb.
+ * Versus/online P2 pushblock teach fairness leftover (v488): drawPushblockHint stayed
+ * player-only while human P2 (versus + online seat) already tryPushblock on
+ * hold-guarda + away (tickVersusP2 / p2PushblockBuf since v430/v456) — so the
+ * EMPUJON door (PUSHBLOCK_STAM 25 / 240px) on the right seat stayed unread
+ * (P1 remap away cue silent for P2; hold-guard REV already seats after v487).
+ * Soft: drawPushblockHintFor seats rival when matchKind versus|online with
+ * meatyMeleeAtRivalGuard + p2BindPrimary away (from rival.facing). Coexist with
+ * REV chest. drawComboCount + drawEspecialHintP2 + P2 cancel/feint/parry seats
+ * widen yield to PUSHBLOCK_STAM (mirror P1) so stam 25–29 still sees the away
+ * chevron. CPU still silent. ONLINE_2P_READY stays false. PUSHBLOCK_STAM 25 /
+ * PUSHBLOCK_PX 240 / REVERSAL_STAM 30 / tipX / plants / pad / AI_CD / kit /
+ * VERSUS / ROSTER / HITSTOP bufs / riposte / cancel / throw-tech / feint /
+ * parry / REV teach locked. No new combat verb.
+ * Versus/online P2 wake-REV teach fairness leftover (v489): drawWakeReversalHint stayed
+ * player-only while human P2 (versus + online seat) already startWakeReversal on
+ * getup L (tickVersusP2 / p2GolpeBuf / p2ReversalBuf since v472–v473) — so the
+ * tap-golpe wakeRev door (REVERSAL_STAM 30 / THROW_WAKE_INVULN 80) on the right
+ * seat stayed unread (P1 remap golpe cue silent for P2; hold-guard REV / PB /
+ * open PARRY already seat after v461/v487/v488). Soft: meatyMeleeAtRivalWake +
+ * drawWakeReversalHintFor seats rival when matchKind versus|online with
+ * p2BindPrimary golpe. drawComboCount + drawEspecialHintP2 + P2 cancel/feint/
+ * parry seats swap bare wakeupWindow(rival) yield to meatyMeleeAtRivalWake so
+ * the cue is not muddy (mirror v420 P1). Throw-tech / hold-guard REV still own.
+ * CPU still silent. ONLINE_2P_READY stays false. REVERSAL_STAM 30 /
+ * THROW_WAKE_INVULN 80 / L frames / tipX / plants / pad / AI_CD / kit / VERSUS /
+ * ROSTER / HITSTOP bufs / riposte / cancel / throw-tech / feint / parry / REV /
+ * PB teach locked. No new combat verb.
+ * Versus/online P2 hold-guard hitstop flush leftover (v490): v455 arms
+ * p2ReversalBuf / p2ThrowBuf under hitstopLeft (and v456 p2PushblockBuf
+ * flushes in tickVersusP2 after freeze), but flushVersusP2CombatBufs still
+ * hard-returned on rival.guarding — so block → HITSTOP_BLOCK → tap golpe /
+ * throw under freeze → freeze lifts while still holding guard ate the armed
+ * REV / throw (p2ReversalBuf→startReversal while guarding; p2ThrowBuf→
+ * tryThrowTech/startThrow with rival.guarding allowed never reached). P1
+ * mirror: if (player.falling || player.guarding) dump slash/golpe/bolt/open
+ * only — keeps throwBuf/reversalBuf, then flushes startReversal/startThrow
+ * while guarding. Soft: on rival.guarding dump p2SlashBuf/p2GolpeBuf/
+ * p2BoltBuf/p2Open* only; do not return; still run p2ThrowBuf +
+ * p2ReversalBuf flushes (cancel/idle attack refuse guarding). Falling still
+ * returns. CPU unchanged. ONLINE_2P_READY stays false. HITSTOP_BLOCK 60 /
+ * HITSTOP_HIT 140 / REVERSAL_STAM 30 / THROW_STARTUP 80 / tipX / plants /
+ * pad / AI_CD / kit / VERSUS / ROSTER / HITSTOP bufs / riposte / cancel /
+ * throw-tech / feint / parry / REV / PB / wake-REV teach locked.
+ * No new combat verb.
+ * Versus/online P2 rising-guard REV flush leftover (v491): tickVersusP2
+ * runs before updateGuard(rival), so rising ArrowDown+P (guard+golpe) same
+ * frame saw !rival.guarding and started normal L — P1 updateGuard-before-
+ * edges already REV on rising S+L. Soft: on edgeGolpe+wantG when
+ * !rival.guarding && (p2Locked || canGuard) arm p2ReversalBuf (do not
+ * startAttack); flushVersusP2CombatBufs after updateGuard fires
+ * startReversal while guarding. Already-guarding path still startReversal
+ * immediate. CPU unchanged. ONLINE_2P_READY stays false. REVERSAL_STAM 30 /
+ * GOLPE 120/80/180 / tipX / plants / pad / AI_CD / kit / VERSUS / ROSTER /
+ * HITSTOP bufs / riposte / cancel / throw-tech / feint / parry / REV / PB /
+ * wake-REV / hold-guard hitstop flush teach locked. No new combat verb.
+ * Opening throw buffer fairness leftover (v492): Space openBuf, L golpeBuf,
+ * K openBoltBuf already hold through OPENING_MS and flush on lift — but
+ * Space+S grab still hard-refused with no buffer (throwEdge openLeft > 0
+ * refuse), so mash-grab into AI bait-guard dies on lift while mash-Space
+ * fires. Versus P2 open path arms only p2Open*; edgeSlash && wantG unread
+ * (mid-combat already p2ThrowBuf). Soft: on openLeft > 0 throw refuse arm
+ * throwBuf = true (chord already clears slash/golpe/bolt/open). In
+ * tickVersusP2 open block: edgeSlash && wantG → p2ThrowBuf = true (dump
+ * open* like mid-combat). Flush already throwBuf/p2ThrowBuf when
+ * openLeft <= 0. Leave flush/startThrow/tryThrowTech/throwLocked alone.
+ * Skip opening feint. Opening rev refuse out of scope. tipX / plants /
+ * pad / Space 180/140/280 / L 120/80/180 / riposte/parry 140 rising-S /
+ * AI_CD+harness 0.99 / yard lazy-load / VERSUS_2P_READY / ONLINE_2P_READY
+ * false / ROSTER_SELECT_READY / CID unlocked / OPENING_MS / THROW frames
+ * locked. No new combat verb.
+ * Opening rev buffer fairness leftover (v493): v492 twin — Space openBuf, L
+ * golpeBuf, K openBoltBuf, Space+S throwBuf already hold through OPENING_MS
+ * and flush on lift — but hold-guard+golpe still hard-refused with no buffer
+ * (reversalEdge openLeft > 0 refuse), so mash-REV into AI rivalFlushOpenMix
+ * dies on lift while mash-L fires. Versus P2 open path arms p2Open* +
+ * p2ThrowBuf (v492) but edgeGolpe && wantG unread (falls through, early
+ * return). Mid-combat already p2ReversalBuf (v491). Soft: on openLeft > 0
+ * reversal refuse arm reversalBuf = true (chord already clears
+ * slash/golpe/bolt/throw/open). In tickVersusP2 open block: edgeGolpe &&
+ * wantG → p2ReversalBuf = true (dump open* like mid-combat / v492 throw).
+ * Flush already reversalBuf/p2ReversalBuf when openLeft <= 0. Leave
+ * startReversal mid-measure openLeft refuse, opening feint refuse alone.
+ * tipX / plants / pad / Space 180/140/280 / L 120/80/180 / riposte/parry /
+ * AI_CD+harness 0.99 / yard lazy-load / VERSUS_2P_READY / ONLINE_2P_READY
+ * false / ROSTER_SELECT_READY / OPENING_MS / REVERSAL_STAM 30 locked. No
+ * new combat verb.
+ * Versus/online P2 rising-guard PB flush leftover (v494): v491 twin for PB —
+ * tickVersusP2 runs before updateGuard(rival), so rising ArrowDown+away same
+ * frame saw !rival.guarding → else { p2PushblockBuf = 0 }, away edge falls
+ * through — eaten. P1 updateGuard(player) BEFORE tapWalk → tryPushblock
+ * already PB on rising S+away. Soft: after guarding PB branches, on wantG &&
+ * !rival.guarding && canGuard && (edgeL||edgeR) arm p2PushblockBuf (−1/1)
+ * (do not tryPushblock yet); flushVersusP2CombatBufs after updateGuard fires
+ * tryPushblock while guarding. Already-guarding path still tryPushblock
+ * immediate. Leave PUSHBLOCK_STAM/PX / toward refuse / hitstop PB / teach
+ * alone. CPU unchanged. ONLINE_2P_READY stays false. tipX / plants / pad /
+ * Space 180/140/280 / L 120/80/180 / riposte/parry / AI_CD+harness 0.99 /
+ * VERSUS_2P_READY / ROSTER_SELECT_READY / PUSHBLOCK_STAM 25 / PUSHBLOCK_PX
+ * 240 locked. No new combat verb.
+ * Idle throw-edge foe-lock arm leftover (v495): v408 twin for the rising edge —
+ * idle (or guard) Space+S still did else startThrow(player) / else { p2ThrowBuf =
+ * false; startThrow(rival); }. startThrow returns false on throwLocked(throwFoe(f))
+ * with NO buf arm — late meaty grab after your recovery ended (HITSTUN 350 still
+ * live) ate every mash edge; free-frame press only. v408 only keeps an already-
+ * armed throwBuf through foe throwLocked (stun / KD / throwInvuln). Soft: P1
+ * throwEdge else if (throwLocked(throwFoe(player))) throwBuf = true before
+ * startThrow; P2 edgeSlash && wantG arm p2ThrowBuf = true instead of clear +
+ * no-op when throwLocked(throwFoe(rival)). Leave flush / tryThrowTech /
+ * throwLocked gates / opening throw (v492) alone. Not v476 tech-from-recovery.
+ * tipX / plants / pad / Space 180/140/280 / L 120/80/180 / riposte/parry /
+ * AI_CD+harness 0.99 / VERSUS_2P_READY / ONLINE_2P_READY false /
+ * ROSTER_SELECT_READY / HITSTUN 350 / THROW_TECH 80 locked. No new combat verb.
+ * Versus/online P2 throw-chord feint fairness leftover (v496): P1 converts throw
+ * chord into pull during slash startup (feintEdge || (throwEdge && canFeint(player))
+ * → startFeint; throwEdge=false). P2 only feinted on rising guarda (edgeGuard &&
+ * canFeint). Hold-Down + tap O while canFeint(rival) (slash startup) missed that
+ * arm, fell to edgeSlash && wantG → p2Locked → p2ThrowBuf = true (or tech /
+ * startThrow). Same chord buffered a grab instead of startFeint. Soft: before
+ * throw branch, if edgeSlash && wantG && canFeint(rival) → startFeint(rival) and
+ * clear p2SlashBuf/p2GolpeBuf/p2BoltBuf/p2ThrowBuf (mirror P1). Leave rising
+ * edgeGuard&&canFeint, idle throw, tryThrowTech, v495 throwLocked arm, opening
+ * throw/rev, hitstop throw arms alone. No new verb/frames/stam. tipX / plants /
+ * pad / Space 180/140/280 / L 120/80/180 / riposte/parry / AI_CD+harness 0.99 /
+ * VERSUS_2P_READY / ONLINE_2P_READY false / ROSTER_SELECT_READY / FEINT_RECOVERY
+ * 100 locked. No new combat verb.
+ * Hitstop feint buffer fairness leftover (v497): sibling of v455 (other edges
+ * buffer through freeze) + v496 (throw-chord → feint only outside freeze). Under
+ * hitstopLeft > 0 early-return: P1 feintEdge cleared with no buf / no startFeint
+ * (feintT stays 0 while canFeint still true); P1 throwEdge while canFeint →
+ * throwBuf = true (no canFeint convert) → wrong verb latches through recovery
+ * instead of pull; P2 hsEdgeS && hsG → always p2ThrowBuf even when canFeint(rival);
+ * rising guard under freeze has no feint arm (tickVersusP2 skipped). Soft: under
+ * hitstop, before throw arms — P1 if feintEdge || (throwEdge && canFeint(player))
+ * → startFeint(player) (+ clear slash/golpe/bolt/throwBuf); else keep throwEdge →
+ * throwBuf. P2 if (hsG && !p2Held.guard && canFeint(rival)) || (hsEdgeS && hsG &&
+ * canFeint(rival)) → startFeint(rival) (+ clear p2*Buf); else keep hsEdgeS && hsG
+ * → p2ThrowBuf. Leave rising edgeGuard&&canFeint in tickVersusP2, v496 throw-chord,
+ * idle throw/tryThrowTech/v495 throwLocked, opening feint refuse alone. No new
+ * verb/frames. tipX / plants / pad / Space 180/140/280 / L 120/80/180 /
+ * riposte/parry / AI_CD+harness 0.99 / VERSUS_2P_READY / ONLINE_2P_READY false /
+ * ROSTER_SELECT_READY / FEINT_RECOVERY 100 / HITSTOP locked. No new combat verb.
+ * Versus/online P2 opening walk/guard fairness leftover (v498): v431 armed
+ * p2OpenBuf / p2OpenGolpeBuf / p2OpenBoltBuf (+ v492/v493 p2ThrowBuf /
+ * p2ReversalBuf) through OPENING_MS, but open block still ended with
+ * rival.wantBlock=false; rival.gait=0; rival.closing=false; return. Comment
+ * claimed "mirror P1 refuse." P1 does NOT refuse walk/guard mid-measure:
+ * updateGuard(player) and player.gait=move have no openLeft gate. Human P2
+ * was a statue for 1600ms while P1 footworks + can raise guarding (and drain
+ * STAMINA_DRAIN). Mid-combat already has the mirror wantBlock + walk
+ * move/step. Soft: after open-buf arms in openLeft>0 block, set wantBlock
+ * like mid-combat (wantG && stamina >= STAMINA_START_MIN && guardBreakT <= 0
+ * && !riposteArmed); run same walk move/gait/step/GAP as bottom of
+ * tickVersusP2; do not zero gait; keep early-return before attack fire.
+ * Leave p2Open* / throw/rev bufs / flushVersusP2CombatBufs openLeft return /
+ * opening feint refuse / tickAI open freeze alone. CPU tickAI open freeze
+ * stays (versus no-ops armRivalOpenMix). tipX / plants / pad / Space
+ * 180/140/280 / L 120/80/180 / riposte/parry / AI_CD+harness 0.99 /
+ * VERSUS_2P_READY / ONLINE_2P_READY false / ROSTER_SELECT_READY /
+ * OPENING_MS / hitstop feint (v497) / P2 throw-chord feint (v496) / idle
+ * throw-lock / rising PB\/REV flush / teach HUD locked. No new combat verb.
+ * Hitstop rising-guard PB buffer leftover (v499): v456 arms PB under freeze
+ * only when already guarding. v494 arms rising wantG && !guarding &&
+ * (edgeL||edgeR) → p2PushblockBuf outside freeze (flush after updateGuard).
+ * Under hitstop, updateGuard is skipped, so rising S/ArrowDown+away never
+ * sees guarding — away edge eaten by walkHeld/p2Held with no buf. Twin
+ * rising REV under freeze already works (reversalBuf without guarding
+ * check; post-freeze flush needs guarding after raise). Soft: under
+ * hitstop, also arm pushblockBuf / p2PushblockBuf on away edge when
+ * actionHeld("guard") / hsG (even if !guarding). Keep p2PushblockBuf
+ * through tickVersusP2 else-clear while wantG so flushVersusP2CombatBufs
+ * after raise still fires (mirror REV). Leave toward refuse /
+ * PUSHBLOCK_STAM / already-guarding v456 / mid-combat v494 / teach alone.
+ * tipX / plants / pad / Space 180/140/280 / L 120/80/180 / riposte/parry /
+ * AI_CD+harness 0.99 / VERSUS_2P_READY / ONLINE_2P_READY false /
+ * ROSTER_SELECT_READY / PUSHBLOCK_STAM 25 / PUSHBLOCK_PX 240 /
+ * HITSTOP / opening walk/guard (v498) / hitstop feint (v497) locked.
+ * No new combat verb.
+ * Round flow / set score leftover (v500): cada KO used to dump straight to
+ * REVANCHA with no set identity — a string of singles, no FT2. Soft:
+ * SET_WINS_NEEDED = 2 (BO3 / FT2); setWins {p1,p2} clears on ELEGIR/title
+ * start (resetRound from title) and Esc→MENÚ (goTitleFromPlay); KO in
+ * beginFall increments the winner. Mid-set (<2): "> SIGUIENTE / R" + 2
+ * pips hierro/hueso under nameplates (drawLifeBar; not HP); yard rotate
+ * OK. Set-over (>=2): "SET 2-x" + "> REVANCHA / R" clears set on rematch.
+ * Versus + CPU. Draw-only score; no new combat verb. tipX / plants / pad /
+ * Space 180/140/280 / L 120/80/180 / riposte/parry / AI_CD+harness 0.99 /
+ * VERSUS_2P_READY / ONLINE_2P_READY false / ROSTER_SELECT_READY /
+ * hitstop rising-guard PB (v499) locked. No new combat verb.
+ * Roster P2 pick leftover (v501): v444 auto setP2FighterId(other) + requestStart
+ * on ELEGIR — Versus/CPU never chose rival; ROAN vs ROAN / CID vs CID impossible;
+ * roster feel = espejo, not elección ("Later P2 pick page still deferred"). Soft:
+ * P1 ready → titlePage "roster_p2" (no start); chip P2 / RIVAL (CPU en JUGAR);
+ * same ROSTER list; P2 ready → setP2FighterId (same id OK: espejo LARGO/CORTO);
+ * VOLVER → roster P1; then requestStart as now. Versus + CPU. Mirror other still
+ * preselects caret + soft-seats P2 default (v444 strings kept). tipX / plants /
+ * pad / Space 180/140/280 / L 120/80/180 / riposte/parry / AI_CD+harness 0.99 /
+ * VERSUS_2P_READY / ONLINE_2P_READY false / ROSTER_SELECT_READY / FT2 set score
+ * (v500) locked. No kit / buffers / ONLINE unlock / tipX / AI change.
+ * No new combat verb.
+ * Difficulty UX leftover (v502): OPCIONES had remap + volúmenes but cero
+ * DIFICULTAD — JUGAR CPU always same pace. Soft: LS_DIFF + diffTier
+ * facil|normal|dificil (default normal); OPCIONES row DIFICULTAD ←→ like
+ * volumes; RESTABLECER → normal. CPU only (versus/online 100% fair; no 2P).
+ * FÁCIL aiCdScale=1.4 + rival→P1 dmg ×0.85; NORMAL 1/1; DIFÍCIL 0.75 / ×1.15.
+ * Scale via aiCdOf(base) only — base *_AI_CD constants untouched. Dmg scale
+ * only when atk===rival && matchKind==="cpu". Barras / MAX_HP / frames equal.
+ * tipX / plants / pad / Space 180/140/280 / L 120/80/180 / riposte/parry /
+ * AI_CD harness 0.99 under NORMAL / FT2 / roster_p2 / ONLINE_2P_READY false
+ * locked. No AI mixes / kit / buffers / tipX change. No new combat verb.
+ * Opening matchup banner leftover (v503): OPENING_MS 1600ms walk-in was mute —
+ * roster, P2 pick, DIFICULTAD and set mid never landed on screen at start.
+ * Soft: drawOpeningBanner() from drawHud while openLeft > 0 (play). Draw-only.
+ * Fade peak ~0.6→0.2 of OPENING_MS, alpha ∝ openLeft. Line 1 ROAN VS CID
+ * (CPU: ROAN VS CPU CID; versus: P1 ROAN VS P2 CID). Line 2 kits LARGO · CORTO
+ * from entry.kit. CPU + diffTier !== normal → FÁCIL/DIFÍCIL chip under kits.
+ * setWins not 0-0 → 1-0 / 1-1 under chip (mid-set identity on SIGUIENTE).
+ * tipX / plants / pad / Space 180/140/280 / L 120/80/180 / riposte/parry /
+ * AI_CD harness 0.99 / FT2 / roster_p2 / LS_DIFF / ONLINE_2P_READY false
+ * locked. No frames / buffers / kit params / AI / tipX / ONLINE change.
+ * No new combat verb.
+ * CPU / same-id nameplate seat leftover (v504): banner covers OPENING_MS, but
+ * mid-fight CPU bars stay unlabeled (v432). After v501 mirror ROAN vs ROAN
+ * both bars same name. Versus has P1/P2; CPU doesn't. Kit LARGO/CORTO not on
+ * nameplate. Soft: draw-only on nameplate — versus|online keep P1 NAME / P2
+ * NAME; cpu left NAME / right CPU NAME; same-id (any matchKind) force seat
+ * prefix (P1/P2 or CPU); quiet kit suffix ROAN · LARGO / CID · CORTO from
+ * entry.kit (α~0.55, don't cover HP/pips). Draw-only. tipX / plants / pad / Space
+ * 180/140/280 / L 120/80/180 / riposte/parry / AI_CD harness 0.99 / FT2 /
+ * roster_p2 / LS_DIFF / opening banner / ONLINE_2P_READY false locked. No
+ * buffers / FT2 pips / banner / difficulty / kit params / AI / ONLINE change.
+ * No new combat verb.
+ * Esc mid-play pause leftover (v505): In play, Esc called goTitleFromPlay
+ * instantly and clearSetWins — accidental Esc mid-FT2 dumped the set.
+ * Over/falling already teach ESC MENÚ; mid-round had no confirm or pause.
+ * Soft: only mode === "play" Esc → mode = "pause" (freeze combat tick /
+ * openLeft hold). Overlay draw-only: PAUSA + > CONTINUAR /   MENÚ (↑↓ +
+ * Enter/Space; Esc = CONTINUAR). CONTINUAR → mode = "play"; MENÚ →
+ * goTitleFromPlay (clear set intact). Falling/over Esc MENÚ same as now.
+ * Versus + CPU. tipX / plants / pad / Space 180/140/280 / L 120/80/180 /
+ * riposte/parry / AI_CD harness 0.99 / FT2 / roster_p2 / LS_DIFF / opening
+ * banner / nameplate seat+kit / ONLINE_2P_READY false locked. No FT2 pips / score / roster / difficulty / banner / nameplates / buffers / ONLINE change.
+ * No new combat verb.
+ * Golpe reaction-guard leftover (v506): Reaction-guard never arms during
+ * golpe tele — GUARD_COMMIT 140 > GOLPE_STARTUP 120, so L gets no pre-active
+ * block window (Space/bolt do). Soft: in tickAI guard-commit arm, per-cut
+ * commitNeed = player.cut==="golpe" ? Math.min(GUARD_COMMIT_MS, GOLPE_STARTUP-40)
+ * (=80) : GUARD_COMMIT_MS; telegraphT >= commitNeed || !!bolt. Keeps slash
+ * 140 / bolt 140 / throw never-raise. tipX / plants / pad / Space 180/140/280 /
+ * L 120/80/180 / riposte/parry / AI_CD harness 0.99 / mix tables / LS_DIFF /
+ * buffers / sticky / Diseño FT2/roster/difficulty/banner/nameplate/pause /
+ * ONLINE_2P_READY false locked. No HUD / buffers / Diseño / ONLINE change.
+ * No new combat verb.
+ * Riposte reaction-guard leftover (v507): Riposte reaction-guard never arms
+ * during tele — same v506 shape (RIPOSTE_STARTUP 130 < GUARD_COMMIT 140);
+ * commitNeed only special-cased golpe. Riposte is cut="slash" + riposte flag,
+ * so commitNeed stayed 140; swingElapsed during startup ≤130 → canCommit
+ * false whole tele; first active ≈146 may raise same frame as hitbox. After
+ * v402 window freeze, player spend clears riposteWindowT and starts 130 tele
+ * — AI has no pre-active raise (Space 40ms / bolt 60ms / golpe 40ms do). Soft:
+ * extend per-cut commitNeed (cut==="golpe" || player.riposte) ?
+ * min(GUARD_COMMIT_MS, cutStartup(player)-40) : GUARD_COMMIT_MS → riposte 90
+ * (40ms pre-active). Golpe still 80; slash/bolt 140; throw never-raise.
+ * tipX / plants / pad / Space 180/140/280 / L 120/80/180 / riposte/parry /
+ * AI_CD harness 0.99 / mix tables / LS_DIFF / buffers / sticky / Diseño
+ * FT2/roster/difficulty/banner/nameplate/pause / ONLINE_2P_READY false locked.
+ * No HUD / buffers / Diseño / ONLINE / AI_CD / mix change. No new combat verb.
+ * Bait→punish shove gate leftover (v508): after a successful bait block, landBlock
+ * shoves the rival away (pushT/pushVel); bait→punish still fired rivalPunishCut on
+ * bare dist<=myReach and whiffed the free window, while broken/main already gated
+ * on dist+startupShovePx. Soft: on recovery|dartRecPunish|feintRecPunish|
+ * guardBreakPunish while baiting, clear bait/guard like today; punish only if
+ * dist+startupShovePx(rival)<=myReach; else fall through (no return) so main
+ * punish/close owns closing. tipX / plants / pad / Space 180/140/280 / L 120/80/180 /
+ * riposte/parry / AI_CD harness 0.99 / mix tables / LS_DIFF / buffers / sticky /
+ * Diseño FT2/roster/difficulty/banner/nameplate/pause / v506–v507 commitNeed /
+ * ONLINE_2P_READY false locked. No HUD / buffers / Diseño / ONLINE / AI_CD / mix
+ * change. No new combat verb.
+ * Broken-cornered punish leftover (v509): after AI blocks (or PB) while
+ * stam-broken + !roomBack, startupShovePx ≈ hurtW (~178px). Recovery|
+ * dartRec|feintRec|guardBreak shove gate (dist+shove<=myReach) fails, then
+ * bare dist<=myReach still fired rivalPunishCut and whiffed the free window
+ * (v508 bait sibling; main/bait already shove-gate; roomBack walk-out is
+ * intentional cowardice). Soft: cornered check uses dist+shove<=myReach
+ * (shove already in scope); miss → existing walk-in fallthrough. tipX /
+ * plants / pad / Space 180/140/280 / L 120/80/180 / riposte/parry /
+ * AI_CD harness 0.99 / mix tables / LS_DIFF / buffers / sticky / Diseño
+ * FT2/roster/difficulty/banner/nameplate/pause / v506–v508 commitNeed/bait /
+ * ONLINE_2P_READY false locked. No HUD / buffers / Diseño / ONLINE / AI_CD /
+ * mix / frames change. No new combat verb.
+ * Active-blade HOLD measure leftover (v510): tickAI HOLD/myReach + holdStun/
+ * holdWake + rivalPunishCut gReach + rivalIdleCommit gReach seated on idle
+ * bladeReach — ROAN LARGO idle tip overstates ~70px vs ACTIVE sword tip
+ * (CID ~+8 under). Open flush already temp-phase="active" ("Idle sheet pad
+ * is not the sword"); main punish/close/mid/idle-commit/stun-wake still
+ * idle-pad → free-window air swings (idleHold≈271 vs activeHold≈200;
+ * gap≈225–251 arms rivalPunishCut then ACTIVE miss). Not shove-gate
+ * (v508–v509); spacing/kit measure class. Soft: mirror open flush —
+ * snapshot phase/cut, set phase="active" + cut slash|golpe, bladeReach+
+ * lungeOf, restore. tipX / plants / pad / Space 180/140/280 / L 120/80/180 /
+ * riposte/parry / AI_CD harness 0.99 / mix tables / LS_DIFF / buffers /
+ * sticky / Diseño FT2/roster/difficulty/banner/nameplate/pause /
+ * v506–v509 commitNeed/shove gates / ONLINE_2P_READY false locked. No HUD / buffers / Diseño / ONLINE / AI_CD /
+ * mix / frames change. No new combat verb.
+ * Golpe inThreat gHold idle-pad leftover (v511): tickAI golpe branch still
+ * bare idle tip after v510 snapped HOLD/myReach/holdStun/holdWake +
+ * punish/idleCommit gReach to temp phase="active". Slash inThreat rides
+ * that HOLD; golpe gHold = bladeReach(rival)+golpeLungeOf(rival) still
+ * idle-pad → CID understates ~8px (gap in (idleThreat, actThreat] leaves
+ * guardChoice=-1 and AI eats connecting L) / ROAN overstates ~70px
+ * (raises on non-threat). Not commitNeed / shove-gate; leftover of
+ * idle-pad class not mirrored on golpe threat. Soft: mirror open/v510
+ * flush around gHold — snapshot phase/cut, phase="active" + cut="golpe",
+ * bladeReach+golpeLungeOf, restore. Do not expand into updateGuard
+ * stam-threat (optional sibling). tipX / plants / pad / Space 180/140/280 /
+ * L 120/80/180 / riposte/parry / AI_CD harness 0.99 / mix tables / LS_DIFF /
+ * buffers / sticky / Diseño FT2/roster/difficulty/banner/nameplate/pause /
+ * v506–v510 commitNeed/shove/HOLD myReach / ONLINE_2P_READY false locked.
+ * No HUD / buffers / Diseño / ONLINE / AI_CD / mix / frames change.
+ * No new combat verb.
+ * updateGuard stam-threat idle-pad leftover (v512): updateGuard slash+golpe
+ * threat still bare idle tip after v510 HOLD / v511 gHold snapped tickAI
+ * inThreat to temp phase="active". Same engagement class — ROAN idleBr
+ * overstates ~70px (ug pocket 315 vs AI inThreat 244) / CID understates ~8px
+ * (161 vs 169). AI raise (active) vs stam lock/regen (idle) disagree. Not
+ * commitNeed/shove; half-wired idle-pad sibling v511 deferred. Soft: mirror
+ * open/v510/v511 — around both threat assigns snapshot f.phase/cut, set
+ * phase="active"+cut slash|golpe, bladeReach+lungeOf, restore. Shared
+ * player+rival path. tipX / plants / pad / Space 180/140/280 / L 120/80/180 /
+ * riposte/parry / AI_CD harness 0.99 / mix tables / LS_DIFF / buffers /
+ * sticky / Diseño FT2/roster/difficulty/banner/nameplate/pause /
+ * v506–v511 commitNeed/shove/HOLD/gHold / ONLINE_2P_READY false locked.
+ * No HUD / buffers / Diseño / ONLINE / AI_CD / mix / frames change.
+ * No new combat verb.
+ * Teach meatyMeleeAt* ACTIVE tip-flush leftover (v584): teach meatyMeleeAt*
+ * Guard/Wake/Open twins still measured bare idle/block tip after v513/v514
+ * snapped live AI meatySpaceAtGuard/Wake to ACTIVE. poseSheet prefers block
+ * while guarding (no tipX → sheet-edge); wakeupWindow/idle/walk also lack
+ * tipX. Same deltas: ROAN block/idle overstates ACTIVE ~66–70px (false
+ * REV/PB/wake/parry cue OOR); CID understates ~8px (cue silent on true
+ * meaty). Live AI already uses the true sword pocket; HUD teach still lied.
+ * Soft: mirror v513/v514 ACTIVE tip flush in all six teach meatyMeleeAt*
+ * doors around each HOLD assign — snapshot phase/cut/(guarding+
+ * wakeRevFadeHold on Guard), set phase="active" + cut slash|golpe matching
+ * the incoming cut, clear guarding on Guard paths so tip is ACTIVE not
+ * block-edge, bladeReach+*LungeOf, restore. Draw/teach-gate only; no combat
+ * math / AI CD / meaty chance / constant retune. tipX / plants / pad /
+ * Space 180/140/280 / L 120/80/180 / riposte/parry / AI_CD harness 0.99 /
+ * HITSTOP 140/60 / HITSTUN 350 / buffer 80 / MAX_HP 100 / SLASH_DMG −10 /
+ * PUSHBLOCK_STAM/PX / STAMINA_BLOCK / BOLT_STAM / REVERSAL_STAM /
+ * throwBuf v409 / AI meatySpaceAt* flush v513–v514 / cancel/especial/
+ * freeze-arm teach class / soft-mix/turtle twins / ONLINE_2P_READY false /
+ * VERSUS_2P_READY true / ROSTER_SELECT_READY true / v552–v583 locked.
+ * No courtyard redraw / ONLINE / tipX / Space/L / AI_CD / combat math change.
+ * No new combat verb.
+ * Link-cancel comboBolt recovery-end clear leftover (v585): v471/v424 arm
+ * comboBolt so a link/holdCut plant that outlasts HITSTUN still chains the HUD
+ * string on land. Connect clears via noteCombo. Bolt stun-abort + bolt recovery
+ * end already zero it. Slash/golpe recovery end cleared aiSawBlock / links /
+ * plants but left comboBolt. OOR whiff after knock (stun extended, flesh never
+ * lands) kept the latch into idle → next connect chained via atk.comboBolt with
+ * def.stunT===0 → false 2+ stamp / false string feel. Soft: f.comboBolt = false
+ * at advanceAttack recovery-end (same seat as aiSawBlock / link clears). Bolt
+ * path already clears. Connect path stays noteCombo clear (no-op). No frames /
+ * stam / AI_CD / teach / buffer retune. tipX / plants / pad / Space 180/140/280 /
+ * L 120/80/180 / hitstop 140/60 / hitstun 350 / buffer 80 / MAX_HP 100 /
+ * SLASH_DMG −10 / parry/riposte / AI_CD 0.99 / ONLINE false / PUSHBLOCK_STAM/PX /
+ * STAMINA_BLOCK / BOLT_STAM 30 / tipX/Space/L / throwBuf v409 / v552–v584 /
+ * AI meatySpaceAt* flush v513–v514 / comboBolt arm v424/v471 / noteCombo chain
+ * rule locked. Soft recovery-end clear class; not tip-flush / teach / freeze-arm /
+ * wake-hold / soft-mix twin. No new combat verb.
+ * Clash-resolve comboBolt exchange-reset leftover (v586): doClash plant/bolt/
+ * riposte/reversal dump left comboBolt. v471/v424 arm on link/holdCut while foe
+ * locked; v585 zeros only at slash/golpe recovery-end (bolt stun-abort/recovery
+ * already did). Clash-cancel fires mid-clashRec before recovery-end, so a
+ * pre-clash armed latch survives into cancel landHit → noteCombo sees
+ * atk.comboBolt with def.stunT===0 → false 2+ HUD string across a mutual
+ * exchange reset. Soft: f.comboBolt = false in doClash both-seats loop next to
+ * plant clears (same exchange-reset seat as clashPlant/linkPlant/holdCutPlant).
+ * Not a recovery-end twin; clash-resolve latch class. Sibling idle aborts
+ * startFeint/landParry also dump links without comboBolt — lower priority, skip
+ * this tip. No frames/stam/AI_CD/teach/buffer retune. tipX / plants / pad /
+ * Space 180/140/280 / L 120/80/180 / hitstop 140/60 / hitstun 350 / buffer 80 /
+ * MAX_HP 100 / SLASH_DMG −10 / parry/riposte / AI_CD 0.99 / ONLINE false /
+ * PUSHBLOCK_STAM/PX / STAMINA_BLOCK / BOLT_STAM 30 / tipX/Space/L / throwBuf
+ * v409 / v552–v585 / AI meatySpaceAt* flush v513–v514 / comboBolt arm v424/v471 /
+ * noteCombo chain rule locked. Soft clash-resolve latch class; not tip-flush /
+ * teach / freeze-arm / wake-hold / soft-mix twin. No new combat verb.
+ * Freeze-mash / mid-shove pushblock re-spend leftover (v587): teach already mutes
+ * on pushT>0; tryPushblock did not. Freeze-arm flush / mid-combat away-tap
+ * re-entered while a paid 240px shove still owned pushT/pushVel and re-spent
+ * PUSHBLOCK_STAM. Soft: in tryPushblock before pulseStam/PUSHBLOCK_STAM spend,
+ * refuse only when already at full shove —
+ * if (f.pushT > 0 && Math.abs(f.pushVel) * GUARD_PUSH_MS >= PUSHBLOCK_PX - 0.5)
+ * return false; (same expression as landBlock/landBoltBlock shoveOwns).
+ * Preserves applyPush→rivalPushblockOnBlock upgrade (hurtW ≪ 240 unpaid seat);
+ * stops freeze-mash flush and live away-tap re-spend. Bare early pushT>0 refuse
+ * blocked that upgrade (trial shovePx≈177.6 / sfx=block) — revisado. No
+ * freeze-arm-only rewrite; no new flag. PUSHBLOCK_STAM 25 / PX 240 /
+ * GUARD_PUSH_MS 150 / HITSTOP 140/60 / tipX/Space/L / v552–v586 / AI_CD 0.99 /
+ * ONLINE false / land* upgrade order locked. startFeint/landParry comboBolt
+ * siblings deferred. Soft mid-shove re-spend class; not tip-flush / teach /
+ * freeze-arm twin. No new combat verb.
+ * Tech-interrupt pbBreakPending clear leftover (v588): v555 clears
+ * pbBreakPending on flesh/throw/clash so same-tick flush cannot tip-plant
+ * GB after the exchange already resolved. landThrowTech (v481) already
+ * mirrors the riposte/reversal dump but still leaves pbBreakPending.
+ * Path: last-stam tryPushblock → pbBreakPending + keep-guard → throw
+ * startup tech (landThrowTech sets guarding=false, leaves pending) →
+ * foeThreatensPbBreak false (foe is throw recovery / cut==="throw", not
+ * startup/active melee) → flushPbBreakPending tip-plants tripGuardBreak
+ * on a successful tech. Soft shatter after a clean grab-break.
+ * Soft: in landThrowTech both-seats loop next to riposte/reversal dump:
+ * `f.pbBreakPending = false;` — clear only (no trip); tech already
+ * resolved the exchange. Mirror v555 landThrow/doClash clear-only.
+ * Leave v553 arm/threaten/whiff-flush, v554 plant threaten, chip trip,
+ * PUSHBLOCK_* untouched. tipX/Space/L; hitstop 140/60; hitstun 350;
+ * buffer 80; MAX_HP 100; SLASH_DMG −10; parry/riposte; AI_CD 0.99;
+ * ONLINE false; PUSHBLOCK_STAM 25 / PX 240 / STAMINA_BLOCK 20 /
+ * GUARD_PUSH_MS 150; BOLT_STAM 30; throwBuf v409; v552–v587 (incl.
+ * v553 defer + v555 flesh/throw/clash clears); no shoveOwns / comboBolt /
+ * teach / freeze-arm / wake / soft-mix retune. Soft tech-interrupt
+ * clear-on-resolve seat of v555; not comboBolt / shoveOwns / teach /
+ * freeze-arm twin. No new combat verb.
+ * Throw-cut / landThrowTech aiSawBlock belt-clear leftover (v589):
+ * Post-block aiSawBlock latch (v544 landBlock) survives landThrowTech /
+ * throw-cut recovery into idle — advanceAttack only clears on
+ * slash|golpe (~recovery-end). landThrowTech forces both seats to throw
+ * recovery beside v588 pbBreakPending clear but never dumps aiSawBlock →
+ * idle inherits post-block latch after clean tech (empty-K / melee-refuse /
+ * CutBolt stick). landHit clears; cancelIntoBolt/bolt-rec belt (v550);
+ * empty-K watch is not the hole. Soft: in landThrowTech both-seats loop
+ * next to v588 f.pbBreakPending=false → f.aiSawBlock=false (clear only).
+ * Belt: landThrow atk.aiSawBlock=false (mirror landHit). Belt: advanceAttack
+ * recovery-end also clear when cut==="throw". Soft only; no AI_CD / empty-K /
+ * yield retunes. tipX/Space/L; hitstop 140/60; hitstun 350; buffer 80;
+ * MAX_HP 100; SLASH_DMG −10; parry/riposte; AI_CD 0.99; ONLINE false;
+ * PUSHBLOCK_*; BOLT_STAM; throwBuf v409; v552–v588 (incl. v544 arm +
+ * v550 cancelIntoBolt clear + v588 pbBreakPending tech clear); no
+ * empty-K / yield / soft-mix retune. Soft throw-cut / tech aiSawBlock
+ * clear-on-resolve seat of v544/v550; not empty-K / yield / teach twin.
+ * No new combat verb.
+ * Melee OOR playerSwinging freeze walk-in leftover (v590): Space/L OOR
+ * under playerSwinging still hard-freezes AI into a statue after v576 only
+ * unfroze throw OOR. Guard already rolls !inThreat → guardChoice=-1 on whiff
+ * tele, then the shared freeze return zeros closing through fullscreen /
+ * near-whiff Space|L. Soft: in tickAI playerSwinging, after v576 throw OOR
+ * walk-in and before the statue return — if (slash||golpe) && (startup||active)
+ * && !inThreat → same closing=true + walkIn cadence return as v576. In-threat
+ * tele stays frozen for reaction-guard; boltIncoming answer/plant paths
+ * above unchanged. tipX/Space/L; hitstop 140/60; hitstun 350; buffer 80;
+ * MAX_HP 100; SLASH_DMG −10; parry/riposte; AI_CD 0.99; ONLINE false;
+ * PUSHBLOCK_*; BOLT_STAM; throwBuf v409; v552–v589 (incl. v576 throw OOR
+ * only); no belt-clear / teach / freeze-arm / soft-mix retune. Soft melee
+ * OOR walk-in seat of v576 throw-only unfinished half; not belt-clear /
+ * teach / freeze-arm / soft-mix twin. No new combat verb.
+ * Unpaid hold-S REV buffer hold leftover (v591): Unpaid hold-S REV still
+ * eats the tap/buf on guard seats — startReversal returns false unpaid,
+ * but edge seats call it with no hold (reversalEdge; golpeEdge while
+ * guarding; P2 edgeGolpe&&wantG while guarding clears p2ReversalBuf then
+ * calls), and flush seats clear-then-fail (reversalBuf / p2ReversalBuf).
+ * Teach already mutes unpaid REV; v581 freeze-arm only gates guardBreakT
+ * (not stam). Soft: on those five guarding edge/flush seats only clear
+ * reversalBuf/p2ReversalBuf when startReversal succeeds; if refuse &&
+ * stamina < REVERSAL_STAM keep the REV buf (do not convert to golpeBuf /
+ * normal L on drop-S). P1+P2 shared. No REVERSAL_STAM/INVULN/frames
+ * retune. tipX/Space/L; hitstop 140/60; hitstun 350; buffer 80; MAX_HP 100;
+ * SLASH_DMG −10; parry/riposte; AI_CD 0.99; ONLINE false; PUSHBLOCK_*;
+ * BOLT_STAM; throwBuf v409; REVERSAL_STAM 30; v552–v590 (incl. v581 GB-only
+ * freeze-arm + v582 wake unpaid L). Guard-seat sibling of v582 wake unpaid;
+ * not freeze-arm stam gate / wake slash-K twin / soft-mix / belt-clear /
+ * OOR walk-in. No new combat verb.
+ * Unpaid EMPUJON pushblockBuf keep leftover (v592): Unpaid EMPUJON still
+ * eats the away-tap/buf on guard flush seats — tryPushblock returns false
+ * unpaid, but P1/P2 edge+flush seats always clear pushblockBuf /
+ * p2PushblockBuf after try (clear-then-fail). Teach already mutes unpaid
+ * (drawPushblockHintFor); v575 freeze-arm stam gate locked. Soft: on the
+ * five P1+P2 guarding edge/flush seats only clear pushblockBuf /
+ * p2PushblockBuf when tryPushblock succeeds; if refuse && guarding &&
+ * dir === awayWalkDir(f) && stamina < PUSHBLOCK_STAM keep/arm the away
+ * buf. Other refuses (toward, throw-incoming, GB, stun, falling, openLeft,
+ * shoveOwns) still clear. No PUSHBLOCK_STAM/PX / GUARD_PUSH_MS / shoveOwns /
+ * v575 freeze-arm retune. tipX/Space/L; hitstop 140/60; hitstun 350;
+ * buffer 80; MAX_HP 100; SLASH_DMG −10; parry/riposte; AI_CD 0.99; ONLINE
+ * false; PUSHBLOCK_STAM 25 / PX 240; BOLT_STAM 30; REVERSAL_STAM 30;
+ * tipX/Space/L; throwBuf v409; v552–v591 (incl. v575 freeze-arm PB stam+GB,
+ * v587 shoveOwns refuse, v591 unpaid REV, v582 wake unpaid L). Guard-seat
+ * sibling of v591 REV unpaid; not idle boltBuf-keep / shoveOwns / freeze-arm
+ * twin. No new combat verb.
+ * Blocked-connect comboBolt latch leftover (v593): Blocked-connect comboBolt
+ * latch leftover — cancel string arms comboBolt on flesh, then steel leaves
+ * the latch so a post-block re-cancel can stamp false 2+. Path: flesh →
+ * link/holdCut arms comboBolt → landBlock leaves latch (comboN still ≥1,
+ * def.stunT===0) → mid-recovery empty-K (cancelIntoBolt + v544/v550; arm
+ * condition fails so old latch stays) or CPU melee cancel (v545 refuse is
+ * you/versus/online only) → landBoltHit/landHit → noteCombo chains via
+ * atk.comboBolt → false 2+ / false string. v585 only helps if recovery fully
+ * ends; v586 is clash-only. Soft: in landBlock after noteConnect() beside
+ * atk.aiSawBlock=true — clear-only atk.comboBolt=false; atk.comboN=0;
+ * atk.comboT=0; atk.comboPunch=false. Optional lower belt: same dump in
+ * landBoltBlock (HUD symmetry; bolt recovery-end already zeros comboBolt).
+ * Blocked string cannot false-chain; 2+ stamp dies on steel. No noteCombo
+ * rule change; no frames/stam/AI_CD. Skip landParry/startFeint. tipX/Space/L;
+ * hitstop 140/60; hitstun 350; buffer 80; MAX_HP 100; SLASH_DMG −10;
+ * parry/riposte; AI_CD 0.99; ONLINE false; PUSHBLOCK_*; BOLT_STAM 30;
+ * REVERSAL_STAM 30; tipX/Space/L; throwBuf v409; noteCombo chain rule;
+ * comboBolt arm v424/v471; v585 recovery-end / v586 clash clear; v544/v545/
+ * v550 post-block doors; v552–v592 locked. Soft blocked-connect latch clear
+ * — landBlock resolve seat of v585/v586; not startFeint/landParry /
+ * noteCombo retune / unpaid-hold / aiSawBlock twin. No new combat verb.
+ * Tech-interrupt combo latch leftover (v594): Tech-interrupt combo latch —
+ * landThrowTech dumps riposte/reversal/pbBreakPending/aiSawBlock but leaves
+ * comboBolt/comboN/comboT/comboPunch; 2+ stamp survives clean tech into throw
+ * recovery and idle. Path: mid-string (comboN≥2, comboT live; link/holdCut
+ * may arm comboBolt) → throw tech → landThrowTech mirrors v481/v588/v589
+ * exchange-reset clears but never touches combo*. Tech forces throw recovery
+ * (no cancel door); v585 only zeros comboBolt at recovery-end — comboN/T/
+ * Punch ride COMBO_SHOW_MS through THROW_TECH_REC and into idle → false 2+
+ * stamp across a clean mutual throw-break. Not false-chain (no post-tech
+ * cancel); stamp-on-resolve seat of v593 missing on the tech interrupt. Soft:
+ * in landThrowTech both-seats loop next to v589 f.aiSawBlock=false, clear-
+ * only: f.comboBolt=false; f.comboN=0; f.comboT=0; f.comboPunch=false —
+ * mirror v593 full dump; tech already resolved the exchange. P1+P2 shared.
+ * Soft only; no noteCombo / frames / stam / AI_CD retune. tipX/Space/L;
+ * hitstop 140/60; hitstun 350; buffer 80; MAX_HP 100; SLASH_DMG −10;
+ * parry/riposte; AI_CD 0.99; ONLINE false; PUSHBLOCK_*; BOLT_STAM 30;
+ * REVERSAL_STAM 30; tipX/Space/L; throwBuf v409; v552–v593 (incl. v585
+ * recovery-end comboBolt-only, v586 clash comboBolt-only, v588/v589 tech
+ * clears, v593 landBlock/landBoltBlock full dump); startFeint/landParry
+ * deferred; no unpaid-hold / freeze-arm / OOR / soft-mix retune. Soft tech-
+ * interrupt latch clear — landThrowTech exchange-reset full combo dump
+ * beside v589; 2+ stamp dies on clean tech; not startFeint/landParry /
+ * doClash/landBlock (already shipped) / noteCombo retune. No new combat verb.
+ * Guard-raise mid boltPhase startup refuse leftover (v595): Mid–knife-plant S
+ * raise hops the sheet knife→block while the dart still births — updateGuard
+ * only gated phase !== "idle", but bolt keeps phase === "idle" through
+ * boltPhase === "startup", so want/raise arms; poseBitmap/poseSheet prefer
+ * guarding block over throwKnife / holdCut slash. canStartBolt refuses
+ * guarding only at plant start; tip raise already skips boltPhase. Empty-K
+ * and holdCut/clash-K plants both lose the telegraph sheet to block while
+ * BOLT_STARTUP continues and spawnBolt still fires. Recovery raise stays
+ * useful (post-dart defense). Soft: in updateGuard next to the phase gate,
+ * if f.boltPhase === "startup" set want = false (no new raise mid-plant).
+ * Leave boltPhase === "recovery" free so early post-dart guard still works.
+ * Soft only. No BOLT_* / frames / stam / pose priority retune. No new combat
+ * verb. tipX/Space/L; hitstop 140/60; hitstun 350; buffer 80; MAX_HP 100;
+ * SLASH_DMG −10; parry/riposte; AI_CD 0.99; ONLINE false; PUSHBLOCK_*;
+ * BOLT_STAM 30; REVERSAL_STAM 30; throwBuf v409; v552–v594 (incl. unpaid-hold
+ * / combo latch / freeze-arm / especial-teach / aiSawBlock / OOR walk-in).
+ * Soft mid-startup guard refuse — knife/holdCut plant sheet cannot hop to
+ * block while dart still plants; recovery raise kept. Not unpaid boltBuf-
+ * keep, freeze-arm, especial-teach, combo latch, or landParry twin.
+ * P1 wantGuard boltPhase recovery raise unlock leftover (v596): v595 left
+ * updateGuard recovery free, but P1 wantGuard still blanketed all boltPhase
+ * (`if (f.boltPhase) return false`) — hold-S through BOLT_RECOVERY never
+ * reached updateGuard as want=true, so P1 stayed open for the full recovery
+ * while P2/AI (wantBlock has no boltPhase gate) could raise. Soft: in
+ * wantGuard change the bolt gate to `if (f.boltPhase === "startup") return
+ * false;` (mirror v595). Leave recovery free so early post-dart guard works
+ * for P1. Soft only. No BOLT_* / frames / stam / pose priority / tip ease
+ * retune. No new combat verb. tipX/Space/L; hitstop 140/60; hitstun 350;
+ * buffer 80; MAX_HP 100; SLASH_DMG −10; parry/riposte; AI_CD 0.99; ONLINE
+ * false; PUSHBLOCK_*; BOLT_STAM 30; REVERSAL_STAM 30; throwBuf v409;
+ * v552–v595 (incl. v595 startup-only updateGuard refuse). Soft P1 wantGuard
+ * recovery unlock — v595 recovery-free intent lands on P1; not more startup
+ * refuse / unpaid-hold / combo latch.
+ * Bolt-recovery guard raise/drop pose-clock leftover (v597): After v596
+ * unlocks P1 hold-S raise during boltPhase==="recovery" (AI/P2 wantBlock
+ * already could), the raise *permission* lands but the raise *pose clock*
+ * still blanketed all boltPhase: tickGuardPose snaps guardPoseK=0,
+ * guardRaiseK returns 0, tip-under-raise (v342) gates !f.boltPhase, and
+ * guardDropFade returns 0. Sheet snaps block (poseBitmap prefers guarding)
+ * with no raise lean / tip ease / drop fade — a hop, not a raise. Soft:
+ * mirror v595/v596 startup-only in the raise pose-clock family only —
+ * tickGuardPose / guardRaiseK / tip-under-raise X+Y / guardDropFade use
+ * boltPhase === "startup" (tip: !== "startup"). Leave startup refuse;
+ * leave wantGuard/updateGuard gates; leave BOLT_* / frames / stam / poseBitmap
+ * priority. Soft only — raise/drop during bolt recovery eases like idle
+ * raise (v342). No new combat verb. tipX/Space/L; hitstop 140/60;
+ * hitstun 350; buffer 80; MAX_HP 100; SLASH_DMG −10; parry/riposte;
+ * AI_CD 0.99; ONLINE false; PUSHBLOCK_*; BOLT_STAM 30; REVERSAL_STAM 30;
+ * throwBuf v409; wantGuard/updateGuard want gates v595+v596; unpaid-hold
+ * / combo latch / freeze-arm / especial-teach / aiSawBlock / OOR /
+ * soft-mix; v552–v596. Soft bolt-recovery raise/drop pose-clock — v596
+ * recovery-raise intent unfinished half; not more wantGuard/updateGuard
+ * twin.
+ * HoldCut bolt-recovery S-raise sheet-protect refuse leftover (v598): After
+ * v596/v597 unlock hold-S raise during boltPhase==="recovery", special-cancel
+ * K (boltHoldCut) recovery still arms guarding; poseBitmap/poseSheet prefer
+ * block over holdingCutBolt slash (guarding checked first before holdCut) →
+ * held cut sheet hops to block mid special-cancel recovery (BOLT_RECOVERY 280
+ * / SUPER 380). Empty-K recovery raise stays useful (no boltHoldCut). Clash-K
+ * never arms boltHoldCut (`boltHoldCut = !fromClash`). WHY: v595 refused
+ * startup raise to protect knife/holdCut plant sheet; v596/v597 unlocked
+ * recovery for post-dart defense but left holdCut recovery unprotected —
+ * same block-over-slash hop on the unfinished holdCut half. Soft: in
+ * wantGuard next to the startup gate, if (holdingCutBolt(f)) return false;
+ * in updateGuard next to the startup gate, if (holdingCutBolt(f)) want =
+ * false. Soft only. No poseBitmap/poseSheet priority retune. No BOLT_* /
+ * frames / stam / tip ease retune. No new combat verb. Empty-K / clash-K
+ * recovery raise kept. tipX/Space/L; hitstop 140/60; hitstun 350; buffer 80;
+ * MAX_HP 100; SLASH_DMG −10; parry/riposte; AI_CD 0.99; ONLINE false;
+ * PUSHBLOCK_*; BOLT_STAM 30; REVERSAL_STAM 30; throwBuf v409; wantGuard/
+ * updateGuard want gates v595+v596; pose-clock v597; unpaid-hold / combo
+ * latch / freeze-arm / especial-teach / aiSawBlock / OOR / soft-mix;
+ * v552–v597. Soft holdCut bolt-recovery S-raise refuse — special-cancel cut plant unfinished half of v596 recovery unlock; not more startup-only
+ * wantGuard/pose-clock twin.
+ * Empty-K bolt-recovery S-raise knife-plant keep-through-raise leftover (v599): After
+ * v596/v597 unlock hold-S raise during boltPhase==="recovery" and v598 refuses only
+ * holdingCutBolt (empty-K / clash-K raise kept), mid that kept raise boltPlantFade still
+ * hard-zeros on guarding → restBolt dies → knife overlay dumps → sheet hops knife→block
+ * under the raise (unlike sheatheFade / feintFade keep-through-raise + restFeintGuard /
+ * sheathe→guard). Soft draw-only: boltPlantFade drop || f.guarding (keep falling/stunT/
+ * holdingCutBolt/recovery); restBolt add && !f.guarding (mirror restSheathe); add
+ * restBoltGuard = bf > 0.02 && f.guarding && ready(boltPlant) && ready(block) &&
+ * boltPlant !== block; overlay restBolt || restBoltWalk || restBoltGuard (mirror
+ * restFeintGuard). Tip X/Y already ease knife→pose tip with bf once bf lives (pose tip
+ * is block after rk → knife→block). Soft only. No wantGuard/updateGuard/pose-clock/
+ * holdingCutBolt refuse retune. No BOLT_* / frames / stam / tip ease retune. No new
+ * combat verb. tipX/Space/L; hitstop 140/60; hitstun 350; buffer 80; MAX_HP 100;
+ * SLASH_DMG −10; parry/riposte; AI_CD 0.99; ONLINE false; PUSHBLOCK_*; BOLT_STAM 30;
+ * REVERSAL_STAM 30; throwBuf v409; wantGuard/updateGuard/pose-clock/holdingCutBolt
+ * refuse v595–v598; unpaid-hold / combo latch / freeze-arm / especial-teach /
+ * aiSawBlock / OOR / soft-mix; v552–v598. Soft empty-K bolt-recovery knife-plant
+ * keep-through-raise — restBoltGuard / boltPlantFade no-guarding-gate; draw-only
+ * unfinished half of v596/v597 kept empty-K raise; not another wantGuard/pose-clock/
+ * holdingCutBolt twin.
+ * CID/ROAN spent-super bolt dash+recovery kit leftover (v600): v467/v469 seated
+ * empty-dart boltRec/boltSpeed kit (CID CORTO 250/1056 · ROAN LARGO 280/880) but
+ * boltRecMs / spawnBolt still forced spent especial onto shared BOLT_SUPER_RECOVERY 380 /
+ * BOLT_SUPER_SPEED 1280 — CORTO pocket and LARGO poke spent the round-closer on the
+ * same clock/travel, so kit identity unread exactly when meter dumps (empty owned;
+ * spent tip-only). Soft: ROSTER boltSuperRec / boltSuperSpeed (roan LARGO 380/1280
+ * baselines; cid CORTO 339 ≈380·250/280, 1536 =1280·1056/880); boltSuperRecOf /
+ * boltSuperSpeedOf; boltRecMs spent rides kit; spawnBolt spent rides kit. Empty
+ * boltRec/boltSpeed / SUPER_RANGE / BOLT_SUPER_* shake+grit+size+dmg / tipX /
+ * plants / pad / Space/L/K frames / AI_CD 0.99 / VERSUS / ONLINE_2P_READY false /
+ * ROSTER / meter rules locked. No new combat verb. Super edge unfinished half of
+ * v467/v469 — not AI spend / empty twin / boltPhase raise family.
+ * Throw plant fade outbound bodyAABB idle hold leftover (v601): while
+ * throwPlantFade crossfades windup→idle (restThrow idle base + windup overlay),
+ * poseSheet stays windup (ps.body) the whole throw/tech recovery, so bodyAABB
+ * keeps you windup soft body (746w) after the sprite is mostly idle (DESIGN idle
+ * 493w). Inverse of v529 boltPlant (sheet idle early / draw knife behind);
+ * outbound twin of v533 telegraph inbound (tf<0.5 → idle hold). Tip under
+ * throwPlantFade (v353–v367) already eases tip to idle-edge because poseSheet
+ * stays windup; collision never got the matching late-fade idle hold. Soft: in
+ * bodyAABB next to teleIdleHold, const trfK = throwPlantFade(f); const
+ * throwIdleHold = trfK > 0 && trfK < 0.5; then (teleIdleHold || throwIdleHold)
+ * ? sh.body : b (DESIGN idle; same feet). Early recovery (trf≥0.5) keeps windup
+ * ps.body. plantBodyAABB / tipX / throwPlantFade clocks / restThrow draw
+ * untouched. P1+P2 shared (no-ops where windup lacks soft body). Do not invent
+ * new rect numbers. tipX 991/0/884 / Space 180/140/280 / L 120/80/180 /
+ * riposte/parry / plants / pad 2×2 / AI_CD harness 0.99 / VERSUS_2P_READY /
+ * ONLINE_2P_READY false / ROSTER_SELECT_READY / Combate v487–v516 / Diseño
+ * v500–v505 / Arte soft packs v517–v533 locked / v552–v600 locked. No courtyard redraw / tipX / steelX / AI_CD / Combate / mixes / body AABB rect pack numbers change. No new combat verb. Not clashRec/techRec sheathe blade-hold (SILENT
+ * intentional). Not boltPhase raise / combo-latch / unpaid / spent-super v600 twin.
+ * Bolt recovery settle→guard destRect leftover (v602): after v596/v597 unlock
+ * hold-S raise during boltPhase==="recovery" and v599 keep knife sheet through that
+ * raise, destRect idleBreath still hard-zeroed on raise ("settle→guard unchanged"
+ * leftover from settle→walk tips) while amp*(1-boltPlantFade) had already climbed
+ * mid/late recovery — chest hop on mid empty-K / clash-K recovery raise (same hole
+ * feint/cutRec closed with Math.max(plantK, raiseK)). Soft: in idleBreath bolt
+ * recovery branch, replace guarding hard-zero with
+ * amp * (1 - Math.max(boltPlantFade(f), guardRaiseK(f))). Walk-out / walkFadeHold
+ * keep-0; advanceBoltFighter cutRec arm on recovery-end mid-raise; holdCut skip
+ * (!holdingCutBolt); throw/wakeup settle→guard; v595–v599 gates / restBoltGuard /
+ * boltPlantFade untouched. tipX 991/0/884 / Space 180/140/280 / L 120/80/180 /
+ * hitstop 140/60 / hitstun 350 / buffer 80 / MAX_HP 100 / SLASH_DMG −10 /
+ * AI_CD 0.99 / ONLINE false / PUSHBLOCK_* / BOLT_STAM 30 / REVERSAL_STAM 30 /
+ * throwBuf v409 / v552–v601 locked (incl. v595–v599 boltPhase raise family,
+ * v600 spent-super kit, v601 throwIdleHold). Soft destRect/idleBreath only —
+ * unfinished half of v596/v597 raise unlock + v599 sheet keep; not bodyAABB /
+ * combo-latch / unpaid / SILENT twin. No new combat verb.
+ * Bolt recovery plant walk-in destRect lean leftover (v603): mid-stride / walkFadeHold
+ * empty-K / clash-K keeps settle through tele/clash/link/holdCut *startup*, then tickGait
+ * hard-zeros walkSettleT+walkFadeHold the tick dart birth pops boltPhase→recovery
+ * (f.boltPhase blanket at combat snap). destRect lean hops off the walk plant while
+ * boltPlantFade / restBolt/restBoltWalk/restBoltGuard still show knife — a hop, not a
+ * plant. Plant walk-in lean class already closed for tele/link/clash/holdCut/rev/
+ * throw-guard/tech/feint; knife recovery never got the keep. Soft: in tickGait after
+ * feint keep, before combat snap, if boltPhase==="recovery" && !holdingCutBolt(f) &&
+ * (walkFadeHold>0 || walkSettleT>0) → if (boltPlantFade(f)<=0.02) walkFadeHold=0;
+ * drainWalkSettleUnderPlant(f,dt,was); return (mirror feint). walkSettleK plant-fade
+ * list adds (boltPhase==="recovery" && !holdingCutBolt(f)). Soft destRect lean only —
+ * unfinished half of tele/feint plant-walk-in lean for empty-K/clash-K knife plant; not
+ * settle→guard idleBreath / raise-gate / throwIdleHold twin. Startup still snaps via
+ * existing tele/clash/link/holdCut keeps. holdingCutBolt recovery still boltPlantFade 0 /
+ * holdCut path. tipX 991/0/884 / Space 180/140/280 / L 120/80/180 / hitstop 140/60 /
+ * hitstun 350 / buffer 80 / MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 / ONLINE false /
+ * PUSHBLOCK_* / BOLT_STAM 30 / REVERSAL_STAM 30 / throwBuf v409 / v552–v602 locked
+ * (incl. v595–v599 boltPhase raise, v600 spent-super, v601 throwIdleHold, v602 bolt
+ * settle→guard idleBreath). No BOLT_* / frames / stam / pose retune. No new combat verb.
+ * Cut recovery sheatheFade outbound bodyAABB idle hold leftover (v604): while
+ * sheatheFade crossfades slash→idle on non-clash/tech slash|golpe recovery
+ * (draw+tip already late-idle via sheatheFade + v345 idle-edge tip seat), poseSheet
+ * stays slash (ps.body) the whole recovery, so bodyAABB keeps you slash soft body
+ * (803w) after sprite+tip are mostly idle (DESIGN idle 493w). Inverse of v528
+ * (holds slash when sheet lacks .body); here sheet keeps slash.body too long.
+ * Twin class of v601 throwPlantFade outbound idle hold; unfinished half of v345
+ * tip-under-sheathe — tip/draw already late-idle; collision never got matching
+ * late-fade idle hold. Soft: in bodyAABB next to throwIdleHold,
+ * const sfRecK = sheatheFade(f); const sheatheIdleHold = sfRecK > 0 &&
+ * sfRecK < 0.5 && phase==="recovery" && (cut==="slash"||cut==="golpe") &&
+ * !clashRec && !techRec; then (teleIdleHold || throwIdleHold || sheatheIdleHold)
+ * ? sh.body : b (DESIGN idle; same feet). Early recovery (sf≥0.5) keeps slash
+ * ps.body. Clash/tech recovery / idle clash sheathe / plantBodyAABB / tipX /
+ * sheatheFade clocks / restSheathe untouched. P1+P2 shared. Do not invent new
+ * rect numbers. tipX 991/0/884 / Space 180/140/280 / L 120/80/180 / hitstop 140/60 /
+ * hitstun 350 / buffer 80 / MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 / ONLINE false /
+ * PUSHBLOCK_* / BOLT_STAM 30 / REVERSAL_STAM 30 / throwBuf v409 / v552–v603 locked
+ * (incl. v595–v603 seats, v601 throwIdleHold). Soft bodyAABB only — unfinished half
+ * of v345 tip-under-sheathe + v601 throwPlantFade outbound class; not clashRec
+ * SILENT / settle→guard / plant-walk-in twin. No new combat verb.
+ * Bolt plant fade sticky late-release bodyAABB leftover (v605): v529 holds full knife
+ * soft body while boltPlantFade > 0.02 and poseSheet lacks .body (recovery poseBitmap
+ * already idle). Late fade (0.02–0.5): tip/draw already mostly idle under
+ * tip-under-boltPlantFade + restBolt, but hurtbox still throwKnife 692w vs idle 493w
+ * (+199). Inverse of v529 named by v601 when seating throwIdleHold (“sheet idle early /
+ * draw knife behind”); v604 closed sheathe sheet-keeps-body outbound. Sticky inbound
+ * hold never got the matching late idle release. Soft: in bodyAABB, change bolt gate
+ * only — const boltFam = (bfK >= 0.5 && !(ps && ps.body)) ? poseFamily(f) : null;
+ * (keep knife||windup pick). Early bf≥0.5 keeps knife; late bf<0.5 falls through to
+ * DESIGN idle (same feet). Mirror 0.5 threshold of tele/throw/sheathe IdleHolds without
+ * adding to that OR. P1+P2 you-family shared; rival no-op (no soft knife body). Do not
+ * invent rect numbers. plantBodyAABB / tipX / boltPlantFade clocks / restBolt* /
+ * v595–v599 raise gates / v602–v603 bolt destRect untouched. holdingCutBolt still 0;
+ * raise mid-recovery still ps.block.body (!(ps&&ps.body) false). tipX 991/0/884 /
+ * Space 180/140/280 / L 120/80/180 / hitstop 140/60 / hitstun 350 / buffer 80 /
+ * MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 / ONLINE false / PUSHBLOCK_* / BOLT_STAM 30 /
+ * REVERSAL_STAM 30 / throwBuf v409 / v552–v604 locked (incl. IdleHold tele/throw/sheathe,
+ * settle→guard, plant-walk-in lean, boltPhase raise family, spent-super, clashRec/techRec
+ * SILENT). Soft bodyAABB gate-tighten only — unfinished inverse half of v529 named by
+ * v601; tip/draw already late-idle; not IdleHold tele/throw/sheathe twin / settle→guard /
+ * plant-walk-in / feint-parry-guardDrop sticky sibling. No new combat verb.
+ * IdleHold ultra-late floor leftover (v606): IdleHold throw + cut-recovery sheathe
+ * still floored at >0.02 while tip+rest already keep through any live fade (>0).
+ * When 0 < fade ≤ 0.02 the hold dropped and bodyAABB fell through to ps.body
+ * (throw windup 746w / cut slash 803w) while sprite+tip were already idle
+ * (DESIGN 493w) — a late collision hop, not a plant. Unfinished half of
+ * tip-under-throwPlantFade >0 late-dump fix for bodyAABB (markers already >0;
+ * body never got matching floor). Soft: gate-tighten only —
+ * throwIdleHold = trfK > 0 && trfK < 0.5; sheatheIdleHold = sfRecK > 0 &&
+ * sfRecK < 0.5 && phase==="recovery" && (slash||golpe) && !clashRec && !techRec.
+ * Mirror restThrow / tip trfTip>0 / restSheathe / tip sfTip>0. Early ≥0.5 still
+ * keeps plant ps.body. teleIdleHold / plantBodyAABB / tipX / fade clocks / rest*
+ * / clashRec SILENT / bolt gate untouched. Not a new IdleHold OR; not
+ * feint/parry/guardDrop sticky; not settle→guard / plant-walk-in / boltPhase raise.
+ * tipX 991/0/884 / Space 180/140/280 / L 120/80/180 / hitstop 140/60 / hitstun 350 /
+ * buffer 80 / MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 / ONLINE false / PUSHBLOCK_* /
+ * BOLT_STAM 30 / REVERSAL_STAM 30 / throwBuf v409 / v552–v605 locked (incl. IdleHold
+ * tele/throw/sheathe seats, bolt sticky late-release, settle→guard, plant-walk-in
+ * lean, boltPhase raise family). Soft bodyAABB floor-tighten only. No new combat verb.
+ * Feint→guard bodyAABB raise mid-plant windup-keep leftover (v607): unfinished half of
+ * restFeintGuard — draw (restFeintGuard + feintFade) already keeps windup overlay through
+ * raise, but v530 collision half intentionally fell to ps.block.body and never got a
+ * raise-aware windup keep. While restFeintGuard + feintFade keep windup through raise,
+ * bodyAABB feintB still hard-skipped on guarding → hurtbox snapped windup 746w→block 625w
+ * (−121) the tick S raises mid-pull while sprite+tip still mostly windup. Soft: in
+ * bodyAABB, change feint gate only —
+ * const feintB = (ffK > 0.02 && (!(ps && ps.body) || (f.guarding && ffK >= 0.5)))
+ * ? poseFamily(f).windup : null;
+ * Early raise mid-feint (ff≥0.5) keeps windup soft body while restFeintGuard still owns
+ * windup; late ff<0.5 falls through to ps.block.body. Idle feint sticky
+ * >0.02 && !(ps&&ps.body) unchanged. Mirror IdleHold 0.5 threshold; no new IdleHold OR.
+ * P1 you-family; rival no-op (no soft windup.body). tipX / feintFade / restFeintGuard /
+ * destRect untouched. tipX 991/0/884 / Space 180/140/280 / L 120/80/180 / hitstop 140/60 /
+ * hitstun 350 / buffer 80 / MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 / ONLINE false /
+ * PUSHBLOCK_* / BOLT_STAM 30 / REVERSAL_STAM 30 / throwBuf v409 / v552–v606 locked (incl.
+ * IdleHold tele/throw/sheathe + ultra-late floor, bolt sticky late-release, settle→guard,
+ * plant-walk-in lean, boltPhase raise/holdCut/knife-plant, spent-super). Soft bodyAABB
+ * feint raise-keep only — unfinished half of restFeintGuard; not IdleHold/fade-floor/
+ * sticky-release / boltPhase-raise twin. No new combat verb.
+ * Wakeup→guard / hurt→guard tipY raise idle-seat leftover (v608): unfinished half of
+ * tip-under-raise after Arte body packs. tip under guard raise (v342) tipY idle ey seats
+ * on bodyAABB chest mid, but base idle tipY (no tipY mark) uses bladeBox. After v520 soft
+ * hurt bodyAABB, those diverge on getup (~+27px). The tick S raises mid-crumple, tipY dumps
+ * 394→421 while restWakeGuard + wakeupFade still own the crumple — a hop, not a raise.
+ * Pure idle→guard matched (bodyY=bbY). tipX path already sheetEdge (dtx 0). Soft: in
+ * bladeTipY tip-under-guard-raise idle ey only — when idle lacks tipY, seat ey on
+ * bladeBox(f) chest mid (hb.y + hb.h * 0.45), same as base tipY fallback. Do not use soft
+ * bodyAABB. tipX under-raise / wakeupFade / restWakeGuard / bodyAABB hurt hold / destRect
+ * untouched. tipX 991/0/884 / Space 180/140/280 / L 120/80/180 / hitstop 140/60 /
+ * hitstun 350 / buffer 80 / MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 / ONLINE false /
+ * PUSHBLOCK_* / BOLT_STAM 30 / REVERSAL_STAM 30 / throwBuf v409 / v552–v607 locked (incl.
+ * IdleHold/sticky/feint-raise-keep / settle→guard / plant-walk-in / boltPhase raise). Soft
+ * tipY idle-seat only — unfinished half of tip-under-raise after v520 soft hurt body; not
+ * IdleHold/feint-raise-keep/settle→guard twin. No new combat verb.
+ * Tip under wakeRevFadeHold wakeup→reversal tipY plant leftover (v609): unfinished tip half of
+ * wakeRevFadeHold sheet keep. restWakeRev + wakeupFade(wakeRevFadeHold) keep crumple→windup over
+ * GUARD_RAISE_MS, but tipY tipPlantK seats block tipY (= you windup tipY 105) the same tick
+ * tap-L getup arms — idle bladeBox tipY → block/windup tipY hop ~45px world while crumple still
+ * owns the sheet. tipX already continuous (block has no tipX → windup sheet-edge = idle
+ * sheet-edge). Hold-S L getup already continuous (gpk>0 keeps block by). Soft: in bladeTipY
+ * tipPlantK block-from only — when wakeupFade(f)>0.02 && guardRaiseK(f)<0.02 (tap-L getup, no
+ * leftover block raise), seat by on bladeBox(f) chest mid (hb.y+hb.h*0.45, mirror v608 idle
+ * seat — not soft bodyAABB) instead of block tipY. tipPlantK then eases idle ey→windup tipY
+ * over raiseT (same clock as wakeRevFadeHold). Hold-S L (gpk≥0.02) unchanged. tipX /
+ * tip-under-raise / restWakeRev / wakeRevFadeHold clocks / bodyAABB untouched. tipX 991/0/884 /
+ * Space 180/140/280 / L 120/80/180 / hitstop 140/60 / hitstun 350 / buffer 80 / MAX_HP 100 /
+ * SLASH_DMG −10 / AI_CD 0.99 / ONLINE false / PUSHBLOCK_* / BOLT_STAM 30 / REVERSAL_STAM 30 /
+ * throwBuf v409 / v552–v608 locked (incl. tipY raise idle-seat / IdleHold / sticky /
+ * feint-raise-keep / settle→guard / plant-walk-in / boltPhase raise). Soft tipY tipPlantK
+ * by idle-seat only — unfinished tip half of wakeRevFadeHold sheet keep; not tipY raise-seat
+ * (v608 tip-under-raise ey), not IdleHold/sticky/feint-raise-keep/settle→guard/plant-walk-in.
+ * No new combat verb.
+ * Tip under telegraphFade tipY idle-seat leftover (v610): unfinished tip half of tip-under-tele
+ * after v520 soft hurt. tip under telegraphFade tipY idle ey seats on bodyAABB chest mid, but
+ * base idle tipY (no tipY mark) uses bladeBox. After v520 soft hurt bodyAABB, those diverge on
+ * getup (~+27px — same dump v608 named). The tick Space/L arms during leftover hurtFade or
+ * mid-wakeupFade, tipY hops plant→hurt-soft while crumple still owns soft body — a hop, not a
+ * plant. Pure idle tele matched. tipX tele continuous. Soft: in bladeTipY tip-under-telegraphFade
+ * idle ey only — when idle lacks tipY, seat ey on bladeBox(f) chest mid (hb.y + hb.h * 0.45),
+ * mirror v608. Do not use soft bodyAABB. tipX / tip-under-raise / wakeRev tipPlantK / restTele /
+ * bodyAABB hurt hold / destRect untouched. tipX 991/0/884 / Space 180/140/280 / L 120/80/180 /
+ * hitstop 140/60 / hitstun 350 / buffer 80 / MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 / ONLINE
+ * false / PUSHBLOCK_* / BOLT_STAM 30 / REVERSAL_STAM 30 / throwBuf v409 / v552–v609 locked (incl.
+ * tipY raise idle-seat / wakeRev tipPlant / IdleHold / sticky / feint-raise-keep / settle→guard /
+ * plant-walk-in / boltPhase raise). Soft tipY tele idle-seat only — unfinished tip half of
+ * tip-under-tele after v520; not tipY raise-seat (v608) / wakeRev tipPlant (v609). No new combat
+ * verb.
+ * Bolt recovery restBoltWalk walkFadeHold draw seat leftover (v611): unfinished draw half of
+ * v603 lean keep. v603 keeps walkFadeHold+settle lean through empty-K/clash-K knife recovery,
+ * and breath already treats walkFadeHold as rested-walk — but restBoltWalk still gates only
+ * recoveryWalkResting (A/D held). After A/D release mid-stride into bolt recovery, destRect lean
+ * rides leftover settle while sheet falls to restBolt idle+knife — a hop, not a plant.
+ * Feint/sheathe/tele/clash/link/holdCut rest*Walk already OR walkFadeHold > 0.02. Soft: widen
+ * restBoltWalk to bf > 0.02 && !f.guarding && (recoveryWalkResting(f) || f.walkFadeHold > 0.02)
+ * && ready(boltPlant) && ready(walk) && walk !== boltPlant (mirror restFeintWalk/restSheatheWalk).
+ * Keep A/D recoveryWalkResting path; !f.guarding so restBoltGuard still owns raise. Overlay
+ * restBolt || restBoltWalk || restBoltGuard unchanged. Draw-only. tipX 991/0/884 / Space
+ * 180/140/280 / L 120/80/180 / hitstop 140/60 / hitstun 350 / buffer 80 / MAX_HP 100 /
+ * SLASH_DMG −10 / AI_CD 0.99 / ONLINE false / PUSHBLOCK_* / BOLT_STAM 30 / REVERSAL_STAM 30 /
+ * throwBuf v409 / v552–v610 locked (incl. v603 lean keep / v599 restBoltGuard / tipY soft-hurt
+ * seats / IdleHold / sticky / feint-raise-keep / settle→guard). Soft restBoltWalk walkFadeHold
+ * draw seat only — unfinished draw half of v603 lean keep; not settle→guard idleBreath twin;
+ * not tipY soft-hurt seats; not IdleHold/sticky. No destRect lean retune. No new combat verb.
+ * Parry/hit interrupt restParryWalk draw seat leftover (v612): unfinished walk half of
+ * restParry under chip-stun recovery walk-out. restParry always paints parryBase (idle /
+ * wind) + slash|windup|knife overlay while pf live. Chip-stun recovery walk-out (16819)
+ * already rests walk under A/D once pf dies — but the else-if is behind restParry, so live
+ * interrupt never gets a Walk sibling (unlike restThrowWalk / restBoltWalk / restFeintWalk).
+ * After pf ends (~140ms) while stun still owns (~350 hitstun / ~180 parry stagger) and A/D
+ * held: sheet hops idle→walk mid-stun. During live pf + A/D / leftover walkFadeHold, lean
+ * already keeps through stun settle→walk keep-0 while sheet stays idle — lean without walk
+ * plant. Throw-KD interrupt (parryBase===hurt) correctly keeps crumple; chip/parry/tech
+ * paths do not. Soft: add restParryWalk = pf > 0.02 && !restFeint && !restFeintGuard &&
+ * !restFeintWalk && parryBase !== hurt && (recoveryWalkResting(f) || f.walkFadeHold > 0.02)
+ * && ready(parrySheet) && ready(walk) && walk !== parrySheet; gate restParry with
+ * !restParryWalk; base restParryWalk → drawImage(walk); overlay widen if (restParry ||
+ * restParryWalk). Keep hurt base for throw-KD; keep idle/tech non-walk when not resting
+ * walk. Draw-only. tipX 991/0/884 / Space 180/140/280 / L 120/80/180 / hitstop 140/60 /
+ * hitstun 350 / buffer 80 / MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 / ONLINE false /
+ * PUSHBLOCK_* / BOLT_STAM 30 / REVERSAL_STAM 30 / throwBuf v409 / v552–v611 locked. Soft
+ * restParryWalk interrupt draw seat only — unfinished walk half of restParry under chip-stun
+ * recovery walk-out; not tipY soft-hurt; not IdleHold/sticky; not clashRec/techRec SILENT;
+ * not MORE rest*Walk walkFadeHold widen of an existing recovery rest*Walk. No fade-clock /
+ * stun / buffer retune. No new combat verb.
+ * Bolt recovery S-raise mid-stride / walkFadeHold restBoltGuardWalk leftover (v614): unfinished
+ * GuardWalk half of restBoltGuard. v603 keeps walkFadeHold through empty-K/clash-K recovery;
+ * v611 seats opaque walk under knife via restBoltWalk; v599 restBoltGuard keeps knife through
+ * raise on block. Raise mid that walk plant: restBoltWalk dies (!f.guarding), base snaps to
+ * poseBitmap block, restWalkGuard only paints walk at wf alpha under knife — walk opacity dumps.
+ * restWakeGuardWalk already keeps opaque walk base through raise and skips restWalkGuard;
+ * restBoltGuard never got that GuardWalk half. Soft draw-only: add restBoltGuardWalk =
+ * bf > 0.02 && f.guarding && (f.walkFadeHold > 0.02 || recoveryWalkOut(f)) && ready(walk) &&
+ * ready(boltPlant) && walk !== boltPlant && walk !== block; gate restBoltGuard with
+ * !restBoltGuardWalk; base restBoltGuardWalk → drawImage(walk); widen knife overlay
+ * restBolt || restBoltWalk || restBoltGuard || restBoltGuardWalk; skip restWalkGuard while
+ * restBoltGuardWalk (mirror restWakeGuardWalk). Idle bolt→guard unchanged. No lean/destRect/
+ * bodyAABB/wantGuard retune. tipX 991/0/884 / Space 180/140/280 / L 120/80/180 / hitstop
+ * 140/60 / hitstun 350 / buffer 80 / MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 / ONLINE false /
+ * PUSHBLOCK_* / BOLT_STAM 30 / REVERSAL_STAM 30 / throwBuf v409 / v552–v613 locked (incl. v603
+ * lean keep / v599 restBoltGuard / v611 restBoltWalk / v612–v613 restParryWalk). Soft
+ * restBoltGuardWalk draw seat only — unfinished GuardWalk half of restBoltGuard; not lean /
+ * destRect / bodyAABB / wantGuard retune; not tipY soft-hurt; not IdleHold/sticky. No new combat verb.
+ * Feint→guard mid-stride / walkFadeHold restFeintGuardWalk leftover (v615): unfinished
+ * GuardWalk half of restFeintGuard. Opaque restFeintWalk dumps to block base + translucent
+ * restWalkGuard under live windup when raise arms mid walk plant. restWakeGuardWalk /
+ * restBoltGuardWalk already keep opaque walk base through raise and skip restWalkGuard;
+ * restFeintGuard never got that GuardWalk half. Soft draw-only: add restFeintGuardWalk =
+ * ff > 0.02 && f.guarding && (f.walkFadeHold > 0.02 || recoveryWalkOut(f)) && ready(walk) &&
+ * ready(wind) && walk !== wind && walk !== block; gate restFeintGuard / restFeintWalk /
+ * restFeint with !restFeintGuardWalk; base restFeintGuardWalk → drawImage(walk); widen
+ * windup overlay restFeint || restFeintGuard || restFeintWalk || restFeintGuardWalk; skip
+ * restWalkGuard while restFeintGuardWalk (mirror restBoltGuardWalk / restWakeGuardWalk).
+ * Idle feint→guard unchanged. Keep live: feintFade no guarding gate; tickGait feint
+ * walkFadeHold keep. No lean/destRect/bodyAABB/wantGuard/feintFade clock retune. tipX
+ * 991/0/884 / Space 180/140/280 / L 120/80/180 / hitstop 140/60 / hitstun 350 / buffer 80 /
+ * MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 / ONLINE false / PUSHBLOCK_* / BOLT_STAM 30 /
+ * REVERSAL_STAM 30 / throwBuf v409 / v552–v614 locked (incl. v614 restBoltGuardWalk /
+ * restWakeGuardWalk / restFeintGuard / feintFade raise-keep / tickGait feint walkFadeHold).
+ * Soft restFeintGuardWalk draw seat only — unfinished GuardWalk half of restFeintGuard; not lean /
+ * destRect / bodyAABB / wantGuard / feintFade retune; not tipY soft-hurt; not IdleHold/sticky. No new combat verb.
+ * Bolt→guard bodyAABB raise mid-plant knife-keep leftover (v616): unfinished
+ * collision half of restBoltGuard after draw keep (v599) + GuardWalk (v614). Hurtbox
+ * snapped knife 692w→block 625w the tick raise arms while sprite+tip still mostly
+ * knife. Soft: in bodyAABB, change bolt gate only —
+ * const boltFam = (bfK >= 0.5 && (!(ps && ps.body) || f.guarding)) ? poseFamily(f) : null;
+ * Soft raise-aware keep — early raise (bf≥0.5 + guarding) keeps knife||windup soft body while restBoltGuard owns
+ * knife; late bf<0.5 falls through to ps.block.body. Idle bolt sticky ≥0.5 && !(ps&&ps.body)
+ * unchanged (v605 late-release still holds). Mirror v607 / IdleHold 0.5; no new IdleHold OR.
+ * tipX / boltPlantFade clocks / restBolt* / destRect / lean untouched. P1 you-family; rival
+ * no-op if no soft throwKnife/windup.body. tipX 991/0/884 / Space 180/140/280 / L 120/80/180 /
+ * hitstop 140/60 / hitstun 350 / buffer 80 / MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 /
+ * ONLINE false / PUSHBLOCK_* / BOLT_STAM 30 / REVERSAL_STAM 30 / throwBuf v409 /
+ * v552–v615 locked (incl. v605 bolt sticky / v607 feint raise-keep / v614 restBoltGuardWalk /
+ * v599 restBoltGuard / boltPlantFade keep-through-raise). Soft bodyAABB gate-only — unfinished
+ * collision half of restBoltGuard; not MORE rest*GuardWalk; not lean/destRect/wantGuard;
+ * not damage/timing/stam/AI retune; not IdleHold/sticky-release twin. No new combat verb.
+ * Tip under sheatheFade tipY idle-edge seat leftover (v617): unfinished tipY half of
+ * v345/v346 idle-edge tip seat after v604/v606 IdleHold. tipX seats stable
+ * sheetEdgeTipWorldX; tipY same gate still seated soft bodyAABB chest —
+ * hops slash-chest→idle-chest mid-ease when IdleHold flips (sfRecK 0.5). Idle
+ * lacks tipY (POSE.you/rival/rivalFlip idle). Soft: in bladeTipY tip-under-sheatheFade
+ * idle-edge branch only (sheathing / non-clash slash|golpe recovery) — when idle lacks
+ * tipY, seat poseTip on bladeBox(f) chest mid (hb.y + hb.h * 0.45), mirror tipX
+ * sheetEdgeTipWorldX stability + v608 tip-under-raise idle seat. Do not use soft
+ * bodyAABB. Draw-only tipY. tipX / sheatheFade clock / IdleHold gate / restSheathe /
+ * clashRec·techRec SILENT / bodyAABB retune untouched. tipX 991/0/884 / Space
+ * 180/140/280 / L 120/80/180 / hitstop 140/60 / hitstun 350 / buffer 80 / MAX_HP 100 /
+ * SLASH_DMG −10 / AI_CD 0.99 / ONLINE false / PUSHBLOCK_* / BOLT_STAM 30 /
+ * REVERSAL_STAM 30 / throwBuf v409 / v552–v616 locked (incl. tipY soft-hurt wakeup/rev/tele
+ * v608–v610 / IdleHold / boltFam raise-keep v616). Soft tipY idle-edge seat only —
+ * unfinished tipY half of v345/v346 after IdleHold; not tipY soft-hurt wakeup/rev/tele;
+ * not IdleHold collision twin; not GuardWalk; not bolt·feint bodyAABB raise-keep. No new
+ * combat verb.
+ * Tip under throwPlantFade tipY idle-edge seat leftover (v618): unfinished tipY half of
+ * tip-under-throwPlantFade after v601/v606 IdleHold + v617 sheathe twin. tipX seats
+ * stable sheetEdgeTipWorldX; tipY same gate still seated soft bodyAABB chest —
+ * hops windup-chest→idle-chest mid-ease when IdleHold flips (trfK 0.5). Idle
+ * lacks tipY (POSE.you/rival/rivalFlip idle). Soft: in bladeTipY tip-under-throwPlantFade
+ * idle-edge branches only (both !techGuardTip and tech-from-guard after-raise) — when
+ * idle lacks tipY, seat ey on bladeBox(f) chest mid (hb.y + hb.h * 0.45), mirror tipX
+ * sheetEdgeTipWorldX stability + v617 sheathe tipY idle-edge. Do not use soft
+ * bodyAABB. Draw-only tipY. tipX / throwPlantFade clock / throwIdleHold / restThrow /
+ * destRect / bodyAABB retune untouched. tipX 991/0/884 / Space 180/140/280 / L 120/80/180 /
+ * hitstop 140/60 / hitstun 350 / buffer 80 / MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 /
+ * ONLINE false / PUSHBLOCK_* / BOLT_STAM 30 / REVERSAL_STAM 30 / throwBuf v409 /
+ * v552–v617 locked (incl. tipY sheathe twin v617 / tipY soft-hurt v608–v610 / IdleHold /
+ * GuardWalk / bodyAABB raise-keep). Soft tipY idle-edge seat only — unfinished tipY
+ * half of tip-under-throwPlantFade after IdleHold; not tipY sheathe twin; not tipY
+ * soft-hurt; not IdleHold/GuardWalk/bodyAABB raise-keep. No new combat verb.
+ * Tip under feintFade tipY mid-tele idle-seat leftover (v619): unfinished tipY half of
+ * v344 mid-tele feint after v610 tele tipY bladeBox. tipX mid-tele bias seats
+ * stable sheetEdgeTipWorldX; tipY same gate still seated soft bodyAABB chest —
+ * hops tipY off plant-stable tipX while fk eases (feintTipK<0.98). Idle
+ * lacks tipY (POSE.you/rival/rivalFlip idle). Soft: in bladeTipY tip-under-feintFade
+ * mid-tele bias only (tipK<0.98 idle ey branch) — when idle lacks tipY, seat ey on
+ * bladeBox(f) chest mid (hb.y + hb.h * 0.45), mirror tipX sheetEdgeTipWorldX
+ * stability + v610 tele tipY idle-seat. Do not use soft bodyAABB. Draw-only tipY.
+ * tipX / feintFade clock / feintTipK latch / restFeint* / IdleHold / GuardWalk /
+ * bodyAABB retune untouched. tipX 991/0/884 / Space 180/140/280 / L 120/80/180 /
+ * hitstop 140/60 / hitstun 350 / buffer 80 / MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 /
+ * ONLINE false / PUSHBLOCK_* / BOLT_STAM 30 / REVERSAL_STAM 30 / throwBuf v409 /
+ * v552–v618 locked (incl. tipY sheathe twin v617 / tipY throw twin v618 / tipY soft-hurt
+ * v608–v610 / IdleHold / GuardWalk / bodyAABB raise-keep). Soft tipY mid-tele idle-seat
+ * only — unfinished tipY half of v344 after v610; not tipY sheathe/throw twin
+ * (v617/v618); not tipY soft-hurt; not IdleHold/GuardWalk/bodyAABB raise-keep. No new
+ * combat verb.
+ * Sheathe→guard bodyAABB raise mid-plant slash-keep leftover (v620): unfinished
+ * collision half of sheathe→guard after draw keep. Hurtbox snapped slash 803w→block 625w
+ * the tick S raises mid idle sheathe while sprite+tip still mostly slash. Soft:
+ * in bodyAABB, change slash gate only —
+ * const slashB = (sfK > 0.02 && (!(ps && ps.body) || (f.guarding && sfK >= 0.5)))
+ * ? poseFamily(f).slash : null;
+ * Soft raise-aware keep — early raise (sf≥0.5 + guarding) keeps slash soft body while
+ * sheathe overlay owns slash; late sf<0.5 falls through to ps.block.body. Idle sheathe
+ * sticky >0.02 && !(ps&&ps.body) unchanged. Mirror v607 / IdleHold 0.5; no new IdleHold
+ * OR. tipX / sheatheFade clock / restSheathe* / destRect / lean / tipY seats untouched.
+ * tipX 991/0/884 / Space 180/140/280 / L 120/80/180 / hitstop 140/60 / hitstun 350 /
+ * buffer 80 / MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 / ONLINE false / PUSHBLOCK_* /
+ * BOLT_STAM 30 / REVERSAL_STAM 30 / throwBuf v409 / v552–v619 locked (incl. v607 feint
+ * raise-keep / v616 bolt raise-keep / sheatheFade keep-through-raise / draw overlay
+ * through raise / poseSheet raise flips block first). Soft bodyAABB gate-only —
+ * unfinished collision half of sheathe→guard; not MORE rest*GuardWalk; not tipY
+ * bladeBox twin; not IdleHold/sticky/lean; not damage/timing/stam/AI; not
+ * wantGuard/sheatheFade retune. No new combat verb.
+ * Sheathe→guard mid-stride / walkFadeHold restSheatheGuardWalk leftover (v621): unfinished
+ * GuardWalk half of sheathe→guard after draw keep + v620 slashB. Opaque restSheatheWalk
+ * dumps to block base + translucent restWalkGuard under live slash when raise arms mid
+ * walk plant. restWakeGuardWalk / restBoltGuardWalk / restFeintGuardWalk already keep
+ * opaque walk base through raise and skip restWalkGuard; sheathe never got that GuardWalk
+ * half. Soft draw-only: add restSheatheGuardWalk = fade > 0 && f.guarding &&
+ * (f.walkFadeHold > 0.02 || recoveryWalkOut(f)) && ready(walk) && ready(cut) &&
+ * walk !== cut && walk !== block; base restSheatheGuardWalk → drawImage(walk); skip
+ * restWalkGuard while restSheatheGuardWalk (mirror restBoltGuardWalk / restFeintGuardWalk /
+ * restWakeGuardWalk). Slash overlay already paints on fade > 0.02 (no exclusive OR widen —
+ * sheathe family). Idle sheathe→guard non-walk unchanged (poseBitmap block + slash overlay).
+ * restSheatheWalk / restSheathe keep !f.guarding (bolt twin — mutually exclusive with
+ * GuardWalk). No lean/destRect/bodyAABB/wantGuard/sheatheFade clock retune. tipX 991/0/884 /
+ * Space 180/140/280 / L 120/80/180 / hitstop 140/60 / hitstun 350 / buffer 80 / MAX_HP 100 /
+ * SLASH_DMG −10 / AI_CD 0.99 / ONLINE false / PUSHBLOCK_* / BOLT_STAM 30 / REVERSAL_STAM 30 /
+ * throwBuf v409 / v552–v620 locked (incl. v620 slashB / restBoltGuardWalk / restFeintGuardWalk /
+ * restWakeGuardWalk / sheatheFade keep-through-raise). Soft restSheatheGuardWalk draw seat
+ * only — unfinished GuardWalk half of sheathe→guard; not lean / destRect / bodyAABB /
+ * wantGuard / sheatheFade retune; not tipY soft-hurt; not IdleHold/sticky. No new combat verb.
+ * Tip under holdCutFade tipY idle-edge seat leftover (v622): unfinished tipY half of
+ * v346 after v617 sheatheFade tipY bladeBox. tipX holdCut FROM seats stable
+ * sheetEdgeTipWorldX; tipY same gate still seats soft bodyAABB chest. Special-cancel
+ * K mid-sheathe handoff hops tipY off plant-stable tipX while hf eases
+ * leftover-sheathe→slash. Idle lacks tipY (POSE.you/rival/rivalFlip idle). Soft: in
+ * bladeTipY tip-under-holdCutFade idle ey branch only (id lacks tipY) — seat ey on
+ * bladeBox(f) chest mid (hb.y + hb.h * 0.45), mirror tipX sheetEdgeTipWorldX +
+ * v617 sheathe tipY idle-edge. Do not use soft bodyAABB. Draw-only tipY.
+ * tipX / holdCutFade clock / linkSheathe / rest* / IdleHold / GuardWalk /
+ * bodyAABB retune untouched. tipX 991/0/884 / Space 180/140/280 / L 120/80/180 /
+ * hitstop 140/60 / hitstun 350 / buffer 80 / MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 /
+ * ONLINE false / PUSHBLOCK_* / BOLT_STAM 30 / REVERSAL_STAM 30 / throwBuf v409 /
+ * through v621 locked (incl. tipY sheathe/throw/feint twin v617–v619 / GuardWalk v621 /
+ * bodyAABB raise-keep / IdleHold). Soft tipY idle-edge seat only — unfinished tipY
+ * half of v346 after v617; not tipY sheathe/throw/feint twin (v617–v619); not
+ * GuardWalk; not bodyAABB raise-keep; not IdleHold; not lean. No new combat verb.
+ * Tip under linkPlantFade+linkSheathe tipY idle-edge seat leftover (v623): unfinished
+ * tipY half of v346 linkPlant after v622 holdCutFade tipY bladeBox. tipX linkSheathe
+ * FROM seats stable sheetEdgeTipWorldX; tipY same gate still seats soft bodyAABB
+ * chest. Connected slash→L / mashy Space mid-sheathe handoff hops tipY off
+ * plant-stable tipX while linkPlantFade eases leftover-sheathe→slash/windup. Idle
+ * lacks tipY (POSE.you/rival/rivalFlip idle). Soft: in bladeTipY tip-under-
+ * linkPlantFade+linkSheathe idle ey branch only (id lacks tipY) — seat ey on
+ * bladeBox(f) chest mid (hb.y + hb.h * 0.45), mirror tipX sheetEdgeTipWorldX +
+ * v622 holdCut tipY idle-edge. Do not use soft bodyAABB. Draw-only tipY.
+ * tipX / linkPlantFade clock / linkSheathe / rest* / IdleHold / GuardWalk /
+ * bodyAABB retune untouched. tipX 991/0/884 / Space 180/140/280 / L 120/80/180 /
+ * hitstop 140/60 / hitstun 350 / buffer 80 / MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 /
+ * ONLINE false / PUSHBLOCK_* / BOLT_STAM 30 / REVERSAL_STAM 30 / throwBuf v409 /
+ * through v622 locked (incl. tipY sheathe/throw/feint/holdCut twin v617–v619/v622 /
+ * GuardWalk / bodyAABB raise-keep / IdleHold). Soft tipY idle-edge seat only —
+ * unfinished tipY half of v346 linkPlant after v622; not tipY sheathe/throw/feint/
+ * holdCut twin (already closed); not GuardWalk; not bodyAABB raise-keep; not
+ * IdleHold; not lean. No new combat verb.
+ * Tip under sheathe↔guardDrop tipY idle-edge seat leftover (v624): unfinished
+ * tipY half of v345 sheathe↔guardDrop tip gate after v617 sheatheFade tipY
+ * bladeBox + v608 tip-under-raise. tipX TO seats stable sheetEdgeTipWorldX;
+ * tipY same gate still seats soft bodyAABB chest. Idle lacks tipY. While
+ * guardDropFade live, bodyAABB is soft block — tipY idle TO hops off
+ * plant-stable tipX as gdf eases mid→ey. Pure drop tipPlantK already lands
+ * idle tipY on bladeBox base; dual-gate overwrite still soft. Soft: in
+ * bladeTipY tip-under-sheathe↔guardDrop idle ey branch only (id lacks tipY)
+ * — seat ey on bladeBox(f) chest mid (hb.y + hb.h * 0.45), mirror tipX
+ * sheetEdgeTipWorldX + v608/v617 tipY idle-edge. Do not use soft bodyAABB.
+ * Draw-only tipY. tipX / sheatheFade / guardDropFade clocks / IdleHold /
+ * GuardWalk / bodyAABB raise-keep / tipY sheathe·throw·feint·holdCut·linkPlant
+ * (v617–v623) untouched. tipX 991/0/884 / Space 180/140/280 / L 120/80/180 /
+ * hitstop 140/60 / hitstun 350 / buffer 80 / MAX_HP 100 / SLASH_DMG −10 /
+ * AI_CD 0.99 / ONLINE false / PUSHBLOCK_* / BOLT_STAM 30 / REVERSAL_STAM 30 /
+ * throwBuf v409 / through v623 locked. Soft tipY idle-edge seat only —
+ * unfinished tipY half of v345 sheathe↔guardDrop after v617; not sheatheFade
+ * tipY twin (v617); not tipY throw/feint/holdCut/linkPlant twin (v618–v623);
+ * not GuardWalk; not bodyAABB raise-keep; not IdleHold; not lean.
+ * No new combat verb.
+ * Combo stamp plantBodyAABB seat leftover (v625): 2+ combo stamp x snaps at the
+ * IdleHold 0.5 width flip while the plant sheet is still crossfading.
+ * drawComboCount seats on soft bodyAABB center. throwIdleHold / sheatheIdleHold
+ * swap wide pose body to DESIGN idle at fade 0.5 mid recovery — glyph hops
+ * off the crossfade. plantBodyAABB always uses sheetOf DESIGN and does not
+ * flip. Soft: in drawComboCount only, anchor the stamp on plantBodyAABB(f)
+ * (x = bb.x + bb.w * 0.5, y from that same rect). Draw-only (drawComboCount).
+ * Do not edit bodyAABB, throwIdleHold, sheatheIdleHold, restThrow, restSheathe,
+ * or drawRiposteHintFor (same soft center but RIPOSTE_WIN is not phase recovery
+ * — leave it). tipX / tajo 180/140/280 / hitstop 140/60 / hitstun 350 /
+ * buffer 80 / MAX_HP 100 / SLASH_DMG −10 / parry/riposte windows / AI_CD 0.99 /
+ * ONLINE false / PUSHBLOCK_* / BOLT_STAM 30 / REVERSAL_STAM 30 / throwBuf v409 /
+ * through v624 locked. Soft combo stamp plantBodyAABB seat only — not tipY
+ * bladeBox; not GuardWalk; not bodyAABB raise-keep; not clashRec/techRec
+ * sheatheFade. No new combat verb.
+ * Cancel-teach plantBodyAABB seat leftover (v626): connected golpe recovery
+ * opens the last-100ms cancel door (phaseT≥80, GOLPE_CANCEL_MS 100) before
+ * the sheatheIdleHold width flip (phaseT 90, sfRecK crosses 0.5). The live
+ * teach still anchors on soft bodyAABB, so the glyph and tip-side mote snap
+ * mid-crossfade. Combo already yielded (v625); riposte never meets this door
+ * (RIPOSTE_WIN is not phase recovery). Soft: in drawCancelHintFor and the P1
+ * inline seat in drawCancelHint, anchor on plantBodyAABB(f) /
+ * plantBodyAABB(player). Keep x = bb.x + bb.w * 0.5, face arc bb.w * 0.34,
+ * and y from that same rect. Draw-only. Do not edit bodyAABB, sheatheIdleHold,
+ * slashB, restSheathe, sheatheFade, drawComboCount, or drawRiposteHintFor.
+ * tipX / tajo 180/140/280 / hitstop 140/60 / hitstun 350 / buffer 80 /
+ * MAX_HP 100 / SLASH_DMG −10 / parry/riposte / AI_CD 0.99 / ONLINE false /
+ * PUSHBLOCK_* / BOLT_STAM 30 / REVERSAL_STAM 30 / throwBuf v409 /
+ * GOLPE_RECOVERY 180 / GOLPE_CANCEL_MS 100 / through v625 locked.
+ * Soft cancel-teach plantBodyAABB seat only — not drawComboCount; not drawRiposteHintFor; not bodyAABB; not sheatheIdleHold; not slashB; not restSheathe; not sheatheFade. No new combat verb.
+ * Throw-tech plantBodyAABB seat leftover (v627): Defender slash/golpe recovery
+ * still anchors the live Space+S teach on soft bodyAABB, so glyph and ring hop
+ * at sheatheIdleHold width flip (sfRecK crosses 0.5) while restSheathe still
+ * crossfades. Combo (v625) and cancel (v626) already planted; this label is
+ * neither. Soft: in drawThrowTechHintFor and the P1 inline seat in
+ * drawThrowTechHint only, anchor on plantBodyAABB(f) / plantBodyAABB(player).
+ * Keep cx = bb.x + bb.w * 0.5, cy = bb.y + bb.h * 0.36, glyph
+ * y = bb.y - 20 - (1-k)*4. Draw-only. Do not edit bodyAABB, sheatheIdleHold,
+ * sheatheFade, restSheathe, throwPlantFade, drawComboCount, drawCancelHint,
+ * or drawRiposteHintFor. tipX / tajo 180/140/280 / hitstop 140/60 / hitstun 350 /
+ * buffer 80 / MAX_HP 100 / SLASH_DMG −10 / parry/riposte / AI_CD 0.99 /
+ * ONLINE false / PUSHBLOCK_* / BOLT_STAM 30 / REVERSAL_STAM 30 / throwBuf v409 /
+ * GOLPE_RECOVERY 180 / GOLPE_CANCEL_MS 100 / THROW_TECH_MS 80 / through v626 locked.
+ * Soft throw-tech plantBodyAABB seat only — not drawComboCount; not drawCancelHint; not drawRiposteHintFor; not bodyAABB; not sheatheIdleHold; not restSheathe; not sheatheFade; not throwPlantFade. No new combat verb.
+ * meatySpaceAtGuard (AI REV) idle-pad leftover (v513): meatySpaceAtGuard still
+ * bare idle/block tip after v511 inThreat / v512 ug snapped ACTIVE. Guard
+ * sheet has no tipX → sheet-edge like idle. v510 ROAN idle overstates ~70px
+ * vs ACTIVE (ug 315 vs AI inThreat 244); CID under ~8px. Raise pocket =
+ * ACTIVE; REV pocket = bare → CID refuses REV on true meaty; ROAN bait-hold
+ * can REV outside connect. Not commitNeed/shove; leftover of idle-pad class
+ * not mirrored on AI REV gate. Soft: mirror open/v510–v512 flush around HOLD
+ * assigns (snapshot phase/cut/guarding, phase="active" + cut slash|golpe,
+ * bladeReach+lungeOf, restore; clear guarding so tip is ACTIVE not block
+ * sheet-edge). AI path only — do NOT expand teach meaty twins. tipX / plants / pad / Space 180/140/280 / L 120/80/180 /
+ * riposte/parry / AI_CD harness 0.99 / mix tables / LS_DIFF / buffers /
+ * sticky / Diseño FT2/roster/difficulty/banner/nameplate/pause /
+ * v506–v512 commitNeed/shove/HOLD/gHold/ug / ONLINE_2P_READY false locked.
+ * No HUD / buffers / Diseño / ONLINE / AI_CD / mix / frames change.
+ * No new combat verb.
+ * meatySpaceAtWake (AI wake-REV) idle-pad leftover (v514): meatySpaceAtWake still
+ * bare idle tip after v513 guard-REV flush. wakeupWindow forces
+ * phase==="idle"; idle has no tipX → sheet-edge. v511/v512/v513 snapped
+ * inThreat/ug/guard-REV to ACTIVE; wake pocket still bare. Same measure:
+ * ROAN idle overstates ~70px vs ACTIVE / CID under ~8px → CID skips true
+ * meaty wake-REV; ROAN can REV outside connect. Not shove-gate; leftover
+ * idle-pad class on AI wake path only. Soft: mirror open/v510–v513 flush
+ * around both HOLD assigns (snapshot phase/cut, phase="active" + cut
+ * slash|golpe, bladeReach+lungeOf, restore). AI path only — do NOT expand
+ * teach wake twins (meatyMeleeAtPlayerWake / meatyMeleeAtRivalWake).
+ * tipX / plants / pad / Space 180/140/280 / L 120/80/180 / riposte/parry /
+ * AI_CD harness 0.99 / mix tables / LS_DIFF / buffers / sticky /
+ * Diseño FT2/roster/difficulty/banner/nameplate/pause /
+ * v506–v513 commitNeed/shove/HOLD/gHold/ug/guard-REV / ONLINE_2P_READY false locked.
+ * No HUD / buffers / Diseño / ONLINE / AI_CD / mix / frames change.
+ * No new combat verb.
+ * armRival*Link (AI cancel inRange) bare-bladeReach leftover (v515): armRivalSlashLink /
+ * armRivalGolpeLink / armRivalBoltLink still bare bladeReach for AI_LINK_RANGE
+ * inRange bump after landHit/landBlock already snap phase="recovery". Recovery
+ * slash sheet + usingDedicatedPose → slashPose ox=0; ACTIVE slash ox=72 /
+ * golpe ox=40. Reach understates ~40–72px vs true ACTIVE follow-up tip → 0.55
+ * bump underfires at connect measure (cancels feel shy). Not idle-pad
+ * (recovery has tipX); cancel/link inRange class. Kit *LungeOf already wired.
+ * Soft: mirror open/v510–v514 active-blade HOLD flush around each reach assign
+ * (snapshot phase/cut, phase="active" + cut golpe for SlashLink / slash for
+ * GolpeLink|BoltLink, bladeReach+lungeOf, restore). AI path only — do NOT
+ * expand teach twins or player-side arms. tipX / plants / pad / Space
+ * 180/140/280 / L 120/80/180 / riposte/parry / AI_CD harness 0.99 / mix tables /
+ * LS_DIFF / buffers / sticky / Diseño FT2/roster/difficulty/banner/nameplate/pause /
+ * v506–v514 commitNeed/shove/HOLD/gHold/ug/guard-REV/wake-REV / ONLINE_2P_READY false locked.
+ * No HUD / buffers / Diseño / ONLINE / AI_CD / mix / frames change.
+ * No new combat verb.
+ * updateGuard stam-threat guard-sheet leftover (v516): updateGuard stam-threat
+ * ACTIVE flush is a no-op while guarding — poseSheet still prefers block (no tipX
+ * → sheet-edge) over temp phase="active". Soft: mirror v513 meatySpaceAtGuard —
+ * snapshot f.guarding, clear it around both threat bladeReach assigns, restore
+ * (keep existing phase/cut/wakeRevFadeHold snap). Hold-guard is the live
+ * stam-lock case. Measure: ROAN block-edge overstates ACTIVE ~66px (pocket
+ * ~294 vs ~229); CID understates ~8px — matches v512/v513 idle-pad deltas.
+ * Regen lock/10/s threat vs out disagree with true ACTIVE sword. Shared
+ * player+rival path. tipX / plants / pad / Space 180/140/280 / L 120/80/180 /
+ * riposte/parry / AI_CD harness 0.99 / mix tables / LS_DIFF / buffers /
+ * sticky / Diseño FT2/roster/difficulty/banner/nameplate/pause /
+ * v506–v515 commitNeed/shove/HOLD/gHold/ug/guard-REV/wake-REV/link /
+ * ONLINE_2P_READY false locked.
+ * No HUD / buffers / Diseño / ONLINE / AI_CD / mix / frames change.
+ * No new combat verb.
+ * Hurt body AABB leftover (v517): KO/throw paints you_hurt/rival_hurt (~45°)
+ * but bodyAABB still used DESIGN.*.body idle. Soft: when poseSheet is hurt,
+ * bodyAABB uses hurt body rects (same feet) for rival + rivalFlip only.
+ * rival { x: 288, y: 16, w: 589, h: 910 } (+119; thick spill 0);
+ * rivalFlip { x: 3, y: 16, w: 586, h: 920 }. You/player hurt AABB = next
+ * angle — do not ship you in this pack. Feet/plant unchanged. Idle bodies
+ * untouched. tipX 991/0/884 / Space 180/140/280 / L 120/80/180 /
+ * riposte/parry / plants / pad 2×2 / AI_CD harness 0.99 /
+ * VERSUS_2P_READY / ONLINE_2P_READY false / ROSTER_SELECT_READY /
+ * CID unlocked / Combate v487–v516 / Diseño v500–v505 locked.
+ * No courtyard redraw / tipX / steelX / AI_CD / Combate / mixes change.
+ * No new combat verb.
+ * You hurt body AABB leftover (v518): after v517 rival/flip, you_hurt still
+ * used DESIGN.you.body idle. Soft: when poseSheet=hurt for you, bodyAABB
+ * uses Arte hurt rect { x: 24, y: 18, w: 581, h: 890 } (pies iguales
+ * footX/Y 75/921; y/h idle). delta +88w. Cover head/chest/torso read mass;
+ * leave right trail spill outside on purpose. Do NOT expand to w≈1162.
+ * Rival/rivalFlip hurt rects untouched (v517). Idle you.body untouched.
+ * tipX 991/0/884 / Space 180/140/280 / L 120/80/180 / riposte/parry /
+ * plants / pad 2×2 / AI_CD harness 0.99 / VERSUS_2P_READY /
+ * ONLINE_2P_READY false / ROSTER_SELECT_READY / CID unlocked /
+ * Combate v487–v517 / Diseño v500–v505 locked.
+ * No courtyard redraw / tipX / steelX / AI_CD / Combate / mixes change.
+ * No new combat verb.
+ * Hurt body AABB height tuck leftover (v519): v517/v518 widened hurt body
+ * (x/w) but y/h still idle standing — empty air above the crumpled skull.
+ * Soft: tuck body.y ≈ skull−8; h = old_bottom − new_y (plant bottom stays).
+ * you { x: 24, y: 110, w: 581, h: 798 } (air −92);
+ * rival { x: 288, y: 242, w: 589, h: 684 } (air −226);
+ * rivalFlip { x: 3, y: 249, w: 586, h: 687 } (air −233).
+ * Keep x/w from v517–v518 unchanged. Idle bodies untouched.
+ * tipX 991/0/884 / Space 180/140/280 / L 120/80/180 / riposte/parry /
+ * plants / pad 2×2 / AI_CD harness 0.99 / VERSUS_2P_READY /
+ * ONLINE_2P_READY false / ROSTER_SELECT_READY / CID unlocked /
+ * Combate v487–v518 / Diseño v500–v505 locked.
+ * No courtyard redraw / tipX / steelX / AI_CD / Combate / mixes change.
+ * No new combat verb.
+ * Getup fade visual vs collision leftover (v520): after throw KD, drawKnight
+ * crossfades hurt→idle with max(wakeupFade, hurtFade), but poseSheet is
+ * already idle once thrownT=0 — bodyAABB snapped to idle body while sprite
+ * still showed crumple. Soft: in bodyAABB, if Math.max(wakeupFade(f),
+ * hurtFade(f)) > 0.02, use poseFamily(f).hurt.body (rects already shipped
+ * v517–v519; same feet). Chip stun (no hurtFadeT) stays idle. Falling/KO
+ * hp<=0 already poseSheet=hurt. Do not invent new rect numbers.
+ * tipX 991/0/884 / Space 180/140/280 / L 120/80/180 / riposte/parry /
+ * plants / pad 2×2 / AI_CD harness 0.99 / VERSUS_2P_READY /
+ * ONLINE_2P_READY false / ROSTER_SELECT_READY / CID unlocked /
+ * Combate v487–v519 / Diseño v500–v505 locked.
+ * No courtyard redraw / tipX / steelX / AI_CD / Combate / mixes change.
+ * No new combat verb.
+ * Slash body AABB leftover (v521): In active/recovery slash, poseBitmap is
+ * slash but bodyAABB still used DESIGN.*.body idle. Soft: when poseSheet=slash,
+ * bodyAABB uses slash body rects (same feet/y/h idle) for rival + rivalFlip only.
+ * rival { x: 0, y: 16, w: 771, h: 910 };
+ * rivalFlip { x: 104, y: 16, w: 729, h: 920 }. You slash AABB = next
+ * angle — do not ship you in this pack. Feet/plant unchanged. Idle bodies
+ * untouched. tipX 991/0/884 / Space 180/140/280 / L 120/80/180 /
+ * riposte/parry / plants / pad 2×2 / AI_CD harness 0.99 /
+ * VERSUS_2P_READY / ONLINE_2P_READY false / ROSTER_SELECT_READY /
+ * CID unlocked / Combate v487–v516 / Diseño v500–v505 /
+ * hurt AABB/fade packs v517–v520 locked.
+ * No courtyard redraw / tipX / steelX / AI_CD / Combate / mixes change.
+ * No new combat verb.
+ * You slash body AABB leftover (v522): after v521 rival/flip, you slash still
+ * used DESIGN.you.body idle. Soft: when poseSheet=slash for you, bodyAABB
+ * uses Arte slash rect { x: 59, y: 18, w: 803, h: 890 } (+222w vs idle;
+ * y/h keep planted feet bottom; x +35 so left trail stays out of thick mass).
+ * Rival/rivalFlip slash rects untouched (v521). Idle you.body untouched.
+ * tipX 991/0/884 / Space 180/140/280 / L 120/80/180 / riposte/parry /
+ * plants / pad 2×2 / AI_CD harness 0.99 / VERSUS_2P_READY /
+ * ONLINE_2P_READY false / ROSTER_SELECT_READY / CID unlocked /
+ * Combate v487–v516 / Diseño v500–v505 /
+ * hurt/slash/fade packs v517–v521 locked.
+ * No courtyard redraw / tipX / steelX / AI_CD / Combate / mixes change.
+ * No new combat verb.
+ * Block body AABB leftover (v523): While guarding, poseBitmap is block but
+ * bodyAABB still used DESIGN.*.body idle. Soft: when poseSheet=block,
+ * bodyAABB uses block body rects (same feet/y/h idle) for rival + rivalFlip only.
+ * rival { x: 125, y: 16, w: 646, h: 910 };
+ * rivalFlip { x: 68, y: 16, w: 634, h: 920 }. You_block / you_windup = next
+ * angle — do not ship you in this pack. Soft Arte body = hurtbox only;
+ * plantBodyAABB (idle DESIGN) still drives bladeReach/keepApart/bodyGap
+ * / hurtW block-push (v522 split kept; soft guard must not inflate chip-push
+ * past PUSHBLOCK_PX). Guard-break cut-block steel rides wound while
+ * guardBreakT so soft→idle body snap does not hop the asterisk.
+ * Feet/plant unchanged. Idle bodies untouched.
+ * tipX 991/0/884 / Space 180/140/280 / L 120/80/180 /
+ * riposte/parry / plants / pad 2×2 / AI_CD harness 0.99 /
+ * VERSUS_2P_READY / ONLINE_2P_READY false / ROSTER_SELECT_READY /
+ * CID unlocked / Combate v487–v516 / Diseño v500–v505 /
+ * hurt/slash/fade packs v517–v522 locked.
+ * No courtyard redraw / tipX / steelX / AI_CD / Combate / mixes change.
+ * No new combat verb.
+ * You block body AABB leftover (v524): after v523 rival/flip, you block still
+ * used DESIGN.you.body idle. Soft: when poseSheet=block for you, bodyAABB
+ * uses Arte block rect { x: 84, y: 18, w: 625, h: 890 } (+132w vs idle DESIGN
+ * {84,18,493,890}; keep x/y/h). Rival/rivalFlip block rects untouched (v523).
+ * Idle you.body untouched. Soft Arte body = hurtbox only; plantBodyAABB
+ * (idle DESIGN) still drives bladeReach/keepApart/bodyGap
+ * / hurtW block-push (v522 split kept). you_windup = next angle — do not
+ * ship windup in this pack.
+ * tipX 991/0/884 / Space 180/140/280 / L 120/80/180 /
+ * riposte/parry / plants / pad 2×2 / AI_CD harness 0.99 /
+ * VERSUS_2P_READY / ONLINE_2P_READY false / ROSTER_SELECT_READY /
+ * CID unlocked / Combate v487–v516 / Diseño v500–v505 /
+ * hurt/slash/fade/block packs v517–v523 locked.
+ * No courtyard redraw / tipX / steelX / AI_CD / Combate / mixes change.
+ * No new combat verb.
+ * You windup body AABB leftover (v525): after v524 you block, you windup still
+ * used DESIGN.you.body idle. Soft: when poseSheet=windup for you, bodyAABB
+ * uses Arte windup rect { x: 84, y: 18, w: 746, h: 890 } (+253w vs idle DESIGN
+ * {84,18,493,890}; keep x/y/h). Rival/rivalFlip windup untouched (no body).
+ * tipX 359 stays. Idle you.body untouched. Soft Arte body = hurtbox only;
+ * plantBodyAABB (idle DESIGN) still drives bladeReach/keepApart/bodyGap
+ * / hurtW block-push (v522 split kept). you.block/rival packs untouched.
+ * tipX 991/0/884 / Space 180/140/280 / L 120/80/180 /
+ * riposte/parry / plants / pad 2×2 / AI_CD harness 0.99 /
+ * VERSUS_2P_READY / ONLINE_2P_READY false / ROSTER_SELECT_READY /
+ * CID unlocked / Combate v487–v516 / Diseño v500–v505 /
+ * hurt/slash/fade/block packs v517–v524 locked.
+ * No courtyard redraw / tipX / steelX / AI_CD / Combate / mixes change.
+ * No new combat verb.
+ * You throwKnife body AABB leftover (v526): after v525 you windup, you throwKnife still
+ * used DESIGN.you.body idle (no body field). Soft: when poseSheet=throwKnife for you, bodyAABB
+ * uses Arte throwKnife rect { x: 31, y: 18, w: 692, h: 890 } (+199w / x −53 vs idle DESIGN
+ * {84,18,493,890}; keep y/h). Rival/rivalFlip throwKnife untouched (no body).
+ * tipX 268 stays. Idle you.body untouched. Soft Arte body = hurtbox only;
+ * plantBodyAABB (idle DESIGN) still drives bladeReach/keepApart/bodyGap
+ * / hurtW block-push (v522 split kept). you.windup/block/rival packs untouched.
+ * tipX 991/0/884 / Space 180/140/280 / L 120/80/180 /
+ * riposte/parry / plants / pad 2×2 / AI_CD harness 0.99 /
+ * VERSUS_2P_READY / ONLINE_2P_READY false / ROSTER_SELECT_READY /
+ * CID unlocked / Combate v487–v516 / Diseño v500–v505 /
+ * hurt/slash/fade/block/windup packs v517–v525 locked.
+ * No courtyard redraw / tipX / steelX / AI_CD / Combate / mixes change.
+ * No new combat verb.
+ * Guard drop fade visual vs collision leftover (v527): after S release /
+ * guard-break settle, drawKnight crossfades block→idle with guardDropFade,
+ * but poseSheet is already idle once guarding=0 — bodyAABB snapped to idle
+ * DESIGN body while sprite still showed block. Same class as v520 hurt/wakeup
+ * fade body hold. Soft: in bodyAABB, if guardDropFade(f) > 0.02, use
+ * poseFamily(f).block.body (rects already shipped; same feet):
+ * you { x: 84, y: 18, w: 625, h: 890 } (v524);
+ * rival { x: 125, y: 16, w: 646, h: 910 } (v523);
+ * rivalFlip { x: 68, y: 16, w: 634, h: 920 } (v523).
+ * Do not invent new rect numbers. Chip/combat snaps that cut fade stay as
+ * today (stun/falling/feint/non-idle already zero guardDropFade). Hurt/wakeup
+ * fadeK still wins when live. Soft Arte body = hurtbox only; plantBodyAABB
+ * (idle DESIGN) still drives bladeReach/keepApart/bodyGap
+ * / hurtW block-push (v522 split kept). tipX / steelX / Space / L / riposte /
+ * parry / plants /
+ * pad 2×2 untouched. tipX 991/0/884 / Space 180/140/280 / L 120/80/180 /
+ * riposte/parry / plants / pad 2×2 / AI_CD harness 0.99 /
+ * VERSUS_2P_READY / ONLINE_2P_READY false / ROSTER_SELECT_READY /
+ * CID unlocked / Combate v487–v516 / Diseño v500–v505 /
+ * hurt/slash/fade/block/windup/throwKnife packs v517–v526 locked.
+ * No courtyard redraw / tipX / steelX / AI_CD / Combate / mixes change.
+ * No new combat verb.
+ * Sheathe fade visual vs collision leftover (v528): while sheatheFade crossfades
+ * slash→idle/walk, poseSheet is already idle/walk (no dedicated .body) once
+ * sheathing() dies under walk-out / gait plant — bodyAABB snapped to idle
+ * DESIGN body while sprite still showed slash. Same class as v520 hurt/wakeup
+ * fade + v527 guardDropFade body hold. Soft: in bodyAABB, if sheatheFade(f)
+ * > 0.02 AND poseSheet lacks .body (idle/walk), use poseFamily(f).slash.body
+ * (rects already shipped; same feet):
+ * you { x: 59, y: 18, w: 803, h: 890 } (v522);
+ * rival { x: 0, y: 16, w: 771, h: 910 } (v521);
+ * rivalFlip { x: 104, y: 16, w: 729, h: 920 } (v521).
+ * Do not invent new rect numbers. Do not change slash.body numbers.
+ * Priority: hurt fade → guardDropFade block.body → sheathe slash.body → ps.body.
+ * Live block/guarding unchanged (poseSheet.block.body already wins). Soft Arte
+ * body = hurtbox only; plantBodyAABB (idle DESIGN) still drives bladeReach /
+ * keepApart / bodyGap / hurtW block-push (v522 split kept). tipX / steelX /
+ * Space / L / riposte / parry / plants / pad 2×2 untouched. tipX 991/0/884 /
+ * Space 180/140/280 / L 120/80/180 / riposte/parry / plants / pad 2×2 /
+ * AI_CD harness 0.99 / VERSUS_2P_READY / ONLINE_2P_READY false /
+ * ROSTER_SELECT_READY / CID unlocked / Combate v487–v516 / Diseño v500–v505 /
+ * hurt/slash/fade/block/windup/throwKnife/guardDrop packs v517–v527 locked.
+ * No courtyard redraw / tipX / steelX / AI_CD / Combate / mixes change.
+ * No new combat verb.
+ * Bolt plant fade visual vs collision leftover (v529): while boltPlantFade crossfades
+ * throwKnife→idle/walk, poseSheet is already idle/walk (no dedicated .body) once
+ * bolt recovery starts (poseBitmap idle) — bodyAABB snapped to idle
+ * DESIGN body while sprite still showed knife. Same class as v520 hurt/wakeup
+ * fade + v527 guardDropFade + v528 sheatheFade body hold. Soft: in bodyAABB, if
+ * boltPlantFade(f) > 0.02 AND poseSheet lacks .body (idle/walk), use
+ * (poseFamily(f).throwKnife?.body || poseFamily(f).windup?.body) (rects already
+ * shipped; same feet):
+ * you throwKnife { x: 31, y: 18, w: 692, h: 890 } (v526) preferred;
+ * you windup { x: 84, y: 18, w: 746, h: 890 } (v525) fallback.
+ * Rival/rivalFlip: no throwKnife/windup soft body — hold no-ops / falls through to DESIGN.
+ * Do not invent new rect numbers. Do not change throwKnife.body / windup.body numbers.
+ * Priority: hurt fade → guardDropFade block.body → sheathe slash.body →
+ * boltPlant knife||windup → ps.body.
+ * Special-cancel still zeros (holdingCutBolt → boltPlantFade 0). Soft Arte
+ * body = hurtbox only; plantBodyAABB (idle DESIGN) still drives bladeReach /
+ * keepApart / bodyGap / hurtW block-push (v522 split kept). tipX / steelX /
+ * Space / L / riposte / parry / plants / pad 2×2 untouched. tipX 991/0/884 /
+ * tipX knife 268 / windup 359 / Space 180/140/280 / L 120/80/180 / riposte/parry /
+ * plants / pad 2×2 / AI_CD harness 0.99 / VERSUS_2P_READY / ONLINE_2P_READY false /
+ * ROSTER_SELECT_READY / CID unlocked / Combate v487–v516 / Diseño v500–v505 /
+ * hurt/slash/fade/block/windup/throwKnife/guardDrop/sheathe packs v517–v528 locked.
+ * No courtyard redraw / tipX / steelX / AI_CD / Combate / mixes change.
+ * No new combat verb.
+ * Feint fade visual vs collision leftover (v530): while feintFade crossfades
+ * windup→idle/walk, poseSheet is already idle/walk (no dedicated .body) once
+ * feintT arms (poseBitmap idle; walk under gait) — bodyAABB snapped to idle
+ * DESIGN body while sprite still showed windup. Same class as v520 hurt/wakeup
+ * fade + v527 guardDropFade + v528 sheatheFade + v529 boltPlantFade body hold.
+ * Soft: in bodyAABB, if feintFade(f) > 0.02 AND !guarding AND poseSheet lacks
+ * .body (idle/walk), use poseFamily(f).windup.body (rects already shipped;
+ * same feet):
+ * you windup { x: 84, y: 18, w: 746, h: 890 } (v525).
+ * Rival/rivalFlip: no windup soft body — hold no-ops / falls through to DESIGN.
+ * Skip override when guarding (feint→guard uses block.body already via ps.body).
+ * Do not invent new rect numbers. Do not change windup.body numbers.
+ * Priority: hurt fade → guardDropFade block.body → sheathe slash.body →
+ * boltPlant knife||windup → feint windup → ps.body.
+ * Soft Arte body = hurtbox only; plantBodyAABB (idle DESIGN) still drives
+ * bladeReach / keepApart / bodyGap / hurtW block-push (v522 split kept).
+ * tipX / steelX / Space / L / riposte / parry / plants / pad 2×2 untouched.
+ * tipX 991/0/884 / tipX windup 359 / Space 180/140/280 / L 120/80/180 /
+ * riposte/parry / plants / pad 2×2 / AI_CD harness 0.99 / VERSUS_2P_READY /
+ * ONLINE_2P_READY false / ROSTER_SELECT_READY / CID unlocked /
+ * Combate v487–v516 / Diseño v500–v505 /
+ * hurt/slash/fade/block/windup/throwKnife/guardDrop/sheathe/boltPlant packs
+ * v517–v529 locked.
+ * No courtyard redraw / tipX / steelX / AI_CD / Combate / mixes change.
+ * No new combat verb.
+ * Parry fade visual vs collision leftover (v531): while parryFade crossfades
+ * slash|windup|knife→idle/walk (chip stun), poseSheet is already idle/walk
+ * (no dedicated .body) once landParry / landHit / landBoltHit set stunT —
+ * bodyAABB snapped to idle DESIGN body while sprite still showed leftover
+ * attack sheet. Same class as v520 hurt/wakeup fade + v527 guardDropFade +
+ * v528 sheatheFade + v529 boltPlantFade + v530 feintFade body hold.
+ * Soft: in bodyAABB, if parryFade(f) > 0.02 AND poseSheet lacks .body
+ * (idle/walk), pick soft body by parryFadeSheet (mirror drawKnight parrySheet):
+ * "slash" (default) → poseFamily(f).slash.body (rects already shipped;
+ * same feet):
+ * you slash { x: 59, y: 18, w: 803, h: 890 } (v522);
+ * rival { x: 0, y: 16, w: 771, h: 910 } (v521);
+ * rivalFlip { x: 104, y: 16, w: 729, h: 920 } (v521).
+ * "windup" → poseFamily(f).windup.body:
+ * you windup { x: 84, y: 18, w: 746, h: 890 } (v525).
+ * Rival/rivalFlip: no windup soft body — hold no-ops / falls through to DESIGN.
+ * "knife" → throwKnife.body || windup.body:
+ * you throwKnife { x: 31, y: 18, w: 692, h: 890 } (v526) preferred;
+ * windup fallback (v525). Rival/rivalFlip: no throwKnife/windup soft body —
+ * hold no-ops / falls through to DESIGN.
+ * Do NOT override hurt/block poseSheet (ps.body already wins; parryFade
+ * already 0 under guarding; throw interrupt rests on hurt with .body).
+ * Do not invent new rect numbers. Do not change soft body numbers.
+ * Priority: hurt fade → guardDropFade block.body → sheathe slash.body →
+ * boltPlant knife||windup → feint windup → parry sheet-matched → ps.body.
+ * Soft Arte body = hurtbox only; plantBodyAABB (idle DESIGN) still drives
+ * bladeReach / keepApart / bodyGap / hurtW block-push (v522 split kept).
+ * tipX / steelX / Space / L / riposte / parry / plants / pad 2×2 untouched.
+ * tipX 991/0/884 / tipX windup 359 / tipX knife 268 / Space 180/140/280 /
+ * L 120/80/180 / riposte/parry / plants / pad 2×2 / AI_CD harness 0.99 /
+ * VERSUS_2P_READY / ONLINE_2P_READY false / ROSTER_SELECT_READY / CID unlocked /
+ * Combate v487–v516 / Diseño v500–v505 /
+ * hurt/slash/fade/block/windup/throwKnife/guardDrop/sheathe/boltPlant/feint packs
+ * v517–v530 locked.
+ * No courtyard redraw / tipX / steelX / AI_CD / Combate / mixes change.
+ * No new combat verb.
+ * Raise-plant outgoing bodyAABB hold leftover (v532): while clashPlantFade /
+ * linkPlantFade crossfade leftover slash→windup (raise plant), poseSheet is
+ * already windup (ps.body) the same tick cancel/start armed — bodyAABB snapped
+ * to windup while sprite still showed leftover slash. Inverse of interrupt/
+ * drop/recovery (sheet ahead of draw). Same class as v520–v531 soft holds, but
+ * outgoing: sheet ahead, draw behind. Soft: while clashPlantFade(f)>0.02 OR
+ * linkPlantFade(f)>0.02 → poseFamily(f).slash.body (rects already shipped;
+ * same feet):
+ * you slash { x: 59, y: 18, w: 803, h: 890 } (v522);
+ * rival { x: 0, y: 16, w: 771, h: 910 } (v521);
+ * rivalFlip { x: 104, y: 16, w: 729, h: 920 } (v521).
+ * While reversalPlantFade(f)>0.02 OR throwGuardPlantFade(f)>0.02 OR
+ * techGuardPlantFade(f)>0.02 → poseFamily(f).block.body:
+ * you block { x: 84, y: 18, w: 625, h: 890 } (v524);
+ * rival { x: 125, y: 16, w: 646, h: 910 } (v523);
+ * rivalFlip { x: 68, y: 16, w: 634, h: 920 } (v523).
+ * holdCutFade: poseSheet already slash — no-op (SILENT).
+ * Overrides ps.body windup for that window (hurtbox-only).
+ * Do not invent new rect numbers. Do not change soft body numbers.
+ * Priority: hurt fade → guardDropFade block.body → sheathe slash.body →
+ * boltPlant knife||windup → feint windup → parry sheet-matched →
+ * clash/link slash.body → rev/throwGuard/techGuard block.body → ps.body.
+ * Soft Arte body = hurtbox only; plantBodyAABB (idle DESIGN) still drives
+ * bladeReach / keepApart / bodyGap / hurtW block-push (v522 split kept).
+ * tipX / steelX / Space / L / riposte / parry / plants / pad 2×2 untouched.
+ * tipX 991/0/884 / tipX windup 359 / tipX knife 268 / Space 180/140/280 /
+ * L 120/80/180 / riposte/parry / plants / pad 2×2 / AI_CD harness 0.99 /
+ * VERSUS_2P_READY / ONLINE_2P_READY false / ROSTER_SELECT_READY / CID unlocked /
+ * Combate v487–v516 / Diseño v500–v505 /
+ * hurt/slash/fade/block/windup/throwKnife/guardDrop/sheathe/boltPlant/feint/parry packs
+ * v517–v531 locked.
+ * No courtyard redraw / tipX / steelX / AI_CD / Combate / mixes change.
+ * No new combat verb.
+ * TelegraphFade inbound bodyAABB hold leftover (v533): while telegraphing &&
+ * telegraphFade < 0.5, poseSheet is already windup/knife (ps.body) the same
+ * tick start armed — bodyAABB snapped to windup/knife soft while sprite still
+ * showed mostly idle (restTele while tf<0.98). Inverse of outgoing raise-plant
+ * (v532): inbound sheet ahead, draw behind. Soft: while telegraphing(f) AND
+ * telegraphFade(f) < 0.5, use DESIGN idle body (sheetOf(f).body / family idle
+ * hurtbox): you { x: 84, y: 18, w: 493, h: 890 }; rival { x: 301, y: 16,
+ * w: 470, h: 910 }; rivalFlip { x: 108, y: 16, w: 470, h: 920 }. Else fall
+ * through to ps.body / existing priority. Do not invent new rect numbers.
+ * Do not change soft body numbers. Overrides ps.body windup/knife for that
+ * inbound window (hurtbox-only).
+ * Priority: hurt fade → guardDropFade block.body → sheathe slash.body →
+ * boltPlant knife||windup → feint windup → parry sheet-matched →
+ * clash/link slash.body → rev/throwGuard/techGuard block.body →
+ * telegraph idle hold (tf<0.5) → ps.body.
+ * Soft Arte body = hurtbox only; plantBodyAABB (idle DESIGN) still drives
+ * bladeReach / keepApart / bodyGap / hurtW block-push (v522 split kept).
+ * tipX / steelX / Space / L / riposte / parry / plants / pad 2×2 untouched.
+ * tipX 991/0/884 / tipX windup 359 / tipX knife 268 / Space 180/140/280 /
+ * L 120/80/180 / riposte/parry / plants / pad 2×2 / AI_CD harness 0.99 /
+ * VERSUS_2P_READY / ONLINE_2P_READY false / ROSTER_SELECT_READY / CID unlocked /
+ * Combate v487–v516 / Diseño v500–v505 /
+ * hurt/slash/fade/block/windup/throwKnife/guardDrop/sheathe/boltPlant/feint/parry/raisePlant packs
+ * v517–v532 locked.
+ * No courtyard redraw / tipX / steelX / AI_CD / Combate / mixes change.
+ * No new combat verb.
+ * Reaction-guard post-block sit-on-S starves recovery punish leftover (v542):
+ * tickAI reaction-guard hold (~guardChoice===1 early-return) keeps
+ * wantBlock through the whole attacker recovery family after a successful
+ * raise — rivalPunishCut / closing never run. Bait / retreat-abort /
+ * broken / main already clear sit-on-S for that free window. Soft: inside
+ * the guardChoice===1 early-return, if player.phase==="recovery" ||
+ * dartRecPunish || feintRecPunish || guardBreakPunish → clear guardChoice /
+ * wantBlock / guarding + rivalClearCommit(); if dist+startupShovePx(rival)
+ * <=myReach → rivalPunishCut() return; else fall through (mirror bait v508
+ * shove gate). Raise through startup/active unchanged. Do NOT touch
+ * v534–v541 packs, tipX/Space/L, AI_CD 0.99, GUARD_COMMIT 140,
+ * bait/AI_BAIT/THROW_AI_CD, knife-plant, meatyMeleeAt*, tip-flush, bladeBox Y,
+ * LS_DIFF, ONLINE false, Arte / Diseño / buffers / AI feel packs.
+ * tipX 991/0/884 / Space 180/140/280 / L 120/80/180 / PARRY_WIN 140 /
+ * RIPOSTE_WIN 280 / stagger 180 / gleam 80 / riposte 130/140/280 /
+ * slash 180/140/280 / hitstop 140/60 / hitstun 350 / buffer 80 /
+ * MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 / GUARD_BREAK_MS 400 /
+ * THROW_TECH 80 / THROW_TECH_REC 160 / FEINT_RECOVERY 100 / GUARD_COMMIT 140 /
+ * plants / pad 2×2 / VERSUS_2P_READY true / ONLINE_2P_READY false /
+ * ROSTER_SELECT_READY true / v534–v541 locked. No courtyard redraw / ONLINE /
+ * tipX / Space/L / AI_CD / GUARD_COMMIT / Arte / riposte packs / bait /
+ * knife-plant change. No new combat verb.
+ * Post-block link reach gate leftover (v543): armRival*Link rolls inRange at
+ * connect (gap≈0, GUARD_PUSH shove not traveled yet). By late cancel window
+ * GUARD_PUSH (~hurtW≈186) finished; ACTIVE golpe reach ≈142 → empty-meter
+ * combo-first still fired whiff L and stole linkBolt. Full+superArmed yield
+ * (v428) already skips; empty meter did not. Soft: in rivalTrySlashGolpe,
+ * before cancelIntoGolpe, snapshot ACTIVE golpe tip (phase="active"/
+ * cut="golpe", bladeReach+golpeLungeOf, restore); if absGap()+foeSlide(player,
+ * GOLPE_STARTUP) > gReach → return false so rivalTryCutBolt can own.
+ * Mirror rivalTryGolpeSlash with slash reach + STARTUP. foeSlide =
+ * |pushVel|*min(pushT, ms) when pushT>0, else 0. Empty-meter combo-first
+ * kept in-reach. Clash-K / v428 full+superArmed yield / AI_LINK_* / frames /
+ * tipX untouched. Do NOT touch v534–v542 packs, tipX/Space/L, AI_CD 0.99,
+ * AI_LINK_*, AI_BAIT, THROW_AI_CD, Arte/Diseño/buffers/AI feel packs,
+ * meatyMeleeAt*, tip-flush, bladeBox Y, LS_DIFF, ONLINE false.
+ * tipX 991/0/884 / Space 180/140/280 / L 120/80/180 / PARRY_WIN 140 /
+ * RIPOSTE_WIN 280 / stagger 180 / gleam 80 / riposte 130/140/280 /
+ * slash 180/140/280 / hitstop 140/60 / hitstun 350 / buffer 80 /
+ * MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 / GUARD_BREAK_MS 400 /
+ * THROW_TECH 80 / THROW_TECH_REC 160 / FEINT_RECOVERY 100 / GUARD_COMMIT 140 /
+ * plants / pad 2×2 / VERSUS_2P_READY true / ONLINE_2P_READY false /
+ * ROSTER_SELECT_READY true / v534–v542 locked. No courtyard redraw / ONLINE /
+ * tipX / Space/L / AI_CD / AI_LINK_* / Arte / riposte packs / bait /
+ * knife-plant change. No new combat verb.
+ * Post-block special-cancel K empty especial leftover (v544): landBlock sets
+ * cutHit (same as flesh) and aiSawBlock; cancelIntoBolt always
+ * startBolt(f, !boltAnswerEmpty(f)) so meterFull spends; v428 yields Space/L→K
+ * on any cutHit including block; v543 refuses out-of-reach post-block melee so
+ * CutBolt owns more after GUARD_PUSH — AI full+superArmed especial plants 200ms
+ * vs stunT 0. Soft: landBlock atk.aiSawBlock=true for both seats; clear
+ * aiSawBlock on slash/golpe recovery end for both (aiResetT rival-only kept);
+ * cancelIntoBolt → startBolt(f, !boltAnswerEmpty(f) && (fromClash || !f.aiSawBlock));
+ * rivalHitConfirmBoltPriority also !rival.aiSawBlock so block keeps empty
+ * combo-first / empty CutBolt without especial yield. Flesh confirm still spends;
+ * clash-K / answer-empty / idle full-K kept. No AI_LINK_* / frames / CD retune.
+ * Do NOT touch v534–v543 packs (incl. foeSlide reach gate), tipX/Space/L,
+ * AI_CD 0.99, AI_LINK_*, Arte/Diseño/buffers/AI feel packs.
+ * tipX 991/0/884 / Space 180/140/280 / L 120/80/180 / PARRY_WIN 140 /
+ * RIPOSTE_WIN 280 / stagger 180 / gleam 80 / riposte 130/140/280 /
+ * slash 180/140/280 / hitstop 140/60 / hitstun 350 / buffer 80 /
+ * MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 / GUARD_BREAK_MS 400 /
+ * THROW_TECH 80 / THROW_TECH_REC 160 / FEINT_RECOVERY 100 / GUARD_COMMIT 140 /
+ * plants / pad 2×2 / VERSUS_2P_READY true / ONLINE_2P_READY false /
+ * ROSTER_SELECT_READY true / v534–v543 locked. No courtyard redraw / ONLINE /
+ * tipX / Space/L / AI_CD / AI_LINK_* / Arte / riposte packs / bait /
+ * knife-plant change. No new combat verb.
+ * Post-block player melee cancel refuse leftover (v545): slashToGolpeWindow /
+ * golpeToSlashWindow only require cutHit; landBlock arms cutHit+aiSawBlock and
+ * shoves; late Space↔L cancel after GUARD_PUSH → cancelIntoGolpe/Slash mounts
+ * whiff while defender is free. AI already reach-refuses (v543 rivalTry*) and
+ * empty-K gated (v544 cancelIntoBolt !aiSawBlock); player melee door still
+ * opened on cutHit into whiff. Soft: after clashRec early-return in both
+ * windows, if (f.aiSawBlock && f.kind === "you") return false. ClashRec melee
+ * doors, flesh (landHit clears aiSawBlock), and AI in-reach corner confirms
+ * (v543) untouched; post-block player routes through empty-K (v544).
+ * Do NOT touch v534–v544 packs (foeSlide, cancelIntoBolt aiSawBlock, etc.),
+ * tipX/Space/L, AI_CD 0.99, AI_LINK_*, AI_BAIT, THROW_AI_CD, Arte/buffers/
+ * AI feel idle-pad, ONLINE false.
+ * tipX 991/0/884 / Space 180/140/280 / L 120/80/180 / PARRY_WIN 140 /
+ * RIPOSTE_WIN 280 / stagger 180 / gleam 80 / riposte 130/140/280 /
+ * slash 180/140/280 / hitstop 140/60 / hitstun 350 / buffer 80 /
+ * MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 / GUARD_BREAK_MS 400 /
+ * THROW_TECH 80 / THROW_TECH_REC 160 / FEINT_RECOVERY 100 / GUARD_COMMIT 140 /
+ * plants / pad 2×2 / VERSUS_2P_READY true / ONLINE_2P_READY false /
+ * ROSTER_SELECT_READY true / v534–v544 locked. No courtyard redraw / ONLINE /
+ * tipX / Space/L / AI_CD / AI_LINK_* / Arte / riposte packs / bait /
+ * knife-plant change. No new combat verb.
+ * Clash late Space/L open-field reach gate leftover (v546):
+ * CLASH_STEP bounce opens gap past ACTIVE tip by the last-100ms window;
+ * slashToGolpeWindow / golpeToSlashWindow clashRec branches still true →
+ * cancelIntoGolpe/Slash mount a guaranteed whiff. AI already foeSlide in
+ * rivalTry* (v543); player clashRec never gated. Soft: in both clashRec
+ * branches after late-100ms time check — snapshot ACTIVE follow-up tip
+ * (golpe/slash + lungeOf); if absGap()+foeSlide(foe, GOLPE_STARTUP|STARTUP)
+ * > reach return false (shared seats you+rival). In-reach/corner clash
+ * Space/L kept; cutToBoltWindow clash-K still owns when melee refuses.
+ * No aiSawBlock / post-block / AI_LINK_* / frames retune.
+ * Do NOT touch v534–v545 as shipped; tipX/Space/L;
+ * CLASH_RECOVERY 200 / CLASH_STEP 90 / KNOCK_MS 180.
+ * tipX 991/0/884 / Space 180/140/280 / L 120/80/180 / PARRY_WIN 140 /
+ * RIPOSTE_WIN 280 / stagger 180 / gleam 80 / riposte 130/140/280 /
+ * slash 180/140/280 / hitstop 140/60 / hitstun 350 / buffer 80 /
+ * MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 / GUARD_BREAK_MS 400 /
+ * THROW_TECH 80 / THROW_TECH_REC 160 / FEINT_RECOVERY 100 / GUARD_COMMIT 140 /
+ * CLASH_RECOVERY 200 / CLASH_STEP 90 / KNOCK_MS 180 /
+ * plants / pad 2×2 / VERSUS_2P_READY true / ONLINE_2P_READY false /
+ * ROSTER_SELECT_READY true / v534–v545 locked. No courtyard redraw / ONLINE /
+ * tipX / Space/L / AI_CD / AI_LINK_* / Arte / riposte packs / bait /
+ * knife-plant change. No new combat verb.
+ * P2 tickVersusP2 hold-S p2BoltBuf dump leftover (v548):
+ * v547 flushVersusP2CombatBufs kept p2BoltBuf through rival.guarding
+ * (p2BoltBuf kept v547) but tickVersusP2 still hard-cleared
+ * p2BoltBuf every hold-S tick (~10084–10090). Call order: tickVersusP2
+ * (~13637) → flushVersusP2CombatBufs (~13644). Hitstop arms p2BoltBuf
+ * (~13208); post-freeze hold-S → tickVersusP2 dump → flush sees false.
+ * P2 drop-guard dart still dead while P1 works. Soft: remove p2BoltBuf
+ * from that tickVersusP2 guarding dump (p2BoltBuf kept v548);
+ * slash/golpe/open* still dump. Idle/cancel flush already requires
+ * !rival.guarding — no dart while S held. Do NOT change
+ * flushVersusP2CombatBufs (already correct from v547). Do NOT keep
+ * slash/golpe through guard. Do NOT touch P1 dump, tipX/Space/L,
+ * frames, AI_LINK, hitstop arms, chord clears. Falling / chord clears
+ * unchanged. tipX 991/0/884 / Space 180/140/280 / L 120/80/180 /
+ * PARRY_WIN 140 / RIPOSTE_WIN 280 / stagger 180 / gleam 80 /
+ * riposte 130/140/280 / slash 180/140/280 / hitstop 140/60 /
+ * hitstun 350 / buffer 80 / MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 /
+ * GUARD_BREAK_MS 400 / THROW_TECH 80/160 / FEINT_RECOVERY 100 /
+ * GUARD_COMMIT 140 / AI_LINK_* / CLASH_* / tipX/Space/L /
+ * slashBuf/golpeBuf still dump on guard / v534–v547 locked.
+ * No new combat verb.
+ * Versus/online P2 post-block melee cancel refuse leftover (v549):
+ * v545 refuses late Space↔L after landBlock only when f.aiSawBlock &&
+ * f.kind === "you". VERSUS_2P_READY is live; human P2 is kind === "rival"
+ * and tickAI auto-link is skipped for versus/online, so P2 never gets
+ * v543 foeSlide refuse — buffered O/P after GUARD_PUSH still mounts whiff
+ * while P1 is gated and empty-K (v544) still owns. Soft: after clashRec
+ * early-return in both slashToGolpeWindow / golpeToSlashWindow, refuse when
+ * f.aiSawBlock && (f.kind === "you" || matchKind === "versus" ||
+ * matchKind === "online"). CPU match keeps rival door open for rivalTry*
+ * foeSlide (v543). Do NOT change clashRec reach gates (v546), flesh path,
+ * empty-K (v544), foeSlide (v543), tipX/Space/L, frames.
+ * tipX 991/0/884 / Space 180/140/280 / L 120/80/180 / PARRY_WIN 140 /
+ * RIPOSTE_WIN 280 / stagger 180 / gleam 80 / riposte 130/140/280 /
+ * slash 180/140/280 / hitstop 140/60 / hitstun 350 / buffer 80 /
+ * MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 / GUARD_BREAK_MS 400 /
+ * THROW_TECH 80/160 / FEINT_RECOVERY 100 / GUARD_COMMIT 140 /
+ * AI_LINK_* / CLASH_* / tipX/Space/L /
+ * v534–v548 locked (incl. v545 flesh/clashRec/AI in-reach, v547/v548
+ * boltBuf keep, no slashBuf/golpeBuf keep-through-guard).
+ * No new combat verb.
+ * open-mix plant-seat convert walk vs hold-S turtle leftover (v565):
+ * FlushOpenMix already tries the v560 throw first, but when it refuses in the
+ * throwRange…hold+2 pocket, slash/golpe used to plant immediately and clear
+ * aiOpen, aborting the open-walk convert. NEW plant-seat class (not twin of
+ * v560 throw-first, v562 bait-ARM, v563 closing skip-chip, or v564 idle arm).
+ * Soft: after the dart branch and before slash/golpe plant, if
+ * (player.guarding && absGap() > throwRangeOf(rival)) { rival.closing = true;
+ * walk in and return true; } — keep aiOpen until v560 can convert. Non-guard
+ * and in-throw-range plant unchanged; dart unchanged. No new combat verb.
+ * Keep v552–v564 titles and locks untouched.
+ * mid→measure idle-standoff throw-convert band vs hold-S turtle leftover (v564):
+ * Mid approach clears closing; after the next idle standoff expires in the
+ * throwRange…myReach band against a guarded player, idle commit used to chip
+ * forever because rivalTryThrow already refused. Soft: at idle expiry,
+ * if (player.guarding && dist > throwRangeOf(rival)) { rival.closing = true;
+ * return; } so the existing v563 closing walk owns the convert. Non-guard
+ * and in-range idle commit stays unchanged. No new combat verb. Keep v552–v563
+ * titles and locks untouched.
+ * closing-path throw-convert band chips vs hold-S turtle leftover (v563):
+ * v558 arms closing=true so post-feint hold-S convert can walk into throw, and
+ * skips punishCut while feintT>0. When feintT ends, closing still punished as
+ * soon as dist+startupShovePx(rival)<=myReach, even in the throwRange…myReach
+ * band, so the closing chip aborted convert. Soft: guard + outside throw range
+ * falls through the existing walk-in; non-guard and in-range turtle are unchanged.
+ * No new combat verb. Keep v552–v562 titles and locks untouched.
+ * open-mix bait-ARM-vs-turtle leftover (v562):
+ * Open flush throw refuse (range/CD) still arms aiBaitT while player.guarding
+ * against hold-S turtle — the throw already tried at flush top, but the bait
+ * ARM seat returns true and burns the tick; v540 clears next tick, so mid can
+ * resume with boltArmed false and soft-pause instead of same-tick chip/walk.
+ * NEW open-mix bait-ARM-vs-turtle class at the ARM seat (not twin of v560
+ * throw-first or v561 idle-commit gate). Soft: in rivalFlushOpenMix bait
+ * branch, before canStartGuard/arm: if (player.guarding) { rival.aiOpen = "";
+ * return false; } — throw already tried; same-tick main path owns turtle.
+ * Non-guard open bait unchanged. Leave v540 for raise-during-bait. Few lines;
+ * no AI_OPEN_* / AI_BAIT_* / THROW_* retune. Locks untouched: v552–v561;
+ * PUSHBLOCK_STAM 25 / PX 240 / STAMINA_BLOCK 20 / PB AI CD+CHANCE;
+ * AI_BAIT_FEINT / FEINT_AI_* / AI_RETREAT_MS_* / AI_MID_* / AI_OPEN_*;
+ * THROW_AI_CD / throw-vs-idle; GUARD_COMMIT / AI_LINK_*; tipX/Space/L;
+ * AI_CD 0.99; slashBuf/golpeBuf keep-through-guarding; v534–v551;
+ * v540/v551 clear seats kept. No new combat verb.
+ *
+ * idle-commit bait/reset vs hold-S turtle leftover (v561):
+ * idle-commit bait/reset vs hold-S turtle — after throw refuse,
+ * idle standoff expires into rivalIdleCommit. vs player.guarding,
+ * AI_CLOSE_BAIT (~18%) arms bait and AI_CLOSE_RESET (~14%) arms
+ * retreat — intents v540/v551 abort next tick via rivalClearCommit
+ * (standGoal=0). Fallthrough idle then re-rolls standGoal 400–800ms.
+ * ~32% of turtle idle commits buy a dead arm + full re-standoff
+ * instead of chip. NEW idle soft-mix-vs-turtle class at the ARM
+ * seat — not twin of v540/v551 clear seats or v560. Soft: in
+ * rivalIdleCommit only, gate bait/reset (and post-reset retreat) on
+ * !player.guarding so those rolls fall to existing remainder
+ * slash/golpe chip; non-guard bait/reset/post-reset unchanged. Few
+ * lines; no AI_CLOSE_* / AI_POST_RESET / THROW_* / AI_BAIT_* retune. Leave
+ * v540/v551 clear seats (still needed for open-bait refuse +
+ * mid-bait raise). Do NOT change v552–v560 packs. Locks: v552–v560;
+ * PUSHBLOCK_STAM 25 / PX 240 / STAMINA_BLOCK 20 / PB AI CD+CHANCE;
+ * AI_BAIT_FEINT / FEINT_AI_* / AI_RETREAT_MS_* / AI_MID_* /
+ * AI_OPEN_*; THROW_AI_CD / throw-vs-idle; GUARD_COMMIT /
+ * AI_LINK_*; tipX/Space/L; AI_CD 0.99; slashBuf/golpeBuf
+ * keep-through-guarding; v534–v551 packs.
+ * No new combat verb.
+ * open-mix flush throw-vs-guard leftover (v560):
+ * open-mix flush early-return starves throw-vs-guard vs hold-S
+ * turtle — rivalFlushOpenMix walks in / pockets slash·golpe·dart
+ * (or arms bait) and returns every tick before rivalTryThrow; main
+ * path already throws first (11057) before close/idle. Hold-S through
+ * OPENING_MS → open approach eats chip-first (or one-tick bait)
+ * instead of grab-vs-guard. Soft: in rivalFlushOpenMix, after
+ * canAct/feintT/thrownT gates, before bait/slash branches:
+ * if (player.guarding && rivalTryThrow()) { rival.aiOpen = "";
+ * return true; } — clears open intent; throw refuse falls through
+ * to existing bait/walk/pocket. No new flag; dart/bait/non-guard
+ * open unchanged. Do NOT change v552–v559 packs or THROW_* /
+ * AI_OPEN_* / AI_BAIT_* retunes. Locks: v552–v559;
+ * PUSHBLOCK_STAM 25 / PX 240 / STAMINA_BLOCK 20 / PB AI CD+CHANCE;
+ * AI_BAIT_FEINT / FEINT_AI_* / AI_RETREAT_MS_* / AI_MID_* /
+ * AI_OPEN_*; THROW_AI_CD / throw-vs-idle; GUARD_COMMIT /
+ * AI_LINK_*; tipX/Space/L; AI_CD 0.99; slashBuf/golpeBuf
+ * keep-through-guarding; v534–v551 packs.
+ * No new combat verb.
+ * too-close walk-out vs hold-S turtle leftover (v559):
+ * too-close pocket (dist < myReach-48) + roomBack always walked out —
+ * no player.guarding gate. Outside throw (ROAN band throwRange…myReach-48)
+ * or on throwCd inside throw, turtle pressure dies (chip/throw-reentry
+ * starved). Sibling spirit of v540/v551 turtle aborts, but at the
+ * too-close seat (not bait/retreat). Soft: in the too-close block, gate
+ * walk-out on !player.guarding (mirror !roomBack → rivalPunishCut):
+ * if (roomBack && !player.guarding) { walk-out… return; } then
+ * existing rivalPunishCut+clear (harness standGoal>STANDOFF_MAX returns —
+ * mirror stun/wakeup/open-mix freeze; production noop). Non-guard
+ * too-close walk-out unchanged. No new flag; no THROW_* / AI_* /
+ * FEINT_* / PUSHBLOCK_* retune. Do NOT change v552–v558 packs. Locks:
+ * v552–v558; PUSHBLOCK_STAM 25 / PX 240 /
+ * STAMINA_BLOCK 20 / PB AI CD+CHANCE; AI_BAIT_FEINT / FEINT_AI_* /
+ * AI_RETREAT_MS_* / AI_MID_*; THROW_AI_CD / throw-vs-idle; GUARD_COMMIT /
+ * AI_LINK_*; tipX/Space/L; AI_CD 0.99; slashBuf/golpeBuf
+ * keep-through-guarding; v534–v551 packs.
+ * No new combat verb.
+ * vs-guard feint-commit leftover (v558):
+ * vs-guard feint-commit missing — rivalTryFeint pull vs hold-S from
+ * slash pocket outside THROW_RANGE clears closing and falls into a
+ * fresh 400–800ms idle standoff while player still holds S; throw/golpe
+ * convert never arms (in-throw-range rivalTryThrow already owns after
+ * feintT; bait feint-retreat already commits walk-out — this is the
+ * non-retreat sibling). Soft: in rivalTryFeint after successful
+ * startFeint, replace bare rival.closing=false with: if
+ * player.guarding && absGap()>throwRangeOf(rival) → rival.closing=true;
+ * else closing=false (in-range still yields to rivalTryThrow after
+ * feintT). In closing block, only rivalPunishCut+return when
+ * dist+shove<=myReach && rival.feintT<=0; during feintT fall through
+ * to existing walk-in so in-reach feint lock does not statue on
+ * startAttack no-op. No new flag; No AI_BAIT_FEINT / FEINT_AI_* /
+ * THROW_* / AI_RETREAT_MS_* retune. Do NOT change v556 aiFeintRetreat early-return
+ * or v557 boltArmed mirror. Locks: v552–v557
+ * (PB/pending/threaten/clear + bait feint-retreat order + boltArmed);
+ * PUSHBLOCK_* / STAMINA_BLOCK; AI_BAIT_FEINT / FEINT_AI_* /
+ * AI_RETREAT_MS_* / AI_MID_*; THROW_AI_CD / throw-vs-idle;
+ * GUARD_COMMIT / AI_LINK_*; tipX/Space/L; AI_CD 0.99; v534–v551 packs;
+ * slashBuf/golpeBuf keep-through-guarding
+ * No new combat verb.
+ * bait feint-retreat boltArmed mirror leftover (v557):
+ * Open-bait→feint-into-retreat ends the walk-out with no spacing dart.
+ * rivalTryFeintRetreat calls rivalStartRetreat with boltArmed still
+ * false — every other soft-reset retreat (post-reset, close-reset,
+ * mid-CD) arms `rival.boltArmed = true` first so the retreat-end dart
+ * gate (`boltArmed && boltCd≤0 && dist>HOLD+16`) can fire. Open-bait
+ * path (rivalFlushOpenMix + bait sit early-return) never reaches the
+ * dist≤HOLD re-arm, so pull+walk-out leaves boltArmed false. Soft: in
+ * rivalTryFeintRetreat, before rivalStartRetreat(): `rival.boltArmed =
+ * true;` (mirror). No AI_BAIT_FEINT / FEINT_AI_* / AI_RETREAT_MS_* /
+ * AI_MID_* retune. Do NOT change v556 aiFeintRetreat early-return in
+ * rivalTryFeint. Locks: v552 PB-before-chip; v553 pbBreakPending defer/trip/flush;
+ * v554 foeThreatensPbBreak boltPhase startup; v555 flesh/throw/clash
+ * clear pending; v556 aiFeintRetreat early-return in rivalTryFeint;
+ * PUSHBLOCK_STAM 25 / PUSHBLOCK_PX 240 / STAMINA_BLOCK 20 /
+ * PUSHBLOCK_AI_CD 1800 / CHANCE 0.4; AI_BAIT_FEINT / FEINT_AI_* /
+ * AI_RETREAT_MS_* retunes; ALL v534–v551 packs; tipX/Space/L;
+ * AI_CD 0.99; courtyard/Arco/Justa; Arte v517–v533; AI feel
+ * idle-pad+link ACTIVE flush v506–v516; buffers v472–v499; Diseño
+ * v500–v505; teach meatyMeleeAt*; tip-flush/bladeBox Y/LS_DIFF/
+ * combo-especial; ONLINE false; throw-vs-idle; AI_BAIT/THROW_AI_CD/
+ * GUARD_COMMIT/AI_LINK_* retunes; slashBuf/golpeBuf keep-through-
+ * guarding; riposte/seat v534–v538
+ * No new combat verb.
+ * bait feint-into-retreat rivalTryFeint order leftover (v556):
+ * Bait no-bite arms startAttack + aiFeintRetreat, then returns.
+ * tickAI runs rivalTryFeint BEFORE rivalTryFeintRetreat. Natural
+ * raise during the readable tele (~70ms) makes player.guarding true
+ * → rivalTryFeint (FEINT_AI_CHANCE 0.4) startFeints and returns
+ * without rivalStartRetreat; aiFeintRetreat then dies on !canFeint /
+ * feintCd. Signature bait→pull→walk-out becomes a plain feint.
+ * Retreat only survives when feintArmed rolls −1. Soft: at top of
+ * rivalTryFeint: `if (rival.aiFeintRetreat) return false;` so
+ * rivalTryFeintRetreat owns the pull+retreat. No AI_BAIT_FEINT /
+ * FEINT_AI_CHANCE / FEINT_AI_CD / AI_RETREAT_MS_* retune; leave
+ * normal vs-guard feint when aiFeintRetreat is false. Locks: v552
+ * PB-before-chip; v553 pbBreakPending defer/trip/flush; v554
+ * foeThreatensPbBreak boltPhase startup; v555 flesh/throw/clash
+ * clear pending; PUSHBLOCK_STAM 25 / PUSHBLOCK_PX 240 /
+ * STAMINA_BLOCK 20 / PUSHBLOCK_AI_CD 1800 / CHANCE 0.4; ALL
+ * v534–v551; tipX/Space/L; AI_CD 0.99; courtyard/Arco/Justa;
+ * Arte v517–v533; AI feel v506–v516; buffers v472–v499; Diseño
+ * v500–v505; teach meatyMeleeAt*; tip-flush/bladeBox Y/LS_DIFF/
+ * combo-especial; ONLINE false; throw-vs-idle;
+ * AI_BAIT/THROW_AI_CD/GUARD_COMMIT/AI_LINK_* / AI_RETREAT_MS_*
+ * retunes; slashBuf/golpeBuf keep-through-guarding; riposte/seat
+ * v534–v538; AI decisioning/throw-tech/cancel v539–v551
+ * No new combat verb.
+ * pbBreakPending clear on flesh/throw leftover (v555):
+ * pbBreakPending survives flesh/throw (and clash) resolve — same-tick
+ * flush tip-plants GB on top of HITSTUN/KD. v553 defers last-stam PB
+ * break so meaty can still landBlock/landBoltBlock absorb-then-break;
+ * flush tip-plants only when pending survives resolve (whiff).
+ * landHit / landBoltHit / landThrow dump guarding + riposte/reversal
+ * but never clear pbBreakPending. Path: last-stam tryPushblock →
+ * pbBreakPending → release S → landHit flesh → foeThreatensPbBreak
+ * false → flush tip-plants tripGuardBreak same tick → HITSTUN +
+ * GUARD_BREAK_MS stacked. Same landBoltHit/landThrow; doClash can
+ * leave pending for flush too. Soft: in landHit, landBoltHit, and
+ * landThrow (mirror riposte/reversal dump): `def.pbBreakPending = false;`
+ * — clear only, no trip (flesh/throw already resolved the exchange).
+ * Optional belt in doClash: `player.pbBreakPending = false;
+ * rival.pbBreakPending = false;` Leave tryPushblock arm,
+ * foeThreatensPbBreak (incl. v554 startup), landBlock/landBoltBlock
+ * trip-on-chip, and whiff flush tip-plant untouched. Do NOT change
+ * v552 PB-before-chip, v553 defer mechanism, v554 plant threaten, or
+ * PUSHBLOCK_* constants. Locks: v552 PB-before-chip order; v553
+ * pbBreakPending defer/trip/flush mechanism (arm + threaten-gate +
+ * whiff tip-plant); v554 foeThreatensPbBreak boltPhase startup;
+ * PUSHBLOCK_STAM 25 / PUSHBLOCK_PX 240 / STAMINA_BLOCK 20 /
+ * PUSHBLOCK_AI_CD 1800 / CHANCE 0.4; ALL v534–v551; tipX/Space/L;
+ * AI_CD 0.99; courtyard/Arco/Justa; Arte v517–v533; AI feel
+ * idle-pad+link ACTIVE flush v506–v516; buffers v472–v499; Diseño
+ * v500–v505; teach meatyMeleeAt*; tip-flush/bladeBox Y/LS_DIFF/
+ * combo-especial; ONLINE false; throw-vs-idle; AI_BAIT/THROW_AI_CD/
+ * GUARD_COMMIT/AI_LINK_* / AI_RETREAT_MS_* retunes; slashBuf/golpeBuf
+ * keep-through-guarding.
+ * No new combat verb.
+ * foeThreatensPbBreak knife-plant startup leftover (v554):
+ * Comment claimed “incoming bolt” keeps pbBreakPending through
+ * landBoltBlock, but only live `bolt` counted — knife plant
+ * (foe.boltPhase === "startup", phase idle, bolt null) returned false.
+ * Last-stam PB vs plant → same-tick flushPbBreakPending tripped break
+ * (or canHold dropped) before birth; dart then landBoltHit flesh on broken/open
+ * guard instead of landBoltBlock absorb-then-break. tickAI boltIncoming /
+ * boltAnswerEmpty already treat plant as incoming. Soft: in
+ * foeThreatensPbBreak, after the melee swing check, also
+ * `if (foe && foe.boltPhase === "startup") return true;` (mirror tickAI boltIncoming / boltAnswerEmpty). Keep live-bolt branch. No
+ * PUSHBLOCK_STAM/PX / STAMINA_BLOCK / AI_CD retune; no new pending flag. Do NOT
+ * change v553 pbBreakPending defer/trip/flush mechanism. Do NOT change
+ * v552 PB-before-chip order. tipX/Space/L; AI_CD 0.99; courtyard/Arco/Justa;
+ * Arte v517–v533; AI feel v506–v516; buffers v472–v499; Diseño v500–v505;
+ * ALL v534–v551; v552 PB-before-chip order; v553 pbBreakPending
+ * defer/trip/flush mechanism; PUSHBLOCK_STAM/PX / STAMINA_BLOCK /
+ * PUSHBLOCK_AI_CD/CHANCE; teach meatyMeleeAt*; tip-flush/bladeBox Y/
+ * LS_DIFF/combo-especial; ONLINE false; throw-vs-idle;
+ * AI_BAIT/THROW_AI_CD/GUARD_COMMIT/AI_LINK_* / AI_RETREAT_MS_* retunes;
+ * slashBuf/golpeBuf keep-through-guarding.
+ * No new combat verb.
+ * Pushblock last-stam defer guard-break leftover (v553):
+ * Pre-connect pushblock that spends the last stam (≤25) used to call
+ * tripGuardBreak immediately — clearing guarding before resolveCuts /
+ * resolveBolt so the meaty that was being blocked converted to
+ * landHit/landBoltHit flesh. AI PB-into-break via rivalPushblockOnBlock
+ * sits inside landBlock after the guarding gate, so mid-stam AI still
+ * absorbs as block. Same-exchange PB-break seat was asymmetric
+ * (player/P2 open; AI keeps block). Soft: on stam≤0 after PB spend, defer
+ * tripGuardBreak — set pbBreakPending on the fighter who PBd, keep
+ * guarding + shove. landBlock/landBoltBlock already trip when stam≤0
+ * (with atk) and clear pending. Flush pending tip-plant trip after
+ * resolve if still pending (whiff / foe no longer swinging). While
+ * pending && foe still swinging, keep canHold so updateGuard does not
+ * silent-drop before active. Apply for player tryPushblock AND P2/versus
+ * path that calls tryPushblock before resolve. Do NOT change v552
+ * PB-before-chip order. No PUSHBLOCK_STAM/PX / STAMINA_BLOCK / AI_CD / CHANCE retune.
+ * tipX/Space/L; AI_CD 0.99; courtyard/Arco/Justa; Arte v517–v533;
+ * AI feel v506–v516; buffers v472–v499; Diseño v500–v505; ALL v534–v551;
+ * v552 PB-before-chip order twin; PUSHBLOCK_STAM 25 / PUSHBLOCK_PX 240 /
+ * STAMINA_BLOCK 20 / PUSHBLOCK_AI_CD 1800 / CHANCE 0.4; teach
+ * meatyMeleeAt*; tip-flush/bladeBox Y/LS_DIFF/combo-especial SILENT;
+ * ONLINE false; throw-vs-idle; AI_BAIT/THROW_AI_CD/GUARD_COMMIT/
+ * AI_LINK_ / AI_RETREAT_MS_ retunes; slashBuf/golpeBuf keep-through-guarding.
+ * No new combat verb.
+ * Rival pushblock before chip leftover (v552):
+ * Rival live pushblock on connecting landBlock/landBoltBlock spent
+ * STAMINA_BLOCK (−20) before tryPushblock’s PUSHBLOCK_STAM (−25) gate —
+ * so AI PB only fired when pre-block stam ≥45. Player tryPushblock arms
+ * at Same 25 first. Mid-stam (25–44) armed pbArmed but never shoved;
+ * header “Same 25 stam” broken under pressure. Soft: in BOTH landBlock
+ * and landBoltBlock call rivalPushblockOnBlock() BEFORE the STAMINA_BLOCK
+ * chip / tripGuardBreak. Keep shoveOwns / plant skip / 40%/CD/25/240
+ * unchanged. Mirror player pre-connect PB order — no constant retune.
+ * Do NOT change PUSHBLOCK_STAM 25 / PUSHBLOCK_PX 240 / STAMINA_BLOCK 20 /
+ * PUSHBLOCK_AI_CD 1800 / CHANCE 0.4. Do NOT retune AI_BAIT / THROW_AI_CD /
+ * GUARD_COMMIT / AI_LINK_* / AI_RETREAT_MS_* / tipX/Space/L / frames.
+ * tipX/Space/L; AI_CD 0.99; no courtyard.png redraw; Arte v517–v533;
+ * AI feel v506–v516; buffers sticky v472–v499; Diseño v500–v505;
+ * v534–v551; teach meatyMeleeAt*; tip-flush/bladeBox Y/LS_DIFF/
+ * combo-especial; ONLINE false; throw-vs-idle; AI_BAIT/THROW_AI_CD/
+ * GUARD_COMMIT / AI_LINK_* / AI_RETREAT_MS_* retunes; slashBuf/golpeBuf
+ * keep-through-guarding; PUSHBLOCK_STAM 25 / PUSHBLOCK_PX 240 /
+ * STAMINA_BLOCK 20 / PUSHBLOCK_AI_CD 1800 / CHANCE 0.4.
+ * No new combat verb.
+ * Retreat early-path abort vs player turtle leftover (v551):
+ * Retreat early-path starves throw-vs-guard vs turtle — aiRetreatT walk-out
+ * early-returns while player.guarding (non-swing idle); rivalTryThrow only
+ * runs after that return, so grab-vs-hold-S dies for the whole 220–480ms
+ * retreat. Bait already clears turtle (v540); retreat already aborts for
+ * recovery/dart/feint/GB (v397–v399) but never for player.guarding. Soft:
+ * AFTER recovery-punish abort arm, BEFORE walk-out else: if player.guarding
+ * → aiRetreatT=0 + rivalClearCommit() and fall through so rivalTryThrow /
+ * idle mix own the turtle. Non-guard retreat walk-out unchanged. Do NOT
+ * retune THROW_AI_CD / AI_BAIT_* / AI_RETREAT_MS_* / throw-vs-idle. Do NOT
+ * touch bait v540. tipX/Space/L / frames / AI_LINK_* / CLASH_* locked.
+ * PARRY_WIN 140 / RIPOSTE_WIN 280 / stagger 180 / gleam 80 /
+ * riposte 130/140/280 / slash 180/140/280 / hitstop 140/60 /
+ * hitstun 350 / buffer 80 / MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 /
+ * GUARD_BREAK_MS 400 / THROW_TECH 80/160 / FEINT_RECOVERY 100 /
+ * GUARD_COMMIT 140 / AI_LINK_* / CLASH_* / AI_BAIT_* / THROW_AI_CD /
+ * AI_RETREAT_MS_* / throw-vs-idle / tipX/Space/L / v534–v550 locked.
+ * No new combat verb.
+ * Post-block cancelIntoBolt aiSawBlock clear leftover (v550):
+ * cancelIntoBolt abandons slash/golpe recovery so v544's only clear seat
+ * (advanceAttack recovery-end) never runs — aiSawBlock sticks through
+ * empty-K holdCut; rival also skips aiResetT = AI_RESET_MS post-block bias.
+ * Soft: capture const sawBlock = !!f.aiSawBlock before spend/startBolt;
+ * keep startBolt(f, !boltAnswerEmpty(f) && (fromClash || !f.aiSawBlock));
+ * on ok && sawBlock clear f.aiSawBlock=false and if rival f.aiResetT =
+ * AI_RESET_MS; belt bolt recovery end mirrors advanceAttack slash/golpe
+ * recovery-end clear. No spend/reach/window retune. v544 empty spend kept.
+ * v545/v549 refuse kept. v547/v548 boltBuf keep untouched.
+ * Do NOT touch tipX/Space/L, frames, AI_LINK_*, CLASH_*, spend gate.
+ * tipX 991/0/884 / Space 180/140/280 / L 120/80/180 /
+ * PARRY_WIN 140 / RIPOSTE_WIN 280 / stagger 180 / gleam 80 /
+ * riposte 130/140/280 / slash 180/140/280 / hitstop 140/60 /
+ * hitstun 350 / buffer 80 / MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 /
+ * GUARD_BREAK_MS 400 / THROW_TECH 80/160 / FEINT_RECOVERY 100 /
+ * GUARD_COMMIT 140 / AI_LINK_* / CLASH_* / tipX/Space/L /
+ * v534–v549 locked.
+ * No new combat verb.
+ * Hold-S drop-guard dart buffer leftover (v547):
+ * Hold-S dump cleared boltBuf every tick while throwBuf/reversalBuf
+ * survive and flush through guarding (startThrow/startReversal). Hitstop
+ * path already arms boltBuf=true on boltEdge under freeze (~13255); first
+ * post-freeze frame still guarding dumped K. P2 v490 mirrored that dump
+ * for p2BoltBuf. Soft: keep boltBuf through player.guarding (falling still
+ * clears); keep p2BoltBuf through rival.guarding (falling early-return
+ * still clears all). slashBuf/golpeBuf/openBuf/openBoltBuf still dump on
+ * guard. Idle/cancel flush already requires !guarding — no dart while S
+ * held; else-clear also skips guarding so dump-kept buf survives until
+ * release-S idle flush fires. Mirror P2 v490 spirit (throw/rev keep).
+ * No tipX/Space/L/AI_CD/frames/AI_LINK/v534–v546 retune.
+ * tipX 991/0/884 / Space 180/140/280 / L 120/80/180 / PARRY_WIN 140 /
+ * RIPOSTE_WIN 280 / stagger 180 / gleam 80 / riposte 130/140/280 /
+ * slash 180/140/280 / hitstop 140/60 / hitstun 350 / buffer 80 /
+ * MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 / GUARD_BREAK_MS 400 /
+ * THROW_TECH 80 / THROW_TECH_REC 160 / FEINT_RECOVERY 100 / GUARD_COMMIT 140 /
+ * plants / pad 2×2 / VERSUS_2P_READY true / ONLINE_2P_READY false /
+ * ROSTER_SELECT_READY true / v534–v546 locked. No courtyard redraw / ONLINE /
+ * tipX / Space/L / AI_CD / AI_LINK_* / Arte / riposte packs / bait /
+ * knife-plant change. No new combat verb.
+ * Throw-tech owns Space+S over feint leftover (v541): slash-startup
+ * Space+S (throwEdge && canFeint) used to startFeint before tryThrowTech —
+ * teach drawFeintHint already yields TECH when tech live (v459), but live
+ * input feinted and cleared throwEdge (idle+feintT, throwable). Soft: at
+ * P1 tick + P1 hitstop, when throwEdge && canFeint → tryThrowTech(player)
+ * first; only startFeint if tech refuses. Rising feintEdge alone (tap-S,
+ * no Space) still feints. Mirror P2 tickVersusP2 edgeSlash&&wantG&&canFeint
+ * + hitstop hsEdgeS&&hsG&&canFeint → tryThrowTech(rival) before startFeint.
+ * Rising edgeGuard feint unchanged. Do NOT touch v534–v540 packs,
+ * tipX/Space/L, AI_CD 0.99, THROW_TECH 80 / THROW_TECH_REC 160 /
+ * FEINT_RECOVERY 100, bait/AI_BAIT/THROW_AI_CD, knife-plant, ONLINE false,
+ * Arte / Diseño / buffers / AI feel packs. tipX 991/0/884 / Space 180/140/280 /
+ * L 120/80/180 / PARRY_WIN 140 / RIPOSTE_WIN 280 / stagger 180 / gleam 80 /
+ * riposte 130/140/280 / slash 180/140/280 / hitstop 140/60 / hitstun 350 /
+ * buffer 80 / MAX_HP 100 / SLASH_DMG −10 / AI_CD 0.99 / GUARD_BREAK_MS 400 /
+ * THROW_TECH 80 / THROW_TECH_REC 160 / FEINT_RECOVERY 100 / plants / pad 2×2 /
+ * VERSUS_2P_READY true / ONLINE_2P_READY false / ROSTER_SELECT_READY true /
+ * v534–v540 locked. No courtyard redraw / ONLINE / tipX / Space/L / AI_CD /
+ * Arte / riposte packs / bait / knife-plant change. No new combat verb.
+ * Hold-guard bait vs player turtle leftover (v540): tickAI bait branch
+ * early-returns on sit-on-S for non-swing idle including player.guarding.
+ * rivalTryThrow only reached after that return — throw-vs-guard pressure
+ * dies for whole bait window (mutual turtle dead zone). Bait already clears
+ * for recovery/dart/feint/GB punish then fallthrough; player.guarding wrongly
+ * sits on S. Soft: AFTER recovery-punish arm, BEFORE sit-on-S: if
+ * player.guarding → clear aiBaitT / guardChoice / wantBlock / guarding +
+ * rivalClearCommit() and fall through (mirror recovery-punish fallthrough)
+ * so rivalTryThrow / idle mix own the turtle. No THROW_AI_CD / AI_BAIT_* /
+ * throw-vs-idle retune (throw stays hold-guard only). Do NOT touch v534–v539
+ * packs, tipX/Space/L, AI_CD 0.99, Arte v517–v533, AI feel v506–v516,
+ * buffers v472–v499, Diseño v500–v505, meatyMeleeAt*, tip-flush, bladeBox Y,
+ * LS_DIFF, combo-especial, ONLINE false, courtyard. tipX / plants / pad /
+ * Space 180/140/280 / L 120/80/180 / riposte 130/140/280 / PARRY_WIN 140 /
+ * RIPOSTE_WIN 280 / PARRY_STAGGER 180 / PARRY_GLEAM 80 / hitstop 140/60 /
+ * hitstun 350 / MAX_HP 100 / SLASH_DMG −10 / AI_CD harness 0.99 / buffer 80 /
+ * GUARD_BREAK_MS 400 / VERSUS_2P_READY true / ONLINE_2P_READY false /
+ * ROSTER_SELECT_READY true / v534–v539 locked. No courtyard redraw / ONLINE /
+ * tipX / Space/L / AI_CD / Arte / riposte packs / knife-plant change. No new
+ * combat verb.
+ * Knife-plant meaty AI punish-cut leftover (v539): boltIncoming lumps
+ * pre-birth boltPhase==="startup" with live dart. After v438 dart-answer, AI
+ * still hard-returns with no Space/L contest — human meaties idle knife plant
+ * from frame 0; AI only guard/dart after 140ms, never cuts the plant. Soft: in
+ * tickAI playerSwinging / boltIncoming branch, AFTER dart-answer attempt,
+ * BEFORE freeze return: if player.boltPhase==="startup" && !bolt (pre-birth only)
+ * && readable tele (boltT ≳40) && boltT early enough that golpe active
+ * can land before birth (≲80; GOLPE_STARTUP 120 vs BOLT_STARTUP 200) &&
+ * dist+startupShovePx(rival,GOLPE_STARTUP) <= golpe HOLD && high-band roll
+ * (mirror AI_DART_ANSWER / harness 0.99) → rivalPunishCut + clear commit +
+ * return. Live dart keeps freeze/answer only. No throw-vs-idle retune (AI
+ * throw stays hold-guard). Do NOT touch v534–v538 riposte packs, tipX/Space/L,
+ * AI_CD 0.99, Arte v517–v533, AI feel v506–v515, buffers v472–v499, Diseño
+ * v500–v505, ONLINE false, meatyMeleeAt*, tip-flush, bladeBox Y, LS_DIFF,
+ * combo-especial, courtyard redraw. tipX / plants / pad /
+ * Space 180/140/280 / L 120/80/180 / riposte 130/140/280 / PARRY_WIN 140 /
+ * RIPOSTE_WIN 280 / PARRY_STAGGER 180 / PARRY_GLEAM 80 / hitstop 140/60 /
+ * hitstun 350 / MAX_HP 100 / SLASH_DMG −10 / AI_CD harness 0.99 / buffer 80 /
+ * GUARD_BREAK_MS 400 / VERSUS_2P_READY true / ONLINE_2P_READY false /
+ * ROSTER_SELECT_READY true / v534–v538 locked. No courtyard redraw / ONLINE /
+ * tipX / Space/L / AI_CD / Arte / riposte packs change. No new combat verb.
+ * Hold-S Space riposte spend + pad far window leftover (v538): applyActionEdge
+ * routes slash+guard to throwEdge only; trySpendRiposteInput never sees Space
+ * while holding S. startThrow then dumps seat into throw (whiff far / grab
+ * close). P2 already feeds edgeSlash+wantG into trySpendRiposteP2;
+ * tickVersusP2 spend-before-throw. Pad far clears throwEdge with no attackEdge.
+ * Soft: in trySpendRiposteInput while riposteWindowT > 0, treat throwEdge as
+ * space (and reversalEdge as l) so hold-S Space reaches spend. Keep existing
+ * close refuse (guard && throwInRange → false, throw owns) and L+S refuse
+ * (rev owns, mirror P2). On spend success clear throwEdge/reversalEdge too.
+ * Pad far: while riposte window live, do not clear throwEdge. Call
+ * trySpendRiposteInput before throwEdge/reversalEdge outside hitstop (mirror
+ * P2 spend-before-throw; hitstop path already spends first). Do NOT touch
+ * v534 tickAI gate, v535 feint/spend, v536 startBolt dump, v537 tripGuardBreak
+ * + GB spend/fire gates. tipX / plants / pad / Space 180/140/280 /
+ * L 120/80/180 / riposte 130/140/280 / PARRY_WIN 140 / RIPOSTE_WIN 280 /
+ * PARRY_STAGGER 180 / PARRY_GLEAM 80 / hitstop 140/60 / hitstun 350 /
+ * MAX_HP 100 / SLASH_DMG −10 / AI_CD harness 0.99 / buffer 80 /
+ * GUARD_BREAK_MS 400 / Arte v517–v533 / AI feel v506–v515 / buffers v487–v499 /
+ * Diseño v500–v505 / v534–v537 / ONLINE_2P_READY false locked. No courtyard redraw / ONLINE / tipX /
+ * Space/L / AI_CD / Arte rect / tickAI gate / feint spend / startBolt dump /
+ * GB dump change. No new combat verb.
+ * Guard-break riposte seat dump + spend/fire GB gate leftover (v537): tripGuardBreak
+ * leaves riposteWindowT / riposteArmed live. trySpend* arms through guardBreakT.
+ * tryFire* has no GB gate; startAttack silently no-ops on GB → armed never
+ * consumed → v534 freezes AI through GUARD_BREAK_MS 400 then fires delayed
+ * riposte. Soft: in tripGuardBreak after guarding=false dump
+ * f.riposteWindowT=0; f.riposteArmed=false; f.riposte=false. Extend
+ * trySpendRiposteInput / trySpendRiposteP2 refuse to include guardBreakT>0
+ * (mirror startAttack / v535 feintT||boltPhase). Belt: tryFireRiposte /
+ * tryFireRiposteP2 refuse guardBreakT>0 BEFORE clearing bufs / calling
+ * startAttack. Do NOT touch v534 tickAI gate (riposteWindowT > 0 ||
+ * riposteArmed), v535 landParry feintT clear + spend refuse feintT/boltPhase,
+ * or v536 startBolt riposte dump. tipX / plants / pad / Space 180/140/280 /
+ * L 120/80/180 / riposte 130/140/280 / PARRY_WIN 140 / RIPOSTE_WIN 280 /
+ * PARRY_STAGGER 180 / PARRY_GLEAM 80 / hitstop 140/60 / hitstun 350 /
+ * MAX_HP 100 / SLASH_DMG −10 / AI_CD harness 0.99 / buffer 80 /
+ * GUARD_BREAK_MS 400 / Arte v517–v533 / AI feel v506–v515 / buffers v487–v499 /
+ * Diseño v500–v505 / v534 tickAI gate / v535 feint/spend / v536 startBolt dump /
+ * ONLINE_2P_READY false locked. No courtyard redraw / ONLINE / tipX / Space/L /
+ * AI_CD / Arte rect / tickAI gate / feint spend / startBolt dump change.
+ * No new combat verb.
+ * startBolt riposte seat dump leftover (v536): After RIPOSTE_WIN, K (startBolt)
+ * did not consume riposte seat — riposteWindowT / riposteArmed stayed live while
+ * throw/rev already dump them. release-S→K kept AI frozen (v402/v534) through
+ * dart on leftover window; same-frame spend→boltEdge armed then planted knife
+ * with riposteArmed stuck (tryFire* refuses boltPhase) so v534 froze for whole
+ * dart and may fire delayed riposte after. Soft: in startBolt after canStartBolt
+ * OK, mirror throw/rev — u.riposteWindowT=0; u.riposteArmed=false; u.riposte=false
+ * (shared P1/P2 via u). Do NOT touch v534 tickAI gate (riposteWindowT > 0 ||
+ * riposteArmed) or v535 landParry feintT clear + trySpend refuse feintT/boltPhase.
+ * tipX / plants / pad / Space 180/140/280 / L 120/80/180 / riposte 130/140/280 /
+ * PARRY_WIN 140 / RIPOSTE_WIN 280 / PARRY_STAGGER 180 / PARRY_GLEAM 80 /
+ * hitstop 140/60 / hitstun 350 / MAX_HP 100 / SLASH_DMG −10 / AI_CD harness 0.99 /
+ * buffer 80 / Arte v517–v533 / AI feel v506–v515 / buffers v487–v499 /
+ * Diseño v500–v505 / v534 tickAI gate / v535 feint/spend / ONLINE_2P_READY false
+ * locked. No courtyard redraw / ONLINE / tipX / Space/L / AI_CD / Arte rect /
+ * tickAI gate / feint spend change. No new combat verb.
+ * Feint→parry→riposte feintT clear + spend gate leftover (v535): Feint→parry→riposte
+ * trySpend arms while feintT still locked; tryFire refuses; v534 freezes AI on
+ * riposteArmed for remaining feintT (multi-frame stuck beyond one-tick armed gap).
+ * landParry arms RIPOSTE_WIN but never clears def.feintT. Hitstop freezes feint
+ * drain; trySpend* arms with no feintT/boltPhase check; tryFire* refuses
+ * feintT>0; v534 holds AI on riposteArmed until feint dies. Soft: landParry sets
+ * def.feintT=0 (parry frees defender for reward); trySpendRiposteInput /
+ * trySpendRiposteP2 refuse when feintT>0 || boltPhase (mirror tryFire) so window
+ * stays live if still locked — no stuck armed. Do NOT touch v534 tickAI gate
+ * (riposteWindowT > 0 || riposteArmed). tipX / plants / pad / Space 180/140/280 /
+ * L 120/80/180 / riposte 130/140/280 / PARRY_WIN 140 / RIPOSTE_WIN 280 /
+ * PARRY_STAGGER 180 / PARRY_GLEAM 80 / hitstop 140/60 / hitstun 350 / MAX_HP 100 /
+ * SLASH_DMG −10 / AI_CD harness 0.99 / buffer 80 / Arte v517–v533 /
+ * AI feel v506–v515 / buffers v487–v499 / Diseño v500–v505 / v534 tickAI gate /
+ * ONLINE_2P_READY false locked. No courtyard redraw / ONLINE / tipX / Space/L /
+ * AI_CD / Arte rect / tickAI gate change. No new combat verb.
+ * Riposte armed spend→fire gap leftover (v534): v402 freezes AI only while
+ * player.riposteWindowT > 0. trySpendRiposteInput clears the window and sets
+ * riposteArmed before tickAI, but tryFireRiposte (startup → playerSwinging)
+ * runs after tickAI — so one+ decision ticks AI could idle-commit / punishCut
+ * into the armed reward before tele owns the freeze. Soft: extend tickAI v402
+ * gate to player.riposteWindowT > 0 || player.riposteArmed (same freeze body).
+ * Drop when startAttack clears armed / phase=startup so existing swinging
+ * freeze takes over. Order stays trySpendRiposteInput → tickAI → tryFireRiposte
+ * (do NOT reorder). tipX / plants / pad / Space 180/140/280 / L 120/80/180 /
+ * riposte 130/140/280 / PARRY_WIN 140 / RIPOSTE_WIN 280 / PARRY_STAGGER 180 /
+ * PARRY_GLEAM 80 / hitstop 140/60 / hitstun 350 / MAX_HP 100 / SLASH_DMG −10 /
+ * AI_CD harness 0.99 / buffer 80 / tipX/Space/L / Arte v517–v533 /
+ * AI feel v506–v515 / buffers v487–v499 / Diseño v500–v505 /
+ * ONLINE_2P_READY false locked. No courtyard redraw / ONLINE / tipX /
+ * Space/L / AI_CD / Arte rect / reorder change. No new combat verb.
  * Tip under boltPlantFade leftover: idle/walk K recovery used to dump
  * bladeTip onto idle-edge (~339px) the same tick dart birth popped
  * boltPhase to recovery while leftover knife still owned the sheet
@@ -2746,15 +5239,19 @@
     you: {
       idle:   { w: 1186, h: 926, footX: 75,  footY: 921, top: 4 },
       // Windup tip plant leftover: tip on cocked opaque tip (was empty air 323/55).
-      windup: { w: 1186, h: 926, footX: 75,  footY: 921, top: 4, tipX: 359, tipY: 105 },
+      // Windup body AABB leftover (v525): body on cocked silhouette (same feet/y/h idle).
+      windup: { w: 1186, h: 926, footX: 75,  footY: 921, top: 4, tipX: 359, tipY: 105, body: { x: 84, y: 18, w: 746, h: 890 } },
       // Knife tip plant leftover: tip on raised blade, not helmet (was 359/198).
-      throwKnife: { w: 1186, h: 926, footX: 75,  footY: 921, top: 4, tipX: 268, tipY: 109 },
+      // ThrowKnife body AABB leftover (v526): body on raised-knife silhouette (same feet/y/h idle).
+      throwKnife: { w: 1186, h: 926, footX: 75,  footY: 921, top: 4, tipX: 268, tipY: 109, body: { x: 31, y: 18, w: 692, h: 890 } },
       // Slash tip plant leftover: tipY on opaque tip (was bladeBox chest mid).
-      slash:  { w: 1186, h: 926, footX: 75,  footY: 921, top: 4, tipX: 991, tipY: 270 },
+      // Slash body AABB leftover (v522): body on slash silhouette (same feet/y/h idle).
+      slash:  { w: 1186, h: 926, footX: 75,  footY: 921, top: 4, tipX: 991, tipY: 270, body: { x: 59, y: 18, w: 803, h: 890 } },
       // Block tip plant leftover: tipY on opaque tip (was bladeBox chest mid).
       // Block steel X plant leftover: steelX on opaque tip (was bodyAABB chest fraction).
-      block:  { w: 1186, h: 926, footX: 75,  footY: 921, top: 4, tipY: 105, steelX: 424 },
-      hurt:   { w: 1186, h: 926, footX: 75,  footY: 921, top: 4 },
+      // Block body AABB leftover (v524): body on guard silhouette (same feet/y/h idle).
+      block:  { w: 1186, h: 926, footX: 75,  footY: 921, top: 4, tipY: 105, steelX: 424, body: { x: 84, y: 18, w: 625, h: 890 } },
+      hurt:   { w: 1186, h: 926, footX: 75,  footY: 921, top: 4, body: { x: 24, y: 110, w: 581, h: 798 } },
       walk:   { w: 1186, h: 926, footX: 75,  footY: 921, top: 4 },
     },
     rival: {
@@ -2764,11 +5261,13 @@
       // Knife tip plant leftover: tip on forward point, not mid-blade (was 70/383).
       throwKnife: { w: 877,  h: 945, footX: 729, footY: 940, top: 4, tipX: 6, tipY: 384 },
       // Slash tip plant leftover: tipY on opaque tip (was bladeBox chest mid).
-      slash:  { w: 877,  h: 945, footX: 729, footY: 940, top: 4, tipX: 0, tipY: 338 },
+      // Slash body AABB leftover (v521): body on slash silhouette (same feet/y/h idle).
+      slash:  { w: 877,  h: 945, footX: 729, footY: 940, top: 4, tipX: 0, tipY: 338, body: { x: 0, y: 16, w: 771, h: 910 } },
       // Block tip plant leftover: tipY on opaque tip (was bladeBox chest mid).
       // Block steel X plant leftover: steelX on opaque tip (was bodyAABB chest fraction).
-      block:  { w: 877,  h: 945, footX: 729, footY: 940, top: 4, tipY: 223, steelX: 544 },
-      hurt:   { w: 877,  h: 945, footX: 729, footY: 940, top: 4 },
+      // Block body AABB leftover (v523): body on guard silhouette (same feet/y/h idle).
+      block:  { w: 877,  h: 945, footX: 729, footY: 940, top: 4, tipY: 223, steelX: 544, body: { x: 125, y: 16, w: 646, h: 910 } },
+      hurt:   { w: 877,  h: 945, footX: 729, footY: 940, top: 4, body: { x: 288, y: 242, w: 589, h: 684 } },
       walk:   { w: 877,  h: 945, footX: 729, footY: 940, top: 4 },
     },
     rivalFlip: {
@@ -2778,11 +5277,13 @@
       // Knife tip plant leftover: tip on forward point, not mid-blade (was 815/390).
       throwKnife: { w: 885,  h: 956, footX: 150, footY: 947, top: 8, tipX: 873, tipY: 391 },
       // Slash tip plant leftover: tipY on opaque tip (was bladeBox chest mid).
-      slash:  { w: 885,  h: 956, footX: 150, footY: 947, top: 8, tipX: 884, tipY: 338 },
+      // Slash body AABB leftover (v521): body on slash silhouette (same feet/y/h idle).
+      slash:  { w: 885,  h: 956, footX: 150, footY: 947, top: 8, tipX: 884, tipY: 338, body: { x: 104, y: 16, w: 729, h: 920 } },
       // Block tip plant leftover: tipY on opaque tip (was bladeBox chest mid).
       // Block steel X plant leftover: steelX on opaque tip (was bodyAABB chest fraction).
-      block:  { w: 885,  h: 956, footX: 150, footY: 947, top: 8, tipY: 230, steelX: 335 },
-      hurt:   { w: 885,  h: 956, footX: 150, footY: 947, top: 8 },
+      // Block body AABB leftover (v523): body on guard silhouette (same feet/y/h idle).
+      block:  { w: 885,  h: 956, footX: 150, footY: 947, top: 8, tipY: 230, steelX: 335, body: { x: 68, y: 16, w: 634, h: 920 } },
+      hurt:   { w: 885,  h: 956, footX: 150, footY: 947, top: 8, body: { x: 3, y: 249, w: 586, h: 687 } },
       walk:   { w: 885,  h: 956, footX: 150, footY: 947, top: 8 },
     },
   };
@@ -2859,7 +5360,7 @@
     // Title pages + KO rematch (over) sit on title bed; duel loops in play
     // and through the crumple fall (falling used to map to "" and silence).
     if (mode === "title" || mode === "over") return "title";
-    if (mode === "play" || mode === "falling") return "duel";
+    if (mode === "play" || mode === "falling" || mode === "pause") return "duel";
     return "";
   }
   function musicFadeK() {
@@ -3137,27 +5638,27 @@
     yard3: bareImg(),
     yard4: bareImg(),
     yard5: bareImg(),
-    you: loadImg("art/you.png?v=304"),
-    rival: loadImg("art/rival.png?v=304"),
-    rivalFlip: loadImg("art/rival_flip.png?v=304"),
-    youWindup: loadImg("art/you_windup.png?v=304"),
-    youThrowKnife: loadImg("art/you_throw_knife.png?v=304"),
-    youSlash: loadImg("art/you_slash.png?v=304"),
-    youBlock: loadImg("art/you_block.png?v=304"),
-    rivalWindup: loadImg("art/rival_windup.png?v=304"),
-    rivalThrowKnife: loadImg("art/rival_throw_knife.png?v=304"),
-    rivalSlash: loadImg("art/rival_slash.png?v=304"),
-    rivalBlock: loadImg("art/rival_block.png?v=304"),
-    rivalFlipWindup: loadImg("art/rival_flip_windup.png?v=304"),
-    rivalFlipThrowKnife: loadImg("art/rival_flip_throw_knife.png?v=304"),
-    rivalFlipSlash: loadImg("art/rival_flip_slash.png?v=304"),
-    rivalFlipBlock: loadImg("art/rival_flip_block.png?v=304"),
-    youHurt: loadImg("art/you_hurt.png?v=304"),
-    rivalHurt: loadImg("art/rival_hurt.png?v=304"),
-    rivalFlipHurt: loadImg("art/rival_flip_hurt.png?v=304"),
-    youWalk: loadImg("art/you_walk.png?v=304"),
-    rivalWalk: loadImg("art/rival_walk.png?v=304"),
-    rivalFlipWalk: loadImg("art/rival_flip_walk.png?v=304"),
+    you: loadImg("art/you.png?v=453"),
+    rival: loadImg("art/rival.png?v=453"),
+    rivalFlip: loadImg("art/rival_flip.png?v=453"),
+    youWindup: loadImg("art/you_windup.png?v=453"),
+    youThrowKnife: loadImg("art/you_throw_knife.png?v=453"),
+    youSlash: loadImg("art/you_slash.png?v=453"),
+    youBlock: loadImg("art/you_block.png?v=453"),
+    rivalWindup: loadImg("art/rival_windup.png?v=453"),
+    rivalThrowKnife: loadImg("art/rival_throw_knife.png?v=453"),
+    rivalSlash: loadImg("art/rival_slash.png?v=453"),
+    rivalBlock: loadImg("art/rival_block.png?v=453"),
+    rivalFlipWindup: loadImg("art/rival_flip_windup.png?v=453"),
+    rivalFlipThrowKnife: loadImg("art/rival_flip_throw_knife.png?v=453"),
+    rivalFlipSlash: loadImg("art/rival_flip_slash.png?v=453"),
+    rivalFlipBlock: loadImg("art/rival_flip_block.png?v=453"),
+    youHurt: loadImg("art/you_hurt.png?v=453"),
+    rivalHurt: loadImg("art/rival_hurt.png?v=453"),
+    rivalFlipHurt: loadImg("art/rival_flip_hurt.png?v=453"),
+    youWalk: loadImg("art/you_walk.png?v=453"),
+    rivalWalk: loadImg("art/rival_walk.png?v=453"),
+    rivalFlipWalk: loadImg("art/rival_flip_walk.png?v=453"),
   };
 
   const keys = new Set();
@@ -3196,6 +5697,10 @@
   const LS_BINDS = "vispera.binds.v1";
   const LS_PAD = "vispera.pad.v1";
   const LS_VOL = "vispera.vol.v1";
+  // Difficulty UX leftover (v502): LS_DIFF sibling of LS_VOL.
+  const LS_DIFF = "vispera.diff.v1";
+  const DIFF_TIERS = ["facil", "normal", "dificil"];
+  const DIFF_LABELS = { facil: "FÁCIL", normal: "NORMAL", dificil: "DIFÍCIL" };
   const LS_YARD = "vispera.yard.v1";
   const YARD_KEYS = ["yard", "yard2", "yard3", "yard4", "yard5"];
   const yardSrcArmed = Object.create(null);
@@ -3268,6 +5773,26 @@
   let volMusic = (volStored && typeof volStored.music === "number") ? Math.max(0, Math.min(100, volStored.music | 0)) : 80;
   let volSfx = (volStored && typeof volStored.sfx === "number") ? Math.max(0, Math.min(100, volStored.sfx | 0)) : 60;
   function persistVol() { saveJson(LS_VOL, { music: volMusic, sfx: volSfx }); applyMusicVol(); }
+  // Difficulty UX leftover (v502): load/persist + scales (default normal).
+  const diffStored = loadJson(LS_DIFF, null) || {};
+  function sanitizeDiff(v) { return DIFF_TIERS.indexOf(v) >= 0 ? v : "normal"; }
+  let diffTier = sanitizeDiff(diffStored && diffStored.tier);
+  let aiCdScale = 1;
+  let diffDmgScale = 1;
+  function syncDiffScales() {
+    if (diffTier === "facil") { aiCdScale = 1.4; diffDmgScale = 0.85; }
+    else if (diffTier === "dificil") { aiCdScale = 0.75; diffDmgScale = 1.15; }
+    else { aiCdScale = 1; diffDmgScale = 1; }
+  }
+  syncDiffScales();
+  function persistDiff() { saveJson(LS_DIFF, { tier: diffTier }); }
+  // Scale *_AI_CD assigns only — base constants stay. NORMAL → identity.
+  function aiCdOf(base) { return Math.round(base * aiCdScale); }
+  // Dmg scale only rival→P1 in CPU matches (versus/online fair).
+  function cpuInDmg(atk, base) {
+    if (atk !== rival || matchKind !== "cpu") return base;
+    return base * diffDmgScale;
+  }
   function persistBinds() { saveJson(LS_BINDS, binds); }
   function persistPad() { saveJson(LS_PAD, padBinds); }
 
@@ -3543,8 +6068,44 @@
     // you with Space/R rematch only — no title exit from the KO handoff. Soft:
     // Esc on falling/over also goTitleFromPlay (same as mid-play). Space/R
     // rematch kept. Mid-play Esc unchanged.
-    if ((mode === "play" || mode === "falling" || mode === "over") && c === "Escape") {
+    // Esc mid-play pause leftover (v505): was
+    // (mode === "play" || mode === "falling" || mode === "over") && c === "Escape"
+    // → goTitleFromPlay; mid-play now pauses. Falling/over still MENÚ.
+    if (mode === "play" && c === "Escape") {
+      mode = "pause";
+      pauseSel = 0;
+      attackEdge = false;
+      golpeEdge = false;
+      boltEdge = false;
+      throwEdge = false;
+      reversalEdge = false;
+      feintEdge = false;
+      requestStart = false;
+      requestRestart = false;
+      keys.clear();
+      return;
+    }
+    if ((mode === "falling" || mode === "over") && c === "Escape") {
       goTitleFromPlay();
+      return;
+    }
+    if (mode === "pause") {
+      if (c === "ArrowUp" || c === "KeyW") { pauseSel = 0; return; }
+      if (c === "ArrowDown" || c === "KeyS") { pauseSel = 1; return; }
+      if (c === "Escape") {
+        mode = "play";
+        pauseSel = 0;
+        return;
+      }
+      if (c === "Enter" || c === "Space") {
+        if (pauseSel === 0) {
+          mode = "play";
+          pauseSel = 0;
+        } else {
+          goTitleFromPlay();
+        }
+        return;
+      }
       return;
     }
     if (e.__pad) {
@@ -3598,9 +6159,19 @@
   // Online / versus 2P scaffolding leftover (v427): match seat + ready stubs.
   // JUGAR keeps cpu; VERSUS unlocked (v430). Online stub leftover (v434):
   // ONLINE root row locked until ONLINE_2P_READY (net path still reserved).
+  // Online human-P2 seat leftover (v451): matchKind online admits versus P2
+  // path (tickVersusP2 / AI skip / HUD); menu stays locked (ONLINE_2P_READY false).
   let matchKind = "cpu"; // "cpu" | "versus" | "online"
   const VERSUS_2P_READY = true;
   const ONLINE_2P_READY = false;
+  // Round flow / set score leftover (v500): BO3 / FT2. Clears on title start
+  // + Esc→MENÚ; KO credits in beginFall; mid-set SIGUIENTE keeps wins.
+  const SET_WINS_NEEDED = 2;
+  let setWins = { p1: 0, p2: 0 };
+  function clearSetWins() { setWins = { p1: 0, p2: 0 }; }
+  function setIsComplete() {
+    return setWins.p1 >= SET_WINS_NEEDED || setWins.p2 >= SET_WINS_NEEDED;
+  }
   // Roster / character differentiation hooks leftover (v437): fighterId + ROSTER
   // (roan ready; cid second-fighter stub locked). setP*FighterId refuses !ready.
   // No new root menu row.
@@ -3617,9 +6188,14 @@
   // Roster face crop polish leftover (v443): head boxes (you 1186×926 / rival 877×945).
   // CID/ROAN move kit leftover (v445): art tip already shorts CID HOLD ~40px;
   // kit makes that identity (CORTO walk+golpe pocket vs ROAN LARGO baseline).
+  // CID/ROAN K-bolt SUPER_RANGE kit leftover (v462): per-fighterId especial spend range.
+  // CID/ROAN bolt recovery kit leftover (v467): per-fighterId empty-dart recovery.
+  // CID/ROAN bolt dash kit leftover (v469): per-fighterId empty-dart travel speed.
+  // CID/ROAN throw range kit leftover (v470): per-fighterId grab band.
+  // CID/ROAN spent-super bolt dash+recovery kit leftover (v600): per-fighterId spent especial.
   const ROSTER = [
-    { id: "roan", label: "ROAN", ready: true, kit: "LARGO", walk: 240, golpeLunge: 18, slashLunge: 44, face: { sx: 80, sy: 100, sw: 400, sh: 400 } },
-    { id: "cid", label: "CID", ready: true, kit: "CORTO", walk: 288, golpeLunge: 28, slashLunge: 28, face: { sx: 350, sy: 220, sw: 260, sh: 260 } },
+    { id: "roan", label: "ROAN", ready: true, kit: "LARGO", walk: 240, walkStep: 320, golpeLunge: 18, slashLunge: 44, superRange: 420, boltRec: 280, boltSpeed: 880, boltSuperRec: 380, boltSuperSpeed: 1280, throwRange: 132, face: { sx: 80, sy: 100, sw: 400, sh: 400 } },
+    { id: "cid", label: "CID", ready: true, kit: "CORTO", walk: 288, walkStep: 267, golpeLunge: 28, slashLunge: 28, superRange: 360, boltRec: 250, boltSpeed: 1056, boltSuperRec: 339, boltSuperSpeed: 1536, throwRange: 120, face: { sx: 350, sy: 220, sw: 260, sh: 260 } },
   ];
   let p1FighterId = DEFAULT_P1_FIGHTER_ID;
   let p2FighterId = DEFAULT_P2_FIGHTER_ID;
@@ -3629,6 +6205,7 @@
     return null;
   }
   // CID/ROAN move kit leftover (v445): per-fighterId walk / golpe lunge.
+  // CID/ROAN walk cadence kit leftover (v468): boot clock rides walkStepOf.
   function walkSpeed(f) {
     const e = rosterEntry(f && f.fighterId);
     if (e && e.walk != null) return e.walk;
@@ -3647,6 +6224,47 @@
     const e = rosterEntry(f && f.fighterId);
     if (e && e.slashLunge != null) return e.slashLunge;
     return LUNGE_PX;
+  }
+  // CID/ROAN K-bolt SUPER_RANGE kit leftover (v462): per-fighterId especial spend range.
+  function superRangeOf(f) {
+    const e = rosterEntry(f && f.fighterId);
+    if (e && e.superRange != null) return e.superRange;
+    return SUPER_RANGE;
+  }
+  // CID/ROAN bolt recovery kit leftover (v467): per-fighterId empty-dart recovery.
+  function boltRecOf(f) {
+    const e = rosterEntry(f && f.fighterId);
+    if (e && e.boltRec != null) return e.boltRec;
+    return BOLT_RECOVERY;
+  }
+  // CID/ROAN walk cadence kit leftover (v468): per-fighterId boot clock.
+  function walkStepOf(f) {
+    const e = rosterEntry(f && f.fighterId);
+    if (e && e.walkStep != null) return e.walkStep;
+    return WALK_STEP_MS;
+  }
+  // CID/ROAN bolt dash kit leftover (v469): per-fighterId empty-dart travel.
+  function boltSpeedOf(f) {
+    const e = rosterEntry(f && f.fighterId);
+    if (e && e.boltSpeed != null) return e.boltSpeed;
+    return BOLT_SPEED;
+  }
+  // CID/ROAN throw range kit leftover (v470): per-fighterId grab band.
+  function throwRangeOf(f) {
+    const e = rosterEntry(f && f.fighterId);
+    if (e && e.throwRange != null) return e.throwRange;
+    return THROW_RANGE;
+  }
+  // CID/ROAN spent-super bolt dash+recovery kit leftover (v600): per-fighterId spent especial.
+  function boltSuperRecOf(f) {
+    const e = rosterEntry(f && f.fighterId);
+    if (e && e.boltSuperRec != null) return e.boltSuperRec;
+    return BOLT_SUPER_RECOVERY;
+  }
+  function boltSuperSpeedOf(f) {
+    const e = rosterEntry(f && f.fighterId);
+    if (e && e.boltSuperSpeed != null) return e.boltSuperSpeed;
+    return BOLT_SUPER_SPEED;
   }
   function setP1FighterId(id) {
     const e = rosterEntry(id);
@@ -3772,6 +6390,16 @@
   let p2OpenBuf = false;
   let p2OpenGolpeBuf = false;
   let p2OpenBoltBuf = false;
+  // Versus/online P2 mid-combat buffer fairness leftover (v452): mirror P1
+  // slashBuf/golpeBuf/boltBuf/throwBuf/reversalBuf for human P2 seat.
+  let p2SlashBuf = false;
+  let p2GolpeBuf = false;
+  let p2BoltBuf = false;
+  let p2ThrowBuf = false;
+  let p2ReversalBuf = false;
+  // Versus/online P2 pushblock hitstop buffer fairness leftover (v456): mirror
+  // P1 pushblockBuf for human P2 away-tap through HITSTOP_BLOCK.
+  let p2PushblockBuf = 0;
 
   function revealPad() {
     if (padShown) return;
@@ -3825,7 +6453,10 @@
     if (padChordHeld()) {
       // Hold-guarda + tap-tajo: same Space+S throw as teclado.
       padMarkChordLook();
-      if (mode === "play" && !throwInRange()) throwEdge = false;
+      // Hold-S Space riposte spend + pad far window leftover (v538): while
+      // RIPOSTE_WIN live, keep throwEdge so trySpendRiposteInput can treat it
+      // as space (far clear used to drop the chord with no attackEdge).
+      if (mode === "play" && !throwInRange() && !(player && player.riposteWindowT > 0)) throwEdge = false;
     }
   }
 
@@ -3877,7 +6508,8 @@
   if (canvas && typeof canvas.addEventListener === "function") {
     canvas.addEventListener("pointerdown", (e) => {
       unlockSfx();
-      if (mode === "over") requestStart = true;
+      // KO falling Space rematch leftover (v465): tap rematch unread on crumple.
+      if (mode === "over" || mode === "falling") requestStart = true;
       else if (mode === "title") titlePointer(e);
     });
   }
@@ -4145,6 +6777,7 @@
       wakeRevArmed: 0,
       pbCd: 0,
       pbArmed: 0,
+      pbBreakPending: false,
       feintT: 0,
       parryFadeT: 0,
       parryFadeSheet: "",
@@ -4181,6 +6814,8 @@
 
   let mode = "title";
   let modeT = 0;
+  // Esc mid-play pause leftover (v505): caret on CONTINUAR (0) / MENÚ (1).
+  let pauseSel = 0;
   let player = makeFighter("you");
   let rival = makeFighter("rival");
   let koTarget = null;
@@ -4326,6 +6961,9 @@
     // so stunT 0 restarted the count while golpe→K still chained. comboBolt
     // keeps that cancel string for one land; cleared here. Clash/idle K stay
     // stun-gated.
+    // Link-cancel combo counter leftover (v471): same latch on linkPlant
+    // Space↔L (early-active Soft→golpe used to restart when HITSTUN died mid
+    // link). Clash Space/L stay stun-gated.
     if (!atk || !def) return;
     const chain = atk.comboN > 0 && (def.stunT > 0 || def.falling || (def.thrownT || 0) > 0 || atk.comboBolt);
     atk.comboN = chain ? atk.comboN + 1 : 1;
@@ -4361,6 +6999,10 @@
 
 
   function resetRound() {
+    // Round flow / set score leftover (v500): title start / set-complete
+    // REVANCHA clears set; mid-set SIGUIENTE keeps wins. Esc→MENÚ clears in
+    // goTitleFromPlay. Draw-only score; no new combat verb.
+    if (mode === "title" || setIsComplete()) clearSetWins();
     // Escenarios picker sticky on title→JUGAR. Rematch (KO→over) rotates patio.
     // Rematch patio contrast leftover (v410): KeyR during falling used to
     // resetRound while mode was still "falling", so rotateYardForContrast
@@ -4434,6 +7076,12 @@
     p2OpenBuf = false;
     p2OpenGolpeBuf = false;
     p2OpenBoltBuf = false;
+    p2SlashBuf = false;
+    p2GolpeBuf = false;
+    p2BoltBuf = false;
+    p2ThrowBuf = false;
+    p2ReversalBuf = false;
+    p2PushblockBuf = 0;
     openLeft = OPENING_MS;
     koLanded = false;
     lastKoSfx = "";
@@ -4450,16 +7098,17 @@
 
   function gaitWalkOn(f) {
     if (!walking(f)) return false;
-    const a = (f.walkT / WALK_STEP_MS) * Math.PI;
-    // Passing frame is the peak; plant sheet holds the rest so it reads as a step.
-    // Both 320ms boots. Signed sin skipped the back step (idle bob, then a cut).
+    // v468 walkStepOf kit boot clock.
+    const a = (f.walkT / walkStepOf(f)) * Math.PI;
+    // Passing peak; plant holds rest. Both kit boots. Signed sin skipped back step.
     return Math.abs(Math.sin(a)) > 0.28;
   }
 
   function walkSheetK(f) {
     // Visual only. poseBitmap still hard-cuts at gaitWalkOn (abs sin>0.28).
     if (!walking(f)) return 0;
-    const a = (f.walkT / WALK_STEP_MS) * Math.PI;
+    // CID/ROAN walk cadence kit leftover (v468): boot clock rides walkStepOf.
+    const a = (f.walkT / walkStepOf(f)) * Math.PI;
     const u = Math.abs(Math.sin(a));
     return u * u * (3 - 2 * u);
   }
@@ -4477,7 +7126,9 @@
 
   function tickGait(f, dt) {
     const was = f.walkT > 0;
-    const pass0 = was && Math.abs(Math.sin((f.walkT / WALK_STEP_MS) * Math.PI)) > 0.28;
+    // CID/ROAN walk cadence kit leftover (v468): boot clock rides walkStepOf.
+    const stepMs = walkStepOf(f);
+    const pass0 = was && Math.abs(Math.sin((f.walkT / stepMs) * Math.PI)) > 0.28;
     if (walking(f)) {
       if (!was) {
         f.walkRiseT = 0;
@@ -4497,9 +7148,9 @@
       f.walkSettleRot = pose.rot;
       f.walkSettleOy = pose.oy;
       f.walkSettleT = 0;
-      const pass1 = Math.abs(Math.sin((f.walkT / WALK_STEP_MS) * Math.PI)) > 0.28;
+      const pass1 = Math.abs(Math.sin((f.walkT / stepMs) * Math.PI)) > 0.28;
       // Grit on boot plant (passing ends). !was / lift used to puff
-      // dust while destRect rise was still ~0. abs so both 320ms steps
+      // dust while destRect rise was still ~0. abs so both kit steps
       // stamp; gaitWalkOn sheet now abs so both boots share the passing frame.
       if (was && pass0 && !pass1) {
         spawnPlantDust(f, 1);
@@ -4633,6 +7284,37 @@
       drainWalkSettleUnderPlant(f, dt, was);
       return;
     }
+    // Bolt recovery plant walk-in destRect lean leftover: mid-stride / walkFadeHold
+    // empty-K / clash-K keeps settle through tele/clash/link/holdCut *startup*, then
+    // tickGait hard-zeros walkSettleT+walkFadeHold the tick dart birth pops
+    // boltPhase→recovery (f.boltPhase blanket at combat snap). destRect lean hops
+    // off the walk plant while boltPlantFade / restBolt/restBoltWalk/restBoltGuard
+    // still show knife — a hop, not a plant. Plant walk-in lean class already closed
+    // for tele/link/clash/holdCut/rev/throw-guard/tech/feint; knife recovery never
+    // got the keep. Keep leftover settle through leftover boltPlantFade (mirror feint).
+    if (f.boltPhase === "recovery" && !holdingCutBolt(f) && (f.walkFadeHold > 0 || f.walkSettleT > 0)) {
+      if (boltPlantFade(f) <= 0.02) f.walkFadeHold = 0;
+      drainWalkSettleUnderPlant(f, dt, was);
+      return;
+    }
+    // Parry/hit interrupt restParryWalk walkFadeHold tickGait keep leftover (v613):
+    // unfinished runtime half of v612 draw seat. v612 seats walk under live pf when
+    // recoveryWalkResting || walkFadeHold > 0.02 (mirror restFeintWalk/restBoltWalk).
+    // Feint/bolt-recovery already keep walkFadeHold before the combat snap; interrupt never got a keep —
+    // tickGait hard-zeros walkFadeHold the tick stunT arms. So the
+    // v612 walkFadeHold OR is inert after one stun tick: A/D-release mid-pf dumps
+    // walk→idle under live slash|windup|knife overlay; mid-stride leftover walkFadeHold
+    // dies on hit. A/D-held path still works via recoveryWalkResting only. Soft: chip/parry/tech interrupt only —
+    // keep leftover walkFadeHold through leftover parryFade
+    // (mirror feint/bolt). Skip throw-KD hurt path. walkSettleK stun hard-0 / restParryWalk
+    // gate / parryFade clocks / lean untouched. not plant-walk-in lean destRect twin; not MORE rest*Walk gate widen;
+    // not tipY soft-hurt / IdleHold / sticky. No new combat verb.
+    // (v613 tip restParryWalk walkFadeHold tickGait keep leftover — unfinished runtime half of v612 draw seat.)
+    if ((f.parryFadeT||0) > 0 && f.thrownT <= 0 && f.hp > 0 && !f.falling && (f.walkFadeHold > 0 || f.walkSettleT > 0)) {
+      if (parryFade(f) <= 0.02) f.walkFadeHold = 0;
+      drainWalkSettleUnderPlant(f, dt, was);
+      return;
+    }
     // Combat poses lock immediately — do not ease leftover lean into a slash.
     // Walk→guard leftover: leftover walk fade used to die the tick S raised
     // (this zeroed walkFadeHold / walkSettleT on guarding), so walk popped to
@@ -4673,11 +7355,12 @@
     if (walking(f)) return 0;
     // Plant walk-in destRect lean leftover: leftover lean/dip used to dump the
     // tick mid-stride Space/L/K / clash / holdCut / reverse / throw-guard / tech /
-    // feint armed (this gated phase!==idle while walkFadeHold still held the sheet),
-    // so destRect lean hopped off the plant while rest*Walk still showed walk under
-    // the raise. Keep leftover settle through leftover walkSettleT under plant fades
-    // (mirror walk→guard). poseBitmap still windup/knife/slash/idle. Idle settle
-    // still eases. Stun / non-plant combat still snap (settleT already zeroed).
+    // feint / bolt recovery armed (this gated phase!==idle while walkFadeHold still
+    // held the sheet), so destRect lean hopped off the plant while rest*Walk /
+    // restBolt* still showed walk/knife under the raise. Keep leftover settle through
+    // leftover walkSettleT under plant fades (mirror walk→guard). poseBitmap still
+    // windup/knife/slash/idle. Idle settle still eases. Stun / non-plant combat
+    // still snap (settleT already zeroed). holdingCutBolt recovery still snaps.
     if (
       telegraphing(f) ||
       linkPlanting(f) ||
@@ -4686,7 +7369,8 @@
       reversalPlanting(f) ||
       throwGuardPlanting(f) ||
       techGuardPlanting(f) ||
-      f.feintT > 0
+      f.feintT > 0 ||
+      (f.boltPhase === "recovery" && !holdingCutBolt(f))
     ) {
       const k = f.walkSettleT / WALK_SETTLE_MS;
       return k * k;
@@ -4723,13 +7407,15 @@
     // walkT==0 is the planted boot (sin 0 → 0.34). Returning 1 used to
     // lurch the first frame a full 4px (destRect rise still ~0) then
     // slam to ~2px — the cadence pause on boot ran one tick late.
-    const a = (f.walkT / WALK_STEP_MS) * Math.PI;
+    // CID/ROAN walk cadence kit leftover (v468): boot clock rides walkStepOf.
+    const a = (f.walkT / walkStepOf(f)) * Math.PI;
     return 0.34 + 0.96 * Math.abs(Math.sin(a));
   }
 
   function walkPose(f) {
     if (!walking(f)) return { rot: 0, ox: 0, oy: 0 };
-    const a = (f.walkT / WALK_STEP_MS) * Math.PI;
+    // CID/ROAN walk cadence kit leftover (v468): boot clock rides walkStepOf.
+    const a = (f.walkT / walkStepOf(f)) * Math.PI;
     const stride = Math.sin(a);
     const plant = Math.abs(Math.cos(a));
     const k = walkRiseK(f);
@@ -5035,11 +7721,15 @@
     // already closed. Keep breath 0 through walking / walk-out / leftover walkFadeHold during bolt
     // plant; advanceBoltFighter arms cutRecBreathT when recovery ends mid-stride / mid-raise / under
     // walkFadeHold so max(ck, wk) / hold-under-rise own the post-recovery seat. Idle knife plant
-    // still eases with boltPlantFade. Bolt recovery settle→guard unchanged. Special-cancel still
+    // still eases with boltPlantFade. Bolt recovery settle→guard (max bf, rk). Special-cancel still
     // zeros (holdingCutBolt). AABB planted.
     if (f.boltPhase === "recovery" && !holdingCutBolt(f)) {
       if (walking(f) || recoveryWalkOut(f) || f.walkFadeHold > 0.02) return 0;
-      if (f.guarding || f.guardPoseK > 0) return 0;
+      if (f.guarding || f.guardPoseK > 0) {
+        const bf = boltPlantFade(f);
+        const rk = guardRaiseK(f);
+        return amp * (1 - Math.max(bf, rk));
+      }
       return amp * (1 - boltPlantFade(f));
     }
     // Cut recovery destRect leftover: slash/golpe recovery used to hard-zero
@@ -5193,7 +7883,12 @@
       f.guardPoseK = 0;
       return;
     }
-    if (f.phase !== "idle" || f.boltPhase) {
+    // Bolt-recovery guard raise/drop pose-clock leftover (v597): v596 unlocked
+    // P1 recovery raise intent, but tickGuardPose / guardRaiseK / tip-under-raise
+    // / guardDropFade still blanketed all boltPhase — raise permission landed,
+    // pose clock snapped (hop, not raise). Soft: startup-only (mirror v595/v596).
+    // Leftover-planting drain branch unchanged. wantGuard/updateGuard untouched.
+    if (f.phase !== "idle" || f.boltPhase === "startup") {
       if (reversalPlanting(f) || throwGuardPlanting(f) || techGuardPlanting(f) || slashLeftoverPlanting(f) || golpeLeftoverPlanting(f) || boltLeftoverPlanting(f)) {
         const step = dt / GUARD_RAISE_MS;
         if (f.guardPoseK <= step) f.guardPoseK = 0;
@@ -5230,7 +7925,7 @@
     if (!f || f.falling || f.hp <= 0) return 0;
     if (f.thrownT > 0 && !throwKdLeftoverPlanting(f)) return 0;
     if (f.stunT > 0 && f.thrownT <= 0 && !stunLeftoverPlanting(f)) return 0;
-    if ((f.phase !== "idle" || f.boltPhase) && !reversalPlanting(f) && !throwGuardPlanting(f) && !techGuardPlanting(f) && !slashLeftoverPlanting(f) && !golpeLeftoverPlanting(f) && !boltLeftoverPlanting(f) && !stunLeftoverPlanting(f) && !throwKdLeftoverPlanting(f)) return 0;
+    if ((f.phase !== "idle" || f.boltPhase === "startup") && !reversalPlanting(f) && !throwGuardPlanting(f) && !techGuardPlanting(f) && !slashLeftoverPlanting(f) && !golpeLeftoverPlanting(f) && !boltLeftoverPlanting(f) && !stunLeftoverPlanting(f) && !throwKdLeftoverPlanting(f)) return 0;
     const u = Math.max(0, Math.min(1, f.guardPoseK || 0));
     return u * u * (3 - 2 * u);
   }
@@ -5574,15 +8269,198 @@
     const dy = FLOOR_Y - d.footY * s + pose.oy;
     const dx = ox - d.footX * s;
     const sh = sheetOf(f);
-    const b = sh.body;
+    // Hurt body AABB leftover (v517/v518/v519): KO/throw paints hurt (~45°) but
+    // bodyAABB still used DESIGN idle body. Soft: when poseSheet is hurt, use
+    // hurt body rects (same feet). x/w v517–v518; y/h Arte height tuck v519.
+    // Slash body AABB leftover (v521/v522): same ps.body hook — when poseSheet=slash,
+    // rival/rivalFlip slash.body (v521); you slash.body Arte (v522).
+    // Block body AABB leftover (v523/v524): same ps.body hook — when poseSheet=block,
+    // rival/rivalFlip block.body Arte (v523); you block.body Arte (v524)
+    // (hurtbox-only; plantBodyAABB for reach).
+    // Windup body AABB leftover (v525): same ps.body hook — when poseSheet=windup,
+    // you windup.body Arte (v525). Rival/rivalFlip windup untouched (no body).
+    // ThrowKnife body AABB leftover (v526): same ps.body hook — when poseSheet=throwKnife,
+    // you throwKnife.body Arte (v526). Rival/rivalFlip throwKnife untouched (no body).
+    // Getup fade visual vs collision leftover (v520): drawKnight crossfades
+    // hurt→idle with max(wakeupFade, hurtFade), but poseSheet is already idle
+    // once thrownT=0. Soft: while Math.max(wakeupFade, hurtFade) > 0.02, use
+    // poseFamily.hurt.body (rects v517–v519; same feet). Chip stun (no
+    // hurtFadeT) stays idle. Falling/KO already poseSheet=hurt.
+    // Guard drop fade visual vs collision leftover (v527): drawKnight
+    // crossfades block→idle with guardDropFade, but poseSheet is already
+    // idle once guarding=0 — bodyAABB snapped to idle body while sprite
+    // still showed block. Soft: while guardDropFade(f) > 0.02, use
+    // poseFamily(f).block.body (rects already shipped v523–v524; same feet).
+    // Chip/combat snaps that cut fade stay as today. Hurt/wakeup fadeK
+    // still wins when live (guardDropFade already 0 under stun).
+    // Sheathe fade visual vs collision leftover (v528): drawKnight
+    // crossfades slash→idle/walk with sheatheFade, but poseSheet is already
+    // idle/walk (no .body) once sheathing dies under walk-out / gait plant —
+    // bodyAABB snapped to idle while sprite still showed slash. Soft: while
+    // sheatheFade(f) > 0.02 AND poseSheet lacks .body, use
+    // poseFamily(f).slash.body (rects already shipped v521–v522; same feet).
+    // Bolt plant fade visual vs collision leftover (v529): drawKnight
+    // crossfades throwKnife→idle/walk with boltPlantFade, but poseSheet is
+    // already idle/walk (no .body) once bolt recovery starts — bodyAABB
+    // snapped to idle while sprite still showed knife. Soft: while
+    // boltPlantFade(f) > 0.02 AND poseSheet lacks .body, use
+    // (poseFamily(f).throwKnife.body || poseFamily(f).windup.body)
+    // (rects already shipped v526/v525; same feet). Rival/rivalFlip: no soft
+    // throwKnife/windup body — hold no-ops / falls through to DESIGN.
+    // Special-cancel still zeros (holdingCutBolt → boltPlantFade 0).
+    // Feint fade visual vs collision leftover (v530): drawKnight
+    // crossfades windup→idle/walk with feintFade, but poseSheet is already
+    // idle/walk (no .body) once feintT arms — bodyAABB snapped to idle while
+    // sprite still showed windup. Soft: while feintFade(f) > 0.02 AND
+    // !guarding AND poseSheet lacks .body, use poseFamily(f).windup.body
+    // (rects already shipped v525; same feet). Rival/rivalFlip: no soft
+    // windup body — hold no-ops / falls through to DESIGN. v530 skipped when
+    // guarding (feint→guard used block.body via ps.body); v607 raise-aware keep
+    // (ff≥0.5 + guarding) finishes restFeintGuard collision half.
+    // Parry fade visual vs collision leftover (v531): drawKnight
+    // crossfades slash|windup|knife→idle/walk with parryFade, but poseSheet
+    // is already idle/walk (no .body) once stun arms (chip stun) — bodyAABB
+    // snapped to idle while sprite still showed leftover attack sheet. Soft:
+    // while parryFade(f) > 0.02 AND poseSheet lacks .body, pick soft body by
+    // parryFadeSheet (mirror drawKnight parrySheet): slash (default) →
+    // poseFamily(f).slash.body (rects v521–v522); windup → windup.body
+    // (v525); knife → throwKnife.body || windup.body (v526/v525). Rival/
+    // rivalFlip windup/knife: no soft body — hold no-ops. Do NOT override
+    // hurt/block poseSheet (ps.body wins; parryFade 0 under guarding).
+    // Raise-plant outgoing bodyAABB hold leftover (v532): drawKnight
+    // crossfades leftover slash→windup (clashPlantFade / linkPlantFade) or
+    // leftover block→windup (reversalPlantFade / throwGuardPlantFade /
+    // techGuardPlantFade), but poseSheet is already windup (ps.body) the
+    // same tick cancel/start armed — bodyAABB snapped to windup while sprite
+    // still showed leftover raise sheet. Inverse of interrupt/drop/recovery.
+    // Soft: while clashPlantFade(f)>0.02 OR linkPlantFade(f)>0.02, use
+    // poseFamily(f).slash.body (rects v521–v522; same feet) — overrides
+    // ps.body windup. While reversalPlantFade(f)>0.02 OR
+    // throwGuardPlantFade(f)>0.02 OR techGuardPlantFade(f)>0.02, use
+    // poseFamily(f).block.body (rects v523–v524; same feet) — overrides
+    // ps.body windup. holdCutFade: poseSheet already slash — no-op (SILENT).
+    // Priority: hurt fade → guardDropFade block.body → sheathe slash.body →
+    // boltPlant knife||windup → feint windup → parry sheet-matched →
+    // clash/link slash.body → rev/throwGuard/techGuard block.body →
+    // telegraph idle hold (tf<0.5) → throw idle hold (trf 0.02..0.5) → ps.body.
+    // TelegraphFade inbound bodyAABB hold leftover (v533): drawKnight rests
+    // leftover idle under telePlant while telegraphFade < 0.98 (restTele), but
+    // poseSheet is already windup/knife (ps.body) the same tick start armed —
+    // bodyAABB snapped to windup/knife soft while sprite still showed mostly
+    // idle. Soft: while telegraphing(f) AND telegraphFade(f) < 0.5, use
+    // sheetOf(f).body (DESIGN idle; same feet) — overrides ps.body windup/
+    // knife for that inbound window. Else fall through to ps.body. Rival/
+    // rivalFlip windup/knife: no soft body — hold is already DESIGN via sh.
+    // Throw plant fade outbound bodyAABB idle hold leftover (v601): restThrow
+    // already fades windup→idle under throwPlantFade, but poseSheet stays windup
+    // (ps.body) the whole throw/tech recovery — bodyAABB kept you windup soft
+    // (746w) after sprite mostly idle (DESIGN 493w). Soft: while throwPlantFade(f)
+    // >0 AND <0.5, use sheetOf(f).body (DESIGN idle; same feet) — overrides
+    // ps.body windup for that late outbound window. Early recovery (trf≥0.5)
+    // keeps windup. Twin of v533 inbound. Rival/rivalFlip windup: no soft body —
+    // already DESIGN via sh. plantBodyAABB / tipX / throwPlantFade / restThrow untouched.
+    // Live block/guarding unchanged (ps.block.body wins).
+    const ps = poseSheet(f);
+    const b = (ps && ps.body) ? ps.body : sh.body;
+    const fadeK = Math.max(wakeupFade(f), hurtFade(f));
+    const hurtB = fadeK > 0.02 ? poseFamily(f).hurt : null;
+    const gdfK = guardDropFade(f);
+    const blockB = gdfK > 0.02 ? poseFamily(f).block : null;
+    const sfK = sheatheFade(f);
+    // Sheathe→guard bodyAABB raise mid-plant slash-keep leftover (v620): unfinished
+    // collision half of sheathe→guard after draw keep. Hurtbox snapped slash
+    // 803w→block 625w the tick S raises mid idle sheathe while sprite+tip still
+    // mostly slash. Soft: raise-aware keep — early sf≥0.5 + guarding keeps slash
+    // soft body while sheathe overlay owns slash; late sf<0.5 falls through to
+    // ps.block.body. Idle sheathe sticky >0.02 && !(ps&&ps.body) unchanged.
+    // Mirror v607 / IdleHold 0.5; no new IdleHold OR. tipX / sheatheFade clock /
+    // restSheathe* / destRect / lean / tipY seats untouched.
+    const slashB = (sfK > 0.02 && (!(ps && ps.body) || (f.guarding && sfK >= 0.5))) ? poseFamily(f).slash : null;
+    const bfK = boltPlantFade(f);
+    // Bolt→guard bodyAABB raise mid-plant knife-keep leftover (v616): unfinished
+    // collision half of restBoltGuard after draw keep (v599) + GuardWalk (v614).
+    // Hurtbox snapped knife 692w→block 625w the tick raise arms while sprite+tip
+    // still mostly knife. Soft: raise-aware keep — early bf≥0.5 + guarding keeps
+    // knife||windup soft body while restBoltGuard owns knife; late bf<0.5 falls
+    // through to ps.block.body. Idle bolt sticky ≥0.5 && !(ps&&ps.body) unchanged
+    // (v605 late-release still holds). Mirror v607 / IdleHold 0.5; no new IdleHold
+    // OR. tipX / boltPlantFade clocks / restBolt* / destRect / lean untouched.
+    const boltFam = (bfK >= 0.5 && (!(ps && ps.body) || f.guarding)) ? poseFamily(f) : null;
+    const boltB = boltFam ? ((boltFam.throwKnife && boltFam.throwKnife.body) ? boltFam.throwKnife : ((boltFam.windup && boltFam.windup.body) ? boltFam.windup : null)) : null;
+    const ffK = feintFade(f);
+    // Feint→guard bodyAABB raise mid-plant windup-keep leftover (v607): unfinished
+    // half of restFeintGuard — draw keeps windup overlay through raise (restFeintGuard
+    // + feintFade no guarding gate), but v530 collision half hard-skipped on guarding
+    // so bodyAABB fell to ps.block.body (625w) while sprite+tip still mostly windup
+    // (746w). Soft: raise-aware keep — early ff≥0.5 + guarding keeps windup soft body;
+    // late ff<0.5 falls through to ps.block.body. Idle feint sticky >0.02 && !(ps&&ps.body)
+    // unchanged. Mirror IdleHold 0.5; no new IdleHold OR. tipX/feintFade/restFeintGuard/
+    // destRect untouched. P1 you-family; rival no-op (no soft windup.body).
+    const feintB = (ffK > 0.02 && (!(ps && ps.body) || (f.guarding && ffK >= 0.5))) ? poseFamily(f).windup : null;
+    const pfK = parryFade(f);
+    let parryB = null;
+    if (pfK > 0.02 && !(ps && ps.body)) {
+      const fam = poseFamily(f);
+      const sheet = f.parryFadeSheet || "slash";
+      if (sheet === "windup") {
+        parryB = (fam.windup && fam.windup.body) ? fam.windup : null;
+      } else if (sheet === "knife") {
+        parryB = (fam.throwKnife && fam.throwKnife.body) ? fam.throwKnife : ((fam.windup && fam.windup.body) ? fam.windup : null);
+      } else {
+        parryB = (fam.slash && fam.slash.body) ? fam.slash : null;
+      }
+    }
+    const raiseSlashK = Math.max(clashPlantFade(f), linkPlantFade(f));
+    const raiseSlashB = raiseSlashK > 0.02 ? poseFamily(f).slash : null;
+    const raiseBlockK = Math.max(reversalPlantFade(f), throwGuardPlantFade(f), techGuardPlantFade(f));
+    const raiseBlockB = raiseBlockK > 0.02 ? poseFamily(f).block : null;
+    // Telegraph inbound: hold DESIGN idle while draw still mostly idle (tf<0.5).
+    const teleIdleHold = telegraphing(f) && telegraphFade(f) < 0.5;
+    // Throw plant fade outbound: hold DESIGN idle while draw mostly idle (trf<0.5).
+    // poseSheet stays windup through throw/tech recovery; restThrow already idle under
+    // throwPlantFade late fade — twin of v533 telegraph inbound idle hold.
+    // IdleHold ultra-late floor leftover (v606): keep hold through any live fade (>0),
+    // mirror restThrow / tip-under-throwPlantFade (>0). >0.02 used to drop hold the last
+    // smoothstep ticks (0<fade≤0.02) onto windup 746w while sprite+tip already idle.
+    const trfK = throwPlantFade(f);
+    const throwIdleHold = trfK > 0 && trfK < 0.5;
+    // Cut recovery sheatheFade outbound: hold DESIGN idle while draw+tip mostly idle (sf<0.5).
+    // poseSheet stays slash through non-clash/tech slash|golpe recovery; tip/draw already
+    // late-idle under sheatheFade + v345 idle-edge tip seat — twin of v601 throwPlantFade
+    // outbound idle hold; unfinished half of v345 tip-under-sheathe. Early sf≥0.5 keeps slash.
+    // IdleHold ultra-late floor leftover (v606): >0 parity with restSheathe / tip sfTip>0
+    // (same late-dump class as throw twin). Early sf≥0.5 still keeps slash ps.body.
+    const sfRecK = sheatheFade(f);
+    const sheatheIdleHold = sfRecK > 0 && sfRecK < 0.5 && f.phase === "recovery" && (f.cut === "slash" || f.cut === "golpe") && !f.clashRec && !f.techRec;
+    const body = (hurtB && hurtB.body) ? hurtB.body : ((blockB && blockB.body) ? blockB.body : ((slashB && slashB.body) ? slashB.body : ((boltB && boltB.body) ? boltB.body : ((feintB && feintB.body) ? feintB.body : ((parryB && parryB.body) ? parryB.body : ((raiseSlashB && raiseSlashB.body) ? raiseSlashB.body : ((raiseBlockB && raiseBlockB.body) ? raiseBlockB.body : ((teleIdleHold || throwIdleHold || sheatheIdleHold) ? sh.body : b))))))));
     // CID/ROAN you-family P2 facing flip leftover (v450): mirror body about foot.
-    let bx = b.x;
-    if (sheetFlipX(f)) bx = 2 * sh.footX - (b.x + b.w);
-    return { x: dx + bx * s, y: dy + b.y * s, w: b.w * s, h: b.h * s };
+    let bx = body.x;
+    if (sheetFlipX(f)) bx = 2 * sh.footX - (body.x + body.w);
+    return { x: dx + bx * s, y: dy + body.y * s, w: body.w * s, h: body.h * s };
   }
 
+  // Soft Arte pose bodies (hurt/slash/block/windup/throwKnife/guardDropFade/sheatheFade/boltPlantFade/feintFade/parryFade/raisePlant/teleIdle/throwIdle/sheatheIdle v517–v533/v601/v604/v605 boltPlant late-release/v606 IdleHold ultra-late floor) are collision hurtboxes.
+  // Blade geometry (bladeBox / bladeReach) stays on idle DESIGN body so tipX
+  // hitbox reach does not shrink when soft AABB widens — same tip/plant.
+  function plantBodyAABB(f) {
+    const s = worldScale();
+    const d = poseFamily(f).idle;
+    const pose = (walking(f) || (f.stunT > 0 && f.hp > 0) || f.falling || f.hp <= 0) ? { rot: 0, ox: 0, oy: 0 } : slashPose(f);
+    const ox = f.x + pose.ox;
+    const dy = FLOOR_Y - d.footY * s + pose.oy;
+    const dx = ox - d.footX * s;
+    const sh = sheetOf(f);
+    const body = sh.body;
+    let bx = body.x;
+    if (sheetFlipX(f)) bx = 2 * sh.footX - (body.x + body.w);
+    return { x: dx + bx * s, y: dy + body.y * s, w: body.w * s, h: body.h * s };
+  }
+
+  // Soft Arte pose bodies (hurt/slash/block/windup/throwKnife/guardDropFade/sheatheFade/boltPlantFade/feintFade/parryFade/raisePlant/teleIdle/throwIdle/sheatheIdle v517–v533/v601/v604/v605 boltPlant late-release/v606 IdleHold ultra-late floor) are collision hurtboxes.
+  // Normal block push magnitude stays on idle plant width so soft guard AABB
+  // cannot inflate chip-push past PUSHBLOCK_PX (v522 plant split).
   function hurtW(f) {
-    return bodyAABB(f).w;
+    return plantBodyAABB(f).w;
   }
 
   function bladeTipX(f) {
@@ -5706,7 +8584,7 @@
     // Ease idle-edge→block tip with guardRaiseK while guarding idle. Drop still
     // tipPlantK+guardDropFade (guarding cleared). Plant-from-guard still tipPlantK
     // (phase startup). Full raise rk=1 no-op. AABB planted. No new combat verb.
-    if (f.guarding && f.phase === "idle" && !f.boltPhase) {
+    if (f.guarding && f.phase === "idle" && f.boltPhase !== "startup") {
       const rk = guardRaiseK(f);
       if (rk < 0.98) {
         const ex = sheetEdgeTipWorldX(f, d, r, s);
@@ -5923,6 +8801,8 @@
     // chest mid when tipY was missing.
     // TipX under plant fades leftover: ease slash→pose tipY with link/clash plant
     // fade (mirror bladeTipX). tip markers / active hitbox unchanged. AABB planted.
+    // v623 tip under linkPlantFade+linkSheathe tipY idle-edge seat leftover: idle lacks tipY —
+    // seat ey on bladeBox chest mid (not soft bodyAABB; mirror tipX sheetEdge + v622 holdCut).
     const r = destRect(f);
     const d = poseSheet(f);
     const s = poseScale(f);
@@ -5943,8 +8823,12 @@
           let ey;
           if (id && id.tipY != null) ey = r.dy + id.tipY * s;
           else {
-            const b = bodyAABB(f);
-            ey = b.y + b.h * 0.06 + b.h * 0.38 * 0.45;
+            // Soft tipY idle-edge seat (v623): idle lacks tipY — seat on bladeBox
+            // chest mid (mirror tipX sheetEdgeTipWorldX + v622 holdCut tipY idle-edge).
+            // Soft bodyAABB hopped tipY off plant-stable tipX while linkPlantFade
+            // eases leftover-sheathe→slash/windup.
+            const hb = bladeBox(f);
+            ey = hb.y + hb.h * 0.45;
           }
           from = ey + (sy - ey) * (f.linkSheathe || 0);
           tip = from + (tip - from) * (1 - k);
@@ -5990,13 +8874,30 @@
     if (tipPlantK > 0.02) {
       const bl = poseFamily(f).block;
       if (bl && bl.tipY != null) {
-        const by = r.dy + bl.tipY * s;
+        let by = r.dy + bl.tipY * s;
+        // Tip under wakeRevFadeHold wakeup→reversal tipY plant leftover (v609):
+        // tipPlantK used to seat block tipY on tap-L getup (no leftover block raise)
+        // while wakeRevFadeHold / wakeupFade still own crumple→windup — idle bladeBox
+        // tipY → block/windup tipY hop ~45px. Seat by on bladeBox chest mid when
+        // wakeupFade && gpk≈0 (mirror v608 tip-under-raise idle seat). Hold-S L
+        // (gpk≥0.02) keeps block by. tipX / tip-under-raise / restWakeRev /
+        // wakeRevFadeHold / bodyAABB untouched. AABB planted.
+        if (wakeupFade(f) > 0.02 && guardRaiseK(f) < 0.02) {
+          const hb = bladeBox(f);
+          by = hb.y + hb.h * 0.45;
+        }
         tip = by + (tip - by) * (1 - tipPlantK);
       }
     }
     // Tip under sheathe↔guardDrop tip gate (v345): ease slash-biased block tipY
     // → idle chest with gdf while sheatheT (mirror bladeTipX). Pure drop still
     // tipPlantK above. AABB planted.
+    // Tip under sheathe↔guardDrop tipY idle-edge seat leftover (v624): unfinished
+    // tipY half of v345 after v617 sheatheFade tipY bladeBox + v608 tip-under-raise.
+    // tipX TO seats stable sheetEdgeTipWorldX; tipY same gate still soft bodyAABB.
+    // Soft: seat ey on bladeBox chest mid (not soft bodyAABB). Do not use soft bodyAABB.
+    // v624 tip under sheathe↔guardDrop tipY idle-edge seat leftover: idle lacks tipY —
+    // seat ey on bladeBox chest mid (not soft bodyAABB; mirror tipX sheetEdge + v608/v617).
     if (guardDropFade(f) > 0.02 && f.sheatheT > 0) {
       const gdf = guardDropFade(f);
       const u = 1 - Math.max(0, Math.min(1, f.sheatheT / SHEATHE_MS));
@@ -6010,26 +8911,31 @@
       let ey;
       if (id && id.tipY != null) ey = r.dy + id.tipY * s;
       else {
-        const b = bodyAABB(f);
-        ey = b.y + b.h * 0.06 + b.h * 0.38 * 0.45;
+        // Soft tipY idle-edge seat (v624): idle lacks tipY — seat on bladeBox
+        // chest mid (mirror tipX sheetEdgeTipWorldX + v608/v617 tipY idle-edge).
+        // Soft bodyAABB hopped tipY off plant-stable tipX while gdf eases mid→ey.
+        const hb = bladeBox(f);
+        ey = hb.y + hb.h * 0.45;
       }
       const mid = by + (sy - by) * sf;
       tip = mid + (ey - mid) * (1 - gdf);
     }
     // Tip under guard raise leftover (v342): ease idle→block tipY with
     // guardRaiseK while guarding idle (rk rises 0→1; mirror bladeTipX /
-    // telegraphFade). Idle has no tipY; bodyAABB chest mid matches pre-raise
-    // tipY fallback without bladeBox (tipX-live). Drop still tipPlantK+
+    // telegraphFade). Idle has no tipY; base tipY fallback seats bladeBox chest
+    // mid — tip under raise idle ey must match (v608 wakeup→guard / hurt→guard
+    // tipY raise idle-seat leftover: v520 soft hurt bodyAABB diverged ~+27px on
+    // getup). Do not seat ey on soft bodyAABB. Drop still tipPlantK+
     // guardDropFade. Plant-from-guard still tipPlantK. AABB planted.
-    if (f.guarding && f.phase === "idle" && !f.boltPhase) {
+    if (f.guarding && f.phase === "idle" && f.boltPhase !== "startup") {
       const rk = guardRaiseK(f);
       if (rk < 0.98) {
         const id = poseFamily(f).idle;
         let ey;
         if (id && id.tipY != null) ey = r.dy + id.tipY * s;
         else {
-          const b = bodyAABB(f);
-          ey = b.y + b.h * 0.06 + b.h * 0.38 * 0.45;
+          const hb = bladeBox(f);
+          ey = hb.y + hb.h * 0.45;
         }
         tip = ey + (tip - ey) * rk;
       }
@@ -6042,6 +8948,8 @@
     // Tip under holdCutFade / boltPlant leftover (v346): recovery sheatheFade also seats
     // pose tipY on idle chest (mirror bladeTipX / restSheathe). holdCutFade zeros
     // sheatheFade during plant. >0 mirror bladeTipX.
+    // v617 tip under sheatheFade tipY idle-edge seat leftover: idle lacks tipY — seat
+    // poseTip on bladeBox chest mid (not soft bodyAABB; IdleHold flip hop).
     const sfTipY = sheatheFade(f);
     if (sfTipY > 0) {
       const sl = poseFamily(f).slash;
@@ -6052,8 +8960,11 @@
           const id = poseFamily(f).idle;
           if (id && id.tipY != null) poseTip = r.dy + id.tipY * s;
           else {
-            const b = bodyAABB(f);
-            poseTip = b.y + b.h * 0.06 + b.h * 0.38 * 0.45;
+            // Soft tipY idle-edge seat (v617): idle lacks tipY — seat on bladeBox
+            // chest mid (mirror tipX sheetEdgeTipWorldX + v608 tip-under-raise).
+            // Soft bodyAABB hopped slash-chest→idle-chest mid-ease when IdleHold flips.
+            const hb = bladeBox(f);
+            poseTip = hb.y + hb.h * 0.45;
           }
         }
         tip = sy + (poseTip - sy) * (1 - sfTipY);
@@ -6062,6 +8973,8 @@
     // Tip under holdCutFade leftover (v346): ease leftover-sheathe tipY→slash with
     // holdCutFade (sk mirrors draw / bladeTipX). After hf dies tipY stays slash through
     // bolt plant. tip markers / steelX / bladeBox unchanged. AABB planted.
+    // v622 tip under holdCutFade tipY idle-edge seat leftover: idle lacks tipY —
+    // seat ey on bladeBox chest mid (not soft bodyAABB; mirror tipX sheetEdge + v617 sheathe).
     const hfTipY = holdCutFade(f);
     if (hfTipY > 0) {
       const sl = poseFamily(f).slash;
@@ -6071,8 +8984,11 @@
         let ey;
         if (id && id.tipY != null) ey = r.dy + id.tipY * s;
         else {
-          const b = bodyAABB(f);
-          ey = b.y + b.h * 0.06 + b.h * 0.38 * 0.45;
+          // Soft tipY idle-edge seat (v622): idle lacks tipY — seat on bladeBox
+          // chest mid (mirror tipX sheetEdgeTipWorldX + v617 sheathe tipY idle-edge).
+          // Soft bodyAABB hopped tipY off plant-stable tipX while hf eases leftover-sheathe→slash.
+          const hb = bladeBox(f);
+          ey = hb.y + hb.h * 0.45;
         }
         const sheatheK = f.linkSheathe || 0;
         const sk = 1 - hfTipY * (1 - sheatheK);
@@ -6080,11 +8996,14 @@
       }
     }
     // Tip under telegraphFade leftover: ease idle-edge→pose tipY with
-    // telegraphFade (mirror bladeTipX). Idle/walk have no tipY; bodyAABB
-    // chest mid matches pre-tele tipY fallback without bladeBox (tipX-live).
-    // Tip under tipPlantK+tele leftover stack (v343): bias idle tipY toward
-    // block tipY by latched leftoverPlantTipK so tele eases leftover→pose
-    // (mirror bladeTipX). tip markers / steelX / bladeBox unchanged. AABB planted.
+    // telegraphFade (mirror bladeTipX). Idle/walk have no tipY; base tipY
+    // fallback seats bladeBox chest mid — tip under tele idle ey must match
+    // (v610 tip under telegraphFade tipY idle-seat leftover: v520 soft hurt
+    // bodyAABB diverged ~+27px on getup / leftover hurtFade). Do not seat ey
+    // on soft bodyAABB. Tip under tipPlantK+tele leftover stack (v343): bias
+    // idle tipY toward block tipY by latched leftoverPlantTipK so tele eases
+    // leftover→pose (mirror bladeTipX). tip markers / steelX / bladeBox
+    // unchanged. AABB planted.
     if (telegraphing(f)) {
       const tf = telegraphFade(f);
       if (tf < 0.98) {
@@ -6092,8 +9011,8 @@
         let ey;
         if (id && id.tipY != null) ey = r.dy + id.tipY * s;
         else {
-          const b = bodyAABB(f);
-          ey = b.y + b.h * 0.06 + b.h * 0.38 * 0.45;
+          const hb = bladeBox(f);
+          ey = hb.y + hb.h * 0.45;
         }
         const tipK = f.leftoverPlantTipK || 0;
         if (f.leftoverPlantTip && tipK > 0.02) {
@@ -6111,6 +9030,8 @@
     // unchanged. AABB planted.
     // Tip under mid-tele feint leftover (v344): bias windup tipY toward idle
     // tipY by latched feintTipK (mirror bladeTipX). Late tele tipK=1 no-op.
+    // v619 tip under feintFade tipY mid-tele idle-seat leftover: idle lacks tipY —
+    // seat ey on bladeBox chest mid (not soft bodyAABB; mirror tipX sheetEdge + v610 tele).
     const fk = feintFade(f);
     if (fk > 0.02) {
       const wu = poseFamily(f).windup;
@@ -6118,13 +9039,15 @@
         let wy = r.dy + wu.tipY * s;
         const tipK = (f.feintTipK == null) ? 1 : f.feintTipK;
         if (tipK < 0.98) {
-          // Mirror tele idle tipY base (bodyAABB chest; idle has no tipY).
+          // Soft tipY mid-tele idle-seat (v619): idle lacks tipY — seat ey on bladeBox
+          // chest mid (mirror tipX sheetEdgeTipWorldX + v610 tele tipY idle-seat).
+          // Soft bodyAABB hopped tipY off plant-stable tipX while fk eases.
           const id = poseFamily(f).idle;
           let ey;
           if (id && id.tipY != null) ey = r.dy + id.tipY * s;
           else {
-            const b = bodyAABB(f);
-            ey = b.y + b.h * 0.06 + b.h * 0.38 * 0.45;
+            const hb = bladeBox(f);
+            ey = hb.y + hb.h * 0.45;
           }
           wy = ey + (wy - ey) * tipK;
         }
@@ -6146,6 +9069,8 @@
     // throwPlantFade (trf dies 1→0; mirror bladeTipX). Idle has no tipY — chest
     // fallback matches tip under feintFade / tele idle base. tip markers / steelX /
     // bladeBox unchanged. AABB planted.
+    // v618 tip under throwPlantFade tipY idle-edge seat leftover: idle lacks tipY —
+    // seat ey on bladeBox chest mid (not soft bodyAABB; IdleHold flip hop).
     // Tip under throwPlantFade tech leftover (v354): mirror bladeTipX — allow ease
     // once pf dies (tech-from-guard / live pf still skip).
     const trfTipY = throwPlantFade(f);
@@ -6166,8 +9091,11 @@
           let ey;
           if (id && id.tipY != null) ey = r.dy + id.tipY * s;
           else {
-            const b = bodyAABB(f);
-            ey = b.y + b.h * 0.06 + b.h * 0.38 * 0.45;
+            // Soft tipY idle-edge seat (v618): idle lacks tipY — seat on bladeBox
+            // chest mid (mirror tipX sheetEdgeTipWorldX + v617 sheathe tipY idle-edge).
+            // Soft bodyAABB hopped windup-chest→idle-chest mid-ease when IdleHold flips.
+            const hb = bladeBox(f);
+            ey = hb.y + hb.h * 0.45;
           }
           tip = wy + (ey - wy) * (1 - trfTipY);
         }
@@ -6182,8 +9110,11 @@
           let ey;
           if (id && id.tipY != null) ey = r.dy + id.tipY * s;
           else {
-            const b = bodyAABB(f);
-            ey = b.y + b.h * 0.06 + b.h * 0.38 * 0.45;
+            // Soft tipY idle-edge seat (v618): idle lacks tipY — seat on bladeBox
+            // chest mid (mirror tipX sheetEdgeTipWorldX + v617 sheathe tipY idle-edge).
+            // Soft bodyAABB hopped windup-chest→idle-chest mid-ease when IdleHold flips.
+            const hb = bladeBox(f);
+            ey = hb.y + hb.h * 0.45;
           }
           const rec = cutRecovery(f);
           const rem = Math.max(1, rec - GUARD_RAISE_MS);
@@ -6243,7 +9174,8 @@
   }
 
   function bladeBox(f) {
-    const b = bodyAABB(f);
+    // Soft Arte slash/hurt/block/windup/throwKnife/guardDropFade/sheatheFade/boltPlantFade/feintFade/parryFade/raisePlant/teleIdle AABB (v521–v533) must not retune tip hitbox origin.
+    const b = plantBodyAABB(f);
     const hh = b.h * 0.38;
     const hy = b.y + b.h * 0.06;
     const tip = bladeTipX(f) + f.facing * 6;
@@ -6256,7 +9188,8 @@
   }
 
   function bladeReach(f) {
-    const b = bodyAABB(f);
+    // Measure tip past idle plant body (not soft Arte slash/hurt/block/windup AABB).
+    const b = plantBodyAABB(f);
     const tip = bladeTipX(f);
     if (f.facing > 0) return Math.max(0, tip - (b.x + b.w));
     return Math.max(0, b.x - tip);
@@ -6284,7 +9217,16 @@
   function wantGuard(f) {
     if (f !== player) return false;
     if (f.stunT > 0) return false;
-    if (f.boltPhase) return false;
+    // P1 wantGuard boltPhase recovery raise unlock leftover (v596): v595 left
+    // updateGuard recovery free, but wantGuard still blanketed all boltPhase —
+    // hold-S through BOLT_RECOVERY never reached updateGuard as want=true.
+    // Soft: refuse startup only (mirror v595); recovery raise reaches updateGuard.
+    if (f.boltPhase === "startup") return false;
+    // HoldCut bolt-recovery S-raise sheet-protect refuse leftover (v598):
+    // special-cancel cut plant (boltHoldCut) still arms want during recovery —
+    // poseBitmap/poseSheet prefer block over holdCut slash → sheet hop.
+    // Soft: refuse while holdingCutBolt. Empty-K / clash-K recovery raise kept.
+    if (holdingCutBolt(f)) return false;
     // Riposte armed: don't re-raise over the spent Space/L (S may still be held).
     if (f.riposteArmed) return false;
     if (!actionHeld("guard")) return false;
@@ -6806,8 +9748,9 @@
     return false;
   }
 
-  function throwInRange() {
-    return absGap() <= THROW_RANGE;
+  // CID/ROAN throw range kit leftover (v470): attacker kit band (omit → player).
+  function throwInRange(atk) {
+    return absGap() <= throwRangeOf(atk || player);
   }
 
   function slashToGolpeWindow(f) {
@@ -6822,8 +9765,32 @@
     if (openLeft > 0) return false;
     if (f.phase !== "recovery") return false;
     if (f.clashRec) {
-      return (cutRecovery(f) - f.phaseT) <= SLASH_CANCEL_MS;
+      if ((cutRecovery(f) - f.phaseT) > SLASH_CANCEL_MS) return false;
+      // Clash late Space/L open-field reach gate leftover (v546): CLASH_STEP bounce
+      // opens gap past ACTIVE follow-up tip by last-100ms window — window still true
+      // → cancelIntoGolpe mounts whiff. AI already reach-refuses in rivalTry* (v543);
+      // player clashRec never gated. Snapshot ACTIVE golpe tip; refuse when
+      // predicted gap misses. Corner / in-reach clash L kept. cutToBoltWindow clash-K
+      // still owns when melee refuses.
+      const foeSG = f === player ? rival : player;
+      const phSG = f.phase;
+      const cuSG = f.cut;
+      f.phase = "active";
+      f.cut = "golpe";
+      const gReach = bladeReach(f) + golpeLungeOf(f);
+      f.phase = phSG;
+      f.cut = cuSG;
+      if (absGap() + foeSlide(foeSG, GOLPE_STARTUP) > gReach) return false;
+      return true;
     }
+    // Post-block player melee cancel refuse leftover (v545): landBlock arms
+    // cutHit+aiSawBlock; late Space→L after GUARD_PUSH used to mount whiff.
+    // AI already reach-refuses (v543) + empty-K gated (v544). v549 extends seat.
+    // Versus/online P2 post-block melee cancel refuse leftover (v549): v545 you-only;
+    // human P2 is kind==="rival" and tickAI skipped in versus/online — buffered O/P
+    // after GUARD_PUSH still mounted whiff. Soft: refuse for you OR versus/online
+    // seats. CPU match keeps rival door open for rivalTry* foeSlide (v543).
+    if (f.aiSawBlock && (f.kind === "you" || matchKind === "versus" || matchKind === "online")) return false;
     if (f.cut !== "slash" || !f.cutHit) return false;
     return (cutRecovery(f) - f.phaseT) <= SLASH_CANCEL_MS;
   }
@@ -6852,6 +9819,9 @@
     f.linkSlash = false;
     f.linkBolt = false;
     f.clashRec = false;
+    // Clash/connect riposte sticky leftover (v483): belt — cutStartup/Active/
+    // Recovery prefer f.riposte; clear so golpe mounts 120/80/180 not 130/140/280.
+    f.riposte = false;
     f.telegraph = false;
     // Tip latch: cancel usually has no leftover k; idle snap path.
     f.leftoverPlantTip = (f.guardPoseK || 0) > 0;
@@ -6861,6 +9831,23 @@
     // Connected slash→golpe and clash late L used to plant silent. holdCut K already juices.
     playLinkSting();
     spawnPlantDust(f, 0.85);
+    // Space→L hit-confirm stun gap leftover (v485): Space late L door opens with
+    // ~100ms stun left on late cancel while GOLPE_STARTUP 120 — active births
+    // after stun dies; defender guards/walks before landHit. v471 only armed
+    // comboBolt (HUD). Soft: linkPlant success, foe.stunT > 0 → max with
+    // GOLPE_STARTUP so flesh lock covers the plant. Clash L / block (stunT 0)
+    // unchanged. Same foe seat as comboBolt below.
+    if (f.linkPlant) {
+      const foe = f === player ? rival : player;
+      if (foe && foe.stunT > 0) foe.stunT = Math.max(foe.stunT, GOLPE_STARTUP);
+      // Link-cancel combo counter leftover (v471): Space→golpe plant used to land
+      // after leftover hitstun died (early-active Soft path ≈440ms > HITSTUN 350)
+      // — arm comboBolt while foe still locked so noteCombo keeps the string.
+      // Clash Space/L skip (no linkPlant). Mirror holdCut K v424.
+      if (f.comboN > 0) {
+        if (foe && (foe.stunT > 0 || foe.falling || (foe.thrownT || 0) > 0)) f.comboBolt = true;
+      }
+    }
     return true;
   }
 
@@ -6876,8 +9863,29 @@
     if (openLeft > 0) return false;
     if (f.phase !== "recovery") return false;
     if (f.clashRec) {
-      return (cutRecovery(f) - f.phaseT) <= GOLPE_CANCEL_MS;
+      if ((cutRecovery(f) - f.phaseT) > GOLPE_CANCEL_MS) return false;
+      // Clash late Space/L open-field reach gate leftover (v546): mirror slash→golpe
+      // with ACTIVE slash tip + STARTUP foeSlide. Corner / in-reach clash Space kept.
+      const foeGS = f === player ? rival : player;
+      const phGS = f.phase;
+      const cuGS = f.cut;
+      f.phase = "active";
+      f.cut = "slash";
+      const sReach = bladeReach(f) + slashLungeOf(f);
+      f.phase = phGS;
+      f.cut = cuGS;
+      if (absGap() + foeSlide(foeGS, STARTUP) > sReach) return false;
+      return true;
     }
+    // Post-block player melee cancel refuse leftover (v545): mirror slash→golpe
+    // — player L→Space after block shove must not mount whiff; clashRec early
+    // return above kept; rival windows still open (v543 rivalTry* owns AI).
+    // v549 extends seat to versus/online human P2 (kind==="rival").
+    // Versus/online P2 post-block melee cancel refuse leftover (v549): v545 you-only;
+    // human P2 is kind==="rival" and tickAI skipped in versus/online — buffered O/P
+    // after GUARD_PUSH still mounted whiff. Soft: refuse for you OR versus/online
+    // seats. CPU match keeps rival door open for rivalTry* foeSlide (v543).
+    if (f.aiSawBlock && (f.kind === "you" || matchKind === "versus" || matchKind === "online")) return false;
     if (f.cut !== "golpe" || !f.cutHit) return false;
     return (cutRecovery(f) - f.phaseT) <= GOLPE_CANCEL_MS;
   }
@@ -6914,23 +9922,33 @@
     // Connected golpe→slash and clash late Space used to plant silent. holdCut K already juices.
     playLinkSting();
     spawnPlantDust(f, 0.85);
+    // L→Space hit-confirm stun gap leftover (v486): golpe late Space door opens
+    // with ~91ms stun left on late cancel while STARTUP 180 — active births
+    // after stun dies; defender guards/walks before landHit. v471 only armed
+    // comboBolt (HUD). Soft: linkPlant success, foe.stunT > 0 → max with
+    // STARTUP so flesh lock covers the plant. Clash Space / block (stunT 0)
+    // unchanged. Same foe seat as comboBolt below.
+    if (f.linkPlant) {
+      const foe = f === player ? rival : player;
+      if (foe && foe.stunT > 0) foe.stunT = Math.max(foe.stunT, STARTUP);
+      // Link-cancel combo counter leftover (v471): golpe→Space plant same latch
+      // (borderline ~340ms; early-active Soft could still drop). Clash skip.
+      // Mirror holdCut K v424 / Space→golpe above.
+      if (f.comboN > 0) {
+        if (foe && (foe.stunT > 0 || foe.falling || (foe.thrownT || 0) > 0)) f.comboBolt = true;
+      }
+    }
     return true;
   }
 
-  function cutToBoltWindow(f) {
-    // Last BOLT_CANCEL_MS of tajo or golpe recovery, hit or block only.
-    // Clash recovery uses the same late door (~last 100ms of the 200ms
-    // clash recovery) into K, same as Space/L. Not a free fireball: same K,
-    // same 200 startup, −30.
-    // Late active / early recovery still queue K; this is when the dart may start.
-    // Connected tajo/golpe → K is the same door for you and the rival.
-    // Clash late K is the same door for you and the rival (rival 40% once-per-clash).
+  // Cancel-door BOLT_STAM leftover (v578): expose the structural late door
+  // separately so a doomed low-stam buffer can be cleared without making K free.
+  function cutToBoltWindowOpen(f) {
     if (!f) return false;
     if (f.cut !== "slash" && f.cut !== "golpe") return false;
     if (f.falling || f.guarding || f.stunT > 0 || f.boltPhase) return false;
     if (openLeft > 0) return false;
     if (f.phase !== "recovery") return false;
-    if (f.stamina < BOLT_STAM) return false;
     // Answer-dart leftover (v438): opposing startup / live dart may be answered
     // so v412 birth clash can fire from a cancel door too. Own live still refuses.
     if (bolt && bolt.kind === f.kind) return false;
@@ -6941,6 +9959,12 @@
     return (cutRecovery(f) - f.phaseT) <= BOLT_CANCEL_MS;
   }
 
+  function cutToBoltWindow(f) {
+    if (!cutToBoltWindowOpen(f)) return false;
+    if (f.stamina < BOLT_STAM) return false;
+    return true;
+  }
+
   function playerClashBoltPriority() {
     // Clash-K cancel priority leftover (v382): same-frame Space/L + K on clash late
     // used to let Space/L steal the dart door (attackEdge/golpeEdge before boltEdge;
@@ -6949,6 +9973,9 @@
     // armed (boltEdge or boltBuf) + cutToBoltWindow. Non-clash unchanged here —
     // hit-confirm special-cancel K is playerHitConfirmBoltPriority (v383).
     if (!player || !player.clashRec) return false;
+    // Cancel-door BOLT_STAM yield/flush/teach leftover (v578): a doomed low-stam
+    // K edge/buffer must not steal the Space/L door; K is listed only when payable.
+    if (player.stamina < BOLT_STAM) return false;
     if (!(boltEdge || boltBuf)) return false;
     return cutToBoltWindow(player);
   }
@@ -6960,6 +9987,9 @@
     // hit-confirm. True when !clashRec + K armed (boltEdge or boltBuf) + cutToBoltWindow
     // (implies cutHit + late recovery). Whiff / clash path unchanged.
     if (!player || player.clashRec) return false;
+    // Cancel-door BOLT_STAM yield/flush/teach leftover (v578): hit-confirm K
+    // priority mirrors cancelIntoBolt's payable-stamina gate.
+    if (player.stamina < BOLT_STAM) return false;
     if (!(boltEdge || boltBuf)) return false;
     return cutToBoltWindow(player);
   }
@@ -6990,7 +10020,17 @@
     f.linkSlash = false;
     f.linkBolt = false;
     f.boltHoldCut = !fromClash;
-    const ok = startBolt(f, true);
+    // Cancel→K answer-plant full-meter forced spend leftover (v477): hit-confirm /
+    // clash late Space|L→K used to always spend via startBolt(f, true) while idle/
+    // edge/open already pass !boltAnswerEmpty (v474/v475). Soft: answer empty.
+    // Post-block special-cancel K empty especial leftover (v544): block arms
+    // aiSawBlock — do not dump full especial into a free defender; flesh still
+    // spends; clash-K can still spend (fromClash).
+    // Post-block cancelIntoBolt aiSawBlock clear leftover (v550): capture before
+    // spend — cancel abandons slash/golpe recovery so v544's only clear seat never
+    // runs; clear on ok (+ rival aiResetT).
+    const sawBlock = !!f.aiSawBlock;
+    const ok = startBolt(f, !boltAnswerEmpty(f) && (fromClash || !f.aiSawBlock));
     if (!ok) f.boltHoldCut = false;
     else if (fromClash) {
       f.clashPlant = true;
@@ -7016,13 +10056,29 @@
       // (Clash-K grit dust seats above, v371). Cast puff already from startBolt.
       playHoldCutSting();
       spawnPlantDust(f, 0.95);
-      // Special-cancel combo counter leftover (v424): Space rec + K plant used to
-      // eat leftover hitstun before land — arm comboBolt while foe still locked
-      // so noteCombo keeps the string. Clash-K skips (no holdCut). Idle K none.
-      if (f.comboN > 0) {
+      // Space→K hit-confirm stun gap leftover (v484): Space late K door opens with
+      // ~170ms stun left while BOLT_STARTUP 200 — dart births after stun dies;
+      // defender guards/walks before landBoltHit. v424 only armed comboBolt (HUD).
+      // Soft: holdCut success, foe.stunT > 0 → max with BOLT_STARTUP so flesh lock
+      // covers the plant. Golpe→K already connects. Clash-K / idle K / block
+      // (stunT 0) unchanged. Same foe seat as comboBolt below.
+      {
         const foe = f === player ? rival : player;
-        if (foe && (foe.stunT > 0 || foe.falling || (foe.thrownT || 0) > 0)) f.comboBolt = true;
+        if (foe && foe.stunT > 0) foe.stunT = Math.max(foe.stunT, BOLT_STARTUP);
+        // Special-cancel combo counter leftover (v424): Space rec + K plant used to
+        // eat leftover hitstun before land — arm comboBolt while foe still locked
+        // so noteCombo keeps the string. Clash-K skips (no holdCut). Idle K none.
+        // Link-cancel combo counter leftover (v471): cancelIntoGolpe/Slash arm the
+        // same latch on linkPlant Space↔L.
+        if (f.comboN > 0) {
+          if (foe && (foe.stunT > 0 || foe.falling || (foe.thrownT || 0) > 0)) f.comboBolt = true;
+        }
       }
+    }
+    // Post-block cancelIntoBolt aiSawBlock clear leftover (v550).
+    if (ok && sawBlock) {
+      f.aiSawBlock = false;
+      if (f.kind === "rival") f.aiResetT = AI_RESET_MS;
     }
     return ok;
   }
@@ -7055,8 +10111,17 @@
       f.phaseT = 0;
     } else if (f.phase === "recovery" && f.phaseT >= cutRecovery(f)) {
       // Rival post-string: whiff or blocked cut biases a reset next commit.
-      if (f.kind === "rival" && (f.cut === "slash" || f.cut === "golpe")) {
-        if (!f.cutHit || f.aiSawBlock) f.aiResetT = AI_RESET_MS;
+      // Post-block special-cancel K empty especial leftover (v544): clear
+      // aiSawBlock on slash/golpe recovery end for both; aiResetT rival-only.
+      // Throw-cut / landThrowTech aiSawBlock belt-clear leftover (v589): also
+      // clear when cut==="throw" — throw recovery kept the latch into idle
+      // (slash|golpe gate never fired). aiResetT still slash|golpe only.
+      if (f.cut === "slash" || f.cut === "golpe") {
+        if (f.kind === "rival") {
+          if (!f.cutHit || f.aiSawBlock) f.aiResetT = AI_RESET_MS;
+        }
+        f.aiSawBlock = false;
+      } else if (f.cut === "throw") {
         f.aiSawBlock = false;
       }
       f.phase = "idle";
@@ -7084,6 +10149,11 @@
       f.linkGolpe = false;
       f.linkSlash = false;
       f.linkBolt = false;
+      // Link-cancel comboBolt recovery-end clear leftover (v585): slash/golpe
+      // recovery ended clearing aiSawBlock / links / plants but left comboBolt —
+      // OOR whiff after knock kept the latch into idle → false 2+ stamp. Mirror
+      // advanceBoltFighter recovery-end / stun-abort clear. Connect still noteCombo.
+      f.comboBolt = false;
       f.clashRec = false;
       f.techRec = false;
       f.techGuardTip = false;
@@ -7135,8 +10205,10 @@
     // destRect/AABB planted. Hurt sheet unchanged. No new combat verb.
     if (!atk || !def) return;
     const dir = def.x >= atk.x ? 1 : -1;
-    const ha = bodyAABB(atk);
-    const hb = bodyAABB(def);
+    // Soft Arte hurt/slash AABB is collision-only; clinch seats on plant body
+    // with bodyGap/keepApart (v522 plant ranging).
+    const ha = plantBodyAABB(atk);
+    const hb = plantBodyAABB(def);
     const gap = dir > 0 ? hb.x - (ha.x + ha.w) : ha.x - (hb.x + hb.w);
     if (gap > THROW_SNAP_GAP) def.x -= dir * (gap - THROW_SNAP_GAP);
   }
@@ -7151,8 +10223,10 @@
       player.x = mid - 1;
       rival.x = mid + 1;
     }
-    const a = bodyAABB(player);
-    const b = bodyAABB(rival);
+    // Soft Arte pose bodies (v517–v533/v601 throwIdle) are hurtboxes only — plant separation
+    // stays on idle DESIGN body so soft AABB does not shove tip out of range.
+    const a = plantBodyAABB(player);
+    const b = plantBodyAABB(rival);
     const push = a.x + a.w - b.x;
     // Throw grab snap leftover: leftover 40px plants overlapped ~300 AABB
     // so this un-push ate the dump the next freeze tick. Hold the clinch
@@ -7191,14 +10265,16 @@
   }
 
   function bodyGap() {
-    const a = bodyAABB(player);
-    const b = bodyAABB(rival);
+    // Soft Arte pose bodies (v517–v533/v601 throwIdle) are hurtboxes. Ranging / AI HOLD /
+    // stam-threat pockets stay on idle plant body with bladeReach/keepApart.
+    const a = plantBodyAABB(player);
+    const b = plantBodyAABB(rival);
     return b.x - (a.x + a.w);
   }
 
   function absGap() {
-    const a = bodyAABB(player);
-    const b = bodyAABB(rival);
+    const a = plantBodyAABB(player);
+    const b = plantBodyAABB(rival);
     if (a.x + a.w < b.x) return b.x - (a.x + a.w);
     if (b.x + b.w < a.x) return a.x - (b.x + b.w);
     return 0;
@@ -7217,6 +10293,13 @@
     return Math.max(0, f.pushVel) * Math.min(f.pushT, win);
   }
 
+  // Post-block link reach gate leftover (v543): predicted foe slide during
+  // follow-up startup. |pushVel| so left/right shove both open absGap.
+  function foeSlide(f, ms) {
+    if (!f || f.pushT <= 0) return 0;
+    return Math.abs(f.pushVel) * Math.min(f.pushT, ms);
+  }
+
   function swingElapsed(f) {
     if (f.phase === "startup") return f.phaseT;
     if (f.phase === "active") return cutStartup(f) + f.phaseT;
@@ -7225,7 +10308,14 @@
 
   function rivalPunishCut() {
     const dist = absGap();
+    // Idle sheet pad is not the sword. Measure with golpe tip (mirror open flush).
+    const ph = rival.phase;
+    const cu = rival.cut;
+    rival.phase = "active";
+    rival.cut = "golpe";
     const gReach = bladeReach(rival) + golpeLungeOf(rival);
+    rival.phase = ph;
+    rival.cut = cu;
     const shove = startupShovePx(rival, GOLPE_STARTUP);
     if (dist + shove <= gReach) startAttack(rival, "golpe");
     else startAttack(rival);
@@ -7240,7 +10330,15 @@
   function armRivalSlashLink(atk) {
     // One roll per connected tajo. Not every slash, not from idle, not on whiff.
     if (!atk || atk.kind !== "rival" || atk.cut !== "slash") return;
+    // Recovery tip understates follow-up. Measure with ACTIVE golpe tip (mirror open/v510–v514 flush).
+    // landHit/landBlock already set phase="recovery"; usingDedicatedPose → slashPose ox=0.
+    const phSlashLink = rival.phase;
+    const cuSlashLink = rival.cut;
+    rival.phase = "active";
+    rival.cut = "golpe";
     const gReach = bladeReach(rival) + golpeLungeOf(rival);
+    rival.phase = phSlashLink;
+    rival.cut = cuSlashLink;
     atk.linkGolpe = rivalLinkRoll(absGap() <= gReach);
   }
 
@@ -7253,7 +10351,10 @@
     // also rolled. True when !clashRec + linkBolt + boltCd ready + meterFull
     // + superArmed + cutToBoltWindow. Empty-meter combo-first unchanged.
     // Clash path still clashRec && linkBolt yield above.
+    // Post-block special-cancel K empty especial leftover (v544): !aiSawBlock
+    // so block keeps empty combo-first / empty CutBolt without especial yield.
     if (!rival || rival.clashRec) return false;
+    if (rival.aiSawBlock) return false;
     if (!rival.linkBolt || rival.boltCd > 0) return false;
     if (!meterFull(rival) || !rival.superArmed) return false;
     return cutToBoltWindow(rival);
@@ -7265,16 +10366,37 @@
     // Clash-K keeps priority so the 40% dart door is not stolen.
     // Hit-confirm especial (v428): full+superArmed linkBolt yields same way.
     if (!rival.linkGolpe) return false;
-    if (rival.clashRec && rival.linkBolt) return false;
+    if (rival.clashRec && rival.linkBolt && rival.boltCd <= 0 && cutToBoltWindow(rival)) return false;
     if (rivalHitConfirmBoltPriority()) return false;
     if (!slashToGolpeWindow(rival)) return false;
+    // Post-block link reach gate leftover (v543): arm rolled inRange at connect
+    // (gap≈0); by late cancel GUARD_PUSH opened the pocket past ACTIVE golpe
+    // tip — empty-meter combo-first whiffed L and stole linkBolt. Snapshot
+    // ACTIVE golpe tip; refuse when predicted gap misses so CutBolt can own.
+    // In-reach empty combo-first kept. Clash-K / v428 yield above untouched.
+    const phSG = rival.phase;
+    const cuSG = rival.cut;
+    rival.phase = "active";
+    rival.cut = "golpe";
+    const gReach = bladeReach(rival) + golpeLungeOf(rival);
+    rival.phase = phSG;
+    rival.cut = cuSG;
+    if (absGap() + foeSlide(player, GOLPE_STARTUP) > gReach) return false;
     return cancelIntoGolpe(rival);
   }
 
   function armRivalGolpeLink(atk) {
     // One roll per connected golpe. Not every L, not from idle, not on whiff.
     if (!atk || atk.kind !== "rival" || atk.cut !== "golpe") return;
+    // Recovery tip understates follow-up. Measure with ACTIVE slash tip (mirror open/v510–v514 flush).
+    // landHit/landBlock already set phase="recovery"; usingDedicatedPose → slashPose ox=0.
+    const phGolpeLink = rival.phase;
+    const cuGolpeLink = rival.cut;
+    rival.phase = "active";
+    rival.cut = "slash";
     const sReach = bladeReach(rival) + slashLungeOf(rival);
+    rival.phase = phGolpeLink;
+    rival.cut = cuGolpeLink;
     atk.linkSlash = rivalLinkRoll(absGap() <= sReach);
   }
 
@@ -7284,9 +10406,20 @@
     // Clash-K keeps priority so the 40% dart door is not stolen.
     // Hit-confirm especial (v428): full+superArmed linkBolt yields same way.
     if (!rival.linkSlash) return false;
-    if (rival.clashRec && rival.linkBolt) return false;
+    if (rival.clashRec && rival.linkBolt && rival.boltCd <= 0 && cutToBoltWindow(rival)) return false;
     if (rivalHitConfirmBoltPriority()) return false;
     if (!golpeToSlashWindow(rival)) return false;
+    // Post-block link reach gate leftover (v543): mirror slash→golpe gate with
+    // ACTIVE slash tip + STARTUP foeSlide so empty-meter reverse combo-first
+    // does not whiff Space after GUARD_PUSH. In-reach empty kept.
+    const phGS = rival.phase;
+    const cuGS = rival.cut;
+    rival.phase = "active";
+    rival.cut = "slash";
+    const sReach = bladeReach(rival) + slashLungeOf(rival);
+    rival.phase = phGS;
+    rival.cut = cuGS;
+    if (absGap() + foeSlide(player, STARTUP) > sReach) return false;
     return cancelIntoSlash(rival);
   }
 
@@ -7295,7 +10428,15 @@
     // Dart always "reaches" — bump when still mid/close so the door fires more in pocket.
     if (!atk || atk.kind !== "rival") return;
     if (atk.cut !== "slash" && atk.cut !== "golpe") return;
+    // Recovery tip understates follow-up. Measure with ACTIVE slash tip (mirror open/v510–v514 flush).
+    // landHit/landBlock already set phase="recovery"; usingDedicatedPose → slashPose ox=0.
+    const phBoltLink = rival.phase;
+    const cuBoltLink = rival.cut;
+    rival.phase = "active";
+    rival.cut = "slash";
     const HOLD = bladeReach(rival) + slashLungeOf(rival);
+    rival.phase = phBoltLink;
+    rival.cut = cuBoltLink;
     atk.linkBolt = rivalLinkRoll(absGap() <= HOLD + 80);
   }
 
@@ -7332,7 +10473,7 @@
     if (rival.boltCd > 0) return false;
     if (!cutToBoltWindow(rival)) return false;
     const ok = cancelIntoBolt(rival);
-    if (ok) rival.boltCd = BOLT_AI_CD;
+    if (ok) rival.boltCd = BOLT_AI_CD && aiCdOf(BOLT_AI_CD);
     return ok;
   }
 
@@ -7340,9 +10481,10 @@
     // Same throw as the player. Only a close hold-guard punish.
     if (rival.throwCd > 0) return false;
     if (!player.guarding) return false;
-    if (absGap() > THROW_RANGE) return false;
+    // CID/ROAN throw range kit leftover (v470): rival grab rides kit (THROW_RANGE baseline).
+    if (absGap() > throwRangeOf(rival)) return false;
     if (!startThrow(rival)) return false;
-    rival.throwCd = THROW_AI_CD;
+    rival.throwCd = THROW_AI_CD && aiCdOf(THROW_AI_CD);
     rival.closing = false;
     rival.standWait = 0;
     rival.standGoal = 0;
@@ -7361,12 +10503,40 @@
     const dist = absGap();
     // CID/ROAN L golpe HOLD meaty-pad kit leftover (v448): golpe pocket rides golpeLungeOf.
     if (player.cut === "golpe") {
+      // Idle sheet pad is not the sword. Measure with golpe tip (mirror open/v510–v512 flush).
+      // Guard sheet has no tipX — poseSheet prefers block while guarding, so clear it
+      // for the tip measure (restore after). wakeRevFadeHold mirrors updateGuard.
+      const phGMeaty = rival.phase;
+      const cuGMeaty = rival.cut;
+      const gGMeaty = rival.guarding;
+      const wrGMeaty = rival.wakeRevFadeHold;
+      rival.guarding = false;
+      rival.phase = "active";
+      rival.cut = "golpe";
       const HOLD = bladeReach(rival) + golpeLungeOf(rival);
+      rival.phase = phGMeaty;
+      rival.cut = cuGMeaty;
+      rival.guarding = gGMeaty;
+      rival.wakeRevFadeHold = wrGMeaty;
       if (dist > HOLD + golpeLungeOf(rival)) return false;
       return true;
     }
-    const HOLD = bladeReach(rival) + slashLungeOf(rival);
+    // Idle sheet pad is not the sword. Measure with slash tip (mirror open/v510–v512 flush).
+    // Guard sheet has no tipX — poseSheet prefers block while guarding, so clear it
+    // for the tip measure (restore after). wakeRevFadeHold mirrors updateGuard.
     // CID/ROAN Space HOLD meaty-pad kit leftover (v447): pad rides slashLungeOf(rival), not LUNGE_PX.
+    const phMeaty = rival.phase;
+    const cuMeaty = rival.cut;
+    const gMeaty = rival.guarding;
+    const wrMeaty = rival.wakeRevFadeHold;
+    rival.guarding = false;
+    rival.phase = "active";
+    rival.cut = "slash";
+    const HOLD = bladeReach(rival) + slashLungeOf(rival);
+    rival.phase = phMeaty;
+    rival.cut = cuMeaty;
+    rival.guarding = gMeaty;
+    rival.wakeRevFadeHold = wrMeaty;
     if (dist > HOLD + slashLungeOf(rival)) return false;
     return true;
   }
@@ -7385,12 +10555,40 @@
     const dist = absGap();
     // CID/ROAN L golpe HOLD meaty-pad kit leftover (v448): golpe pocket rides golpeLungeOf.
     if (rival.cut === "golpe") {
+      // Teach meatyMeleeAt* ACTIVE tip-flush leftover (v584): mirror v513 meatySpaceAtGuard.
+      // Guard sheet has no tipX — poseSheet prefers block while guarding, so clear it
+      // for the tip measure (restore after). wakeRevFadeHold mirrors updateGuard.
+      const phGPG = player.phase;
+      const cuGPG = player.cut;
+      const gGPG = player.guarding;
+      const wrGPG = player.wakeRevFadeHold;
+      player.guarding = false;
+      player.phase = "active";
+      player.cut = "golpe";
       const HOLD = bladeReach(player) + golpeLungeOf(player);
+      player.phase = phGPG;
+      player.cut = cuGPG;
+      player.guarding = gGPG;
+      player.wakeRevFadeHold = wrGPG;
       if (dist > HOLD + golpeLungeOf(player)) return false;
       return true;
     }
-    const HOLD = bladeReach(player) + slashLungeOf(player);
+    // Teach meatyMeleeAt* ACTIVE tip-flush leftover (v584): mirror v513 meatySpaceAtGuard.
+    // Guard sheet has no tipX — poseSheet prefers block while guarding, so clear it
+    // for the tip measure (restore after). wakeRevFadeHold mirrors updateGuard.
     // CID/ROAN Space HOLD meaty-pad kit leftover (v447): pad rides slashLungeOf(player), not LUNGE_PX.
+    const phPG = player.phase;
+    const cuPG = player.cut;
+    const gPG = player.guarding;
+    const wrPG = player.wakeRevFadeHold;
+    player.guarding = false;
+    player.phase = "active";
+    player.cut = "slash";
+    const HOLD = bladeReach(player) + slashLungeOf(player);
+    player.phase = phPG;
+    player.cut = cuPG;
+    player.guarding = gPG;
+    player.wakeRevFadeHold = wrPG;
     if (dist > HOLD + slashLungeOf(player)) return false;
     return true;
   }
@@ -7409,13 +10607,123 @@
     const dist = absGap();
     // CID/ROAN L golpe HOLD meaty-pad kit leftover (v448): golpe pocket rides golpeLungeOf.
     if (rival.cut === "golpe") {
+      // Teach meatyMeleeAt* ACTIVE tip-flush leftover (v584): mirror v514 meatySpaceAtWake.
+      // Idle/walk sheet has no tipX → sheet-edge; measure with ACTIVE golpe tip.
+      const phGPO = player.phase;
+      const cuGPO = player.cut;
+      player.phase = "active";
+      player.cut = "golpe";
       const HOLD = bladeReach(player) + golpeLungeOf(player);
+      player.phase = phGPO;
+      player.cut = cuGPO;
       if (dist > HOLD + golpeLungeOf(player)) return false;
       return true;
     }
-    const HOLD = bladeReach(player) + slashLungeOf(player);
+    // Teach meatyMeleeAt* ACTIVE tip-flush leftover (v584): mirror v514 meatySpaceAtWake.
+    // Idle/walk sheet has no tipX → sheet-edge; measure with ACTIVE slash tip.
     // CID/ROAN Space HOLD meaty-pad kit leftover (v447): pad rides slashLungeOf(player), not LUNGE_PX.
+    const phPO = player.phase;
+    const cuPO = player.cut;
+    player.phase = "active";
+    player.cut = "slash";
+    const HOLD = bladeReach(player) + slashLungeOf(player);
+    player.phase = phPO;
+    player.cut = cuPO;
     if (dist > HOLD + slashLungeOf(player)) return false;
+    return true;
+  }
+
+  function meatyMeleeAtRivalOpen() {
+    // Versus/online P2 parry teach fairness leftover (v461): mirror of
+    // meatyMeleeAtPlayerOpen for human P2 seat. Incoming player Space/L in
+    // threat while rival is open (not holding guard). Not dart, not throw.
+    // Teach gate for drawParryHint P2 seat. Hold-guard meaty stays REV/PB.
+    if (!player || !rival) return false;
+    if (rival.guarding) return false;
+    if (rival.guardBreakT > 0) return false;
+    if (player.cut !== "slash" && player.cut !== "golpe") return false;
+    if (player.phase !== "startup" && player.phase !== "active") return false;
+    if (player.boltPhase === "startup") return false;
+    if (bolt && bolt.kind === "you") return false;
+    const dist = absGap();
+    // CID/ROAN L golpe HOLD meaty-pad kit leftover (v448): golpe pocket rides golpeLungeOf.
+    if (player.cut === "golpe") {
+      // Teach meatyMeleeAt* ACTIVE tip-flush leftover (v584): mirror v514 meatySpaceAtWake.
+      // Idle/walk sheet has no tipX → sheet-edge; measure with ACTIVE golpe tip.
+      const phGRO = rival.phase;
+      const cuGRO = rival.cut;
+      rival.phase = "active";
+      rival.cut = "golpe";
+      const HOLD = bladeReach(rival) + golpeLungeOf(rival);
+      rival.phase = phGRO;
+      rival.cut = cuGRO;
+      if (dist > HOLD + golpeLungeOf(rival)) return false;
+      return true;
+    }
+    // Teach meatyMeleeAt* ACTIVE tip-flush leftover (v584): mirror v514 meatySpaceAtWake.
+    // Idle/walk sheet has no tipX → sheet-edge; measure with ACTIVE slash tip.
+    // CID/ROAN Space HOLD meaty-pad kit leftover (v447): pad rides slashLungeOf(rival), not LUNGE_PX.
+    const phRO = rival.phase;
+    const cuRO = rival.cut;
+    rival.phase = "active";
+    rival.cut = "slash";
+    const HOLD = bladeReach(rival) + slashLungeOf(rival);
+    rival.phase = phRO;
+    rival.cut = cuRO;
+    if (dist > HOLD + slashLungeOf(rival)) return false;
+    return true;
+  }
+
+  function meatyMeleeAtRivalGuard() {
+    // Versus/online P2 reversal teach fairness leftover (v487): mirror of
+    // meatyMeleeAtPlayerGuard for human P2 seat. Incoming player Space/L while
+    // rival holds guard, in threat. Not dart, not throw. Teach gate for
+    // drawReversalHint P2 seat. Open meaty stays PARRY (v461).
+    if (!player || !rival) return false;
+    if (!rival.guarding) return false;
+    if (rival.guardBreakT > 0) return false;
+    if (player.cut !== "slash" && player.cut !== "golpe") return false;
+    if (player.phase !== "startup" && player.phase !== "active") return false;
+    if (player.boltPhase === "startup") return false;
+    if (bolt && bolt.kind === "you") return false;
+    const dist = absGap();
+    // CID/ROAN L golpe HOLD meaty-pad kit leftover (v448): golpe pocket rides golpeLungeOf.
+    if (player.cut === "golpe") {
+      // Teach meatyMeleeAt* ACTIVE tip-flush leftover (v584): mirror v513 meatySpaceAtGuard.
+      // Guard sheet has no tipX — poseSheet prefers block while guarding, so clear it
+      // for the tip measure (restore after). wakeRevFadeHold mirrors updateGuard.
+      const phGRG = rival.phase;
+      const cuGRG = rival.cut;
+      const gGRG = rival.guarding;
+      const wrGRG = rival.wakeRevFadeHold;
+      rival.guarding = false;
+      rival.phase = "active";
+      rival.cut = "golpe";
+      const HOLD = bladeReach(rival) + golpeLungeOf(rival);
+      rival.phase = phGRG;
+      rival.cut = cuGRG;
+      rival.guarding = gGRG;
+      rival.wakeRevFadeHold = wrGRG;
+      if (dist > HOLD + golpeLungeOf(rival)) return false;
+      return true;
+    }
+    // Teach meatyMeleeAt* ACTIVE tip-flush leftover (v584): mirror v513 meatySpaceAtGuard.
+    // Guard sheet has no tipX — poseSheet prefers block while guarding, so clear it
+    // for the tip measure (restore after). wakeRevFadeHold mirrors updateGuard.
+    // CID/ROAN Space HOLD meaty-pad kit leftover (v447): pad rides slashLungeOf(rival), not LUNGE_PX.
+    const phRG = rival.phase;
+    const cuRG = rival.cut;
+    const gRG = rival.guarding;
+    const wrRG = rival.wakeRevFadeHold;
+    rival.guarding = false;
+    rival.phase = "active";
+    rival.cut = "slash";
+    const HOLD = bladeReach(rival) + slashLungeOf(rival);
+    rival.phase = phRG;
+    rival.cut = cuRG;
+    rival.guarding = gRG;
+    rival.wakeRevFadeHold = wrRG;
+    if (dist > HOLD + slashLungeOf(rival)) return false;
     return true;
   }
 
@@ -7435,7 +10743,7 @@
     armRivalReversal();
     if (rival.revArmed !== 1) return false;
     if (!startReversal(rival)) return false;
-    rival.revCd = REVERSAL_AI_CD;
+    rival.revCd = REVERSAL_AI_CD && aiCdOf(REVERSAL_AI_CD);
     rival.guardChoice = 0;
     rival.wantBlock = false;
     rival.closing = false;
@@ -7462,20 +10770,25 @@
     armRivalPushblock();
     if (rival.pbArmed !== 1) return false;
     if (!tryPushblock(rival, awayWalkDir(rival))) return false;
-    rival.pbCd = PUSHBLOCK_AI_CD;
+    rival.pbCd = PUSHBLOCK_AI_CD && aiCdOf(PUSHBLOCK_AI_CD);
     return true;
   }
 
   function rivalPushblockOnBlock() {
     // Connecting block is the meaty. landBlock already set atk to recovery, so
     // meatySpaceAtGuard is false — do not use that gate here. Same 40%/CD/25/240.
+    // Rival PB once-per-block pbArmed sticky leftover (v479): live connect never
+    // cleared pbArmed (only dead rivalTryPushblock did on !meatySpaceAtGuard), so
+    // first roll of the round stuck — −1 never shoved, +1 after CD was a 100%
+    // robot. Soft: zero before arm so each connecting block re-rolls 40%.
     if (!rival.guarding) return false;
     if (rival.guardBreakT > 0) return false;
     if (rival.pbCd > 0) return false;
+    rival.pbArmed = 0;
     armRivalPushblock();
     if (rival.pbArmed !== 1) return false;
     if (!tryPushblock(rival, awayWalkDir(rival))) return false;
-    rival.pbCd = PUSHBLOCK_AI_CD;
+    rival.pbCd = PUSHBLOCK_AI_CD && aiCdOf(PUSHBLOCK_AI_CD);
     return true;
   }
 
@@ -7490,12 +10803,28 @@
     const dist = absGap();
     // CID/ROAN L golpe HOLD meaty-pad kit leftover (v448): golpe pocket rides golpeLungeOf.
     if (player.cut === "golpe") {
+      // Idle sheet pad is not the sword. Measure with golpe tip (mirror open/v510–v513 flush).
+      // wakeupWindow forces phase==="idle"; idle has no tipX → sheet-edge.
+      const phGWake = rival.phase;
+      const cuGWake = rival.cut;
+      rival.phase = "active";
+      rival.cut = "golpe";
       const HOLD = bladeReach(rival) + golpeLungeOf(rival);
+      rival.phase = phGWake;
+      rival.cut = cuGWake;
       if (dist > HOLD + golpeLungeOf(rival)) return false;
       return true;
     }
-    const HOLD = bladeReach(rival) + slashLungeOf(rival);
+    // Idle sheet pad is not the sword. Measure with slash tip (mirror open/v510–v513 flush).
+    // wakeupWindow forces phase==="idle"; idle has no tipX → sheet-edge.
     // CID/ROAN Space HOLD meaty-pad kit leftover (v447): pad rides slashLungeOf(rival), not LUNGE_PX.
+    const phWake = rival.phase;
+    const cuWake = rival.cut;
+    rival.phase = "active";
+    rival.cut = "slash";
+    const HOLD = bladeReach(rival) + slashLungeOf(rival);
+    rival.phase = phWake;
+    rival.cut = cuWake;
     if (dist > HOLD + slashLungeOf(rival)) return false;
     return true;
   }
@@ -7514,13 +10843,70 @@
     const dist = absGap();
     // CID/ROAN L golpe HOLD meaty-pad kit leftover (v448): golpe pocket rides golpeLungeOf.
     if (rival.cut === "golpe") {
+      // Teach meatyMeleeAt* ACTIVE tip-flush leftover (v584): mirror v514 meatySpaceAtWake.
+      // wakeupWindow forces phase==="idle"; idle has no tipX → sheet-edge.
+      const phGPW = player.phase;
+      const cuGPW = player.cut;
+      player.phase = "active";
+      player.cut = "golpe";
       const HOLD = bladeReach(player) + golpeLungeOf(player);
+      player.phase = phGPW;
+      player.cut = cuGPW;
       if (dist > HOLD + golpeLungeOf(player)) return false;
       return true;
     }
-    const HOLD = bladeReach(player) + slashLungeOf(player);
+    // Teach meatyMeleeAt* ACTIVE tip-flush leftover (v584): mirror v514 meatySpaceAtWake.
+    // wakeupWindow forces phase==="idle"; idle has no tipX → sheet-edge.
     // CID/ROAN Space HOLD meaty-pad kit leftover (v447): pad rides slashLungeOf(player), not LUNGE_PX.
+    const phPW = player.phase;
+    const cuPW = player.cut;
+    player.phase = "active";
+    player.cut = "slash";
+    const HOLD = bladeReach(player) + slashLungeOf(player);
+    player.phase = phPW;
+    player.cut = cuPW;
     if (dist > HOLD + slashLungeOf(player)) return false;
+    return true;
+  }
+
+  function meatyMeleeAtRivalWake() {
+    // Versus/online P2 wake-REV teach fairness leftover (v489): mirror of
+    // meatyMeleeAtPlayerWake for human P2 seat. Incoming player Space/L on
+    // getup, in pocket. Not dart, not throw. Teach gate for
+    // drawWakeReversalHint P2 seat. Hold-guard meaty stays REV/PB.
+    if (!player || !rival) return false;
+    if (!wakeupWindow(rival)) return false;
+    if (rival.guarding) return false;
+    if (player.cut !== "slash" && player.cut !== "golpe") return false;
+    if (player.phase !== "startup" && player.phase !== "active") return false;
+    if (player.boltPhase === "startup") return false;
+    if (bolt && bolt.kind === "you") return false;
+    const dist = absGap();
+    // CID/ROAN L golpe HOLD meaty-pad kit leftover (v448): golpe pocket rides golpeLungeOf.
+    if (player.cut === "golpe") {
+      // Teach meatyMeleeAt* ACTIVE tip-flush leftover (v584): mirror v514 meatySpaceAtWake.
+      // wakeupWindow forces phase==="idle"; idle has no tipX → sheet-edge.
+      const phGRW = rival.phase;
+      const cuGRW = rival.cut;
+      rival.phase = "active";
+      rival.cut = "golpe";
+      const HOLD = bladeReach(rival) + golpeLungeOf(rival);
+      rival.phase = phGRW;
+      rival.cut = cuGRW;
+      if (dist > HOLD + golpeLungeOf(rival)) return false;
+      return true;
+    }
+    // Teach meatyMeleeAt* ACTIVE tip-flush leftover (v584): mirror v514 meatySpaceAtWake.
+    // wakeupWindow forces phase==="idle"; idle has no tipX → sheet-edge.
+    // CID/ROAN Space HOLD meaty-pad kit leftover (v447): pad rides slashLungeOf(rival), not LUNGE_PX.
+    const phRW = rival.phase;
+    const cuRW = rival.cut;
+    rival.phase = "active";
+    rival.cut = "slash";
+    const HOLD = bladeReach(rival) + slashLungeOf(rival);
+    rival.phase = phRW;
+    rival.cut = cuRW;
+    if (dist > HOLD + slashLungeOf(rival)) return false;
     return true;
   }
 
@@ -7540,7 +10926,7 @@
     armRivalWakeReversal();
     if (rival.wakeRevArmed !== 1) return false;
     if (!startWakeReversal(rival)) return false;
-    rival.revCd = REVERSAL_AI_CD;
+    rival.revCd = REVERSAL_AI_CD && aiCdOf(REVERSAL_AI_CD);
     rival.guardChoice = 0;
     rival.wantBlock = false;
     rival.closing = false;
@@ -7573,6 +10959,9 @@
   }
 
   function rivalTryFeint() {
+    // bait feint-into-retreat rivalTryFeint order leftover (v556):
+    // When aiFeintRetreat armed, rivalTryFeintRetreat owns pull+retreat.
+    if (rival.aiFeintRetreat) return false;
     // Same startFeint as the player. Only vs a committed player guard on
     // their slash startup. Not vs dart, not vs throw, not every slash.
     if (!canFeint(rival)) {
@@ -7584,10 +10973,14 @@
     armRivalFeint();
     if (rival.feintArmed !== 1) return false;
     if (!startFeint(rival)) return false;
-    rival.feintCd = FEINT_AI_CD;
+    rival.feintCd = FEINT_AI_CD && aiCdOf(FEINT_AI_CD);
     rival.feintArmed = 0;
     rival.wantBlock = false;
-    rival.closing = false;
+    // vs-guard feint-commit leftover (v558):
+    // Outside THROW_RANGE keep closing so hold-S convert can arm after feintT.
+    // In-range still yields to rivalTryThrow after feintT (closing=false).
+    if (player.guarding && absGap() > throwRangeOf(rival)) rival.closing = true;
+    else rival.closing = false;
     return true;
   }
 
@@ -7609,10 +11002,15 @@
       rival.aiFeintRetreat = false;
       return false;
     }
-    rival.feintCd = FEINT_AI_CD;
+    rival.feintCd = FEINT_AI_CD && aiCdOf(FEINT_AI_CD);
     rival.aiFeintRetreat = false;
     rival.wantBlock = false;
     rival.closing = false;
+    // bait feint-retreat boltArmed mirror leftover (v557):
+    // Mirror post-reset / close-reset / mid-CD retreat — arm before walk-out
+    // so retreat-end dart (boltArmed && boltCd≤0 && dist>HOLD+16) can fire.
+    // Open-bait→feint-retreat early-returns before dist≤HOLD re-arm.
+    rival.boltArmed = true;
     rivalStartRetreat();
     return true;
   }
@@ -7637,7 +11035,7 @@
     if (rival.boltCd > 0) return false;
     if (!canStartBolt(rival)) return false;
     startBolt(rival, rivalShouldSuper());
-    rival.boltCd = BOLT_AI_CD;
+    rival.boltCd = BOLT_AI_CD && aiCdOf(BOLT_AI_CD);
     rivalClearCommit();
     return true;
   }
@@ -7673,13 +11071,24 @@
     // harness Math.random=0.99 still reads a Space commit.
     rivalClearCommit();
 
+    // idle-commit bait/reset vs hold-S turtle leftover (v561):
+    // Gate bait/reset/post-reset on !player.guarding so turtle idle
+    // commits chip (slash/golpe) instead of dead arm + full re-standoff
+    // (v540/v551 abort). Non-guard bait/reset/post-reset unchanged.
     if (rival.aiResetT > 0) {
       const wantReset = Math.random() < AI_POST_RESET;
       rival.aiResetT = 0;
-      if (wantReset && rivalDoPostReset(roomBack, HOLD, dist)) return;
+      if (wantReset && !player.guarding && rivalDoPostReset(roomBack, HOLD, dist)) return;
     }
 
+    // Idle sheet pad is not the sword. Measure with golpe tip (mirror open flush).
+    const phG = rival.phase;
+    const cuG = rival.cut;
+    rival.phase = "active";
+    rival.cut = "golpe";
     const gReach = bladeReach(rival) + golpeLungeOf(rival);
+    rival.phase = phG;
+    rival.cut = cuG;
     const shove = startupShovePx(rival, GOLPE_STARTUP);
     const golpeOk = dist + shove <= gReach;
     const r = Math.random();
@@ -7693,7 +11102,7 @@
     // Harness 0.99 still Space. Not a super robot (BOLT_AI_CD). Versus skipped.
     if (rivalShouldSuper() && rival.boltCd <= 0 && canStartBolt(rival) && r < AI_CLOSE_SUPER) {
       startBolt(rival, true);
-      rival.boltCd = BOLT_AI_CD;
+      rival.boltCd = BOLT_AI_CD && aiCdOf(BOLT_AI_CD);
       return;
     }
 
@@ -7706,13 +11115,13 @@
       startAttack(rival);
       return;
     }
-    if (r < tBait && canStartGuard) {
+    if (r < tBait && canStartGuard && !player.guarding) {
       rival.aiBaitT = AI_BAIT_MS_MIN + Math.random() * (AI_BAIT_MS_MAX - AI_BAIT_MS_MIN);
       rival.guardChoice = 1;
       rival.wantBlock = true;
       return;
     }
-    if (r < tReset && roomBack) {
+    if (r < tReset && roomBack && !player.guarding) {
       rival.boltArmed = true;
       rivalStartRetreat();
       return;
@@ -7721,6 +11130,185 @@
     startAttack(rival);
   }
 
+
+  // Versus/online P2 mid-combat buffer fairness leftover (v452): flush after
+  // advanceAttack (mirror P1 slashBuf idle flush timing) so recovery→idle same
+  // frame still fires the buffered meaty.
+  function flushVersusP2CombatBufs() {
+    if (matchKind !== "versus" && matchKind !== "online") return;
+    if (mode !== "play") return;
+    if (openLeft > 0) return;
+    if (rival.falling) return;
+    // Versus/online P2 hold-guard hitstop flush leftover (v490): v455 arms
+    // p2ReversalBuf / p2ThrowBuf under hitstopLeft, but guarding used to
+    // hard-return here — so freeze-lift with hold-guarda still on ate the
+    // REV / throw flush (P1 dumps slash/golpe/bolt/open only and keeps
+    // throwBuf/reversalBuf → startReversal/startThrow while guarding). Soft:
+    // mirror P1 dump; still run p2ThrowBuf + p2ReversalBuf flushes below.
+    // Cancel / idle attack flushes refuse guarding (windows / dumped bufs).
+    // Hold-S drop-guard dart buffer leftover (v547): keep p2BoltBuf through
+    // rival.guarding (mirror P1 boltBuf); slash/golpe/open* still dump.
+    // Idle/cancel bolt flush gates !rival.guarding (no dart while hold-S).
+    if (rival.guarding) {
+      p2SlashBuf = false;
+      p2GolpeBuf = false;
+      /* p2BoltBuf kept v547 */
+      p2OpenBuf = false;
+      p2OpenGolpeBuf = false;
+      p2OpenBoltBuf = false;
+    }
+    // Versus/online P2 rising-guard PB flush leftover (v494): tickVersusP2
+    // armed p2PushblockBuf on rising wantG+away before updateGuard; after
+    // raise, fire tryPushblock while guarding (mirror v491 rising REV flush).
+    if (rival.guarding && p2PushblockBuf) {
+      // Unpaid EMPUJON pushblockBuf keep leftover (v592): only clear when
+      // tryPushblock succeeds; unpaid refuse keeps p2PushblockBuf.
+      if (tryPushblock(rival, p2PushblockBuf)) p2PushblockBuf = 0;
+      else if (!(p2PushblockBuf === awayWalkDir(rival) && rival.stamina < PUSHBLOCK_STAM)) p2PushblockBuf = 0;
+    }
+    // Versus/online P2 perfect-parry / riposte fairness leftover (v454): fire
+    // armed reward slash before mid-combat buf flushes (mirror tryFireRiposte).
+    tryFireRiposteP2();
+    // Cancel doors from buffered presses (mirror P1 buffered cancel flushes).
+    // Cancel-door BOLT_STAM leftover (v578): a doomed P2 K buffer is discarded
+    // in its live door so it cannot block the payable O/P flush forever.
+    if (p2BoltBuf && cutToBoltWindowOpen(rival) && rival.stamina < BOLT_STAM) p2BoltBuf = false;
+    if (p2BoltBuf && cutToBoltWindow(rival) && rival.stamina >= BOLT_STAM && !rival.stunT && !rival.guarding && cancelIntoBolt(rival)) {
+      p2BoltBuf = false;
+      p2SlashBuf = false;
+      p2GolpeBuf = false;
+    }
+    if (p2SlashBuf && golpeToSlashWindow(rival) && !rival.stunT && !(p2BoltBuf && cutToBoltWindow(rival) && rival.stamina >= BOLT_STAM) && cancelIntoSlash(rival)) {
+      p2SlashBuf = false;
+      p2GolpeBuf = false;
+    }
+    if (p2GolpeBuf && slashToGolpeWindow(rival) && !rival.stunT && !(p2BoltBuf && cutToBoltWindow(rival) && rival.stamina >= BOLT_STAM) && cancelIntoGolpe(rival)) {
+      p2GolpeBuf = false;
+      p2SlashBuf = false;
+    }
+    if (p2SlashBuf && rival.phase === "idle" && rival.stunT <= 0 && rival.feintT <= 0 && rival.guardBreakT <= 0 && !rival.boltPhase) {
+      // Wake getup buffer priority leftover (v473): yield to p2GolpeBuf/p2ReversalBuf
+      // wakeupWindow door (mirror P1 slashBuf yield).
+      if (wakeupWindow(rival) && (p2GolpeBuf || p2ReversalBuf)) {
+        /* hold — wake L/rev flush owns the getup */
+      } else {
+        const ph = rival.phase;
+        rival.phase = "active";
+        const hold = bladeReach(rival) + slashLungeOf(rival);
+        rival.phase = ph;
+        if (bodyGap() <= hold + 2) {
+          p2SlashBuf = false;
+          p2GolpeBuf = false;
+          p2OpenBoltBuf = false;
+          startAttack(rival);
+        }
+      }
+    }
+    if (p2GolpeBuf && rival.phase === "idle" && rival.stunT <= 0 && rival.feintT <= 0 && rival.guardBreakT <= 0 && !rival.boltPhase) {
+      // Wake KD→L buffer fairness leftover (v472): keep through thrownT; flush
+      // into wakeupWindow → startWakeReversal (mirror P1 golpeBuf keep).
+      if ((rival.thrownT || 0) > 0) {
+        /* hold — KD; wakeupWindow flush owns the getup L */
+      } else if (wakeupWindow(rival) && startWakeReversal(rival)) {
+        p2GolpeBuf = false;
+        p2SlashBuf = false;
+      } else if (wakeupWindow(rival)) {
+        /* Unpaid wake-L hold leftover (v582): hold p2GolpeBuf — do not startAttack
+           while throwInvulnT live. Too late (window gone) still flushes normal L. */
+      } else {
+        const ph = rival.phase;
+        rival.phase = "active";
+        const hold = bladeReach(rival) + golpeLungeOf(rival);
+        rival.phase = ph;
+        if (bodyGap() <= hold + 2) {
+          p2GolpeBuf = false;
+          p2SlashBuf = false;
+          p2OpenBoltBuf = false;
+          startAttack(rival, "golpe");
+        }
+      }
+    }
+    // Mirror P1 idle boltBuf hold-gate (v403/v404/v419 fairness).
+    // Player super buffer leftover (v463): mirror meterFull superRangeOf persist/fire.
+    if (p2BoltBuf && rival.phase === "idle" && rival.feintT <= 0 && rival.guardBreakT <= 0 && rival.stunT <= 0 && !rival.guarding && !rival.boltPhase) {
+      // Wake getup buffer priority leftover (v473): yield to wake L/rev on getup.
+      if (wakeupWindow(rival) && (p2GolpeBuf || p2ReversalBuf)) {
+        /* hold — wake L/rev flush owns the getup */
+      } else if (meterFull(rival)) {
+        if (absGap() <= superRangeOf(rival) && canStartBolt(rival)) {
+          p2BoltBuf = false;
+          p2SlashBuf = false;
+          p2GolpeBuf = false;
+          p2OpenBoltBuf = false;
+          // Answer-plant→K full-meter forced spend leftover (v474): empty vs plant.
+          startBolt(rival, !boltAnswerEmpty(rival));
+        } else if (!canStartBolt(rival)) {
+          p2BoltBuf = false;
+        }
+        /* else persist — walk-in to kit superRange */
+      } else {
+        const ph = rival.phase;
+        rival.phase = "active";
+        const hold = bladeReach(rival) + slashLungeOf(rival);
+        rival.phase = ph;
+        if (bodyGap() <= hold + 2 && canStartBolt(rival)) {
+          p2BoltBuf = false;
+          p2SlashBuf = false;
+          p2GolpeBuf = false;
+          p2OpenBoltBuf = false;
+          startBolt(rival, true);
+        } else {
+          p2BoltBuf = false;
+        }
+      }
+    }
+    // Throw-buffer tech-from-recovery leftover (v476): mirror P1 — tech flush
+    // any phase tryThrowTech allows; startThrow still idle/guard only.
+    if (p2ThrowBuf && !rival.falling) {
+      // Wake getup buffer priority leftover (v473): yield to wake L/rev on getup.
+      if (wakeupWindow(rival) && (p2GolpeBuf || p2ReversalBuf)) {
+        /* hold — wake L/rev flush owns the getup */
+      } else if (tryThrowTech(rival)) {
+        p2ThrowBuf = false;
+        p2SlashBuf = false;
+        p2GolpeBuf = false;
+        p2BoltBuf = false;
+        p2ReversalBuf = false;
+      } else if ((rival.phase === "idle" || rival.guarding) && rival.stunT <= 0 && !rival.boltPhase && rival.feintT <= 0 && rival.guardBreakT <= 0) {
+        if (throwLocked(throwFoe(rival))) {
+          /* hold — foe stun / KD / wakeup invuln */
+        } else {
+          p2ThrowBuf = false;
+          p2SlashBuf = false;
+          p2GolpeBuf = false;
+          p2BoltBuf = false;
+          p2ReversalBuf = false;
+          startThrow(rival);
+        }
+      }
+    }
+    // Wake KD→L buffer fairness leftover (v472): hold-S+L kept through KD flushes
+    // into wakeupWindow first (mirror P1 reversalBuf).
+    if (p2ReversalBuf && rival.stunT <= 0 && !rival.boltPhase && rival.feintT <= 0 && (rival.thrownT || 0) <= 0) {
+      if (wakeupWindow(rival) && startWakeReversal(rival)) {
+        p2ReversalBuf = false;
+        p2SlashBuf = false;
+        p2GolpeBuf = false;
+        p2BoltBuf = false;
+        p2ThrowBuf = false;
+      } else if (rival.guarding) {
+        // Unpaid hold-S REV buffer hold leftover (v591): only clear when
+        // startReversal succeeds; unpaid refuse keeps p2ReversalBuf.
+        if (startReversal(rival)) {
+          p2ReversalBuf = false;
+          p2SlashBuf = false;
+          p2GolpeBuf = false;
+          p2BoltBuf = false;
+          p2ThrowBuf = false;
+        }
+      }
+    }
+  }
 
   function tickVersusP2(dt) {
     // Versus local 2P playable unlock leftover (v430): drive rival from
@@ -7731,7 +11319,10 @@
     // Auto-link cancels skipped at call site. VERSUS_2P_READY true.
     // Versus fair-open leftover (v431): mid-measure edges arm p2Open*Buf
     // (mirror P1); flush after open with hold-gate; p2Held tracks through open.
-    if (matchKind !== "versus") return;
+    // Versus/online P2 opening walk/guard fairness leftover (v498): open also
+    // mirrors mid-combat wantBlock + walk (P1 never refused mid-measure).
+    // Online human-P2 seat leftover (v451): online admits same P2 seat (menu locked).
+    if (matchKind !== "versus" && matchKind !== "online") return;
     if (mode !== "play") return;
 
     const wantL = p2ActionHeld("left");
@@ -7756,35 +11347,143 @@
     p2Held.dart = wantDart;
 
     if (openLeft > 0) {
-      // Soft open buffers — no walk/attack mid-measure (mirror P1 refuse).
+      // Soft open buffers — attack fire still refused mid-measure; walk/guard
+      // now mirror P1 (v498). Versus/online P2 mid-combat buffer fairness
+      // leftover (v452): open arms dump mid-combat bufs (mirror P1 openBuf
+      // clearing slashBuf).
       if (edgeDart) {
         p2OpenBoltBuf = true;
         p2OpenBuf = false;
         p2OpenGolpeBuf = false;
+        p2SlashBuf = false;
+        p2GolpeBuf = false;
+        p2BoltBuf = false;
+        p2ThrowBuf = false;
       } else if (edgeGolpe && !wantG) {
         p2OpenGolpeBuf = true;
         p2OpenBuf = false;
         p2OpenBoltBuf = false;
+        p2SlashBuf = false;
+        p2GolpeBuf = false;
+        p2BoltBuf = false;
+        p2ThrowBuf = false;
+      } else if (edgeGolpe && wantG) {
+        // Opening rev buffer fairness leftover (v493): mirror P1 reversalBuf
+        // arm through OPENING_MS — edgeGolpe+wantG unread while open* armed.
+        p2ReversalBuf = true;
+        p2OpenBuf = false;
+        p2OpenGolpeBuf = false;
+        p2OpenBoltBuf = false;
+        p2SlashBuf = false;
+        p2GolpeBuf = false;
+        p2BoltBuf = false;
+        p2ThrowBuf = false;
+      } else if (edgeSlash && wantG) {
+        // Opening throw buffer fairness leftover (v492): mirror P1 throwBuf
+        // arm through OPENING_MS — edgeSlash+wantG unread while open* armed.
+        p2ThrowBuf = true;
+        p2OpenBuf = false;
+        p2OpenGolpeBuf = false;
+        p2OpenBoltBuf = false;
+        p2SlashBuf = false;
+        p2GolpeBuf = false;
+        p2BoltBuf = false;
+        p2ReversalBuf = false;
       } else if (edgeSlash && !wantG) {
         p2OpenBuf = true;
         p2OpenBoltBuf = false;
         p2OpenGolpeBuf = false;
+        p2SlashBuf = false;
+        p2GolpeBuf = false;
+        p2BoltBuf = false;
+        p2ThrowBuf = false;
       }
-      rival.wantBlock = false;
-      rival.gait = 0;
+      // Versus/online P2 opening walk/guard fairness leftover (v498): P1
+      // updateGuard + gait have no openLeft gate; open used to statue P2
+      // (wantBlock=false; gait=0; return). Mirror mid-combat wantBlock + walk;
+      // keep early-return before attack fire. Open bufs / throw/rev arms alone.
+      const canGuardOpen = rival.stamina >= STAMINA_START_MIN && rival.guardBreakT <= 0;
+      rival.wantBlock = wantG && canGuardOpen && !rival.riposteArmed;
+      let moveOpen = 0;
+      if (!rival.guarding && rival.phase === "idle" && !rival.boltPhase && rival.feintT <= 0 && rival.guardBreakT <= 0) {
+        if (wantL) moveOpen -= 1;
+        if (wantR) moveOpen += 1;
+      }
       rival.closing = false;
+      rival.gait = moveOpen;
+      if (moveOpen !== 0) {
+        let step = moveOpen * walkSpeed(rival) * walkCadence(rival) * (dt / 1000);
+        const GAP = 120;
+        const g = bodyGap();
+        if (moveOpen > 0) {
+          // Rival on the right facing left: +x walks away; pocket clamp unused.
+          rival.x += step;
+        } else {
+          if (g <= GAP) { step = 0; moveOpen = 0; rival.gait = 0; }
+          else step = -Math.min(-step, g - GAP);
+          rival.x += step;
+        }
+      }
       return;
     }
 
-    if (rival.falling || rival.stunT > 0 || (rival.thrownT || 0) > 0 || rival.guardBreakT > 0) {
+    if (rival.falling) {
       rival.wantBlock = false;
       rival.gait = 0;
       rival.closing = false;
       p2OpenBuf = false;
       p2OpenGolpeBuf = false;
       p2OpenBoltBuf = false;
-      // Wakeup L still reachable while thrownT drains via edge below? thrownT
-      // gates here — wakeupWindow runs after thrownT clears (idle path).
+      p2SlashBuf = false;
+      p2GolpeBuf = false;
+      p2BoltBuf = false;
+      p2ThrowBuf = false;
+      p2ReversalBuf = false;
+      p2PushblockBuf = 0;
+      return;
+    }
+
+    // Versus/online P2 mid-combat buffer fairness leftover (v452): stun /
+    // thrownT / guardBreak used to early-return after p2Held ate the edge —
+    // no mid-combat buf (P1 slashBuf already holds). Soft: arm buffers here;
+    // open* still clear; Wake KD→L v472 keeps p2GolpeBuf / p2ReversalBuf through thrownT.
+    if (rival.stunT > 0 || (rival.thrownT || 0) > 0 || rival.guardBreakT > 0) {
+      rival.wantBlock = false;
+      rival.gait = 0;
+      rival.closing = false;
+      p2OpenBuf = false;
+      p2OpenGolpeBuf = false;
+      p2OpenBoltBuf = false;
+      if (edgeDart) {
+        p2BoltBuf = true;
+        p2SlashBuf = false;
+        p2GolpeBuf = false;
+        p2ThrowBuf = false;
+      } else if (edgeGolpe && wantG) {
+        // Wake KD→L buffer fairness leftover (v472): arm hold-S+L through thrownT.
+        p2ReversalBuf = true;
+        p2SlashBuf = false;
+        p2GolpeBuf = false;
+        p2BoltBuf = false;
+        p2ThrowBuf = false;
+      } else if (edgeGolpe && !wantG) {
+        // Wake KD→L buffer fairness leftover (v472): arm L through thrownT.
+        p2GolpeBuf = true;
+        p2SlashBuf = false;
+        p2BoltBuf = false;
+        p2ThrowBuf = false;
+      } else if (edgeSlash && wantG) {
+        p2ThrowBuf = true;
+        p2SlashBuf = false;
+        p2GolpeBuf = false;
+        p2BoltBuf = false;
+        p2ReversalBuf = false;
+      } else if (edgeSlash && !wantG) {
+        p2SlashBuf = true;
+        p2GolpeBuf = false;
+        p2BoltBuf = false;
+        p2ThrowBuf = false;
+      }
       return;
     }
 
@@ -7811,7 +11510,8 @@
           p2OpenBoltBuf = false;
           p2OpenBuf = false;
           p2OpenGolpeBuf = false;
-          startBolt(rival, true);
+          // Opening-K answer-plant full-meter forced spend leftover (v475): empty vs plant.
+          startBolt(rival, !boltAnswerEmpty(rival));
         } else {
           p2OpenBoltBuf = false;
         }
@@ -7831,42 +11531,189 @@
     }
 
     const canGuard = rival.stamina >= STAMINA_START_MIN && rival.guardBreakT <= 0;
-    rival.wantBlock = wantG && canGuard;
+    // Versus/online P2 perfect-parry / riposte fairness leftover (v454): don't
+    // re-raise over a spent O/P (mirror wantGuard !riposteArmed).
+    rival.wantBlock = wantG && canGuard && !rival.riposteArmed;
+    // Mirror P1 v547: guarding dumps slash/golpe/open* only; p2BoltBuf kept through
+    // hold-S (Hold-S drop-guard dart buffer leftover twin — tickVersusP2 dump leftover v548).
+    // flushVersusP2CombatBufs already kept p2BoltBuf; this live seat still dumped first.
+    // Idle/cancel flush already requires !rival.guarding. Falling / chord clears unchanged.
+    if (rival.guarding) {
+      p2SlashBuf = false;
+      p2GolpeBuf = false;
+      /* p2BoltBuf kept v548 */
+      p2OpenBuf = false;
+      p2OpenGolpeBuf = false;
+      p2OpenBoltBuf = false;
+    } else if (!wantG) {
+      // Hitstop rising-guard PB buffer leftover (v499): keep armed buf through
+      // wantG raise so flushVersusP2CombatBufs after updateGuard still fires
+      // (mirror rising REV; else-clear used to eat freeze-armed rising PB).
+      p2PushblockBuf = 0;
+    }
 
     // Rising-guard feint during slash startup (mirror P1 tap-S).
-    if (edgeGuard && canFeint(rival)) {
+    const p2Locked =
+      !!rival.boltPhase ||
+      rival.feintT > 0 ||
+      rival.guardBreakT > 0 ||
+      rival.phase === "startup" ||
+      rival.phase === "active" ||
+      rival.phase === "recovery";
+    // Versus/online P2 perfect-parry / riposte fairness leftover (v454): O/P in
+    // RIPOSTE_WIN spend before feint/pushblock/cuts (mirror trySpendRiposteInput).
+    if ((edgeSlash || edgeGolpe) && trySpendRiposteP2(edgeSlash, edgeGolpe, wantG)) {
+      /* spent — armed p2SlashBuf / riposteArmed */
+    } else if (edgeGuard && canFeint(rival)) {
       startFeint(rival);
+      p2SlashBuf = false;
+      p2GolpeBuf = false;
+      p2BoltBuf = false;
+      p2ThrowBuf = false;
     } else if (rival.guarding && (edgeL || edgeR)) {
       // Away-tap pushblock while holding guarda.
-      if (edgeL) tryPushblock(rival, -1);
-      if (edgeR) tryPushblock(rival, 1);
+      // Unpaid EMPUJON pushblockBuf keep leftover (v592): only clear when
+      // tryPushblock succeeds; unpaid away refuse keeps/arms the away buf.
+      if (edgeL) {
+        if (tryPushblock(rival, -1)) p2PushblockBuf = 0;
+        else if (-1 === awayWalkDir(rival) && rival.stamina < PUSHBLOCK_STAM) p2PushblockBuf = -1;
+        else p2PushblockBuf = 0;
+      }
+      if (edgeR) {
+        if (tryPushblock(rival, 1)) p2PushblockBuf = 0;
+        else if (1 === awayWalkDir(rival) && rival.stamina < PUSHBLOCK_STAM) p2PushblockBuf = 1;
+        else p2PushblockBuf = 0;
+      }
+    } else if (rival.guarding && p2PushblockBuf) {
+      // Versus/online P2 pushblock hitstop buffer fairness leftover (v456):
+      // flush away-tap armed under HITSTOP_BLOCK (mirror P1 pushblockBuf).
+      // Unpaid EMPUJON pushblockBuf keep leftover (v592): only clear when
+      // tryPushblock succeeds; unpaid refuse keeps p2PushblockBuf.
+      if (tryPushblock(rival, p2PushblockBuf)) p2PushblockBuf = 0;
+      else if (!(p2PushblockBuf === awayWalkDir(rival) && rival.stamina < PUSHBLOCK_STAM)) p2PushblockBuf = 0;
+    } else if (wantG && !rival.guarding && canGuard && (edgeL || edgeR)) {
+      // Versus/online P2 rising-guard PB flush leftover (v494): tickVersusP2
+      // runs before updateGuard(rival), so rising ArrowDown+away same frame
+      // saw !rival.guarding and else { p2PushblockBuf = 0 } — away edge eaten.
+      // P1 updateGuard-before-tapWalk already PB on rising S+away. Soft: arm
+      // p2PushblockBuf (−1/1); flushVersusP2CombatBufs after updateGuard fires
+      // tryPushblock while guarding. Do not tryPushblock yet.
+      if (edgeL) p2PushblockBuf = -1;
+      if (edgeR) p2PushblockBuf = 1;
     } else if (edgeDart && cutToBoltWindow(rival) && cancelIntoBolt(rival)) {
       // Human cut→K / clash-K door.
+      p2BoltBuf = false;
+      p2SlashBuf = false;
+      p2GolpeBuf = false;
+    } else if ((edgeSlash || edgeGolpe) && p2BoltBuf && cutToBoltWindow(rival) && rival.stamina >= BOLT_STAM) {
+      // Versus/online P2 clash-K / hit-confirm K cancel priority leftover (v457)
+      // plus payable-stamina yield/flush leftover (v578):
+      // mirror P1 playerClashBoltPriority / playerHitConfirmBoltPriority — buffered
+      // [ owns the cut→K door; late O/P must not cancelIntoSlash/Golpe first.
+      p2SlashBuf = false;
+      p2GolpeBuf = false;
     } else if (edgeGolpe && slashToGolpeWindow(rival) && cancelIntoGolpe(rival)) {
       // Human slash→golpe / clash-L door.
+      p2GolpeBuf = false;
+      p2SlashBuf = false;
     } else if (edgeSlash && golpeToSlashWindow(rival) && cancelIntoSlash(rival)) {
       // Human golpe→slash / clash-Space door.
-    } else if (rival.phase === "idle" && !rival.boltPhase && rival.feintT <= 0) {
-      if (edgeSlash && wantG) {
-        if (tryThrowTech(rival)) {
-          /* tech */
-        } else if (throwInRange()) {
-          startThrow(rival);
-        }
-      } else if (edgeGolpe && wantG) {
-        if (wakeupWindow(rival)) startWakeReversal(rival);
-        else if (rival.guarding) startReversal(rival);
-        else startAttack(rival, "golpe");
-      } else if (edgeSlash && !wantG) {
-        startAttack(rival);
-      } else if (edgeGolpe && !wantG) {
-        startAttack(rival, "golpe");
-      } else if (edgeDart) {
-        // Mirror player full-bar spend (startBolt spendSuper !== false).
-        startBolt(rival, true);
-      }
+      p2SlashBuf = false;
+      p2GolpeBuf = false;
+    } else if (edgeGolpe && wakeupWindow(rival) && startWakeReversal(rival)) {
+      p2GolpeBuf = false;
+      p2SlashBuf = false;
+      p2BoltBuf = false;
+      p2ThrowBuf = false;
+      p2ReversalBuf = false;
     } else if (edgeGolpe && wakeupWindow(rival)) {
-      startWakeReversal(rival);
+      // Unpaid wake-L hold leftover (v582): mirror P1 — do not fall through to
+      // edgeGolpe !wantG startAttack while throwInvulnT live (false getup meaty).
+      // Hold p2GolpeBuf; after THROW_WAKE_INVULN dies → normal L. Too late ok.
+      p2GolpeBuf = true;
+      p2SlashBuf = false;
+      p2BoltBuf = false;
+      p2ThrowBuf = false;
+    } else if (edgeSlash && wantG && canFeint(rival)) {
+      // Versus/online P2 throw-chord feint fairness leftover (v496): hold-Down +
+      // tap O during slash startup must pull (mirror P1 throwEdge&&canFeint),
+      // not arm p2ThrowBuf / startThrow. Rising edgeGuard feint kept above.
+      // Throw-tech owns Space+S over feint leftover (v541): tryThrowTech before
+      // startFeint (mirror P1); feint only if tech refuses.
+      if (!tryThrowTech(rival)) startFeint(rival);
+      p2SlashBuf = false;
+      p2GolpeBuf = false;
+      p2BoltBuf = false;
+      p2ThrowBuf = false;
+    } else if (edgeSlash && wantG) {
+      // Versus/online P2 mid-combat buffer fairness leftover (v452): lock → buf.
+      p2SlashBuf = false;
+      p2GolpeBuf = false;
+      p2BoltBuf = false;
+      p2ReversalBuf = false;
+      if (tryThrowTech(rival)) {
+        p2ThrowBuf = false;
+      } else if (p2Locked) {
+        p2ThrowBuf = true;
+      } else if (throwLocked(throwFoe(rival))) {
+        // Idle throw-edge foe-lock arm leftover (v495): twin of P1 — startThrow
+        // no-ops on foe throwLocked with no buf; arm p2ThrowBuf instead of clear.
+        p2ThrowBuf = true;
+      } else {
+        p2ThrowBuf = false;
+        startThrow(rival);
+      }
+    } else if (edgeGolpe && wantG) {
+      p2SlashBuf = false;
+      p2GolpeBuf = false;
+      p2BoltBuf = false;
+      p2ThrowBuf = false;
+      if (rival.guarding) {
+        // Unpaid hold-S REV buffer hold leftover (v591): only clear p2ReversalBuf
+        // when startReversal succeeds; unpaid refuse keeps the REV buf.
+        if (startReversal(rival)) p2ReversalBuf = false;
+        else if (rival.stamina < REVERSAL_STAM) p2ReversalBuf = true;
+      } else if (p2Locked || canGuard) {
+        // Versus/online P2 rising-guard REV flush leftover (v491): tickVersusP2
+        // runs before updateGuard(rival), so rising ArrowDown+P same frame saw
+        // !rival.guarding and started normal L — P1 updateGuard-before-edges
+        // already REV on rising S+L. Soft: arm p2ReversalBuf when canGuard
+        // (rising) or locked; flushVersusP2CombatBufs after updateGuard fires REV.
+        p2ReversalBuf = true;
+      } else {
+        p2ReversalBuf = false;
+        startAttack(rival, "golpe");
+      }
+    } else if (edgeSlash && !wantG) {
+      p2GolpeBuf = false;
+      p2BoltBuf = false;
+      p2ThrowBuf = false;
+      if (p2Locked) p2SlashBuf = true;
+      else {
+        p2SlashBuf = false;
+        startAttack(rival);
+      }
+    } else if (edgeGolpe && !wantG) {
+      p2SlashBuf = false;
+      p2BoltBuf = false;
+      p2ThrowBuf = false;
+      if (p2Locked) p2GolpeBuf = true;
+      else {
+        p2GolpeBuf = false;
+        startAttack(rival, "golpe");
+      }
+    } else if (edgeDart) {
+      // Mirror player full-bar spend (startBolt spendSuper !== false).
+      // Answer-plant→K full-meter forced spend leftover (v474): empty answer vs
+      // opposing plant / live dart (mirror AI v438); neutral full still spends.
+      p2SlashBuf = false;
+      p2GolpeBuf = false;
+      p2ThrowBuf = false;
+      if (p2Locked) p2BoltBuf = true;
+      else {
+        p2BoltBuf = false;
+        startBolt(rival, !boltAnswerEmpty(rival));
+      }
     }
 
     let move = 0;
@@ -7894,7 +11741,8 @@
   function armRivalOpenMix(dt) {
     // AI opening mix leftover (v435): one roll per round during OPENING_MS.
     // Never plant mid-measure. Versus skipped (human P2 owns p2Open*).
-    if (matchKind === "versus") return;
+    // Online human-P2 seat leftover (v451): online same skip (human P2 owns p2Open*).
+    if (matchKind === "versus" || matchKind === "online") return;
     if (!rival.aiOpenArmed) {
       rival.aiOpenArmed = true;
       const r = Math.random();
@@ -7914,8 +11762,9 @@
   function rivalFlushOpenMix(dt) {
     // After OPENING_MS: persist walk-in / bait like P1 openBuf. Opening still
     // will not plant mid-measure. Versus skipped (human P2 owns p2Open*).
+    // Online human-P2 seat leftover (v451): online same skip.
     if (!rival.aiOpen) return false;
-    if (matchKind === "versus") { rival.aiOpen = ""; return false; }
+    if (matchKind === "versus" || matchKind === "online") { rival.aiOpen = ""; return false; }
     // Skip-measure (bootPlay + short wait + openLeft=0) must not inherit a
     // half-armed open. Only flush if the full OPENING_MS seated.
     if ((rival.aiOpenHold || 0) < OPENING_MS - STEP * 2) {
@@ -7927,9 +11776,17 @@
     if (!rivalCanAct()) return false;
     if (rival.feintT > 0 || rival.guardBreakT > 0 || (rival.thrownT || 0) > 0) return false;
 
+    // open-mix flush throw-vs-guard leftover (v560):
+    // Flush early-return starved rivalTryThrow vs hold-S turtle.
+    // Soft: try grab-vs-guard before bait/slash walk-in/pocket; refuse falls through.
+    if (player.guarding && rivalTryThrow()) { rival.aiOpen = ""; return true; }
+
     const walkIn = (player.x < rival.x ? -1 : 1) * walkSpeed(rival) * (dt / 1000);
 
     if (rival.aiOpen === "bait") {
+      // Open-bait ARM seat vs hold-S turtle leftover (v562): throw already
+      // tried above; clear and fall through so same-tick main path owns it.
+      if (player.guarding) { rival.aiOpen = ""; return false; }
       const canStartGuard = rival.stamina >= STAMINA_START_MIN && rival.guardBreakT <= 0;
       if (canStartGuard) {
         rival.aiBaitT = AI_BAIT_MS_MIN + Math.random() * (AI_BAIT_MS_MAX - AI_BAIT_MS_MIN);
@@ -7953,12 +11810,20 @@
           if (canStartBolt(rival)) {
             rival.aiOpen = "";
             startBolt(rival, rivalShouldSuper());
-            rival.boltCd = BOLT_AI_CD;
+            rival.boltCd = BOLT_AI_CD && aiCdOf(BOLT_AI_CD);
             rival.closing = false;
             return true;
           }
           rival.aiOpen = "";
           return false;
+        }
+        // Open-mix plant-seat convert walk vs hold-S turtle leftover (v565):
+        // Keep the guarded throwRange…hold+2 pocket walking until v560 can convert.
+        if (player.guarding && absGap() > throwRangeOf(rival)) {
+          rival.closing = true;
+          rival.gait = Math.sign(walkIn);
+          rival.x += walkIn * walkCadence(rival);
+          return true;
         }
         rival.aiOpen = "";
         rival.closing = false;
@@ -7985,7 +11850,8 @@
     }
     // Versus local 2P playable unlock leftover (v430): human P2 owns the rival —
     // skip CPU mix when matchKind versus (VERSUS_2P_READY true).
-    if (matchKind === "versus") return;
+    // Online human-P2 seat leftover (v451): online same skip (menu still locked).
+    if (matchKind === "versus" || matchKind === "online") return;
     if (rival.throwCd > 0) rival.throwCd = Math.max(0, rival.throwCd - dt);
     if (rival.revCd > 0) rival.revCd = Math.max(0, rival.revCd - dt);
     if (rival.pbCd > 0) rival.pbCd = Math.max(0, rival.pbCd - dt);
@@ -8008,7 +11874,14 @@
       // Honor that harness freeze so chip-stun destRect tests stay planted.
       if (rival.standGoal > STANDOFF_MAX) return;
       const distStun = absGap();
+      // Idle sheet pad is not the sword. Measure with slash tip (mirror open flush).
+      const phStun = rival.phase;
+      const cuStun = rival.cut;
+      rival.phase = "active";
+      rival.cut = "slash";
       const holdStun = bladeReach(rival) + slashLungeOf(rival);
+      rival.phase = phStun;
+      rival.cut = cuStun;
       const shoveStun = startupShovePx(rival);
       rival.standWait = 0;
       rival.standGoal = 0;
@@ -8036,7 +11909,14 @@
       // holdRivalStill / freezeRivalAI park standGoal at 99999 (> STANDOFF_MAX 800).
       if (rival.standGoal > STANDOFF_MAX) return;
       const distWake = absGap();
+      // Idle sheet pad is not the sword. Measure with slash tip (mirror open flush).
+      const phWake = rival.phase;
+      const cuWake = rival.cut;
+      rival.phase = "active";
+      rival.cut = "slash";
       const holdWake = bladeReach(rival) + slashLungeOf(rival);
+      rival.phase = phWake;
+      rival.cut = cuWake;
       const shoveWake = startupShovePx(rival);
       rival.standWait = 0;
       rival.standGoal = 0;
@@ -8062,7 +11942,14 @@
     // (no punish-cut / idle commit / closing). Stagger still locks via
     // rivalCanAct. Player riposte startup already freezes via playerSwinging.
     // holdRivalStill / freezeRivalAI park standGoal at 99999 (> STANDOFF_MAX 800).
-    if (player.riposteWindowT > 0) {
+    // Riposte armed spend→fire gap leftover (v534): trySpendRiposteInput clears
+    // riposteWindowT and sets riposteArmed before tickAI; tryFireRiposte
+    // (startup → playerSwinging) runs after — so one+ decision ticks AI could
+    // idle-commit / punishCut into the armed reward before tele owns the freeze.
+    // Soft: also freeze while player.riposteArmed. Drop when startAttack clears
+    // armed / phase=startup so existing swinging freeze takes over. Order stays
+    // trySpendRiposteInput → tickAI → tryFireRiposte (do NOT reorder).
+    if (player.riposteWindowT > 0 || player.riposteArmed) {
       if (rival.standGoal > STANDOFF_MAX) return;
       rival.standWait = 0;
       rival.standGoal = 0;
@@ -8075,7 +11962,14 @@
     }
 
     const dist = absGap();
+    // Idle sheet pad is not the sword. Measure with slash tip (mirror open flush).
+    const phHold = rival.phase;
+    const cuHold = rival.cut;
+    rival.phase = "active";
+    rival.cut = "slash";
     const HOLD = bladeReach(rival) + slashLungeOf(rival);
+    rival.phase = phHold;
+    rival.cut = cuHold;
     const myReach = HOLD;
     if (rival.boltCd > 0) {
       rival.boltCd = Math.max(0, rival.boltCd - dt);
@@ -8085,7 +11979,10 @@
       // Opening still starts unarmed (cd already 0 — this gate does not fire).
       if (rival.boltCd <= 0) rival.boltArmed = true;
     }
-    if (dist <= HOLD) rival.boltArmed = true;
+    // Mid-CD approach commit timer survives measure entry leftover (v568):
+    // entering HOLD clears the short approach seat so a later mid revisit can
+    // re-mix pause / retreat / approach instead of inheriting walk-in.
+    if (dist <= HOLD) { rival.boltArmed = true; rival.aiMidApproachT = 0; }
     // Count the attacker's lunge: at true measure dist≈HOLD, so bare
     // dist<=HOLD never armed the 40% guard and the rival ate every Space.
     const boltIncoming = player.boltPhase === "startup" || !!(bolt && bolt.kind === "you");
@@ -8107,7 +12004,14 @@
       player.boltPhase !== "startup" &&
       !(bolt && bolt.kind === "you")
     ) {
+      // Idle sheet pad is not the sword. Measure with golpe tip (mirror open/v510 HOLD flush).
+      const phGHold = rival.phase;
+      const cuGHold = rival.cut;
+      rival.phase = "active";
+      rival.cut = "golpe";
       const gHold = bladeReach(rival) + golpeLungeOf(rival);
+      rival.phase = phGHold;
+      rival.cut = cuGHold;
       inThreat = dist <= gHold + golpeLungeOf(rival) || boltIncoming;
     }
     const playerSwinging = player.phase === "startup" || player.phase === "active" || boltIncoming;
@@ -8131,16 +12035,35 @@
       // bait used to sit on S through the pull.
       // Guard-break punish leftover (v399): guardBreakT lock is phase idle too —
       // bait used to sit on S through the shatter.
-      if ((player.phase === "recovery" || dartRecPunish || feintRecPunish || guardBreakPunish) && dist <= myReach) {
+      // Bait→punish shove gate leftover (v508): post-block empujón — bare
+      // dist<=myReach whiffed while broken/main already use startupShovePx.
+      // Clear bait/guard; punish only if dist+shove connects; else fall through.
+      if (player.phase === "recovery" || dartRecPunish || feintRecPunish || guardBreakPunish) {
         rival.aiBaitT = 0;
         rival.guardChoice = 0;
         rival.wantBlock = false;
         rival.guarding = false; // startAttack rejects guarding
         rivalClearCommit();
-        rivalPunishCut();
-        return;
-      }
-      if (canStartGuard || rival.guarding) {
+        if (dist + startupShovePx(rival) <= myReach) {
+          rivalPunishCut();
+          return;
+        }
+        // Fall through to main punish/close (out of predicted reach).
+      } else if (player.guarding) {
+        // Hold-guard bait vs player turtle leftover (v540): bait sit-on-S used
+        // to early-return while player.guarding — rivalTryThrow only reached
+        // after that return, so throw-vs-guard pressure died for the whole
+        // bait window (mutual turtle dead zone). Soft: clear bait/guard like
+        // recovery-punish fallthrough; rivalTryThrow / idle mix own the turtle.
+        // Non-guard bait sit-on-S unchanged. No THROW_AI_CD / AI_BAIT_* /
+        // throw-vs-idle retune (throw stays hold-guard only).
+        rival.aiBaitT = 0;
+        rival.guardChoice = 0;
+        rival.wantBlock = false;
+        rival.guarding = false;
+        rivalClearCommit();
+        // Fall through — rivalTryThrow / idle mix own the turtle.
+      } else if (canStartGuard || rival.guarding) {
         rival.wantBlock = true;
         rival.guardChoice = 1;
         rival.phase = "idle";
@@ -8161,9 +12084,10 @@
           if (dist <= myReach) rival.aiResetT = Math.max(rival.aiResetT, 200);
         }
         return;
+      } else {
+        rival.aiBaitT = 0;
+        rival.guardChoice = 0;
       }
-      rival.aiBaitT = 0;
-      rival.guardChoice = 0;
     }
 
     // Soft retreat after reset / bait — walk out, then prefer dart if ready.
@@ -8177,6 +12101,16 @@
         rival.aiRetreatT = 0;
         rivalClearCommit();
         // Fall through to main punish/close (and broken/throw as needed).
+      } else if (player.guarding) {
+        // Retreat early-path abort vs player turtle leftover (v551): aiRetreatT
+        // walk-out used to starve rivalTryThrow for the whole retreat while
+        // player.guarding (non-swing idle). Bait already clears turtle (v540);
+        // recovery/dart/feint/GB already abort (v397–v399). Soft: abort retreat
+        // so rivalTryThrow / idle mix own the turtle. Non-guard retreat walk-out
+        // unchanged.
+        rival.aiRetreatT = 0;
+        rivalClearCommit();
+        // Fall through
       } else {
         rival.aiRetreatT = Math.max(0, rival.aiRetreatT - dt);
         rivalClearCommit();
@@ -8196,6 +12130,15 @@
     // Raise still commits at 140ms / 40%. Keep that raise through the
     // exchange (swing + recovery) so hold-drain + block-20 actually bite.
     // Drop when the player is idle — never hold S forever (bait timer owns idle hold).
+    // Golpe reaction-guard leftover (v506): GUARD_COMMIT 140 > GOLPE_STARTUP 120
+    // left L with no pre-active raise window (Space 180→40ms, bolt plant 200→60ms).
+    // Per-cut commitNeed: golpe min(140, 120-40)=80; slash/bolt still 140; throw
+    // 80 never raises. Mix / AI_CD / frames locked.
+    // Riposte reaction-guard leftover (v507): same shape — RIPOSTE_STARTUP 130
+    // < GUARD_COMMIT 140, riposte is cut="slash"+flag so commitNeed stayed 140;
+    // swingElapsed ≤130 → canCommit false whole tele. Soft: extend per-cut
+    // (golpe || player.riposte) ? min(140, cutStartup-40) → riposte 90 (40ms
+    // pre-active). Slash/bolt 140 / throw never-raise / AI_CD / mixes locked.
     if (!playerSwinging && player.phase !== "recovery" && player.boltPhase !== "recovery") {
       // After a hold they are often shoved past HOLD. Walk back in;
       // do not spend the special as a block-punish fireball.
@@ -8205,7 +12148,8 @@
       }
     } else if (rival.guardChoice === 0 && playerSwinging) {
       const telegraphT = player.boltPhase === "startup" ? player.boltT : swingElapsed(player);
-      const canCommit = telegraphT >= GUARD_COMMIT_MS || !!bolt;
+      const commitNeed = (player.cut === "golpe" || player.riposte) ? Math.min(GUARD_COMMIT_MS, cutStartup(player) - 40) : GUARD_COMMIT_MS;
+      const canCommit = telegraphT >= commitNeed || !!bolt;
       if (canCommit) rival.guardChoice = (inThreat && canStartGuard && Math.random() < 0.4) ? 1 : -1;
     }
     if (rival.guardChoice === 1 && !(rival.guarding || canStartGuard)) {
@@ -8218,13 +12162,32 @@
     // whiff the 240px before active. Guard hold still runs below.
 
     if (rival.guardChoice === 1 && (rival.guarding || canStartGuard)) {
-      rival.wantBlock = true;
-      rival.phase = "idle";
-      rival.phaseT = 0;
-      rival.standWait = 0;
-      rival.standGoal = 0;
-      rival.closing = false;
-      return;
+      // Reaction-guard post-block sit-on-S starves recovery punish leftover (v542):
+      // successful raise early-returned wantBlock through whole attacker recovery
+      // family — rivalPunishCut / closing never ran. Bait/retreat-abort/broken/main
+      // already clear sit-on-S for that free window. Soft: clear sit-on-S on
+      // recovery family; punish-cut in predicted reach else fall through (mirror
+      // bait v508 shove gate). Raise through startup/active unchanged.
+      // No GUARD_COMMIT / AI_CD / AI_BAIT / THROW_* / frames retune.
+      if (player.phase === "recovery" || dartRecPunish || feintRecPunish || guardBreakPunish) {
+        rival.guardChoice = 0;
+        rival.wantBlock = false;
+        rival.guarding = false; // startAttack rejects guarding
+        rivalClearCommit();
+        if (dist + startupShovePx(rival) <= myReach) {
+          rivalPunishCut();
+          return;
+        }
+        // Fall through to main punish/close (mirror bait v508 shove gate).
+      } else {
+        rival.wantBlock = true;
+        rival.phase = "idle";
+        rival.phaseT = 0;
+        rival.standWait = 0;
+        rival.standGoal = 0;
+        rival.closing = false;
+        return;
+      }
     }
 
     if (playerSwinging) {
@@ -8241,7 +12204,7 @@
           const rAns = Math.random();
           if (rAns >= 1 - AI_DART_ANSWER) {
             startBolt(rival, false);
-            rival.boltCd = BOLT_AI_CD;
+            rival.boltCd = BOLT_AI_CD && aiCdOf(BOLT_AI_CD);
             rival.closing = false;
             rival.standWait = 0;
             rival.standGoal = 0;
@@ -8249,6 +12212,72 @@
             return;
           }
         }
+      }
+      // Knife-plant meaty AI punish-cut leftover (v539): boltIncoming lumps
+      // pre-birth boltPhase==="startup" with live dart. After v438 dart-answer,
+      // AI still hard-returns with no Space/L contest — human meaties idle
+      // knife plant from frame 0; AI only guard/dart after 140ms, never cuts
+      // the plant. Soft: pre-birth only (!bolt), readable tele (boltT≳40),
+      // early enough golpe active lands before birth (boltT≲80; GOLPE_STARTUP
+      // 120 vs BOLT_STARTUP 200), dist+startupShovePx(rival,GOLPE_STARTUP)<=
+      // golpe HOLD, high-band roll (mirror AI_DART_ANSWER / harness 0.99) →
+      // rivalPunishCut. Live dart keeps freeze/answer only. No throw-vs-idle
+      // retune.
+      if (
+        player.boltPhase === "startup" && !bolt &&
+        player.boltT >= 40 && player.boltT <= 80
+      ) {
+        // Idle sheet pad is not the sword. Measure with golpe tip (mirror
+        // open/v510 HOLD flush / rivalPunishCut gReach).
+        const phPlant = rival.phase;
+        const cuPlant = rival.cut;
+        rival.phase = "active";
+        rival.cut = "golpe";
+        const gHoldPlant = bladeReach(rival) + golpeLungeOf(rival);
+        rival.phase = phPlant;
+        rival.cut = cuPlant;
+        if (dist + startupShovePx(rival, GOLPE_STARTUP) <= gHoldPlant) {
+          const rCut = Math.random();
+          if (rCut >= 1 - AI_DART_ANSWER) {
+            rivalPunishCut();
+            rival.closing = false;
+            rival.standWait = 0;
+            rival.standGoal = 0;
+            rival.aiRetreatT = 0;
+            return;
+          }
+        }
+      }
+      // Throw-tech OOR walk-in leftover (v576): player throw startup/active
+      // freezes the AI, but an out-of-range throw cannot tech yet. Keep closing
+      // through the throw tele instead of leaving a barely-outside-range statue.
+      // In-range throw tele remains frozen here for rivalTryThrowTech/resolve.
+      if (
+        player.cut === "throw" &&
+        (player.phase === "startup" || player.phase === "active") &&
+        !throwInRange(player)
+      ) {
+        rival.closing = true;
+        rival.gait = Math.sign(walkIn);
+        rival.x += walkIn * walkCadence(rival);
+        return;
+      }
+      // Melee OOR playerSwinging freeze walk-in leftover (v590): v576 unfroze
+      // throw OOR only. Space/L OOR under playerSwinging still hard-freezes AI
+      // into a statue — guard already rolls !inThreat → guardChoice=-1 on whiff
+      // tele, then the shared freeze return zeros closing through fullscreen /
+      // near-whiff Space|L. Soft: slash|golpe startup/active && !inThreat →
+      // same closing+walkIn cadence return as v576. In-threat tele stays frozen
+      // for reaction-guard; boltIncoming answer/plant paths above unchanged.
+      if (
+        (player.cut === "slash" || player.cut === "golpe") &&
+        (player.phase === "startup" || player.phase === "active") &&
+        !inThreat
+      ) {
+        rival.closing = true;
+        rival.gait = Math.sign(walkIn);
+        rival.x += walkIn * walkCadence(rival);
+        return;
       }
       rival.closing = false;
       rival.standWait = 0;
@@ -8283,7 +12312,11 @@
         rival.x += walkOut * walkCadence(rival);
         return;
       }
-      if (dist <= myReach) {
+      // Broken-cornered punish leftover (v509): post empujón (v508 sibling) —
+      // recovery|dartRec|feintRec|guardBreak shove gate can miss while bare
+      // dist<=myReach still fired rivalPunishCut and whiffed. Soft: same
+      // dist+shove<=myReach (shove already in scope); miss → walk-in fallthrough.
+      if (dist + shove <= myReach) {
         rivalPunishCut();
         return;
       }
@@ -8324,12 +12357,20 @@
     }
 
     if (rival.closing) {
-      if (dist + startupShovePx(rival) <= myReach) {
-        rivalPunishCut();
-        rival.standWait = 0;
-        rival.standGoal = 0;
-        rival.closing = false;
-        return;
+      // vs-guard feint-commit leftover (v558):
+      // During feintT startAttack no-ops — skip punishCut+return so walk-in
+      // still advances (in-reach feint lock must not statue).
+      if (dist + startupShovePx(rival) <= myReach && rival.feintT <= 0) {
+        // Closing-path throw-convert band chips vs hold-S turtle leftover (v563):
+        // outside throw range, keep walking so the next tick can throw; the
+        // old punish/clear still owns non-guard and in-range closing.
+        if (!(player.guarding && dist > throwRangeOf(rival))) {
+          rivalPunishCut();
+          rival.standWait = 0;
+          rival.standGoal = 0;
+          rival.closing = false;
+          return;
+        }
       }
       rival.gait = Math.sign(walkIn);
       rival.x += walkIn * walkCadence(rival);
@@ -8348,16 +12389,35 @@
       // band spends (harness 0.99); rest of the dart band stays empty K.
       if (rival.boltArmed && rival.boltCd <= 0 && dist > HOLD + 16 && canStartBolt(rival)) {
         rival.aiMidApproachT = 0;
+        // Ready-band pause seat leftover (v567): an armed pause used to reset
+        // standWait / re-roll every tick, so it never stood a beat. Honor the
+        // already-armed seat before taking the dart / pause / walk mix again;
+        // a completed beat then re-mixes.
+        // No new combat verb.
+        if (rival.standGoal > 0) {
+          // Ready-band pause honor leftover (v573): hold-S aborts an armed
+          // statue mid-beat so the existing walk-in/remix can proceed.
+          if (player.guarding) {
+            rival.standWait = 0;
+            rival.standGoal = 0;
+          } else {
+            rival.closing = false;
+            rival.standWait += dt;
+            if (rival.standWait < rival.standGoal) return;
+            rival.standWait = 0;
+            rival.standGoal = 0;
+          }
+        }
         const rMid = Math.random();
         if (rMid >= 1 - AI_MID_DART) {
           startBolt(rival, rivalShouldSuper() && rMid >= 1 - AI_MID_SUPER);
-          rival.boltCd = BOLT_AI_CD;
+          rival.boltCd = BOLT_AI_CD && aiCdOf(BOLT_AI_CD);
           rival.closing = false;
           rival.standWait = 0;
           rival.standGoal = 0;
           return;
         }
-        if (rMid < AI_MID_WALK_PAUSE) {
+        if (rMid < AI_MID_WALK_PAUSE && !player.guarding) {
           rival.closing = false;
           rival.standWait = 0;
           rival.standGoal = rollStandoff();
@@ -8371,11 +12431,18 @@
         // Ready-band dart mix above unchanged (harness 0.99 still darts).
         // Not a feint robot / not Space mash from mid. BOLT_AI_CD / AI_MID_* locked.
         if (rival.standGoal > 0) {
-          rival.closing = false;
-          rival.standWait += dt;
-          if (rival.standWait < rival.standGoal) return;
-          rival.standWait = 0;
-          rival.standGoal = 0;
+          // Mid-CD pause honor leftover (v573): hold-S aborts an armed
+          // statue mid-beat so the existing approach remix can proceed.
+          if (player.guarding) {
+            rival.standWait = 0;
+            rival.standGoal = 0;
+          } else {
+            rival.closing = false;
+            rival.standWait += dt;
+            if (rival.standWait < rival.standGoal) return;
+            rival.standWait = 0;
+            rival.standGoal = 0;
+          }
         }
         if (rival.aiMidApproachT > 0) {
           rival.gait = Math.sign(walkIn);
@@ -8386,14 +12453,21 @@
           return;
         }
         if (rival.standGoal <= 0) {
+          // Mid bolt-CD soft-mix pause ARM vs hold-S turtle leftover (v571):
+          // guarded pause and cornered stand fall through to the existing approach;
+          // v566 retreat ARM remains unchanged. No new combat verb.
+          // Mid bolt-CD soft-mix retreat ARM vs hold-S turtle leftover (v566):
+          // guard refuses the retreat arm and takes the existing remainder walk-in;
+          // non-guard retreat remains unchanged. v551 clear seat stays intact.
+          // No new combat verb; v563–v565 convert seats remain untouched.
           const rCd = Math.random();
-          if (rCd < AI_MID_CD_PAUSE) {
+          if (rCd < AI_MID_CD_PAUSE && !player.guarding) {
             rival.closing = false;
             rival.standWait = 0;
             rival.standGoal = rollStandoff();
             return;
           }
-          if (rCd < AI_MID_CD_PAUSE + AI_MID_CD_RETREAT && roomBack) {
+          if (rCd < AI_MID_CD_PAUSE + AI_MID_CD_RETREAT && roomBack && !player.guarding) {
             rival.boltArmed = true;
             rivalStartRetreat();
             return;
@@ -8402,7 +12476,7 @@
           // used to fall through to approach — pinned mid-CD stayed a walk-in
           // robot (open soft-mix retreat cannot fire). Soft: stand a beat
           // instead. Open retreat above unchanged. Remainder walk commit below.
-          if (rCd < AI_MID_CD_PAUSE + AI_MID_CD_RETREAT && !roomBack) {
+          if (rCd < AI_MID_CD_PAUSE + AI_MID_CD_RETREAT && !roomBack && !player.guarding) {
             rival.closing = false;
             rival.standWait = 0;
             rival.standGoal = rollStandoff();
@@ -8427,7 +12501,11 @@
       return;
     }
     if (dist < Math.max(20, myReach - 48)) {
-      if (roomBack) {
+      // too-close walk-out vs hold-S turtle leftover (v559):
+      // roomBack alone always walked out — no player.guarding gate.
+      // Sibling of v540/v551 turtle aborts at the too-close seat.
+      // Soft: gate walk-out on !player.guarding (mirror !roomBack → punishCut).
+      if (roomBack && !player.guarding) {
         rival.gait = Math.sign(walkOut);
         rival.x += walkOut * walkCadence(rival);
         rival.standWait = 0;
@@ -8435,6 +12513,10 @@
         rival.closing = false;
         return;
       }
+      // holdRivalStill / freezeRivalAI park standGoal at 99999 (> STANDOFF_MAX 800).
+      // Harness freeze: previously too-close walked out (benign x drift); punishCut
+      // on turtle would overwrite planted seats. Mirror stun/wakeup/open-mix belt.
+      if (rival.standGoal > STANDOFF_MAX) return;
       rivalPunishCut();
       rival.standWait = 0;
       rival.standGoal = 0;
@@ -8443,13 +12525,46 @@
     }
 
     if (player.phase === "idle") {
+      // Idle-WAIT throw-convert band vs hold-S turtle leftover (v569):
+      // a guarded measure entry can spend 400–800ms standing before the v564
+      // expiry seat arms closing. Hand the live wait to the existing v563
+      // closing walk immediately; non-guard and in-range idle standoff stays.
+      // Harness belt: planted/frozen stand seats must remain untouched.
+      if (rival.standGoal > STANDOFF_MAX) return;
+      if (player.guarding && dist > throwRangeOf(rival)) {
+        rival.closing = true;
+        rival.standWait = 0;
+        rival.standGoal = 0;
+        return;
+      }
+      // Idle-WAIT throwCd-in-range chip lag vs hold-S turtle leftover (v570):
+      // when the guarded measure is already in throw range but rivalTryThrow
+      // is on cooldown, do not roll another 400–800ms stand. Reuse the v561
+      // guarded idle commit so the existing slash/golpe chip owns the tick.
+      // Non-CD in-range still falls through to rivalTryThrow / idle standoff. No new combat verb.
+      if (player.guarding && dist <= throwRangeOf(rival) && rival.throwCd > 0) {
+        rival.standWait = 0;
+        rival.standGoal = 0;
+        rivalIdleCommit(roomBack, canStartGuard, myReach, HOLD, dist);
+        return;
+      }
       if (rival.standGoal <= 0) rival.standGoal = rollStandoff();
       rival.standWait += dt;
       if (rival.standWait >= rival.standGoal) {
         rival.standWait = 0;
         rival.standGoal = rollStandoff();
-        if (dist <= myReach) rivalIdleCommit(roomBack, canStartGuard, myReach, HOLD, dist);
-        else rival.closing = true;
+        if (dist <= myReach) {
+          // Mid→measure idle-standoff throw-convert band vs hold-S turtle
+          // leftover (v564): the mid walk clears closing, then the idle
+          // expiry used to commit Space/L forever in throwRange…myReach.
+          // Hand guarded out-of-throw-range expiry to the existing v563
+          // closing walk; non-guard and in-range idle commit stays unchanged.
+          if (player.guarding && dist > throwRangeOf(rival)) {
+            rival.closing = true;
+            return;
+          }
+          rivalIdleCommit(roomBack, canStartGuard, myReach, HOLD, dist);
+        } else rival.closing = true;
       }
     }
   }
@@ -8489,6 +12604,16 @@
     const away = awayWalkDir(f);
     if (dir !== away) return false;
     if (f.stamina < PUSHBLOCK_STAM) return false;
+    // Freeze-mash / mid-shove pushblock re-spend leftover (v587): teach already
+    // mutes on pushT>0; tryPushblock did not. Freeze-arm flush / mid-combat
+    // away-tap re-entered while a paid 240px shove still owned pushT/pushVel
+    // and re-spent PUSHBLOCK_STAM. Soft: refuse only when already at full shove
+    // (|pushVel|·GUARD_PUSH_MS ≥ PUSHBLOCK_PX−0.5) — same expression as
+    // landBlock/landBoltBlock shoveOwns. Bare pushT>0 would block
+    // applyPush→rivalPushblockOnBlock upgrade (hurtW ≪ 240 unpaid seat).
+    // Preserves land* upgrade; stops freeze-mash flush + live away-tap re-spend.
+    // No freeze-arm-only rewrite; no new flag. PUSHBLOCK_STAM/PX / GUARD_PUSH_MS locked.
+    if (f.pushT > 0 && Math.abs(f.pushVel) * GUARD_PUSH_MS >= PUSHBLOCK_PX - 0.5) return false;
     // Stamina chunk spend leftover (v378): ghost+flash the −25.
     pulseStam(f, f.stamina);
     f.stamina -= PUSHBLOCK_STAM;
@@ -8516,7 +12641,13 @@
       const pt = guardSteelPoint(f);
       spawnSteelFlash(pt.x, pt.y, foe, f, true, "push");
     }
-    if (f.stamina <= 0) tripGuardBreak(f);
+    // Pushblock last-stam defer guard-break leftover (v553): spending the
+    // last stam used to tripGuardBreak immediately — clearing guarding
+    // before resolveCuts/resolveBolt so the meaty converted to landHit
+    // flesh. Soft: defer — set pbBreakPending, keep guarding + shove.
+    // landBlock/landBoltBlock trip on stam≤0 (clear pending). Post-resolve
+    // flush tip-plants on whiff when foe no longer swinging.
+    if (f.stamina <= 0) f.pbBreakPending = true;
     return true;
   }
 
@@ -8887,6 +13018,18 @@
     // still throwKnife below. holdingCutBolt still skips knife plant path.
     if (holdingCutBolt(f)) return fallback;
     if (f.boltPhase !== "startup" && boltPlantFade(f) <= 0) return fallback;
+    // Cast-puff pin follows eased knife tip through bolt recovery leftover (v628):
+    // empty-K / clash-K recovery used to keep castPlantXY on the raw throwKnife
+    // tip for the whole boltPlantFade while bladeTipX / bladeTipY already ease
+    // knife→pose as the fade dies 1→0 — a drift, not a plant. Before the raw
+    // knife pin, recovery with boltPlantFade > 0 returns fallback (eased tip).
+    // Birth at fade 1 stays on the knife (eased tip equals knife at boltT 0).
+    // Startup knife pin stays. holdingCutBolt fallback stays. Clash/link ease
+    // stays on the startup knife pin. Do not touch the boltPlantFade clock,
+    // BOLT_RECOVERY, or BOLT_CAST_FX_MS. Not tipY bladeBox / GuardWalk /
+    // bodyAABB raise-keep / IdleHold / plantBodyAABB HUD. Through v627 locked.
+    // No new combat verb.
+    if (f.boltPhase === "recovery" && boltPlantFade(f) > 0) return fallback;
     // Idle/walk K cast/puff rides the raised knife tip (throwKnife), not sword windup.
     const d = poseFamily(f).throwKnife || poseFamily(f).windup;
     if (d.tipX == null) return fallback;
@@ -9111,9 +13254,16 @@
       f.riposteWindowT = 0;
       f.riposteArmed = false;
       f.riposte = false;
+      // Clash/connect reversal sticky leftover (v482): riposte dump already both
+      // seats; reversal stuck → cancelIntoGolpe free REVERSAL_INVULN. Soft:
+      // zero here (both). landHit/landBlock dump atk on resolve too.
+      f.reversal = false;
       f.clashPlant = false;
       f.linkPlant = false;
       f.holdCutPlant = false;
+      // Clash-resolve comboBolt exchange-reset leftover (v586): plant dump left
+      // comboBolt; clash-cancel mid-clashRec landHit chained false 2+ via latch.
+      f.comboBolt = false;
       f.linkSheathe = 0;
       f.telegraph = false;
     }
@@ -9135,6 +13285,10 @@
     rival.pushVel = CLASH_STEP / KNOCK_MS;
     player.guarding = false;
     rival.guarding = false;
+    // pbBreakPending clear on flesh/throw leftover (v555): optional belt —
+    // clash resolve must not leave pending for same-tick flush tip-plant.
+    player.pbBreakPending = false;
+    rival.pbBreakPending = false;
     clampFighter(player);
     clampFighter(rival);
     // Clash dust leftover: both lunge plants used to ride under the boot while
@@ -9268,17 +13422,23 @@
     noteConnect();
     noteCombo(atk, def);
     const before = def.hp;
-    def.hp = Math.max(0, def.hp - SLASH_DMG);
+    def.hp = Math.max(0, def.hp - cpuInDmg(atk, SLASH_DMG));
     pulseBar(def, before);
     spawnDmgNum(pt.x, pt.y, before - def.hp, false, def);
     gainMeter(atk, METER_HIT);
     if (atk.kind === "rival") {
       atk.superArmed = true;
-      atk.aiSawBlock = false;
     }
+    // Post-block special-cancel K empty especial leftover (v544): flesh clears
+    // both seats so cancelIntoBolt can still spend especial after a prior block.
+    atk.aiSawBlock = false;
     atk.phase = "recovery";
     atk.phaseT = 0;
     atk.cutHit = true;
+    // Clash/connect reversal sticky leftover (v482): atk.reversal sat through
+    // recovery → cancelIntoGolpe free REVERSAL_INVULN. Soft: dump on resolve.
+    // def dump below unchanged. landParry already zeros atk.
+    atk.reversal = false;
     armRivalSlashLink(atk);
     armRivalGolpeLink(atk);
     armRivalBoltLink(atk);
@@ -9293,6 +13453,11 @@
       hitstopLeft = HITSTOP_HIT;
       playSfx(SFX.impacto);
     }
+    // Clash/connect riposte sticky leftover (v483): landHit only READ juice;
+    // sticky riposte → cancelIntoGolpe free RIPOSTE frames on golpe. Soft: dump
+    // after sting. landParry / doClash already zero. Recovery length unchanged
+    // (RIPOSTE_RECOVERY === RECOVERY 280).
+    atk.riposte = false;
     def.stunT = HITSTUN;
     // Hit interrupt leftover (v336): fade leftover cut→idle (sheatheFade dies on stun).
     armHitInterruptFade(def);
@@ -9303,6 +13468,9 @@
     def.riposteWindowT = 0;
     def.riposteArmed = false;
     def.riposte = false;
+    // pbBreakPending clear on flesh/throw leftover (v555): clear only —
+    // flesh already resolved; flush must not tip-plant GB on HITSTUN.
+    def.pbBreakPending = false;
     atk.closing = false;
     def.closing = def.kind === "rival";
     def.standWait = 0;
@@ -9327,7 +13495,7 @@
     noteConnect();
     noteCombo(atk, def);
     const before = def.hp;
-    def.hp = Math.max(0, def.hp - THROW_DMG);
+    def.hp = Math.max(0, def.hp - cpuInDmg(atk, THROW_DMG));
     pulseBar(def, before);
     {
       const bb = bodyAABB(def);
@@ -9335,6 +13503,10 @@
     }
     gainMeter(atk, METER_HIT);
     if (atk.kind === "rival") atk.superArmed = true;
+    // Throw-cut / landThrowTech aiSawBlock belt-clear leftover (v589):
+    // mirror landHit — throw recovery keeps cut==="throw" so slash|golpe
+    // recovery-end clear never runs; dump latch here (clear only).
+    atk.aiSawBlock = false;
     atk.phase = "recovery";
     atk.phaseT = 0;
     atk.cutHit = true;
@@ -9362,6 +13534,9 @@
     def.riposteWindowT = 0;
     def.riposteArmed = false;
     def.riposte = false;
+    // pbBreakPending clear on flesh/throw leftover (v555): clear only —
+    // throw already resolved; flush must not tip-plant GB on KD.
+    def.pbBreakPending = false;
     def.phase = "idle";
     def.phaseT = 0;
     def.boltPhase = "";
@@ -9404,7 +13579,8 @@
     if (throwLocked(def)) return;
     // Loses to a mashed Space or L that is already active.
     if (def.phase === "active" && def.cut !== "throw") return;
-    if (!throwInRange()) return;
+    // CID/ROAN throw range kit leftover (v470): land rides attacker kit.
+    if (!throwInRange(atk)) return;
     landThrow(atk, def);
   }
 
@@ -9435,6 +13611,36 @@
       // Throw-from-guard / reversal plant leftover same path. Idle tech
       // still snaps (no leftover k).
       f.guarding = false;
+      // Tech-interrupt riposte dump leftover (v481): landHit / landThrow /
+      // landBoltHit (v480) + doClash already zero reversal + riposte reward;
+      // landThrowTech cleared guarding / bolt / wake but left riposteArmed /
+      // RIPOSTE_WIN / reversal live through tech recovery → free riposte slash
+      // on idle. Soft: mirror landHit dump. P1+P2 shared.
+      f.reversal = false;
+      f.riposteWindowT = 0;
+      f.riposteArmed = false;
+      f.riposte = false;
+      // Tech-interrupt pbBreakPending clear leftover (v588): v555 clears
+      // pending on flesh/throw/clash; landThrowTech still left it for
+      // same-tick flush tip-plant GB after clean tech. Clear only — no trip.
+      f.pbBreakPending = false;
+      // Throw-cut / landThrowTech aiSawBlock belt-clear leftover (v589):
+      // landBlock arms aiSawBlock; recovery-end clear is slash|golpe-gated;
+      // tech forces throw recovery but left the latch → idle inherits. Clear
+      // only — mirror v588 pbBreakPending dump beside it.
+      f.aiSawBlock = false;
+      // Tech-interrupt combo latch leftover (v594): landThrowTech already
+      // dumps riposte/reversal/pbBreakPending/aiSawBlock but left comboBolt/
+      // comboN/comboT/comboPunch. Mid-string (comboN≥2, comboT live; link/
+      // holdCut may arm comboBolt) → throw tech → 2+ stamp rides COMBO_SHOW_MS
+      // through THROW_TECH_REC into idle. Tech forces throw recovery (no
+      // cancel door); v585 only zeros comboBolt at recovery-end. Soft: full
+      // dump beside v589 — mirror v593 landBlock. Tech resolved the exchange.
+      // P1+P2 shared. Clear-only; no noteCombo / frames / stam / AI_CD retune.
+      f.comboBolt = false;
+      f.comboN = 0;
+      f.comboT = 0;
+      f.comboPunch = false;
       f.phase = "recovery";
       f.phaseT = 0;
       f.cut = "throw";
@@ -9496,7 +13702,8 @@
     if (def.phase === "active" && def.cut !== "throw") return false;
     const atk = def === player ? rival : player;
     if (!throwTechWindow(atk)) return false;
-    if (!throwInRange()) return false;
+    // CID/ROAN throw range kit leftover (v470): tech door rides attacker kit.
+    if (!throwInRange(atk)) return false;
     landThrowTech(atk, def);
     return true;
   }
@@ -9522,6 +13729,29 @@
     return { x, y: bb.y + bb.h * 0.36 };
   }
 
+  function foeThreatensPbBreak(f) {
+    // foeThreatensPbBreak knife-plant startup leftover (v554): keep canHold /
+    // defer flush while foe still swinging, knife-plant startup, or live
+    // incoming bolt so pending last-stam PB can still absorb as
+    // landBlock/landBoltBlock (mirror tickAI boltIncoming / boltAnswerEmpty).
+    if (!f) return false;
+    const foe = f === player ? rival : player;
+    if (foe && (foe.phase === "startup" || foe.phase === "active") && foe.cut !== "throw") return true;
+    if (foe && foe.boltPhase === "startup") return true;
+    if (bolt && ((f === player && bolt.kind === "rival") || (f === rival && bolt.kind === "you"))) return true;
+    return false;
+  }
+
+  function flushPbBreakPending(f) {
+    // Pushblock last-stam defer guard-break leftover (v553): tip-plant trip
+    // when pending survived resolve (whiff / foe no longer swinging).
+    // landBlock/landBoltBlock already cleared pending on connect trip.
+    if (!f || !f.pbBreakPending) return;
+    if (foeThreatensPbBreak(f)) return;
+    f.pbBreakPending = false;
+    tripGuardBreak(f);
+  }
+
   function tripGuardBreak(f, atk) {
     // Block tip plant leftover: plant steel while leftover block sheet still
     // owns tipY. guarding used to clear first, so guardSteelPoint sat on idle
@@ -9529,6 +13759,22 @@
     const other = atk || (f === player ? rival : player);
     const pt = atk ? cutPoint(atk, f) : guardSteelPoint(f);
     f.guarding = false;
+    // Freeze-lift pushblock buffer vs post-chip break-adjacent stamina leftover (v575):
+    // a break also invalidates any already-armed seat buffer.
+    if (f === player) pushblockBuf = 0;
+    else if (f === rival) p2PushblockBuf = 0;
+    // Freeze-lift bolt buffer arm vs post-chip break-adjacent stamina leftover (v577):
+    // a break also invalidates any already-armed dart seat buffer.
+    if (f === player) boltBuf = false;
+    else if (f === rival) p2BoltBuf = false;
+    // Pushblock last-stam defer guard-break leftover (v553): clear pending so
+    // landBlock/landBoltBlock trip (or tip flush) cannot double-break.
+    f.pbBreakPending = false;
+    // Guard-break riposte seat dump leftover (v537): dump riposte seat so
+    // mid-RIPOSTE_WIN break cannot leave armed stuck under startAttack GB no-op.
+    f.riposteWindowT = 0;
+    f.riposteArmed = false;
+    f.riposte = false;
     f.stamina = 0;
     f.guardBreakT = GUARD_BREAK_MS;
     f.stamRegenT = STAMINA_REGEN_DELAY;
@@ -9577,10 +13823,20 @@
     // Player only. Space+S in throw range stays throw; L+S while guarding stays reversal.
     if (!player || player.riposteWindowT <= 0) return false;
     if (player.falling || player.stunT > 0 || player.thrownT > 0) return false;
-    const space = !!attackEdge;
-    const l = !!golpeEdge;
+    // Feint→parry→riposte feintT clear + spend gate leftover (v535): mirror
+    // tryFireRiposte — refuse while feintT/boltPhase lock so window stays live
+    // (no stuck riposteArmed under v534 freeze). Do NOT touch tickAI gate.
+    // Guard-break riposte seat dump + spend/fire GB gate leftover (v537): also
+    // refuse guardBreakT>0 (mirror startAttack) so spend cannot arm through GB.
+    if (player.feintT > 0 || player.boltPhase || player.guardBreakT > 0) return false;
+    // Hold-S Space riposte spend + pad far window leftover (v538): applyActionEdge
+    // routes slash+guard → throwEdge (not attackEdge); treat throwEdge as space
+    // (and reversalEdge as l) so hold-S Space reaches spend. Close refuse + L+S
+    // refuse kept (throw/rev own). Clear throwEdge/reversalEdge on success.
+    const space = !!attackEdge || !!throwEdge;
+    const l = !!golpeEdge || !!reversalEdge;
     if (!space && !l) return false;
-    if (space && actionHeld("guard") && throwInRange()) return false;
+    if (space && actionHeld("guard") && throwInRange(player)) return false;
     if (l && actionHeld("guard")) return false;
     player.riposteWindowT = 0;
     player.riposteArmed = true;
@@ -9603,6 +13859,8 @@
     openBoltBuf = false;
     attackEdge = false;
     golpeEdge = false;
+    throwEdge = false;
+    reversalEdge = false;
     return true;
   }
 
@@ -9611,6 +13869,10 @@
     if (openLeft > 0) return false;
     if (player.phase !== "idle" || player.guarding || player.stunT > 0 || player.falling) return false;
     if (player.feintT > 0 || player.boltPhase) return false;
+    // Guard-break riposte seat dump + spend/fire GB gate leftover (v537): refuse
+    // guardBreakT>0 BEFORE clearing bufs / calling startAttack (startAttack GB
+    // no-op would leave armed stuck → v534 freeze then delayed riposte).
+    if (player.guardBreakT > 0) return false;
     // Spent on press even on whiff — no measure gate (reward is earlier startup).
     slashBuf = false;
     golpeBuf = false;
@@ -9618,10 +13880,67 @@
     return true;
   }
 
+  function trySpendRiposteP2(edgeSlash, edgeGolpe, wantG) {
+    // Versus/online P2 perfect-parry / riposte fairness leftover (v454): O/P in
+    // RIPOSTE_WIN spend the one-shot reward slash (mirror trySpendRiposteInput).
+    // Throw chord (O+DOWN in range) / rev chord (P+DOWN) refuse. CPU skipped.
+    if (matchKind !== "versus" && matchKind !== "online") return false;
+    if (!rival || rival.riposteWindowT <= 0) return false;
+    if (rival.falling || rival.stunT > 0 || (rival.thrownT || 0) > 0) return false;
+    // Feint→parry→riposte feintT clear + spend gate leftover (v535): mirror
+    // tryFireRiposteP2 — refuse while feintT/boltPhase lock so window stays live.
+    // Guard-break riposte seat dump + spend/fire GB gate leftover (v537): also
+    // refuse guardBreakT>0 (mirror startAttack) so spend cannot arm through GB.
+    if (rival.feintT > 0 || rival.boltPhase || rival.guardBreakT > 0) return false;
+    if (!edgeSlash && !edgeGolpe) return false;
+    if (edgeSlash && wantG && throwInRange(rival)) return false;
+    if (edgeGolpe && wantG) return false;
+    rival.riposteWindowT = 0;
+    rival.riposteArmed = true;
+    rival.guarding = false;
+    rival.wantBlock = false;
+    playRiposteSpendSting();
+    spawnPlantDust(rival, 0.95);
+    {
+      const chest = hitWoundAnchor(rival);
+      spawnBrasaFx("riposte", chest.x, chest.y, rival.facing, rival);
+    }
+    p2SlashBuf = true;
+    p2GolpeBuf = false;
+    p2BoltBuf = false;
+    p2ThrowBuf = false;
+    p2ReversalBuf = false;
+    p2OpenBuf = false;
+    p2OpenBoltBuf = false;
+    p2OpenGolpeBuf = false;
+    return true;
+  }
+
+  function tryFireRiposteP2() {
+    // Versus/online P2 perfect-parry / riposte fairness leftover (v454): fire
+    // armed reward slash when idle (mirror tryFireRiposte).
+    if (matchKind !== "versus" && matchKind !== "online") return false;
+    if (!rival || !rival.riposteArmed) return false;
+    if (openLeft > 0) return false;
+    if (rival.phase !== "idle" || rival.guarding || rival.stunT > 0 || rival.falling) return false;
+    if (rival.feintT > 0 || rival.boltPhase) return false;
+    // Guard-break riposte seat dump + spend/fire GB gate leftover (v537): refuse
+    // guardBreakT>0 BEFORE clearing bufs / calling startAttack.
+    if (rival.guardBreakT > 0) return false;
+    p2SlashBuf = false;
+    p2GolpeBuf = false;
+    startAttack(rival);
+    return true;
+  }
+
   function isPerfectParry(atk, def) {
-    // Player only. Raise-edge window vs melee Space/L. Not throw, not dart.
+    // Raise-edge window vs melee Space/L. Not throw, not dart.
     // landBlock is never dart/throw — still gate cut for clarity.
-    if (def !== player) return false;
+    // Versus/online P2 perfect-parry / riposte fairness leftover (v454): human P2
+    // seat admits the same rising-guard door (CPU rival stays player-only).
+    if (def === player) { /* ok */ }
+    else if ((matchKind === "versus" || matchKind === "online") && def === rival) { /* ok */ }
+    else return false;
     if (!(atk.cut === "slash" || atk.cut === "golpe")) return false;
     return (def.guardRaiseElapsed || 0) < PARRY_WIN_MS;
   }
@@ -9666,6 +13985,10 @@
     def.stamina = Math.max(0, def.stamina - STAMINA_BLOCK);
     def.stamRegenT = STAMINA_REGEN_DELAY;
     // Reward path: arm existing riposte window (same RIPOSTE_WIN 280).
+    // Feint→parry→riposte feintT clear + spend gate leftover (v535): parry frees
+    // defender for reward — clear leftover feintT so tryFire/trySpend are not
+    // stuck behind frozen drain under hitstop (v534 armed freeze stays intact).
+    def.feintT = 0;
     if (def.stamina > 0) {
       def.riposteWindowT = RIPOSTE_WIN_MS;
       def.riposteArmed = false;
@@ -9686,7 +14009,21 @@
     atk.phase = "recovery";
     atk.phaseT = 0;
     atk.cutHit = true;
-    if (atk.kind === "rival") atk.aiSawBlock = true;
+    // Clash/connect reversal sticky leftover (v482): same atk dump as landHit.
+    atk.reversal = false;
+    // Clash/connect riposte sticky leftover (v483): same atk dump as landHit —
+    // blocked riposte kept f.riposte → cancelIntoGolpe free RIPOSTE frames.
+    atk.riposte = false;
+    // Post-block special-cancel K empty especial leftover (v544): both seats.
+    atk.aiSawBlock = true;
+    // Blocked-connect comboBolt latch leftover (v593): landBlock left comboBolt
+    // + comboN after steel — post-block re-cancel chained false 2+ via noteCombo
+    // atk.comboBolt bypass. Clear-only latch on blocked connect (seat of
+    // v585 recovery-end / v586 clash). Skip landParry/startFeint; no noteCombo retune.
+    atk.comboBolt = false;
+    atk.comboN = 0;
+    atk.comboT = 0;
+    atk.comboPunch = false;
     armRivalSlashLink(atk);
     armRivalGolpeLink(atk);
     armRivalBoltLink(atk);
@@ -9717,6 +14054,16 @@
       playSfx(SFX.bloqueo);
     }
     const pt = cutPoint(atk, def);
+    // Rival pushblock before chip leftover (v552): live connect used to chip
+    // STAMINA_BLOCK (−20) before tryPushblock’s PUSHBLOCK_STAM (−25) gate —
+    // AI PB only fired at pre-block ≥45. Player arms at Same 25 first.
+    // Soft: rivalPushblockOnBlock BEFORE chip / tripGuardBreak. shoveOwns /
+    // plant skip / 40%/CD/25/240 unchanged. Mirror player pre-connect order.
+    // After the block sting so a successful rival shove keeps lastPushblockSfx.
+    // tryPushblock overwrites the small block vel with the 240px shove.
+    // Player pushblock connect leftover (v406): shoveOwns already skips 1.0;
+    // || shoved keeps early player latch.
+    if (def === rival) shoved = rivalPushblockOnBlock() || shoved;
     // Stamina chunk spend leftover (v378): ghost+flash the −20 chip.
     pulseStam(def, def.stamina);
     def.stamina = Math.max(0, def.stamina - STAMINA_BLOCK);
@@ -9724,15 +14071,10 @@
     // Hold-block does NOT arm RIPOSTE_WIN (Combate v308 — riposte from parry only).
     if (def.stamina <= 0) tripGuardBreak(def, atk);
     else if (shoveOwns) spawnSteelFlash(pt.x, pt.y, atk, def, true, "push");
-    else spawnSteelFlash(pt.x, pt.y, atk, def);
-    // After the block sting so a successful rival shove keeps lastPushblockSfx.
-    // tryPushblock overwrites the small block vel with the 240px shove.
+    else if (!shoved) spawnSteelFlash(pt.x, pt.y, atk, def);
     // Pushblock dust leftover: landBlock's 1.0 plant used to stack under the
     // live PUSHBLOCK_FX scrape, so leftover block grit rode the 240px trail.
     // Draw-only. Skip the small plant when shove owns the scrape.
-    // Player pushblock connect leftover (v406): shoveOwns already skips 1.0;
-    // rival still re-arms after applyPush (|| shoved keeps early player latch).
-    if (def === rival) shoved = rivalPushblockOnBlock() || shoved;
     // Guard-break plant grit leftover (v377): skip 1.0 when break owns the boot
     // (tripGuardBreak already planted 1.25). Shove skip unchanged.
     if (!shoved && def.guardBreakT <= 0) spawnPlantDust(def, 1.0);
@@ -9769,14 +14111,19 @@
   function rivalShouldSuper() {
     // After a connect, and only where the dart can actually hit.
     // Fullscreen range dart stays a normal K even with a full bar.
+    // CID/ROAN K-bolt SUPER_RANGE kit leftover (v462): kit spend band.
     if (!meterFull(rival)) return false;
     if (!rival.superArmed) return false;
-    if (absGap() > SUPER_RANGE) return false;
+    if (absGap() > superRangeOf(rival)) return false;
+    if (player.guarding) return false;
     return true;
   }
 
   function boltRecMs(f) {
-    return f && f.boltSuper ? BOLT_SUPER_RECOVERY : BOLT_RECOVERY;
+    // CID/ROAN bolt recovery kit leftover (v467): empty dart rides kit.
+    // CID/ROAN spent-super bolt dash+recovery kit leftover (v600): spent rides kit too.
+    if (f && f.boltSuper) return boltSuperRecOf(f);
+    return boltRecOf(f);
   }
 
   function canStartBolt(f) {
@@ -9794,9 +14141,25 @@
     return true;
   }
 
+
+  function boltAnswerEmpty(f) {
+    // Answer-plant→K full-meter forced spend leftover (v474): opposing knife
+    // plant / live dart — empty answer (mirror AI startBolt(rival, false) v438).
+    if (!f) return false;
+    const foe = f === player ? rival : player;
+    if (foe && foe.boltPhase === "startup") return true;
+    if (bolt && bolt.kind !== f.kind) return true;
+    return false;
+  }
+
   function startBolt(f, spendSuper) {
     if (!canStartBolt(f || player)) return false;
     const u = f || player;
+    // startBolt riposte seat dump leftover (v536): mirror throw/rev — leftover
+    // RIPOSTE_WIN / riposteArmed must not freeze AI (v534) through dart.
+    u.riposteWindowT = 0;
+    u.riposteArmed = false;
+    u.riposte = false;
     let wantSuper = false;
     if (meterFull(u)) {
       if (u.kind === "you") wantSuper = spendSuper !== false;
@@ -9922,7 +14285,9 @@
     const h = superOn ? BOLT_SUPER_H : BOLT_H;
     const y = plant.y - h * 0.5;
     const x = u.facing > 0 ? tip : tip - w;
-    const spd = superOn ? BOLT_SUPER_SPEED : BOLT_SPEED;
+    // CID/ROAN bolt dash kit leftover (v469): empty dart rides kit.
+    // CID/ROAN spent-super bolt dash+recovery kit leftover (v600): spent rides kit too.
+    const spd = superOn ? boltSuperSpeedOf(u) : boltSpeedOf(u);
     bolt = { x: x, y: y, w: w, h: h, vx: u.facing * spd, facing: u.facing, kind: u.kind, super: superOn };
   }
 
@@ -9981,6 +14346,13 @@
       f.holdCutPlant = false;
       if (fromCut) f.sheatheT = SHEATHE_MS;
       else if (walkOutEnd) f.cutRecBreathT = GUARD_RAISE_MS;
+      // Post-block cancelIntoBolt aiSawBlock clear leftover (v550) belt: if
+      // aiSawBlock somehow still set when bolt recovery ends, clear it (mirror
+      // advanceAttack slash/golpe recovery-end); rival also aiResetT.
+      if (f.aiSawBlock) {
+        f.aiSawBlock = false;
+        if (f.kind === "rival") f.aiResetT = AI_RESET_MS;
+      }
     }
   }
 
@@ -10005,7 +14377,7 @@
     noteCombo(atk, def);
     const before = def.hp;
     const spent = !!(bolt && bolt.super);
-    const dmg = spent ? BOLT_SUPER_DMG : SLASH_DMG;
+    const dmg = cpuInDmg(atk, spent ? BOLT_SUPER_DMG : SLASH_DMG);
     def.hp = Math.max(0, def.hp - dmg);
     pulseBar(def, before);
     // Especial connect juice leftover (v393): spent −N reads brasa/super, not soft hit-hueso.
@@ -10022,6 +14394,18 @@
     def.phase = "idle";
     def.phaseT = 0;
     def.guarding = false;
+    // Dart flesh-interrupt dump leftover (v480): landHit / landThrow already
+    // zero reversal + riposte reward on flesh/grab; landBoltHit only cleared
+    // guarding — spent riposteArmed / live RIPOSTE_WIN / reversal sat through
+    // dart HITSTUN and tryFireRiposte still fired after stun. Soft: mirror
+    // landHit dump. landBoltBlock chip keeps window (sibling of landBlock).
+    def.reversal = false;
+    def.riposteWindowT = 0;
+    def.riposteArmed = false;
+    def.riposte = false;
+    // pbBreakPending clear on flesh/throw leftover (v555): clear only —
+    // dart flesh already resolved; flush must not tip-plant GB on HITSTUN.
+    def.pbBreakPending = false;
     def.closing = def.kind === "rival";
     def.standWait = 0;
     def.standGoal = 0;
@@ -10040,6 +14424,12 @@
 
   function landBoltBlock(def, atk, dir, pt) {
     noteConnect();
+    // Blocked-connect comboBolt latch leftover (v593): HUD symmetry — same
+    // latch dump as landBlock (bolt recovery-end already zeros comboBolt).
+    atk.comboBolt = false;
+    atk.comboN = 0;
+    atk.comboT = 0;
+    atk.comboPunch = false;
     // Player pushblock dart-connect leftover (v407): tryPushblock before
     // resolveBolt used to arm the 240px shove + óxido/shake-8/pushblock sting,
     // then applyPush + bumpShake(4) + brasa block + 1.0 plant clobbered it —
@@ -10047,8 +14437,8 @@
     // Same hole landBlock already closed (v406). Soft: when shove already owns
     // (|pushVel|·GUARD_PUSH_MS ≈ PUSHBLOCK_PX), keep pushVel, refresh pushT +
     // PUSHBLOCK_SHAKE + óxido steel, skip bolt-block sting / brasa block / 1.0
-    // plant. Chip HP / stam / HITSTOP_BLOCK / tripGuardBreak unchanged. Rival
-    // still does not pushblock vs dart.
+    // plant. Chip HP / stam / HITSTOP_BLOCK / tripGuardBreak unchanged.
+    // Rival dart connect re-arms via rivalPushblockOnBlock (v478).
     let shoved = false;
     const shoveOwns =
       def.pushT > 0 &&
@@ -10066,19 +14456,26 @@
     hitstopLeft = HITSTOP_BLOCK;
     if (!shoveOwns) playBoltBlockSting(!!(bolt && bolt.super));
     const before = def.hp;
-    const chip = (bolt && bolt.super) ? BOLT_SUPER_CHIP : BOLT_CHIP;
+    const chip = cpuInDmg(atk, (bolt && bolt.super) ? BOLT_SUPER_CHIP : BOLT_CHIP);
     def.hp = Math.max(0, def.hp - chip);
     pulseBar(def, before);
     spawnDmgNum(pt.x, pt.y, before - def.hp, true, def);
     gainMeter(atk, METER_BLOCK_SPECIAL);
     if (def.hp <= 0) koTarget = def;
+    // Rival pushblock vs dart leftover (v478): landBlock already re-arms rival
+    // via rivalPushblockOnBlock after applyPush; landBoltBlock skipped it so AI
+    // never shoved a connecting dart. Soft: same hook; shoveOwns / break skip 1.0.
+    // Rival pushblock before chip leftover (v552): dart twin — call PB BEFORE
+    // STAMINA_BLOCK chip / tripGuardBreak so mid-stam (25–44) can shove at Same 25.
+    // shoveOwns / plant skip / 40%/CD/25/240 unchanged; || shoved keeps latch.
+    if (def === rival) shoved = rivalPushblockOnBlock() || shoved;
     // Stamina chunk spend leftover (v378): ghost+flash the −20 chip.
     pulseStam(def, def.stamina);
     def.stamina = Math.max(0, def.stamina - STAMINA_BLOCK);
     def.stamRegenT = STAMINA_REGEN_DELAY;
     if (def.stamina <= 0) tripGuardBreak(def, atk);
     else if (shoveOwns) spawnSteelFlash(pt.x, pt.y, atk, def, true, "push");
-    else spawnBrasaFx("block", pt.x, pt.y, atk.facing, def, boltLandFxScale());
+    else if (!shoved) spawnBrasaFx("block", pt.x, pt.y, atk.facing, def, boltLandFxScale());
     // Player pushblock dart-connect leftover (v407): shoveOwns already skips
     // brasa; skip 1.0 when shove / break owns the boot (mirror landBlock).
     if (!shoved && def.guardBreakT <= 0) spawnPlantDust(def, 1.0);
@@ -10201,7 +14598,7 @@
       rival.cut === "throw" && rival.phase === "active" && !rival.cutHit;
     if (
       bothThrowActive &&
-      throwInRange() &&
+      throwInRange(player) && throwInRange(rival) &&
       !player.falling && !rival.falling &&
       player.stunT <= 0 && rival.stunT <= 0 &&
       !throwLocked(player) && !throwLocked(rival)
@@ -10222,16 +14619,49 @@
       want = false;
     }
     if (f.phase !== "idle" && !f.guarding) want = false;
+    // Guard-raise mid boltPhase startup refuse leftover (v595): mash-S during
+    // knife/holdCut plant used to arm want while phase stayed idle through
+    // boltPhase==="startup" — poseBitmap/poseSheet prefer guarding block over
+    // throwKnife / holdCut slash while BOLT_STARTUP still runs and spawnBolt
+    // still fires. canStartBolt already refuses guarding at plant start; tip
+    // raise already skips boltPhase. Soft: refuse new raise mid-plant only.
+    // Leave boltPhase==="recovery" free so early post-dart guard still works.
+    // Soft only; no BOLT_* / frames / stam / pose priority retune. No new verb.
+    if (f.boltPhase === "startup") want = false;
+    // HoldCut bolt-recovery S-raise sheet-protect refuse leftover (v598):
+    // special-cancel cut plant (boltHoldCut) recovery still arms want — block
+    // hops over unfinished holdCut slash. Soft: refuse while holdingCutBolt.
+    // Empty-K / clash-K recovery raise kept. No pose priority / BOLT_* retune.
+    if (holdingCutBolt(f)) want = false;
 
     const canStart = f.stamina >= STAMINA_START_MIN && f.guardBreakT <= 0 && !f.falling && f.stunT <= 0;
-    const canHold = f.stamina > 0 && f.guardBreakT <= 0 && !f.falling && f.stunT <= 0;
+    // Pushblock last-stam defer guard-break leftover (v553): while
+    // pbBreakPending && foe still swinging, keep canHold so updateGuard
+    // does not silent-drop before active (pre-connect PB last stam).
+    const canHold = (f.stamina > 0 || (f.pbBreakPending && foeThreatensPbBreak(f))) && f.guardBreakT <= 0 && !f.falling && f.stunT <= 0;
     const raise = !!(want && (f.guarding ? canHold : canStart));
 
     // Leave-threat lock: keep 10/s for STAMINA_REGEN_LOCK after the pocket.
     // Shared — player and rival. 25/s only once the window dies, still out.
     // CID/ROAN Space HOLD meaty-pad kit leftover (v447): stam-threat pad rides slashLungeOf(f).
     // CID/ROAN L golpe inThreat/stam-threat kit leftover (v449): live golpe pocket rides golpeLungeOf(f).
+    // Idle sheet pad is not the sword. Measure with slash tip (mirror open/v510/v511 flush).
+    // Guard sheet has no tipX — poseSheet prefers block while guarding, so clear it
+    // for the tip measure (restore after). wakeRevFadeHold mirrors meatySpaceAtGuard.
+    // bladeReach→destRect→idleBreath→wakeupFade clears wakeRevFadeHold when
+    // phase/cut are temp-active (reversalPlanting false); snapshot+restore it.
+    const phThreat = f.phase;
+    const cuThreat = f.cut;
+    const gThreat = f.guarding;
+    const wrThreat = f.wakeRevFadeHold;
+    f.guarding = false;
+    f.phase = "active";
+    f.cut = "slash";
     let threat = absGap() <= bladeReach(f) + slashLungeOf(f) + slashLungeOf(f);
+    f.phase = phThreat;
+    f.cut = cuThreat;
+    f.guarding = gThreat;
+    f.wakeRevFadeHold = wrThreat;
     {
       const other = f === player ? rival : player;
       if (
@@ -10240,8 +14670,21 @@
         other.cut === "golpe" &&
         other.boltPhase !== "startup"
       ) {
+        // Idle sheet pad is not the sword. Measure with golpe tip (mirror open/v510/v511 flush).
+        // Guard sheet has no tipX — clear guarding so tip is ACTIVE not block sheet-edge.
+        const phGThreat = f.phase;
+        const cuGThreat = f.cut;
+        const gGThreat = f.guarding;
+        const wrGThreat = f.wakeRevFadeHold;
+        f.guarding = false;
+        f.phase = "active";
+        f.cut = "golpe";
         const gL = golpeLungeOf(f);
         threat = absGap() <= bladeReach(f) + gL + gL;
+        f.phase = phGThreat;
+        f.cut = cuGThreat;
+        f.guarding = gGThreat;
+        f.wakeRevFadeHold = wrGThreat;
       }
     }
     const locked = threat || f.stamThreatLockT > 0;
@@ -10264,7 +14707,9 @@
       f.stamina = Math.max(0, f.stamina - STAMINA_DRAIN * (dt / 1000));
       f.stamRegenT = STAMINA_REGEN_DELAY;
       if (wakeGuardWalk && f.walkFadeHold < 0.02) f.walkFadeHold = 1;
-      if (f.stamina <= 0) tripGuardBreak(f);
+      // Pushblock last-stam defer guard-break leftover (v553): skip drain trip
+      // while pending so landBlock/flush own the break after resolve.
+      if (f.stamina <= 0 && !f.pbBreakPending) tripGuardBreak(f);
     } else {
       if (f.phase === "idle" || f.guarding) f.guarding = false;
       f.guardRaiseElapsed = 0;
@@ -10291,6 +14736,9 @@
     // only if the crumple sheet would leave the frame.
     const loser = koTarget;
     const winner = loser === player ? rival : player;
+    // Round flow / set score leftover (v500): credit KO toward FT2 set.
+    if (loser === player) setWins.p2++;
+    else setWins.p1++;
     const pad = 12;
     const lr = destRect(loser);
     if (lr.dx < pad) loser.x += pad - lr.dx;
@@ -10478,6 +14926,18 @@
       requestStart = false;
       return;
     }
+    // Esc mid-play pause leftover (v505): freeze combat tick / openLeft hold.
+    if (mode === "pause") {
+      attackEdge = false;
+      golpeEdge = false;
+      boltEdge = false;
+      throwEdge = false;
+      reversalEdge = false;
+      feintEdge = false;
+      requestStart = false;
+      requestRestart = false;
+      return;
+    }
     if (requestRestart) {
       resetRound();
       return;
@@ -10501,15 +14961,122 @@
       tickRiposte(player, dt);
       tickRiposte(rival, dt);
       trySpendRiposteInput();
+      // Versus/online P2 perfect-parry / riposte fairness leftover (v454): P2 O/P
+      // spend under freeze too (tickVersusP2 skipped while hitstop). Track p2Held
+      // so a tap-during-freeze still arms (mirror P1 attackEdge latch).
+      // Versus/online P2 hitstop buffer fairness leftover (v455): v454 riposte-only
+      // under freeze still ate O/P/[ edges (no p2*Buf; dart untracked) while P1
+      // slashBuf already holds through hitstop. Soft: arm mid-combat bufs after
+      // riposte spend try; track full p2Held (mirror stun arms / P1 hs path).
+      if (matchKind === "versus" || matchKind === "online") {
+        const hsSlash = p2ActionHeld("slash");
+        const hsGolpe = p2ActionHeld("golpe");
+        const hsDart = p2ActionHeld("dart");
+        const hsG = p2ActionHeld("guard");
+        const hsL = p2ActionHeld("left");
+        const hsR = p2ActionHeld("right");
+        const hsEdgeS = hsSlash && !p2Held.slash;
+        const hsEdgeG = hsGolpe && !p2Held.golpe;
+        const hsEdgeD = hsDart && !p2Held.dart;
+        if (trySpendRiposteP2(hsEdgeS, hsEdgeG, hsG)) {
+          /* riposte spend owns O/P */
+        } else if (hsEdgeD && rival.stamina >= BOLT_STAM && rival.guardBreakT <= 0) {
+          // Freeze-lift p2BoltBuf arm vs post-chip break-adjacent stamina leftover (v577).
+          p2BoltBuf = true;
+          p2SlashBuf = false;
+          p2GolpeBuf = false;
+          p2ThrowBuf = false;
+        } else if (hsEdgeG && hsG && rival.guardBreakT <= 0) {
+          // Freeze-lift REV arm guard-break gate (v581): do not re-arm through post-chip HITSTOP_BLOCK.
+          p2ReversalBuf = true;
+          p2SlashBuf = false;
+          p2GolpeBuf = false;
+          p2BoltBuf = false;
+          p2ThrowBuf = false;
+        } else if (hsEdgeG && !hsG) {
+          // Wake KD→L buffer fairness leftover (v472): arm L through thrownT.
+          p2GolpeBuf = true;
+          p2SlashBuf = false;
+          p2BoltBuf = false;
+          p2ThrowBuf = false;
+        } else if (hsG && !p2Held.guard && canFeint(rival)) {
+          // Hitstop feint buffer fairness leftover (v497): rising guard under
+          // freeze must pull. Rising edgeGuard feint unchanged (v541).
+          startFeint(rival);
+          p2SlashBuf = false;
+          p2GolpeBuf = false;
+          p2BoltBuf = false;
+          p2ThrowBuf = false;
+        } else if (hsEdgeS && hsG && canFeint(rival)) {
+          // Hitstop feint buffer fairness leftover (v497) + Throw-tech owns
+          // Space+S over feint leftover (v541): tryThrowTech before startFeint
+          // (mirror P1 / tickVersusP2); feint only if tech refuses.
+          if (!tryThrowTech(rival)) startFeint(rival);
+          p2SlashBuf = false;
+          p2GolpeBuf = false;
+          p2BoltBuf = false;
+          p2ThrowBuf = false;
+        } else if (hsEdgeS && hsG) {
+          p2ThrowBuf = true;
+          p2SlashBuf = false;
+          p2GolpeBuf = false;
+          p2BoltBuf = false;
+          p2ReversalBuf = false;
+        } else if (hsEdgeS && !hsG) {
+          p2SlashBuf = true;
+          p2GolpeBuf = false;
+          p2BoltBuf = false;
+          p2ThrowBuf = false;
+        }
+        // Versus/online P2 pushblock hitstop buffer fairness leftover (v456):
+        // mirror P1 pushblockBuf under freeze (away-tap while guarding).
+        // Hitstop rising-guard PB buffer leftover (v499): also arm on hsG when
+        // !guarding (updateGuard skipped under freeze; flush after raise).
+        const hsEdgeL = hsL && !p2Held.left;
+        const hsEdgeR = hsR && !p2Held.right;
+        // Freeze-lift pushblock buffer vs post-chip break-adjacent stamina leftover (v575):
+        // mirror drawPushblockHintFor — do not arm a buffer that tryPushblock will
+        // refuse after HITSTOP_BLOCK (stamina / guard-break gate).
+        if ((rival.guarding || hsG) && rival.stamina >= PUSHBLOCK_STAM && rival.guardBreakT <= 0) {
+          if (hsEdgeL) p2PushblockBuf = -1;
+          if (hsEdgeR) p2PushblockBuf = 1;
+        }
+        p2Held.slash = hsSlash;
+        p2Held.golpe = hsGolpe;
+        p2Held.dart = hsDart;
+        p2Held.guard = hsG;
+        p2Held.left = hsL;
+        p2Held.right = hsR;
+      }
       syncRipostePad();
       if (attackEdge) { slashBuf = true; golpeBuf = false; boltBuf = false; throwBuf = false; }
       if (golpeEdge) {
-        if (player.thrownT > 0) { /* still down — wakeup L is not a mash from knockdown */ }
-        else { golpeBuf = true; slashBuf = false; boltBuf = false; throwBuf = false; }
+        // Wake KD→L buffer fairness leftover (v472): arm through thrownT (mirror
+        // slashBuf / boltBuf under freeze); idle flush owns wakeupWindow.
+        golpeBuf = true; slashBuf = false; boltBuf = false; throwBuf = false;
       }
-      if (boltEdge) { boltBuf = true; slashBuf = false; golpeBuf = false; throwBuf = false; }
+      // Freeze-lift boltBuf arm vs post-chip break-adjacent stamina leftover (v577):
+      // do not arm a dart buffer that canStartBolt will refuse after HITSTOP_BLOCK.
+      if (boltEdge && player.stamina >= BOLT_STAM && player.guardBreakT <= 0) { boltBuf = true; slashBuf = false; golpeBuf = false; throwBuf = false; }
+      // Hitstop feint buffer fairness leftover (v497): slash startup + freeze —
+      // feintEdge used to clear with no startFeint; throwEdge while canFeint
+      // armed throwBuf (wrong verb through recovery). Convert before throw arm.
+      if (feintEdge || (throwEdge && canFeint(player))) {
+        // Throw-tech owns Space+S over feint leftover (v541): tryThrowTech before
+        // startFeint when throwEdge && canFeint; rising feintEdge alone still pulls.
+        slashBuf = false;
+        golpeBuf = false;
+        boltBuf = false;
+        throwBuf = false;
+        if (throwEdge && canFeint(player) && tryThrowTech(player)) {
+          /* tech owns Space+S over feint */
+        } else {
+          startFeint(player);
+        }
+        throwEdge = false;
+      }
       if (throwEdge) { throwBuf = true; slashBuf = false; golpeBuf = false; boltBuf = false; reversalBuf = false; }
-      if (reversalEdge) { reversalBuf = true; slashBuf = false; golpeBuf = false; boltBuf = false; throwBuf = false; }
+      if (reversalEdge && player.guardBreakT <= 0) { reversalBuf = true; slashBuf = false; golpeBuf = false; boltBuf = false; throwBuf = false; }
       attackEdge = false;
       golpeEdge = false;
       boltEdge = false;
@@ -10518,7 +15085,13 @@
       feintEdge = false;
       const wantAhs = actionHeld("left");
       const wantDhs = actionHeld("right");
-      if (player.guarding) {
+      // Hitstop rising-guard PB buffer leftover (v499): also arm on
+      // actionHeld("guard") when !guarding (updateGuard skipped under freeze;
+      // post-freeze tryPushblock flush after raise).
+      // Freeze-lift pushblock buffer vs post-chip break-adjacent stamina leftover (v575):
+      // mirror drawPushblockHintFor — do not arm a buffer that tryPushblock will
+      // refuse after HITSTOP_BLOCK (stamina / guard-break gate).
+      if ((player.guarding || actionHeld("guard")) && player.stamina >= PUSHBLOCK_STAM && player.guardBreakT <= 0) {
         if (wantAhs && !walkHeldA) pushblockBuf = -1;
         if (wantDhs && !walkHeldD) pushblockBuf = 1;
       }
@@ -10555,17 +15128,26 @@
       }
       if (koTarget.fallT >= FALL_MS) {
         mode = "over";
-        modeT = 0;
+        // KO falling rematch teach leftover (v466): seed opaque so crumple→over
+        // does not dip REVANCHA / ESC MENÚ (modeT was 0 through falling).
+        modeT = 400;
         overTipI = (overTipI + 1) % overTips().length;
         syncMusic(true);
       }
       finishWinnerCut(dt);
+      // KO falling Space rematch leftover (v465): Space/tap rematch died on crumple
+      // while KeyR (requestRestart above) + Esc stayed live; over already rematches.
+      if (attackEdge || throwEdge || requestStart) {
+        resetRound();
+        return;
+      }
       attackEdge = false;
       golpeEdge = false;
       boltEdge = false;
       throwEdge = false;
       reversalEdge = false;
       feintEdge = false;
+      requestStart = false;
       return;
     }
 
@@ -10590,10 +15172,21 @@
     tickRiposte(rival, dt);
     updateGuard(player, dt, wantGuard(player));
     tickCutRecBreath(player, dt);
-    if (player.falling || player.guarding) { slashBuf = false; golpeBuf = false; boltBuf = false; openBuf = false; openBoltBuf = false; }
-    if (player.thrownT > 0) { golpeBuf = false; reversalBuf = false; }
+    // Hold-S drop-guard dart buffer leftover (v547): boltBuf kept through
+    // guarding (mirror throwBuf/reversalBuf). Hitstop-armed K + hold-S survive
+    // until drop-guard; idle/cancel flush already requires !player.guarding.
+    // Falling still clears boltBuf (KD path). slash/golpe/open still dump on guard.
+    if (player.falling) { slashBuf = false; golpeBuf = false; boltBuf = false; openBuf = false; openBoltBuf = false; }
+    else if (player.guarding) { slashBuf = false; golpeBuf = false; openBuf = false; openBoltBuf = false; /* boltBuf kept v547 */ }
+    // Wake KD→L buffer fairness leftover (v472): keep golpeBuf / reversalBuf
+    // through thrownT so mash-L on crumple can flush into wakeupWindow.
+    // Space slashBuf / K boltBuf already hold under freeze in KD.
     if (feintEdge || (throwEdge && canFeint(player))) {
       // Slash startup: S is feint, not throw. Idle Space+S still throws.
+      // Throw-tech owns Space+S over feint leftover (v541): throwEdge && canFeint
+      // tries tryThrowTech first; feint only if tech refuses. Rising feintEdge
+      // alone (tap-S, no Space) still feints. Teach drawFeintHint already yields
+      // TECH when tech live (v459).
       slashBuf = false;
       golpeBuf = false;
       boltBuf = false;
@@ -10601,11 +15194,18 @@
       openBoltBuf = false;
       throwBuf = false;
       attackEdge = false;
-      if (openLeft > 0) { /* opening feint refused */ }
+      if (throwEdge && canFeint(player) && tryThrowTech(player)) {
+        /* tech owns Space+S over feint */
+      } else if (openLeft > 0) { /* opening feint refused */ }
       else startFeint(player);
       throwEdge = false;
     }
     feintEdge = false;
+    // Hold-S Space riposte spend + pad far window leftover (v538): spend before
+    // throw/rev (mirror P2 tickVersusP2 spend-before-throw; hitstop path already
+    // spends first). trySpend treats throwEdge as space / reversalEdge as l;
+    // close refuse + L+S refuse leave edges for throw/rev owners below.
+    trySpendRiposteInput();
     if (throwEdge) {
       // Space+S chord. Not a 6th button. Not a cancel door.
       // L+S is reversal — do not steal that chord.
@@ -10625,9 +15225,10 @@
         player.phase === "startup" ||
         player.phase === "active" ||
         player.phase === "recovery";
-      if (openLeft > 0) { /* opening throw refused */ }
+      if (openLeft > 0) { throwBuf = true; /* Opening throw buffer fairness leftover (v492) */ }
       else if (tryThrowTech(player)) throwBuf = false;
       else if (locked) throwBuf = true;
+      else if (throwLocked(throwFoe(player))) throwBuf = true; /* Idle throw-edge foe-lock arm leftover (v495) */
       else startThrow(player);
     }
     throwEdge = false;
@@ -10649,13 +15250,20 @@
         player.phase === "startup" ||
         player.phase === "active" ||
         player.phase === "recovery";
-      if (openLeft > 0) { /* opening reversal refused */ }
-      else if (player.guarding) startReversal(player);
+      if (openLeft > 0) { reversalBuf = true; /* Opening rev buffer fairness leftover (v493) */ }
+      else if (player.thrownT > 0) { reversalBuf = true; /* Wake KD→L v472: hold-S+L through KD */ }
+      else if (wakeupWindow(player) && startWakeReversal(player)) reversalBuf = false;
+      else if (player.guarding) {
+        // Unpaid hold-S REV buffer hold leftover (v591): startReversal unpaid
+        // refuse used to eat the edge with no buf — drop-S then fired normal L.
+        // Keep reversalBuf on stamina < REVERSAL_STAM (guard-seat sibling of v582).
+        if (startReversal(player)) { /* spent */ }
+        else if (player.stamina < REVERSAL_STAM) reversalBuf = true;
+      }
       else if (locked) reversalBuf = true;
     }
     reversalEdge = false;
-    // Riposte spend: Space/L in window (not throw chord, not L+S reversal).
-    trySpendRiposteInput();
+    // Riposte spend already ran before throw/rev (v538 hold-S Space path).
     if (attackEdge) {
       // Buffer any locked frame (full recovery, not only the last 80ms).
       // Early-recovery Space used to vanish because startAttack requires idle.
@@ -10709,9 +15317,20 @@
       if (openLeft > 0) golpeBuf = true;
       else if (yieldBoltK) golpeBuf = false;
       else if (slashToGolpeWindow(player) && cancelIntoGolpe(player)) golpeBuf = false;
-      else if (player.thrownT > 0) { /* still down — too early, not a wakeup mash */ }
+      else if (player.thrownT > 0) { golpeBuf = true; /* Wake KD→L v472: keep through KD */ }
       else if (wakeupWindow(player) && startWakeReversal(player)) golpeBuf = false;
-      else if (player.guarding) startReversal(player);
+      // Unpaid wake-L hold leftover (v582): wakeupWindow live but startWakeReversal
+      // refused (stamina < REVERSAL_STAM) must NOT fall into startAttack while
+      // throwInvulnT is live — that was an unthrowable normal L without paying REV.
+      // Hold golpeBuf; after THROW_WAKE_INVULN dies, wakeRev clears → normal L.
+      // Too late (window gone) still falls through to normal L below.
+      else if (wakeupWindow(player)) { golpeBuf = true; }
+      else if (player.guarding) {
+        // Unpaid hold-S REV buffer hold leftover (v591): unpaid refuse must keep
+        // reversalBuf (not golpeBuf) — drop-S must not convert to normal L.
+        if (startReversal(player)) { /* spent */ }
+        else if (player.stamina < REVERSAL_STAM) reversalBuf = true;
+      }
       else if (locked) golpeBuf = true;
       else startAttack(player, "golpe");
     }
@@ -10737,7 +15356,9 @@
       if (openLeft > 0) openBoltBuf = true;
       else if (cutToBoltWindow(player) && cancelIntoBolt(player)) boltBuf = false;
       else if (locked) boltBuf = true;
-      else startBolt(player);
+      // Answer-plant→K full-meter forced spend leftover (v474): empty answer vs
+      // opposing plant / live dart (mirror AI v438); neutral full still spends.
+      else startBolt(player, !boltAnswerEmpty(player));
     }
     boltEdge = false;
 
@@ -10749,11 +15370,16 @@
     if (wantA && !walkHeldA) tapWalk = -1;
     if (wantD && !walkHeldD) tapWalk = 1;
     if (tapWalk) {
-      tryPushblock(player, tapWalk);
-      pushblockBuf = 0;
+      // Unpaid EMPUJON pushblockBuf keep leftover (v592): only clear when
+      // tryPushblock succeeds; unpaid away refuse keeps/arms the away buf.
+      if (tryPushblock(player, tapWalk)) pushblockBuf = 0;
+      else if (player.guarding && tapWalk === awayWalkDir(player) && player.stamina < PUSHBLOCK_STAM) pushblockBuf = tapWalk;
+      else pushblockBuf = 0;
     } else if (pushblockBuf) {
-      tryPushblock(player, pushblockBuf);
-      pushblockBuf = 0;
+      // Unpaid EMPUJON pushblockBuf keep leftover (v592): only clear when
+      // tryPushblock succeeds; unpaid refuse keeps pushblockBuf.
+      if (tryPushblock(player, pushblockBuf)) pushblockBuf = 0;
+      else if (!(player.guarding && pushblockBuf === awayWalkDir(player) && player.stamina < PUSHBLOCK_STAM)) pushblockBuf = 0;
     }
     walkHeldA = wantA;
     walkHeldD = wantD;
@@ -10819,8 +15445,12 @@
     tickCutRecBreath(rival, dt);
     advanceAttack(player, dt);
     advanceAttack(rival, dt);
+    // Versus/online P2 mid-combat buffer fairness leftover (v452): flush after
+    // advanceAttack so recovery→idle same frame still fires buffered meaty.
+    flushVersusP2CombatBufs();
     // Versus local 2P (v430): human cancel doors in tickVersusP2; skip AI auto-link.
-    if (matchKind !== "versus") {
+    // Online human-P2 seat leftover (v451): online same human cancel doors.
+    if (matchKind !== "versus" && matchKind !== "online") {
       rivalTrySlashGolpe();
       rivalTryGolpeSlash();
       rivalTryCutBolt();
@@ -10859,7 +15489,8 @@
           slashBuf = false;
           golpeBuf = false;
           boltBuf = false;
-          startBolt(player);
+          // Opening-K answer-plant full-meter forced spend leftover (v475): empty vs plant.
+          startBolt(player, !boltAnswerEmpty(player));
         } else {
           openBoltBuf = false;
         }
@@ -10867,7 +15498,10 @@
     }
     // Clash-K cancel priority leftover (v382) + hit-confirm special-cancel K (v383):
     // buffered Space yields to boltBuf when cut→K door live (clash late or connected late).
-    if (slashBuf && openLeft <= 0 && golpeToSlashWindow(player) && !player.guarding && player.stunT <= 0 && !player.falling && !(boltBuf && cutToBoltWindow(player))) {
+    // Cancel-door BOLT_STAM leftover (v578): only a payable K owns that door;
+    // discard a doomed buffer before the Space flush can be blocked by it.
+    if (boltBuf && cutToBoltWindowOpen(player) && player.stamina < BOLT_STAM) boltBuf = false;
+    if (slashBuf && openLeft <= 0 && golpeToSlashWindow(player) && !player.guarding && player.stunT <= 0 && !player.falling && !(boltBuf && cutToBoltWindow(player) && player.stamina >= BOLT_STAM)) {
       slashBuf = false;
       golpeBuf = false;
       cancelIntoSlash(player);
@@ -10882,22 +15516,28 @@
     // while guardBreakT still owned the free window (startAttack armed) — mash
     // stole the v399 punish. Mirror feintT <= 0 hold.
     if (slashBuf && openLeft <= 0 && player.phase === "idle" && !player.guarding && player.stunT <= 0 && !player.falling && player.feintT <= 0 && player.guardBreakT <= 0 && !player.boltPhase) {
-      // Same hold gate as openBuf. Immediate fire after a landed cut sat
-      // ~10px short (knock 80 − lunge 36) — whoosh + slash in empty air.
-      const ph = player.phase;
-      player.phase = "active";
-      const hold = bladeReach(player) + slashLungeOf(player);
-      player.phase = ph;
-      if (bodyGap() <= hold + 2) {
-        slashBuf = false;
-        golpeBuf = false;
-        openBoltBuf = false;
-        startAttack(player);
+      // Wake getup buffer priority leftover (v473): yield to golpeBuf/reversalBuf
+      // wakeupWindow door — slashBuf idle used to fire first and steal wake L.
+      if (wakeupWindow(player) && (golpeBuf || reversalBuf)) {
+        /* hold — wake L/rev flush owns the getup */
+      } else {
+        // Same hold gate as openBuf. Immediate fire after a landed cut sat
+        // ~10px short (knock 80 − lunge 36) — whoosh + slash in empty air.
+        const ph = player.phase;
+        player.phase = "active";
+        const hold = bladeReach(player) + slashLungeOf(player);
+        player.phase = ph;
+        if (bodyGap() <= hold + 2) {
+          slashBuf = false;
+          golpeBuf = false;
+          openBoltBuf = false;
+          startAttack(player);
+        }
       }
     }
     // Clash-K cancel priority leftover (v382) + hit-confirm special-cancel K (v383):
     // buffered L yields to boltBuf when cut→K door live (clash late or connected late).
-    if (golpeBuf && openLeft <= 0 && slashToGolpeWindow(player) && !player.guarding && player.stunT <= 0 && !player.falling && !(boltBuf && cutToBoltWindow(player))) {
+    if (golpeBuf && openLeft <= 0 && slashToGolpeWindow(player) && !player.guarding && player.stunT <= 0 && !player.falling && !(boltBuf && cutToBoltWindow(player) && player.stamina >= BOLT_STAM)) {
       golpeBuf = false;
       slashBuf = false;
       cancelIntoGolpe(player);
@@ -10907,11 +15547,16 @@
     // Guard-break action lock leftover (v409): same guardBreakT <= 0 hold for
     // golpeBuf idle flush (mirror feintT).
     if (golpeBuf && openLeft <= 0 && player.phase === "idle" && !player.guarding && player.stunT <= 0 && !player.falling && player.feintT <= 0 && player.guardBreakT <= 0 && !player.boltPhase) {
+      // Wake KD→L buffer fairness leftover (v472): keep through thrownT; flush
+      // into wakeupWindow → startWakeReversal (mirror throwBuf keep v408).
       if (player.thrownT > 0) {
-        golpeBuf = false;
+        /* hold — KD; wakeupWindow flush owns the getup L */
       } else if (wakeupWindow(player) && startWakeReversal(player)) {
         golpeBuf = false;
         slashBuf = false;
+      } else if (wakeupWindow(player)) {
+        /* Unpaid wake-L hold leftover (v582): hold golpeBuf — do not startAttack
+           while throwInvulnT live. Too late (window gone) still flushes normal L. */
       } else {
         const ph = player.phase;
         player.phase = "active";
@@ -10944,22 +15589,47 @@
     // eat boltBuf while boltPhase still owned the body (phase idle through dart)
     // — Space/L already wait (v405). Skip else-clear through boltPhase; hold-gate
     // owns the free frame.
+    // Player super buffer leftover (v463): full-meter boltBuf used to else-clear
+    // outside blade+lunge while rivalShouldSuper already spends in superRangeOf —
+    // buffered especial died mid-band; edge tap always-spent. Soft: meterFull fires
+    // at absGap <= superRangeOf / persists walk-in; empty K keeps blade+lunge clear.
     if (boltBuf && openLeft <= 0 && player.phase === "idle" && player.feintT <= 0 && player.guardBreakT <= 0 && !player.guarding && player.stunT <= 0 && !player.falling && !player.boltPhase) {
-      const ph = player.phase;
-      player.phase = "active";
-      const hold = bladeReach(player) + slashLungeOf(player);
-      player.phase = ph;
-      if (bodyGap() <= hold + 2 && canStartBolt(player)) {
-        boltBuf = false;
-        slashBuf = false;
-        golpeBuf = false;
-        openBoltBuf = false;
-        startBolt(player);
+      // Wake getup buffer priority leftover (v473): yield to wake L/rev on getup —
+      // full-meter especial idle flush used to spend before golpeBuf wake door.
+      if (wakeupWindow(player) && (golpeBuf || reversalBuf)) {
+        /* hold — wake L/rev flush owns the getup */
+      } else if (meterFull(player)) {
+        if (absGap() <= superRangeOf(player) && canStartBolt(player)) {
+          boltBuf = false;
+          slashBuf = false;
+          golpeBuf = false;
+          openBoltBuf = false;
+          // Answer-plant→K full-meter forced spend leftover (v474): empty vs plant.
+          startBolt(player, !boltAnswerEmpty(player));
+        } else if (!canStartBolt(player)) {
+          boltBuf = false;
+        }
+        /* else persist — walk-in to kit superRange */
       } else {
-        boltBuf = false;
+        const ph = player.phase;
+        player.phase = "active";
+        const hold = bladeReach(player) + slashLungeOf(player);
+        player.phase = ph;
+        if (bodyGap() <= hold + 2 && canStartBolt(player)) {
+          boltBuf = false;
+          slashBuf = false;
+          golpeBuf = false;
+          openBoltBuf = false;
+          startBolt(player);
+        } else {
+          boltBuf = false;
+        }
       }
-    } else if (boltBuf && player.phase === "idle" && player.feintT <= 0 && player.guardBreakT <= 0 && player.stunT <= 0 && !player.boltPhase) {
-      boltBuf = false;
+    } else if (boltBuf && player.phase === "idle" && player.feintT <= 0 && player.guardBreakT <= 0 && !player.guarding && player.stunT <= 0 && !player.boltPhase) {
+      // Wake getup priority: don't else-clear while yielding to wake L/rev.
+      // Hold-S drop-guard dart buffer leftover (v547): skip else-clear while
+      // guarding so dump-kept boltBuf survives until release-S idle flush.
+      if (!(wakeupWindow(player) && (golpeBuf || reversalBuf))) boltBuf = false;
     }
     // Tick-throw buffer fairness leftover (v408): throwBuf used to clear then
     // startThrow no-op while foe still throwLocked (stun/KD/wakeup invuln) —
@@ -10967,31 +15637,53 @@
     // spends; unlocked still startThrow (whiff-fullscreen unchanged).
     // Guard-break action lock leftover (v409): hold throwBuf through guardBreakT
     // (mirror feintT) so mash grab does not arm during the free window.
-    if (throwBuf && openLeft <= 0 && (player.phase === "idle" || player.guarding) && player.stunT <= 0 && !player.falling && !player.boltPhase && player.feintT <= 0 && player.guardBreakT <= 0) {
-      if (tryThrowTech(player)) {
+    // Throw-buffer tech-from-recovery leftover (v476): edge Space+S techs before
+    // locked, but throwBuf only flushed tryThrowTech on idle/guard — mash-throw
+    // in slash recovery missed a mid-recovery grab (80ms window died). Soft:
+    // tech flush any phase tryThrowTech allows; startThrow still idle/guard only.
+    if (throwBuf && openLeft <= 0 && !player.falling) {
+      // Wake getup buffer priority leftover (v473): yield to wake L/rev on getup.
+      if (wakeupWindow(player) && (golpeBuf || reversalBuf)) {
+        /* hold — wake L/rev flush owns the getup */
+      } else if (tryThrowTech(player)) {
         throwBuf = false;
         slashBuf = false;
         golpeBuf = false;
         boltBuf = false;
         reversalBuf = false;
-      } else if (throwLocked(throwFoe(player))) {
-        /* hold — foe stun / KD / wakeup invuln; free-frame flush owns the grab */
-      } else {
-        throwBuf = false;
-        slashBuf = false;
-        golpeBuf = false;
-        boltBuf = false;
-        reversalBuf = false;
-        startThrow(player);
+      } else if ((player.phase === "idle" || player.guarding) && player.stunT <= 0 && !player.boltPhase && player.feintT <= 0 && player.guardBreakT <= 0) {
+        if (throwLocked(throwFoe(player))) {
+          /* hold — foe stun / KD / wakeup invuln; free-frame flush owns the grab */
+        } else {
+          throwBuf = false;
+          slashBuf = false;
+          golpeBuf = false;
+          boltBuf = false;
+          reversalBuf = false;
+          startThrow(player);
+        }
       }
     }
-    if (reversalBuf && openLeft <= 0 && player.guarding && player.stunT <= 0 && !player.falling && !player.boltPhase && player.feintT <= 0) {
-      reversalBuf = false;
-      slashBuf = false;
-      golpeBuf = false;
-      boltBuf = false;
-      throwBuf = false;
-      startReversal(player);
+    // Wake KD→L buffer fairness leftover (v472): hold-S+L kept through KD flushes
+    // into wakeupWindow first (same startWakeReversal spend as tap-L).
+    if (reversalBuf && openLeft <= 0 && player.stunT <= 0 && !player.falling && !player.boltPhase && player.feintT <= 0 && player.thrownT <= 0) {
+      if (wakeupWindow(player) && startWakeReversal(player)) {
+        reversalBuf = false;
+        slashBuf = false;
+        golpeBuf = false;
+        boltBuf = false;
+        throwBuf = false;
+      } else if (player.guarding) {
+        // Unpaid hold-S REV buffer hold leftover (v591): only clear when
+        // startReversal succeeds; unpaid refuse keeps reversalBuf.
+        if (startReversal(player)) {
+          reversalBuf = false;
+          slashBuf = false;
+          golpeBuf = false;
+          boltBuf = false;
+          throwBuf = false;
+        }
+      }
     }
     tickGait(player, dt);
     tickGait(rival, dt);
@@ -11000,6 +15692,10 @@
     clampFighter(rival);
     resolveCuts();
     resolveBolt();
+    // Pushblock last-stam defer guard-break leftover (v553): tip-plant flush
+    // when pending survived resolve (whiff / foe no longer swinging).
+    flushPbBreakPending(player);
+    flushPbBreakPending(rival);
     // Lunge plant scrape ↔ knock cull leftover (v359): scrape only if grit survived resolve.
     flushLungePlantScrape(player);
     flushLungePlantScrape(rival);
@@ -11179,13 +15875,21 @@
   }
 
   function boltPlantFade(f) {
-    // Visual only (drawKnight). poseBitmap still idle once bolt recovery starts.
+    // Visual only (drawKnight). poseBitmap still idle once bolt recovery starts
+    // (block once guarding mid-recovery raise).
     // Idle/walk K used to pop windup→idle the tick the dart left
     // the tip. Special-cancel keeps the cut sheet (boltHoldCut).
     // destRect leftover breath used to dump ~1.6 that same tick
     // (telegraphFade died). Ease leftover breath with this k.
+    // Empty-K bolt-recovery S-raise knife-plant keep-through-raise leftover (v599):
+    // leftover knife used to die the tick S raised mid empty-K / clash-K recovery
+    // (this gated on guarding), so leftover knife popped to block — a snap, not a
+    // plant. Keep leftover knife through leftover boltPlantFade if they raise.
+    // poseBitmap still block once guarding. Idle knife plant still fades knife→idle.
+    // Stun still cuts. Special-cancel still 0 (holdingCutBolt). Mirror sheatheFade /
+    // feintFade keep-through-raise.
     if (!f || holdingCutBolt(f)) return 0;
-    if (f.falling || f.stunT > 0 || f.guarding) return 0;
+    if (f.falling || f.stunT > 0) return 0;
     if (f.boltPhase !== "recovery") return 0;
     const rec = boltRecMs(f);
     if (rec <= 0) return 0;
@@ -11373,7 +16077,7 @@
     if (f.falling || f.stunT > 0 || f.hp <= 0) return 0;
     if (f.guarding) return 0;
     if (f.feintT > 0) return 0;
-    if (f.phase !== "idle" || f.boltPhase) return 0;
+    if (f.phase !== "idle" || f.boltPhase === "startup") return 0;
     return guardRaiseK(f);
   }
 
@@ -12179,8 +16883,41 @@
     // recovery ended — a hop, not a plant. Rest leftover knife on the walk
     // sheet when A/D is held. Idle bolt recovery still rests on idle.
     // poseBitmap still idle once bolt recovery starts. AABB planted.
-    const restBoltWalk = bf > 0.02 && recoveryWalkResting(f) && ready(boltPlant) && ready(walk) && walk !== boltPlant;
-    const restBolt = bf > 0.02 && !restBoltWalk && ready(boltPlant) && ready(idle) && idle !== boltPlant;
+    // Bolt recovery restBoltWalk walkFadeHold draw seat leftover (v611): unfinished
+    // draw half of v603 lean keep. v603 keeps walkFadeHold+settle lean through
+    // empty-K/clash-K knife recovery, and breath already treats walkFadeHold as
+    // rested-walk — but restBoltWalk still gated only recoveryWalkResting (A/D
+    // held). After A/D release mid-stride into bolt recovery, destRect lean rides
+    // leftover settle while sheet falls to restBolt idle+knife — a hop, not a
+    // plant. Feint/sheathe/tele/clash/link/holdCut rest*Walk already OR
+    // walkFadeHold > 0.02. Soft: widen restBoltWalk with !f.guarding &&
+    // (recoveryWalkResting(f) || f.walkFadeHold > 0.02) (mirror restFeintWalk /
+    // restSheatheWalk). Keep A/D recoveryWalkResting path; !f.guarding so
+    // restBoltGuard still owns raise. Overlay restBolt || restBoltWalk ||
+    // restBoltGuard unchanged. Draw-only.
+    // (v611 tip restBoltWalk walkFadeHold draw seat leftover — unfinished draw half of v603 lean keep.)
+    const restBoltWalk = bf > 0.02 && !f.guarding && (recoveryWalkResting(f) || f.walkFadeHold > 0.02) && ready(boltPlant) && ready(walk) && walk !== boltPlant;
+    // Empty-K bolt-recovery S-raise knife-plant keep-through-raise leftover (v599):
+    // restBolt used to keep idle base under a live raise (no !guarding), so leftover
+    // knife overlay died with boltPlantFade's old guarding gate and the sheet hopped
+    // knife→block. Add !f.guarding (mirror restSheathe) so raise falls through to
+    // poseBitmap block base; restBoltGuard keeps leftover knife on the block sheet
+    // (mirror restFeintGuard). Idle bolt recovery still rests on idle.
+    // Bolt recovery S-raise mid-stride / walkFadeHold restBoltGuardWalk leftover (v614):
+    // unfinished GuardWalk half of restBoltGuard. v603 keeps walkFadeHold through
+    // empty-K/clash-K recovery; v611 seats opaque walk under knife via restBoltWalk;
+    // v599 restBoltGuard keeps knife through raise on block. Raise mid that walk plant:
+    // restBoltWalk dies (!f.guarding), base snaps to poseBitmap block, restWalkGuard
+    // only paints walk at wf alpha under knife — walk opacity dumps. restWakeGuardWalk
+    // already keeps opaque walk base through raise and skips restWalkGuard; restBoltGuard
+    // never got that GuardWalk half. Soft draw-only: restBoltGuardWalk seats opaque walk
+    // under live knife while raise + walkFadeHold/recoveryWalkOut; gate restBoltGuard;
+    // widen knife overlay; skip restWalkGuard (mirror restWakeGuardWalk). Idle bolt→guard
+    // unchanged. No lean/destRect/bodyAABB/wantGuard retune.
+    // (v614 tip restBoltGuardWalk leftover — unfinished GuardWalk half of restBoltGuard.)
+    const restBoltGuardWalk = bf > 0.02 && f.guarding && (f.walkFadeHold > 0.02 || recoveryWalkOut(f)) && ready(walk) && ready(boltPlant) && walk !== boltPlant && walk !== block;
+    const restBolt = bf > 0.02 && !restBoltWalk && !f.guarding && ready(boltPlant) && ready(idle) && idle !== boltPlant;
+    const restBoltGuard = bf > 0.02 && f.guarding && !restBoltGuardWalk && ready(boltPlant) && ready(block) && boltPlant !== block;
     // Feint→guard leftover: guarding mid-pull keeps leftover windup on the
     // block sheet (poseBitmap already block). Idle pull still rests on idle.
     // Feint walk-out pose leftover: leftover windup used to rest on idle while
@@ -12199,9 +16936,22 @@
     // or walkFadeHold or recoveryWalkOut. Idle pull still rests on idle.
     // Feint walk-out / feint→guard unchanged. poseBitmap still idle once feintT
     // is set. FeintFade clock unchanged. AABB planted.
-    const restFeintGuard = ff > 0.02 && f.guarding && ready(wind) && ready(block) && wind !== block;
-    const restFeintWalk = ff > 0.02 && !restFeintGuard && (gaitWalkOn(f) || f.walkFadeHold > 0.02 || recoveryWalkOut(f)) && ready(wind) && ready(walk) && wind !== walk;
-    const restFeint = ff > 0.02 && !restFeintGuard && !restFeintWalk && ready(wind) && ready(idle) && idle !== wind;
+    // Feint→guard mid-stride / walkFadeHold restFeintGuardWalk leftover (v615):
+    // unfinished GuardWalk half of restFeintGuard. Opaque restFeintWalk dumps to
+    // poseBitmap block + translucent restWalkGuard under live windup when S-raise
+    // mid walk plant. restWakeGuardWalk / restBoltGuardWalk already keep opaque walk
+    // base through raise and skip restWalkGuard; restFeintGuard never got that
+    // GuardWalk half. Soft draw-only: restFeintGuardWalk seats opaque walk under
+    // live windup while raise + walkFadeHold/recoveryWalkOut; gate restFeintGuard /
+    // restFeintWalk / restFeint; widen windup overlay; skip restWalkGuard (mirror
+    // restBoltGuardWalk / restWakeGuardWalk). Idle feint→guard unchanged. Keep live:
+    // feintFade no guarding gate; tickGait feint walkFadeHold keep. No lean/destRect/
+    // bodyAABB/wantGuard/feintFade clock retune.
+    // (v615 tip restFeintGuardWalk leftover — unfinished GuardWalk half of restFeintGuard.)
+    const restFeintGuardWalk = ff > 0.02 && f.guarding && (f.walkFadeHold > 0.02 || recoveryWalkOut(f)) && ready(walk) && ready(wind) && walk !== wind && walk !== block;
+    const restFeintGuard = ff > 0.02 && f.guarding && !restFeintGuardWalk && ready(wind) && ready(block) && wind !== block;
+    const restFeintWalk = ff > 0.02 && !restFeintGuard && !restFeintGuardWalk && (gaitWalkOn(f) || f.walkFadeHold > 0.02 || recoveryWalkOut(f)) && ready(wind) && ready(walk) && wind !== walk;
+    const restFeint = ff > 0.02 && !restFeintGuard && !restFeintGuardWalk && !restFeintWalk && ready(wind) && ready(idle) && idle !== wind;
     // Parry interrupt leftover (v325): leftover slash used to pop to idle the same tick
     // landParry set stunT (sheatheFade dies on stun). Rest leftover cut on idle while pf live.
     // poseBitmap still idle. Chip stun (pf 0) unchanged. AABB planted.
@@ -12218,7 +16968,23 @@
     const parryBase = ((f.thrownT > 0 || f.falling || f.hp <= 0) && ready(hurt)) ? hurt
       : (f.techRec && f.cut === "throw" && ready(wind)) ? wind
       : idle;
-    const restParry = pf > 0.02 && !restFeint && !restFeintGuard && !restFeintWalk && ready(parrySheet) && ready(parryBase) && parrySheet !== parryBase;
+    // Parry/hit interrupt restParryWalk draw seat leftover (v612): unfinished walk half of
+    // restParry under chip-stun recovery walk-out. restParry always painted parryBase
+    // (idle / wind) + slash|windup|knife overlay while pf live. Chip-stun recovery
+    // walk-out (else-if after restParry) already rests walk under A/D once pf dies —
+    // but live interrupt never got a Walk sibling (unlike restThrowWalk / restBoltWalk /
+    // restFeintWalk). After pf ends (~140ms) while stun still owns (~350 hitstun /
+    // ~180 parry stagger) and A/D held: sheet hops idle→walk mid-stun. During live pf
+    // + A/D / leftover walkFadeHold, lean already keeps through stun settle→walk
+    // keep-0 while sheet stays idle — lean without walk plant. Throw-KD interrupt
+    // (parryBase===hurt) correctly keeps crumple; chip/parry/tech paths do not.
+    // Soft: restParryWalk seats walk under live pf when recoveryWalkResting or
+    // walkFadeHold; gate restParry with !restParryWalk; keep hurt base for throw-KD;
+    // keep idle/tech non-walk when not resting walk. Overlay widen restParry ||
+    // restParryWalk. Draw-only.
+    // (v612 tip restParryWalk interrupt draw seat leftover — unfinished walk half of restParry under chip-stun recovery walk-out.)
+    const restParryWalk = pf > 0.02 && !restFeint && !restFeintGuard && !restFeintWalk && parryBase !== hurt && (recoveryWalkResting(f) || f.walkFadeHold > 0.02) && ready(parrySheet) && ready(walk) && walk !== parrySheet;
+    const restParry = pf > 0.02 && !restParryWalk && !restFeint && !restFeintGuard && !restFeintWalk && ready(parrySheet) && ready(parryBase) && parrySheet !== parryBase;
     // Throw / cut recovery fade leftover: >0.02 used to drop the idle base while
     // poseBitmap still held windup, so the last recovery tick flashed full grab.
     // Keep idle/walk base through any live throwPlantFade. Overlay alpha can be tiny.
@@ -12230,8 +16996,9 @@
     // poseBitmap still windup while planted. AABB planted.
     // Tech interrupt leftover (v340): skip throwPlantFade rest while pf owns the
     // mid-cut → windup overlay (trf would paint full windup over leftover slash).
-    const restThrowWalk = trf > 0 && !restParry && ready(wind) && recoveryWalkOut(f) && recoveryWalkResting(f) && ready(walk) && walk !== wind;
-    const restThrow = trf > 0 && !restThrowWalk && !restParry && ready(wind) && ready(idle) && idle !== wind;
+    // v612: also skip while restParryWalk owns the interrupt walk base.
+    const restThrowWalk = trf > 0 && !restParry && !restParryWalk && ready(wind) && recoveryWalkOut(f) && recoveryWalkResting(f) && ready(walk) && walk !== wind;
+    const restThrow = trf > 0 && !restThrowWalk && !restParry && !restParryWalk && ready(wind) && ready(idle) && idle !== wind;
     // Telegraph walk-in pose leftover: leftover walk used to dump to idle the tick
     // startAttack/startThrow/startBolt armed from mid-stride (tickGait zeroed
     // walkFadeHold; restTele rested on idle), so the raise hopped walk→idle under
@@ -12363,6 +17130,20 @@
     // rests on idle. Mid-stride gaitWalkOn path unchanged. Recovery A/D path unchanged
     // (recoveryWalkOut covers it). Sheathe→guard unchanged. poseBitmap still idle / walk.
     // SheatheFade clock unchanged. AABB planted.
+    // Sheathe→guard mid-stride / walkFadeHold restSheatheGuardWalk leftover (v621):
+    // unfinished GuardWalk half of sheathe→guard after draw keep + v620 slashB. Opaque
+    // restSheatheWalk dumps to poseBitmap block + translucent restWalkGuard under live
+    // slash when S-raise mid walk plant. restWakeGuardWalk / restBoltGuardWalk /
+    // restFeintGuardWalk already keep opaque walk base through raise and skip
+    // restWalkGuard; sheathe never got that GuardWalk half. Soft draw-only:
+    // restSheatheGuardWalk seats opaque walk under live slash while raise +
+    // walkFadeHold/recoveryWalkOut; skip restWalkGuard (mirror restBoltGuardWalk /
+    // restFeintGuardWalk / restWakeGuardWalk). Slash overlay already paints on fade>0.02.
+    // Idle sheathe→guard non-walk unchanged (poseBitmap block + slash overlay).
+    // restSheatheWalk / restSheathe keep !f.guarding (bolt twin). Keep live: sheatheFade
+    // no guarding gate. No lean/destRect/bodyAABB/wantGuard/sheatheFade clock retune.
+    // (v621 tip restSheatheGuardWalk leftover — unfinished GuardWalk half of sheathe→guard.)
+    const restSheatheGuardWalk = fade > 0 && f.guarding && (f.walkFadeHold > 0.02 || recoveryWalkOut(f)) && ready(walk) && ready(cut) && walk !== cut && walk !== block;
     const restSheatheWalk = fade > 0 && !f.guarding && (gaitWalkOn(f) || f.walkFadeHold > 0.02 || recoveryWalkOut(f)) && ready(cut) && ready(walk) && cut !== walk;
     const restSheathe = fade > 0 && !f.guarding && !restSheatheWalk && ready(cut) && ready(idle) && idle !== cut;
     if (restWalk) {
@@ -12380,12 +17161,24 @@
       octx.drawImage(idle, 0, 0, dw, dh);
     } else if (restBoltWalk) {
       octx.drawImage(walk, 0, 0, dw, dh);
+    } else if (restBoltGuardWalk) {
+      // v614: unfinished GuardWalk half of restBoltGuard — seat opaque walk under
+      // live knife while S-raise mid-stride / walkFadeHold (mirror restWakeGuardWalk).
+      octx.drawImage(walk, 0, 0, dw, dh);
     } else if (restBolt) {
       octx.drawImage(idle, 0, 0, dw, dh);
     } else if (restFeintWalk) {
       octx.drawImage(walk, 0, 0, dw, dh);
+    } else if (restFeintGuardWalk) {
+      // v615: unfinished GuardWalk half of restFeintGuard — seat opaque walk under
+      // live windup while S-raise mid-stride / walkFadeHold (mirror restBoltGuardWalk).
+      octx.drawImage(walk, 0, 0, dw, dh);
     } else if (restFeint) {
       octx.drawImage(idle, 0, 0, dw, dh);
+    } else if (restParryWalk) {
+      // v612: unfinished walk half of restParry — seat walk under live pf + A/D /
+      // walkFadeHold (chip/parry/tech). Throw-KD (parryBase===hurt) stays on restParry.
+      octx.drawImage(walk, 0, 0, dw, dh);
     } else if (restParry) {
       // Throw interrupt leftover (v339): hurt base when thrownT; idle base on stun/parry.
       octx.drawImage(parryBase, 0, 0, dw, dh);
@@ -12417,6 +17210,10 @@
       octx.drawImage(walk, 0, 0, dw, dh);
     } else if (restHoldCut) {
       octx.drawImage(idle, 0, 0, dw, dh);
+    } else if (restSheatheGuardWalk) {
+      // v621: unfinished GuardWalk half of sheathe→guard — seat opaque walk under
+      // live slash while S-raise mid-stride / walkFadeHold (mirror restBoltGuardWalk).
+      octx.drawImage(walk, 0, 0, dw, dh);
     } else if (restSheatheWalk) {
       octx.drawImage(walk, 0, 0, dw, dh);
     } else if (restSheathe) {
@@ -12439,7 +17236,7 @@
     } else {
       octx.drawImage(img, 0, 0, dw, dh);
     }
-    if (restWalkGuard && !restWakeGuardWalk) {
+    if (restWalkGuard && !restWakeGuardWalk && !restBoltGuardWalk && !restFeintGuardWalk && !restSheatheGuardWalk) {
       octx.globalAlpha = wf;
       octx.drawImage(walk, 0, 0, dw, dh);
       octx.globalAlpha = 1;
@@ -12449,17 +17246,17 @@
       octx.drawImage(cut, 0, 0, dw, dh);
       octx.globalAlpha = 1;
     }
-    if (restBolt || restBoltWalk) {
+    if (restBolt || restBoltWalk || restBoltGuard || restBoltGuardWalk) {
       octx.globalAlpha = bf;
       octx.drawImage(boltPlant, 0, 0, dw, dh);
       octx.globalAlpha = 1;
     }
-    if (restFeint || restFeintGuard || restFeintWalk) {
+    if (restFeint || restFeintGuard || restFeintWalk || restFeintGuardWalk) {
       octx.globalAlpha = ff;
       octx.drawImage(wind, 0, 0, dw, dh);
       octx.globalAlpha = 1;
     }
-    if (restParry) {
+    if (restParry || restParryWalk) {
       octx.globalAlpha = pf;
       octx.drawImage(parrySheet, 0, 0, dw, dh);
       octx.globalAlpha = 1;
@@ -12582,6 +17379,8 @@
   const COL_BRASA = "#c42818";
   const COL_HUESO = "#cfc3a8";
   const COL_NEGRO = "#0c0a08";
+  // Round flow / set score leftover (v500): empty set pip (filled = COL_HUESO).
+  const COL_HIERRO = "#6a5e52";
 
   function tickHudBar(f, dt) {
     // HP drain flash ↔ punchCover (v331): linear hudFlashT used to start
@@ -12851,17 +17650,49 @@
     // unlabeled. Draw-only. Palette hueso. Does not obscure HP/stam.
     // Second fighter stub / CID unlock leftover (v442): roster nameplates so
     // ELEGIR (ROAN/CID) reads in-match. Versus keeps P1/P2 prefix.
+    // Online human-P2 seat leftover (v451): online same P1/P2 seat tags.
+    // CPU / same-id nameplate seat leftover (v504): mid-fight CPU bars stay
+    // unlabeled (v432); after v501 mirror ROAN vs ROAN both bars same name.
+    // Soft: cpu left NAME / right CPU NAME; same-id force seat prefix (P1/P2
+    // or CPU); quiet kit suffix · LARGO/CORTO from entry.kit (α~0.55). Draw-only.
     {
       const entry = rosterEntry(f.fighterId);
       const name = entry ? entry.label : "";
+      const kit = entry && entry.kit ? entry.kit : "";
+      const sameId = p1FighterId === p2FighterId;
       let lab = name;
-      if (matchKind === "versus") lab = (left ? "P1" : "P2") + (name ? " " + name : "");
+      if (matchKind === "versus" || matchKind === "online") {
+        lab = (left ? "P1" : "P2") + (name ? " " + name : "");
+      } else if (matchKind === "cpu") {
+        if (left) lab = sameId ? ("P1" + (name ? " " + name : "")) : name;
+        else lab = "CPU" + (name ? " " + name : "");
+      } else if (sameId) {
+        lab = (left ? "P1" : "P2") + (name ? " " + name : "");
+      }
+      if (lab && kit) lab = lab + " · " + kit;
       if (lab) {
         ctx.save();
-        ctx.globalAlpha = 0.70;
+        ctx.globalAlpha = 0.55;
         drawPixelText(lab, left ? x : x + w, y - 7, 1, COL_HUESO, left ? "left" : "right");
         ctx.restore();
       }
+    }
+    // Round flow / set score leftover (v500): 2 pips hierro/hueso under
+    // nameplates (BO3 / FT2). Draw-only; not HP. Versus + CPU.
+    {
+      const wins = left ? setWins.p1 : setWins.p2;
+      const pipW = 7;
+      const pipH = 3;
+      const gap = 3;
+      const totalW = SET_WINS_NEEDED * pipW + (SET_WINS_NEEDED - 1) * gap;
+      const pipX0 = left ? x : x + w - totalW;
+      const pipY = y - 3;
+      for (let i = 0; i < SET_WINS_NEEDED; i++) {
+        ctx.fillStyle = i < wins ? COL_HUESO : COL_HIERRO;
+        ctx.globalAlpha = i < wins ? 0.88 : 0.55;
+        ctx.fillRect(pipX0 + i * (pipW + gap), pipY, pipW, pipH);
+      }
+      ctx.globalAlpha = 1;
     }
   }
 
@@ -12897,23 +17728,15 @@
     ctx.restore();
   }
 
-  function drawRiposteHint() {
-    // Riposte window readability leftover (v360): perfect-parry RIPOSTE_WIN used
-    // to leave only a tiny floating bang after PARRY_GLEAM died at 80ms, so the
-    // leftover ~200ms reward window went unread once tip gleam faded. Draw-only (drawRiposteHint).
-    // Soft brasa chest ring + remap teach pulse ride the full 280ms window; bang kept.
-    // RIPOSTE_WIN_MS 280 / PARRY_GLEAM_MS 80 / frames locked. No new combat verb.
-    // Tasteful floating bang while riposte window is live (pizarra/brasa).
-    // Pixel bars — no title-card font (title stays drawPixelText / FONT5).
-    if (!player || player.riposteWindowT <= 0 || mode !== "play") return;
-    const k = Math.min(1, player.riposteWindowT / RIPOSTE_WIN_MS);
-    const bb = bodyAABB(player);
+  function drawRiposteHintFor(f, slashLab, golpeLab) {
+    // Draw-only seat helper for drawRiposteHint (P1 + versus/online P2).
+    if (!f || f.riposteWindowT <= 0 || mode !== "play") return;
+    const k = Math.min(1, f.riposteWindowT / RIPOSTE_WIN_MS);
+    const bb = bodyAABB(f);
     const cx = bb.x + bb.w * 0.5;
     const cy = bb.y + bb.h * 0.38;
-    // Two soft beats across the window so the win reads as a clock, not a sticky.
     const pulse = 0.55 + 0.45 * Math.abs(Math.sin((1 - k) * Math.PI * 2));
     ctx.save();
-    // Soft expanding brasa gleam-ring around chest — lasts full window (not 80ms tip gleam).
     ctx.globalCompositeOperation = "lighter";
     ctx.globalAlpha = (0.16 + 0.32 * k) * pulse;
     ctx.strokeStyle = COL_BRASA;
@@ -12926,10 +17749,9 @@
     ctx.beginPath();
     ctx.arc(cx, cy, 12 + 8 * (1 - k), 0, Math.PI * 2);
     ctx.fill();
-    // Tiny tip-side mote so ring + bang share the same brasa family as parry gleam.
     ctx.globalAlpha = 0.45 * k * pulse;
     ctx.fillStyle = "#ffb060";
-    ctx.fillRect(cx + bb.w * 0.28 * (player.facing || 1) - 2, bb.y + 8, 4, 4);
+    ctx.fillRect(cx + bb.w * 0.28 * (f.facing || 1) - 2, bb.y + 8, 4, 4);
     ctx.globalCompositeOperation = "source-over";
     const x = cx;
     const y = bb.y - 22 - (1 - k) * 6;
@@ -12941,12 +17763,105 @@
     ctx.fillStyle = COL_HUESO;
     ctx.fillRect(x - 2, y - 15, 4, 12);
     ctx.fillRect(x - 2, y + 1, 4, 4);
-    // Teach cue: remap-aware Space/L under bang while window is live.
     {
-      const sLab = codeLabel(bindPrimary("slash"));
-      const lLab = codeLabel(bindPrimary("golpe"));
       ctx.globalAlpha = (0.30 + 0.45 * k) * pulse;
-      drawPixelText(sLab + "/" + lLab, x, y + 16, 1, COL_HUESO, "center");
+      drawPixelText(slashLab + "/" + golpeLab, x, y + 16, 1, COL_HUESO, "center");
+    }
+    ctx.restore();
+  }
+
+  function drawRiposteHint() {
+    // Riposte window readability leftover (v360): perfect-parry RIPOSTE_WIN used
+    // to leave only a tiny floating bang after PARRY_GLEAM died at 80ms, so the
+    // leftover ~200ms reward window went unread once tip gleam faded. Draw-only (drawRiposteHint).
+    // Soft brasa chest ring + remap teach pulse ride the full 280ms window; bang kept.
+    // RIPOSTE_WIN_MS 280 / PARRY_GLEAM_MS 80 / frames locked. No new combat verb.
+    // Tasteful floating bang while riposte window is live (pizarra/brasa).
+    // Pixel bars — no title-card font (title stays drawPixelText / FONT5).
+    // Two soft beats across the window so the win reads as a clock, not a sticky.
+    // Teach cue: remap-aware Space/L under bang while window is live.
+    // Versus/online P2 perfect-parry / riposte fairness leftover (v454): seat
+    // rival with p2BindPrimary when human P2 owns RIPOSTE_WIN (CPU silent).
+    if (mode !== "play") return;
+    if (player && player.riposteWindowT > 0) {
+      drawRiposteHintFor(player, codeLabel(bindPrimary("slash")), codeLabel(bindPrimary("golpe")));
+    }
+    if ((matchKind === "versus" || matchKind === "online") && rival && rival.riposteWindowT > 0) {
+      drawRiposteHintFor(rival, codeLabel(p2BindPrimary("slash")), codeLabel(p2BindPrimary("golpe")));
+    }
+  }
+
+  function drawCancelHintFor(f, dartLab, slashLab, golpeLab) {
+    // Draw-only seat helper for drawCancelHint (P1 + versus/online P2).
+    if (!f || mode !== "play") return;
+    if (f.riposteWindowT > 0) return;
+    const winL = slashToGolpeWindow(f);
+    const winS = golpeToSlashWindow(f);
+    const winK = cutToBoltWindow(f);
+    if (!winL && !winS && !winK) return;
+    const left = Math.max(0, cutRecovery(f) - f.phaseT);
+    const winMs = f.clashRec
+      ? BOLT_CANCEL_MS
+      : (f.cut === "golpe" ? GOLPE_CANCEL_MS : SLASH_CANCEL_MS);
+    const k = Math.max(0.08, Math.min(1, left / Math.max(1, winMs)));
+    const pulse = 0.58 + 0.42 * Math.abs(Math.sin((1 - k) * Math.PI));
+    const parts = [];
+    // Cancel-door BOLT_STAM teach leftover (v578): do not advertise K below
+    // the same 30-stamina payment gate used by the live cancel.
+    if (winK && f.stamina >= BOLT_STAM) parts.push(dartLab);
+    if (winS) parts.push(slashLab);
+    if (winL) parts.push(golpeLab);
+    if (!parts.length) return;
+    const label = parts.join("/");
+    // Cancel-teach plantBodyAABB seat leftover (v626): connected golpe recovery
+    // opens the last-100ms cancel door before sheatheIdleHold flips width, and
+    // this seat still anchored on soft bodyAABB — glyph + tip-side mote snapped
+    // mid-crossfade. Combo already yielded (v625); riposte never meets it.
+    // Soft cancel-teach plantBodyAABB seat (v626): plantBodyAABB(f). Keep
+    // x = bb.x + bb.w * 0.5, face arc bb.w * 0.34, y from that same rect.
+    // bodyAABB / sheatheIdleHold / slashB / restSheathe / sheatheFade /
+    // drawComboCount / drawRiposteHintFor untouched.
+    const bb = plantBodyAABB(f);
+    const cx = bb.x + bb.w * 0.5;
+    const cy = bb.y + bb.h * 0.22;
+    const face = f.facing || 1;
+    ctx.save();
+    ctx.globalCompositeOperation = "lighter";
+    ctx.globalAlpha = (0.18 + 0.34 * k) * pulse;
+    ctx.fillStyle = COL_BRASA;
+    ctx.beginPath();
+    ctx.arc(cx + bb.w * 0.34 * face, cy, 7 + 5 * (1 - k), 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 0.22 * k * pulse;
+    ctx.strokeStyle = COL_BRASA;
+    ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    ctx.arc(cx + bb.w * 0.34 * face, cy, 11 + 6 * (1 - k), 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.globalCompositeOperation = "source-over";
+    const x = cx;
+    const y = bb.y - 18 - (1 - k) * 4;
+    ctx.globalAlpha = (0.40 + 0.45 * k) * (0.72 + 0.28 * pulse);
+    ctx.fillStyle = COL_BRASA;
+    ctx.fillRect(x - 2, y - 8, 4, 7);
+    ctx.fillRect(x - 2, y + 2, 4, 3);
+    ctx.globalAlpha = 0.26 * k;
+    ctx.fillStyle = COL_HUESO;
+    ctx.fillRect(x - 2, y - 9, 4, 7);
+    ctx.fillRect(x - 2, y + 1, 4, 3);
+    ctx.globalAlpha = (0.32 + 0.48 * k) * pulse;
+    let cursor = Math.round(x - pixelTextWidth(label, 1) / 2);
+    const ty = y + 14;
+    for (let i = 0; i < parts.length; i++) {
+      if (i > 0) {
+        drawPixelText("/", cursor, ty, 1, COL_HUESO, "left");
+        cursor += pixelTextWidth("/", 1);
+      }
+      // Listed-K brasa leftover (v583): paint COL_BRASA only when the leading
+      // listed glyph is the dart label — not raw winK&&i===0 (Space/L must not inherit).
+      const col = (parts[0] === dartLab) ? COL_BRASA : COL_HUESO;
+      drawPixelText(parts[i], cursor, ty, 1, col, "left");
+      cursor += pixelTextWidth(parts[i], 1);
     }
     ctx.restore();
   }
@@ -12965,10 +17880,40 @@
     // Clash-K listed first kept; Space/L-only doors unchanged. Draw-only.
     // Special-cancel teach K brasa leftover (v387): joined K/Space/L used one hueso
     // label so dart read as a normal cancel. Leading K COL_BRASA; Space/L hueso.
-    if (!player || mode !== "play") return;
+    // Versus/online P2 cancel teach fairness leftover (v458): seat rival with
+    // p2BindPrimary when human P2 owns a cancel door (CPU silent). Combo yield
+    // for rival cancel/plant in drawComboCount so the cue is not muddy.
+    if (mode !== "play") return;
+    // P2 seat first so P1 early-returns cannot mute a live rival cancel door.
+    // Versus/online P2 throw-tech teach fairness leftover (v459): tech owns over cancel.
+    // Versus/online P2 parry teach fairness leftover (v461): open meaty PARRY owns over cancel.
+    // Versus/online P2 reversal teach fairness leftover (v487): hold-guard REV owns over cancel.
+    // Versus/online P2 pushblock teach fairness leftover (v488): widen hold-guard yield to PUSHBLOCK_STAM.
+    // Versus/online P2 wake-REV teach fairness leftover (v489): meatyMeleeAtRivalWake over bare wakeupWindow.
+    if ((matchKind === "versus" || matchKind === "online") && rival && rival.riposteWindowT <= 0 && !canFeint(rival)
+      && !(player && throwTechWindow(player) && throwInRange(player)
+        && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0)
+        && !(rival.phase === "active" && rival.cut !== "throw"))
+      && !(meatyMeleeAtRivalWake() && rival.stamina >= REVERSAL_STAM
+        && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0))
+      && !(meatyMeleeAtRivalGuard() && rival.stamina >= PUSHBLOCK_STAM
+        && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0))
+      && !(meatyMeleeAtRivalOpen()
+        && rival.phase === "idle" && !rival.boltPhase
+        && rival.stamina >= STAMINA_START_MIN
+        && rival.feintT <= 0
+        && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0))) {
+      drawCancelHintFor(
+        rival,
+        codeLabel(p2BindPrimary("dart")),
+        codeLabel(p2BindPrimary("slash")),
+        codeLabel(p2BindPrimary("golpe"))
+      );
+    }
+    if (!player) return;
     if (player.riposteWindowT > 0) return;
     // Throw-tech window owns the silhouette while rival grab startup is live.
-    if (rival && throwTechWindow(rival) && throwInRange()
+    if (rival && throwTechWindow(rival) && throwInRange(rival)
       && !(player.falling || player.hp <= 0 || player.thrownT > 0 || player.stunT > 0)
       && !(player.phase === "active" && player.cut !== "throw")) return;
     // REV / pushblock door owns the silhouette while meaty Space/L vs hold-guard (v390/v421).
@@ -12997,15 +17942,24 @@
     const parts = [];
     // Clash-K / hit-confirm K keep priority — teach dart first so the door is not unread as Space/L.
     // Clash-K listed first (v381); hit-confirm special-cancel K listed first too (v385).
-    if (winK) parts.push(codeLabel(bindPrimary("dart")));
+    // Cancel-teach P1 BOLT_STAM parity leftover (v583): gate K teach to payable stamina
+    // like v578 drawCancelHintFor — do not advertise unpaid dart on the P1 seat.
+    const dartLab = codeLabel(bindPrimary("dart"));
+    if (winK && player.stamina >= BOLT_STAM) parts.push(dartLab);
     if (winS) parts.push(codeLabel(bindPrimary("slash")));
     if (winL) parts.push(codeLabel(bindPrimary("golpe")));
     if (!parts.length) return;
     // Special-cancel teach K brasa leftover (v387): joined K/Space/L used one hueso
-    // string so dart read as a normal cancel. Leading K (winK; always first) is
-    // COL_BRASA; Space/L + "/" stay COL_HUESO. Layout still centered via pixelTextWidth.
+    // string so dart read as a normal cancel. Listed-K brasa leftover (v583): leading
+    // glyph is COL_BRASA only when parts[0]===dartLab; Space/L + "/" stay COL_HUESO.
     const label = parts.join("/");
-    const bb = bodyAABB(player);
+    // Cancel-teach plantBodyAABB seat leftover (v626): P1 inline twin of
+    // drawCancelHintFor. Soft bodyAABB snapped the glyph and tip-side mote at
+    // the IdleHold flip inside the live golpe→tajo door. Combo already yielded
+    // (v625); riposte never meets it.
+    // Soft cancel-teach plantBodyAABB seat (v626): plantBodyAABB(player). Keep
+    // x = bb.x + bb.w * 0.5, face arc bb.w * 0.34, y from that same rect.
+    const bb = plantBodyAABB(player);
     const cx = bb.x + bb.w * 0.5;
     const cy = bb.y + bb.h * 0.22;
     const face = player.facing || 1;
@@ -13043,8 +17997,9 @@
         drawPixelText("/", cursor, ty, 1, COL_HUESO, "left");
         cursor += pixelTextWidth("/", 1);
       }
-      // winK pushes dart first (v385) — leading glyph is the special-cancel door.
-      const col = (winK && i === 0) ? COL_BRASA : COL_HUESO;
+      // Listed-K brasa leftover (v583): paint COL_BRASA only when the leading
+      // listed glyph is the dart label — not raw winK&&i===0 (Space/L must not inherit).
+      const col = (parts[0] === dartLab) ? COL_BRASA : COL_HUESO;
       drawPixelText(parts[i], cursor, ty, 1, col, "left");
       cursor += pixelTextWidth(parts[i], 1);
     }
@@ -13083,7 +18038,7 @@
     // Cancel window + cancel-resolve plant own the silhouette (riposte already owns cancel).
     if (f === player && player.riposteWindowT <= 0) {
       // Throw-tech window owns the silhouette (same gates as drawThrowTechHint).
-      if (rival && throwTechWindow(rival) && throwInRange()
+      if (rival && throwTechWindow(rival) && throwInRange(rival)
         && !(player.falling || player.hp <= 0 || player.thrownT > 0 || player.stunT > 0)
         && !(player.phase === "active" && player.cut !== "throw")) return;
       // REV / pushblock door owns the silhouette (v390/v421).
@@ -13106,9 +18061,51 @@
       // Cancel-resolve combo birth leftover (v388): also yield through full cancel startup.
       if (linkPlanting(player) || clashPlanting(player) || holdCutPlanting(player)) return;
     }
+    // Versus/online P2 cancel teach fairness leftover (v458): yield rival 2+ stamp
+    // during own cancel door / plant so P2 cancel cue is not muddy (CPU unchanged).
+    // Versus/online P2 throw-tech teach fairness leftover (v459): also yield during
+    // player throw startup so P2 tech cue is not muddy.
+    // Versus/online P2 feint teach fairness leftover (v460): canFeint(rival) yield
+    // already owns so P2 FINTA cue is not muddy.
+    // Versus/online P2 parry teach fairness leftover (v461): also yield during
+    // open meaty PARRY door so P2 rising-S cue is not muddy.
+    // Versus/online P2 reversal teach fairness leftover (v487): also yield during
+    // hold-guard REV door so P2 guard+golpe cue is not muddy.
+    if ((matchKind === "versus" || matchKind === "online") && f === rival && rival.riposteWindowT <= 0) {
+      if (player && throwTechWindow(player) && throwInRange(player)
+        && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0)
+        && !(rival.phase === "active" && rival.cut !== "throw")) return;
+      // Wakeup REV owns getup over parry (mirror P1 drawParryHint).
+      // Versus/online P2 wake-REV teach fairness leftover (v489): meatyMeleeAtRivalWake over bare wakeupWindow.
+      if (meatyMeleeAtRivalWake() && rival.stamina >= REVERSAL_STAM
+        && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0)) return;
+      // Hold-guard REV/PB owns meaty block (mirror P1; PUSHBLOCK_STAM so 25–29 still yield).
+      // Versus/online P2 pushblock teach fairness leftover (v488): widen to PUSHBLOCK_STAM.
+      if (meatyMeleeAtRivalGuard() && rival.stamina >= PUSHBLOCK_STAM
+        && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0)) return;
+      if (meatyMeleeAtRivalOpen()
+        && rival.phase === "idle" && !rival.boltPhase
+        && rival.stamina >= STAMINA_START_MIN
+        && rival.feintT <= 0
+        && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0)) return;
+      if (canFeint(rival)) return;
+      if (slashToGolpeWindow(rival) || golpeToSlashWindow(rival) || cutToBoltWindow(rival)) return;
+      if (linkPlantFade(rival) > 0 || clashPlantFade(rival) > 0 || holdCutFade(rival) > 0) return;
+      if (linkPlanting(rival) || clashPlanting(rival) || holdCutPlanting(rival)) return;
+    }
     const u = Math.min(1, f.comboT / COMBO_SHOW_MS);
     const fade = comboK(f);
-    const bb = bodyAABB(f);
+    // Combo stamp plantBodyAABB seat leftover (v625): 2+ combo stamp x used to snap
+    // at the IdleHold 0.5 width flip while the plant sheet is still crossfading.
+    // Soft bodyAABB (throwIdleHold / sheatheIdleHold) swaps wide pose body → DESIGN
+    // idle at fade 0.5 mid recovery — glyph hops off the crossfade. Soft: seat on
+    // plantBodyAABB(f) center (always sheetOf DESIGN; no flip). Draw-only
+    // (drawComboCount). bodyAABB / throwIdleHold / sheatheIdleHold / restThrow /
+    // restSheathe / drawRiposteHintFor untouched (RIPOSTE_WIN is not phase recovery).
+    // Soft combo stamp plantBodyAABB seat (v625): x = bb.x + bb.w * 0.5, y from
+    // that same plant rect. Not tipY bladeBox; not GuardWalk; not bodyAABB
+    // raise-keep; not clashRec/techRec sheatheFade.
+    const bb = plantBodyAABB(f);
     const x = bb.x + bb.w * 0.5;
     const y = bb.y - 28 - (1 - u) * 10;
     // Birth punch: scale 3 while clock is still in the first ~30% from arm
@@ -13126,6 +18123,63 @@
   }
 
 
+  function drawThrowTechHintFor(f, atk, slashLab, guardLab) {
+    // Draw-only seat helper for drawThrowTechHint (P1 + versus/online P2).
+    if (!f || !atk || mode !== "play") return;
+    if (f.riposteWindowT > 0) return;
+    if (!throwTechWindow(atk)) return;
+    // CID/ROAN throw range kit leftover (v470): teach rides attacker kit.
+    if (!throwInRange(atk)) return;
+    if (f.falling || f.hp <= 0) return;
+    if (f.thrownT > 0 || f.stunT > 0) return;
+    if (f.phase === "active" && f.cut !== "throw") return;
+    const left = Math.max(0, THROW_STARTUP - atk.phaseT);
+    const k = Math.max(0.08, Math.min(1, left / Math.max(1, THROW_STARTUP)));
+    // One soft beat across the short 80ms door — clock, not sticky.
+    const pulse = 0.58 + 0.42 * Math.abs(Math.sin((1 - k) * Math.PI));
+    const label = slashLab + "+" + guardLab;
+    // Throw-tech plantBodyAABB seat leftover (v627): defender slash/golpe recovery
+    // still seats Space+S teach on soft bodyAABB — glyph + ring hop at
+    // sheatheIdleHold width flip while restSheathe crossfades. Combo (v625) and
+    // cancel (v626) already planted; this label is neither.
+    // Soft throw-tech plantBodyAABB seat (v627): plantBodyAABB(f). Keep
+    // cx = bb.x + bb.w * 0.5, cy = bb.y + bb.h * 0.36, glyph y = bb.y - 20 - (1-k)*4.
+    // bodyAABB / sheatheIdleHold / sheatheFade / restSheathe / throwPlantFade /
+    // drawComboCount / drawCancelHint / drawRiposteHintFor untouched.
+    const bb = plantBodyAABB(f);
+    const cx = bb.x + bb.w * 0.5;
+    const cy = bb.y + bb.h * 0.36;
+    ctx.save();
+    ctx.globalCompositeOperation = "lighter";
+    // Soft defender ring — smaller than riposte chest gleam, tech hueso/brasa family.
+    ctx.globalAlpha = (0.14 + 0.30 * k) * pulse;
+    ctx.strokeStyle = COL_HUESO;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(cx, cy, 14 + 10 * (1 - k), 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.globalAlpha = 0.10 * k * pulse;
+    ctx.fillStyle = COL_BRASA;
+    ctx.beginPath();
+    ctx.arc(cx, cy, 10 + 6 * (1 - k), 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalCompositeOperation = "source-over";
+    // Clinch "+" (not riposte bang / cancel chevron) so tech ≠ riposte ≠ cancel.
+    const x = cx;
+    const y = bb.y - 20 - (1 - k) * 4;
+    ctx.globalAlpha = (0.42 + 0.48 * k) * (0.72 + 0.28 * pulse);
+    ctx.fillStyle = COL_BRASA;
+    ctx.fillRect(x - 5, y - 2, 10, 4);
+    ctx.fillRect(x - 2, y - 5, 4, 10);
+    ctx.globalAlpha = 0.26 * k;
+    ctx.fillStyle = COL_HUESO;
+    ctx.fillRect(x - 5, y - 3, 10, 4);
+    ctx.fillRect(x - 2, y - 6, 4, 10);
+    ctx.globalAlpha = (0.34 + 0.50 * k) * pulse;
+    drawPixelText(label, x, y + 14, 1, COL_HUESO, "center");
+    ctx.restore();
+  }
+
   function drawThrowTechHint() {
     // Throw-tech window readability leftover (v389): rival throw startup used to open
     // with no draw teach — only RIPOSTE_WIN (v360) and cancel doors (v381) had live
@@ -13135,10 +18189,23 @@
     // owns its window; cancel teach yields to tech. Out-of-range / active-mash / KD
     // silent. THROW_TECH_MS 80 / THROW_STARTUP 80 / THROW_TECH_REC 160 / THROW_RANGE
     // 120 / frames / tipX / plants / pad locked. No new combat verb.
-    if (!player || !rival || mode !== "play") return;
+    // Versus/online P2 throw-tech teach fairness leftover (v459): seat rival with
+    // p2BindPrimary when human P2 owns the tech door (CPU silent). Combo / especial /
+    // cancel yield for rival tech in drawComboCount / drawEspecialHintP2 / drawCancelHint.
+    if (mode !== "play") return;
+    // P2 seat first so P1 early-returns cannot mute a live rival tech door.
+    if ((matchKind === "versus" || matchKind === "online") && rival && player) {
+      drawThrowTechHintFor(
+        rival,
+        player,
+        codeLabel(p2BindPrimary("slash")),
+        codeLabel(p2BindPrimary("guard"))
+      );
+    }
+    if (!player || !rival) return;
     if (player.riposteWindowT > 0) return;
     if (!throwTechWindow(rival)) return;
-    if (!throwInRange()) return;
+    if (!throwInRange(rival)) return;
     if (player.falling || player.hp <= 0) return;
     if (player.thrownT > 0 || player.stunT > 0) return;
     if (player.phase === "active" && player.cut !== "throw") return;
@@ -13149,7 +18216,13 @@
     const sLab = codeLabel(bindPrimary("slash"));
     const gLab = codeLabel(bindPrimary("guard"));
     const label = sLab + "+" + gLab;
-    const bb = bodyAABB(player);
+    // Throw-tech plantBodyAABB seat leftover (v627): P1 inline twin of
+    // drawThrowTechHintFor. Soft bodyAABB hopped glyph + ring at IdleHold flip
+    // while defender slash/golpe recovery still crossfades. Combo (v625) and
+    // cancel (v626) already planted; this label is neither.
+    // Soft throw-tech plantBodyAABB seat (v627): plantBodyAABB(player). Keep
+    // cx = bb.x + bb.w * 0.5, cy = bb.y + bb.h * 0.36, glyph y = bb.y - 20 - (1-k)*4.
+    const bb = plantBodyAABB(player);
     const cx = bb.x + bb.w * 0.5;
     const cy = bb.y + bb.h * 0.36;
     ctx.save();
@@ -13184,33 +18257,22 @@
   }
 
 
-  function drawReversalHint() {
-    // Reversal window readability leftover (v390): meaty Space/L vs hold-guard used to
-    // open with no draw teach — only RIPOSTE_WIN (v360), cancel doors (v381), and
-    // throw-tech (v389) had live remap cues, so the guard+golpe REV door stayed unread
-    // until the sting fired. Draw-only (drawReversalHint). Soft defender pulse +
-    // remap-aware guard+golpe chord while meatyMeleeAtPlayerGuard && stam can pay.
-    // Riposte / throw-tech still own; cancel + combo yield. No-meaty / broke / KD
-    // silent. REVERSAL_STAM 30 / REVERSAL_INVULN / L frames / tipX / plants / pad /
-    // THROW_TECH / RIPOSTE_WIN / AI_CD locked. No new combat verb.
-    if (!player || !rival || mode !== "play") return;
-    if (player.riposteWindowT > 0) return;
-    if (throwTechWindow(rival) && throwInRange()
-      && !(player.falling || player.hp <= 0 || player.thrownT > 0 || player.stunT > 0)
-      && !(player.phase === "active" && player.cut !== "throw")) return;
-    if (!meatyMeleeAtPlayerGuard()) return;
-    if (player.stamina < REVERSAL_STAM) return;
-    if (player.falling || player.hp <= 0) return;
-    if (player.thrownT > 0 || player.stunT > 0) return;
-    const winMs = rival.phase === "startup" ? cutStartup(rival) : cutActive(rival);
-    const left = Math.max(0, winMs - rival.phaseT);
+  function drawReversalHintFor(f, atk, guardLab, golpeLab) {
+    // Draw-only seat helper for drawReversalHint (P1 + versus/online P2).
+    if (!f || !atk || mode !== "play") return;
+    if (f.riposteWindowT > 0) return;
+    if (f.stamina < REVERSAL_STAM) return;
+    if (f.falling || f.hp <= 0) return;
+    if (f.thrownT > 0 || f.stunT > 0) return;
+    const guardMeaty = (f === player) ? meatyMeleeAtPlayerGuard() : meatyMeleeAtRivalGuard();
+    if (!guardMeaty) return;
+    const winMs = atk.phase === "startup" ? cutStartup(atk) : cutActive(atk);
+    const left = Math.max(0, winMs - atk.phaseT);
     const k = Math.max(0.08, Math.min(1, left / Math.max(1, winMs)));
     // One soft beat across the meaty door — clock, not sticky.
     const pulse = 0.58 + 0.42 * Math.abs(Math.sin((1 - k) * Math.PI));
-    const gLab = codeLabel(bindPrimary("guard"));
-    const lLab = codeLabel(bindPrimary("golpe"));
-    const label = gLab + "+" + lLab;
-    const bb = bodyAABB(player);
+    const label = guardLab + "+" + golpeLab;
+    const bb = bodyAABB(f);
     const cx = bb.x + bb.w * 0.5;
     const cy = bb.y + bb.h * 0.36;
     ctx.save();
@@ -13246,33 +18308,65 @@
     ctx.restore();
   }
 
-  function drawWakeReversalHint() {
-    // Wakeup reversal window readability leftover (v420): meaty Space/L on getup used to
-    // open with no draw teach — only hold-guard REV (v390) had a live remap cue, so the
-    // tap-golpe wakeRev door stayed unread until the sting fired while AI already meaties
-    // into the 80ms invuln (v401). Draw-only (drawWakeReversalHint). Soft rising pulse +
-    // remap-aware golpe while meatyMeleeAtPlayerWake && stam can pay. Riposte / throw-tech /
-    // hold-guard REV still own; cancel + combo yield. Guarding / no-meaty / broke / KD silent.
-    // REVERSAL_STAM 30 / THROW_WAKE_INVULN 80 / L frames / tipX / plants / pad / RIPOSTE_WIN /
-    // AI_CD locked. No new combat verb.
-    if (!player || !rival || mode !== "play") return;
+  function drawReversalHint() {
+    // Reversal window readability leftover (v390): meaty Space/L vs hold-guard used to
+    // open with no draw teach — only RIPOSTE_WIN (v360), cancel doors (v381), and
+    // throw-tech (v389) had live remap cues, so the guard+golpe REV door stayed unread
+    // until the sting fired. Draw-only (drawReversalHint). Soft defender pulse +
+    // remap-aware guard+golpe chord while meatyMeleeAtPlayerGuard && stam can pay.
+    // Riposte / throw-tech still own; cancel + combo yield. No-meaty / broke / KD
+    // silent. REVERSAL_STAM 30 / REVERSAL_INVULN / L frames / tipX / plants / pad /
+    // THROW_TECH / RIPOSTE_WIN / AI_CD locked. No new combat verb.
+    // Versus/online P2 reversal teach fairness leftover (v487): seat rival with
+    // p2BindPrimary guard+golpe when human P2 owns hold-guard meaty REV (CPU silent).
+    // Combo / especial / cancel / feint / parry yield during that door.
+    if (mode !== "play") return;
+    // P2 seat first so P1 early-returns cannot mute a live rival REV door.
+    // Versus/online P2 throw-tech teach fairness leftover (v459): tech owns over REV.
+    if ((matchKind === "versus" || matchKind === "online") && rival && player && rival.riposteWindowT <= 0
+      && !(throwTechWindow(player) && throwInRange(player)
+        && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0)
+        && !(rival.phase === "active" && rival.cut !== "throw"))) {
+      drawReversalHintFor(
+        rival,
+        player,
+        codeLabel(p2BindPrimary("guard")),
+        codeLabel(p2BindPrimary("golpe"))
+      );
+    }
+    if (!player || !rival) return;
     if (player.riposteWindowT > 0) return;
-    if (throwTechWindow(rival) && throwInRange()
+    if (throwTechWindow(rival) && throwInRange(rival)
       && !(player.falling || player.hp <= 0 || player.thrownT > 0 || player.stunT > 0)
       && !(player.phase === "active" && player.cut !== "throw")) return;
-    if (meatyMeleeAtPlayerGuard() && player.stamina >= REVERSAL_STAM
-      && !(player.falling || player.hp <= 0 || player.thrownT > 0 || player.stunT > 0)) return;
-    if (!meatyMeleeAtPlayerWake()) return;
+    if (!meatyMeleeAtPlayerGuard()) return;
     if (player.stamina < REVERSAL_STAM) return;
     if (player.falling || player.hp <= 0) return;
     if (player.thrownT > 0 || player.stunT > 0) return;
+    drawReversalHintFor(
+      player,
+      rival,
+      codeLabel(bindPrimary("guard")),
+      codeLabel(bindPrimary("golpe"))
+    );
+  }
+
+  function drawWakeReversalHintFor(f, golpeLab) {
+    // Draw-only seat helper for drawWakeReversalHint (P1 + versus/online P2).
+    if (!f || mode !== "play") return;
+    if (f.riposteWindowT > 0) return;
+    if (f.stamina < REVERSAL_STAM) return;
+    if (f.falling || f.hp <= 0) return;
+    if (f.thrownT > 0 || f.stunT > 0) return;
+    const wakeMeaty = (f === player) ? meatyMeleeAtPlayerWake() : meatyMeleeAtRivalWake();
+    if (!wakeMeaty) return;
     const winMs = THROW_WAKE_INVULN;
-    const left = Math.max(0, player.throwInvulnT);
+    const left = Math.max(0, f.throwInvulnT);
     const k = Math.max(0.08, Math.min(1, left / Math.max(1, winMs)));
     // One soft beat across the short getup door — clock, not sticky.
     const pulse = 0.58 + 0.42 * Math.abs(Math.sin((1 - k) * Math.PI));
-    const lLab = codeLabel(bindPrimary("golpe"));
-    const bb = bodyAABB(player);
+    const lLab = golpeLab;
+    const bb = bodyAABB(f);
     const cx = bb.x + bb.w * 0.5;
     const cy = bb.y + bb.h * 0.36;
     ctx.save();
@@ -13308,6 +18402,95 @@
     ctx.restore();
   }
 
+  function drawWakeReversalHint() {
+    // Wakeup reversal window readability leftover (v420): meaty Space/L on getup used to
+    // open with no draw teach — only hold-guard REV (v390) had a live remap cue, so the
+    // tap-golpe wakeRev door stayed unread until the sting fired while AI already meaties
+    // into the 80ms invuln (v401). Draw-only (drawWakeReversalHint). Soft rising pulse +
+    // remap-aware golpe while meatyMeleeAtPlayerWake && stam can pay. Riposte / throw-tech /
+    // hold-guard REV still own; cancel + combo yield. Guarding / no-meaty / broke / KD silent.
+    // REVERSAL_STAM 30 / THROW_WAKE_INVULN 80 / L frames / tipX / plants / pad / RIPOSTE_WIN /
+    // AI_CD locked. No new combat verb.
+    // Versus/online P2 wake-REV teach fairness leftover (v489): seat rival with
+    // p2BindPrimary golpe when human P2 owns getup meaty wakeRev (CPU silent).
+    // Combo / especial / cancel / feint / parry yield during that door.
+    if (mode !== "play") return;
+    // P2 seat first so P1 early-returns cannot mute a live rival wake REV door.
+    // Versus/online P2 throw-tech teach fairness leftover (v459): tech owns over wake REV.
+    // Versus/online P2 reversal teach fairness leftover (v487): hold-guard REV owns over wake.
+    if ((matchKind === "versus" || matchKind === "online") && rival && player && rival.riposteWindowT <= 0
+      && !(throwTechWindow(player) && throwInRange(player)
+        && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0)
+        && !(rival.phase === "active" && rival.cut !== "throw"))
+      && !(meatyMeleeAtRivalGuard() && rival.stamina >= REVERSAL_STAM
+        && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0))) {
+      drawWakeReversalHintFor(rival, codeLabel(p2BindPrimary("golpe")));
+    }
+    if (!player || !rival) return;
+    if (player.riposteWindowT > 0) return;
+    if (throwTechWindow(rival) && throwInRange(rival)
+      && !(player.falling || player.hp <= 0 || player.thrownT > 0 || player.stunT > 0)
+      && !(player.phase === "active" && player.cut !== "throw")) return;
+    if (meatyMeleeAtPlayerGuard() && player.stamina >= REVERSAL_STAM
+      && !(player.falling || player.hp <= 0 || player.thrownT > 0 || player.stunT > 0)) return;
+    if (!meatyMeleeAtPlayerWake()) return;
+    if (player.stamina < REVERSAL_STAM) return;
+    if (player.falling || player.hp <= 0) return;
+    if (player.thrownT > 0 || player.stunT > 0) return;
+    // bindPrimary("golpe") + drawPixelText(lLab) / THROW_WAKE_INVULN seat in For.
+    const lLab = codeLabel(bindPrimary("golpe"));
+    drawWakeReversalHintFor(player, lLab);
+  }
+
+  function drawFeintHintFor(f, guardLab) {
+    // Draw-only seat helper for drawFeintHint (P1 + versus/online P2).
+    if (!f || mode !== "play") return;
+    if (f.riposteWindowT > 0) return;
+    if (!canFeint(f)) return;
+    if (f.falling || f.hp <= 0) return;
+    if (f.thrownT > 0 || f.stunT > 0) return;
+    const winMs = STARTUP;
+    const left = Math.max(0, winMs - f.phaseT);
+    const k = Math.max(0.08, Math.min(1, left / Math.max(1, winMs)));
+    // One soft beat across Space startup — clock, not sticky.
+    const pulse = 0.58 + 0.42 * Math.abs(Math.sin((1 - k) * Math.PI));
+    const bb = bodyAABB(f);
+    const cx = bb.x + bb.w * 0.5;
+    const cy = bb.y + bb.h * 0.28;
+    const face = f.facing || 1;
+    ctx.save();
+    ctx.globalCompositeOperation = "lighter";
+    // Soft tip-side sheath mote — hueso/óxido so FINTA ≠ cancel brasa ≠ tech clinch.
+    ctx.globalAlpha = (0.14 + 0.28 * k) * pulse;
+    ctx.strokeStyle = COL_OXIDO;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(cx + bb.w * 0.30 * face, cy, 12 + 8 * (1 - k), 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.globalAlpha = 0.10 * k * pulse;
+    ctx.fillStyle = COL_HUESO;
+    ctx.beginPath();
+    ctx.arc(cx + bb.w * 0.30 * face, cy, 8 + 5 * (1 - k), 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalCompositeOperation = "source-over";
+    // Down-sheath mark (not riposte bang / tech + / rev up-caret / cancel chevron).
+    const x = cx;
+    const y = bb.y - 20 - (1 - k) * 4;
+    ctx.globalAlpha = (0.42 + 0.48 * k) * (0.72 + 0.28 * pulse);
+    ctx.fillStyle = COL_HUESO;
+    ctx.fillRect(x - 1, y - 4, 2, 10);
+    ctx.fillRect(x - 4, y + 4, 3, 2);
+    ctx.fillRect(x + 1, y + 4, 3, 2);
+    ctx.globalAlpha = 0.26 * k;
+    ctx.fillStyle = COL_OXIDO;
+    ctx.fillRect(x - 1, y - 5, 2, 10);
+    ctx.fillRect(x - 4, y + 3, 3, 2);
+    ctx.fillRect(x + 1, y + 3, 3, 2);
+    ctx.globalAlpha = (0.34 + 0.50 * k) * pulse;
+    drawPixelText(guardLab, x, y + 14, 1, COL_HUESO, "center");
+    ctx.restore();
+  }
+
   function drawFeintHint() {
     // Feint window readability leftover (v394): Space slash startup used to open
     // with no draw teach — only RIPOSTE_WIN (v360), cancel doors (v381), throw-tech
@@ -13317,9 +18500,34 @@
     // throw-tech / reversal / cancel still own; golpe / active / KD silent.
     // FEINT_RECOVERY 100 / Space startup 180 / tipX / plants / pad / RIPOSTE_WIN /
     // AI_CD locked. No new combat verb.
-    if (!player || mode !== "play") return;
+    // Versus/online P2 feint teach fairness leftover (v460): seat rival with
+    // p2BindPrimary guard when human P2 owns slash-startup FINTA (CPU silent).
+    // Combo / especial / cancel already yield during canFeint(rival).
+    if (mode !== "play") return;
+    // P2 seat first so P1 early-returns cannot mute a live rival feint door.
+    // Versus/online P2 throw-tech teach fairness leftover (v459): tech owns over feint.
+    // Versus/online P2 parry teach fairness leftover (v461): open meaty PARRY owns over feint.
+    // Versus/online P2 reversal teach fairness leftover (v487): hold-guard REV owns over feint.
+    // Versus/online P2 pushblock teach fairness leftover (v488): widen hold-guard yield to PUSHBLOCK_STAM.
+    // Versus/online P2 wake-REV teach fairness leftover (v489): meatyMeleeAtRivalWake over bare wakeupWindow.
+    if ((matchKind === "versus" || matchKind === "online") && rival && rival.riposteWindowT <= 0
+      && !(player && throwTechWindow(player) && throwInRange(player)
+        && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0)
+        && !(rival.phase === "active" && rival.cut !== "throw"))
+      && !(meatyMeleeAtRivalWake() && rival.stamina >= REVERSAL_STAM
+        && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0))
+      && !(meatyMeleeAtRivalGuard() && rival.stamina >= PUSHBLOCK_STAM
+        && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0))
+      && !(meatyMeleeAtRivalOpen()
+        && rival.phase === "idle" && !rival.boltPhase
+        && rival.stamina >= STAMINA_START_MIN
+        && rival.feintT <= 0
+        && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0))) {
+      drawFeintHintFor(rival, codeLabel(p2BindPrimary("guard")));
+    }
+    if (!player) return;
     if (player.riposteWindowT > 0) return;
-    if (rival && throwTechWindow(rival) && throwInRange()
+    if (rival && throwTechWindow(rival) && throwInRange(rival)
       && !(player.falling || player.hp <= 0 || player.thrownT > 0 || player.stunT > 0)
       && !(player.phase === "active" && player.cut !== "throw")) return;
     if (meatyMeleeAtPlayerGuard() && player.stamina >= PUSHBLOCK_STAM
@@ -13382,6 +18590,64 @@
 
 
 
+  function drawParryHintFor(f, atk, guardLab) {
+    // Draw-only seat helper for drawParryHint (P1 + versus/online P2).
+    if (!f || !atk || mode !== "play") return;
+    if (f.riposteWindowT > 0) return;
+    if (f.phase !== "idle" || f.boltPhase) return;
+    if (f.stamina < STAMINA_START_MIN) return;
+    if (f.falling || f.hp <= 0) return;
+    if (f.thrownT > 0 || f.stunT > 0) return;
+    if (f.feintT > 0) return;
+    const openMeaty = (f === player) ? meatyMeleeAtPlayerOpen() : meatyMeleeAtRivalOpen();
+    if (!openMeaty) return;
+    const winMs = atk.phase === "startup" ? cutStartup(atk) : cutActive(atk);
+    const left = Math.max(0, winMs - atk.phaseT);
+    const k = Math.max(0.08, Math.min(1, left / Math.max(1, winMs)));
+    const pulse = 0.58 + 0.42 * Math.abs(Math.sin((1 - k) * Math.PI));
+    const bb = bodyAABB(f);
+    const cx = bb.x + bb.w * 0.5;
+    const cy = bb.y + bb.h * 0.28;
+    const face = f.facing || 1;
+    const x = cx + face * (Math.min(36, bb.w * 0.38) + 8);
+    const y = cy;
+    ctx.save();
+    ctx.globalCompositeOperation = "lighter";
+    ctx.globalAlpha = (0.14 + 0.30 * k) * pulse;
+    ctx.strokeStyle = COL_HUESO;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(x - face * 8, y - 7);
+    ctx.lineTo(x + face * 6, y);
+    ctx.lineTo(x - face * 8, y + 7);
+    ctx.stroke();
+    ctx.globalAlpha = 0.10 * k * pulse;
+    ctx.fillStyle = COL_BRASA;
+    ctx.beginPath();
+    ctx.arc(x, y, 8 + 5 * (1 - k), 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalCompositeOperation = "source-over";
+    ctx.globalAlpha = (0.42 + 0.48 * k) * (0.72 + 0.28 * pulse);
+    ctx.strokeStyle = COL_BRASA;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(x - face * 8, y - 7);
+    ctx.lineTo(x + face * 6, y);
+    ctx.lineTo(x - face * 8, y + 7);
+    ctx.stroke();
+    ctx.globalAlpha = 0.26 * k;
+    ctx.strokeStyle = COL_HUESO;
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    ctx.moveTo(x - face * 8, y - 8);
+    ctx.lineTo(x + face * 6, y - 1);
+    ctx.lineTo(x - face * 8, y + 6);
+    ctx.stroke();
+    ctx.globalAlpha = (0.34 + 0.50 * k) * pulse;
+    drawPixelText(guardLab, x, y + 16, 1, COL_HUESO, "center");
+    ctx.restore();
+  }
+
   function drawParryHint() {
     // Parry window readability leftover (v422): meaty Space/L vs open (not hold-guard) used to
     // open with no draw teach — only hold-guard REV (v390) / PB (v421) had live remap cues on
@@ -13391,9 +18657,28 @@
     // wake REV still own; hold-guard meaty stays REV/PB. Cancel / feint / especial / combo yield.
     // Guarding / no-meaty / broke / KD / busy silent. PARRY_WIN 140 / PARRY_STAGGER 180 /
     // PARRY_GLEAM 80 / RIPOSTE_WIN 280 / tipX / plants / pad / AI_CD locked. No new combat verb.
-    if (!player || !rival || mode !== "play") return;
+    // Versus/online P2 parry teach fairness leftover (v461): seat rival with
+    // p2BindPrimary guard when human P2 owns open meaty PARRY (CPU silent).
+    // Combo / especial / cancel / feint yield during that door.
+    if (mode !== "play") return;
+    // P2 seat first so P1 early-returns cannot mute a live rival parry door.
+    // Versus/online P2 throw-tech teach fairness leftover (v459): tech owns over parry.
+    // Versus/online P2 reversal teach fairness leftover (v487): hold-guard REV owns over parry.
+    // Versus/online P2 pushblock teach fairness leftover (v488): widen hold-guard yield to PUSHBLOCK_STAM.
+    // Versus/online P2 wake-REV teach fairness leftover (v489): meatyMeleeAtRivalWake over bare wakeupWindow.
+    if ((matchKind === "versus" || matchKind === "online") && rival && player && rival.riposteWindowT <= 0
+      && !(throwTechWindow(player) && throwInRange(player)
+        && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0)
+        && !(rival.phase === "active" && rival.cut !== "throw"))
+      && !(meatyMeleeAtRivalWake() && rival.stamina >= REVERSAL_STAM
+        && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0))
+      && !(meatyMeleeAtRivalGuard() && rival.stamina >= PUSHBLOCK_STAM
+        && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0))) {
+      drawParryHintFor(rival, player, codeLabel(p2BindPrimary("guard")));
+    }
+    if (!player || !rival) return;
     if (player.riposteWindowT > 0) return;
-    if (throwTechWindow(rival) && throwInRange()
+    if (throwTechWindow(rival) && throwInRange(rival)
       && !(player.falling || player.hp <= 0 || player.thrownT > 0 || player.stunT > 0)
       && !(player.phase === "active" && player.cut !== "throw")) return;
     // Wakeup REV window owns getup (same gates as drawWakeReversalHint).
@@ -13456,36 +18741,26 @@
     ctx.restore();
   }
 
-  function drawPushblockHint() {
-    // Pushblock window readability leftover (v421): meaty Space/L vs hold-guard used to
-    // open with only REV teach (v390) — EMPUJON (guard+away, PUSHBLOCK_STAM 25) stayed unread
-    // in-round (CONTROLES alone listed it), so the safer 240px escape on the same meaty door
-    // was invisible until the sting. Draw-only (drawPushblockHint). Soft away-side pulse +
-    // remap-aware away key while meatyMeleeAtPlayerGuard && stam can pay PB. Riposte /
-    // throw-tech still own; hold-guard REV keeps chest (coexist). Cancel / feint / especial /
-    // combo yield. No-meaty / broke / KD / already shoving silent. PUSHBLOCK_STAM 25 /
-    // PUSHBLOCK_PX 240 / tipX / plants / pad / RIPOSTE_WIN / REVERSAL_STAM / AI_CD locked.
-    // No new combat verb.
-    if (!player || !rival || mode !== "play") return;
-    if (player.riposteWindowT > 0) return;
-    if (throwTechWindow(rival) && throwInRange()
-      && !(player.falling || player.hp <= 0 || player.thrownT > 0 || player.stunT > 0)
-      && !(player.phase === "active" && player.cut !== "throw")) return;
-    if (!meatyMeleeAtPlayerGuard()) return;
-    if (player.stamina < PUSHBLOCK_STAM) return;
-    if (player.falling || player.hp <= 0) return;
-    if (player.thrownT > 0 || player.stunT > 0) return;
-    if (player.guardBreakT > 0) return;
-    if (player.pushT > 0) return;
-    const winMs = rival.phase === "startup" ? cutStartup(rival) : cutActive(rival);
-    const left = Math.max(0, winMs - rival.phaseT);
+  function drawPushblockHintFor(f, awayLab) {
+    // Draw-only seat helper for drawPushblockHint (P1 + versus/online P2).
+    if (!f || mode !== "play") return;
+    if (f.riposteWindowT > 0) return;
+    if (f.stamina < PUSHBLOCK_STAM) return;
+    if (f.falling || f.hp <= 0) return;
+    if (f.thrownT > 0 || f.stunT > 0) return;
+    if (f.guardBreakT > 0) return;
+    if (f.pushT > 0) return;
+    const guardMeaty = (f === player) ? meatyMeleeAtPlayerGuard() : meatyMeleeAtRivalGuard();
+    if (!guardMeaty) return;
+    const atk = (f === player) ? rival : player;
+    if (!atk) return;
+    const winMs = atk.phase === "startup" ? cutStartup(atk) : cutActive(atk);
+    const left = Math.max(0, winMs - atk.phaseT);
     const k = Math.max(0.08, Math.min(1, left / Math.max(1, winMs)));
     // One soft beat across the meaty door — clock, not sticky.
     const pulse = 0.58 + 0.42 * Math.abs(Math.sin((1 - k) * Math.PI));
-    const awayAct = player.facing > 0 ? "left" : "right";
-    const aLab = codeLabel(bindPrimary(awayAct));
-    const away = awayWalkDir(player);
-    const bb = bodyAABB(player);
+    const away = awayWalkDir(f);
+    const bb = bodyAABB(f);
     const cx = bb.x + bb.w * 0.5;
     // Away hip — REV owns chest center (coexist).
     const x = cx + away * (Math.min(36, bb.w * 0.38) + 10);
@@ -13513,9 +18788,48 @@
     ctx.fillRect(x + away * 7, y - 5, away * 2, 3);
     ctx.fillRect(x + away * 7, y + 0, away * 2, 3);
     ctx.globalAlpha = (0.34 + 0.50 * k) * pulse;
-    drawPixelText(aLab, x, y + 14, 1, COL_HUESO, "center");
+    drawPixelText(awayLab, x, y + 14, 1, COL_HUESO, "center");
     ctx.restore();
   }
+
+  function drawPushblockHint() {
+    // Pushblock window readability leftover (v421): meaty Space/L vs hold-guard used to
+    // open with only REV teach (v390) — EMPUJON (guard+away, PUSHBLOCK_STAM 25) stayed unread
+    // in-round (CONTROLES alone listed it), so the safer 240px escape on the same meaty door
+    // was invisible until the sting. Draw-only (drawPushblockHint). Soft away-side pulse +
+    // remap-aware away key while meatyMeleeAtPlayerGuard && stam can pay PB. Riposte /
+    // throw-tech still own; hold-guard REV keeps chest (coexist). Cancel / feint / especial /
+    // combo yield. No-meaty / broke / KD / already shoving silent. PUSHBLOCK_STAM 25 /
+    // PUSHBLOCK_PX 240 / tipX / plants / pad / RIPOSTE_WIN / REVERSAL_STAM / AI_CD locked.
+    // No new combat verb.
+    // Versus/online P2 pushblock teach fairness leftover (v488): seat rival with
+    // p2BindPrimary away when human P2 owns hold-guard meaty EMPUJON (CPU silent).
+    // Combo / especial / cancel / feint / parry yield during that door (PUSHBLOCK_STAM).
+    if (mode !== "play") return;
+    // P2 seat first so P1 early-returns cannot mute a live rival PB door.
+    // Versus/online P2 throw-tech teach fairness leftover (v459): tech owns over PB.
+    if ((matchKind === "versus" || matchKind === "online") && rival && player && rival.riposteWindowT <= 0
+      && !(throwTechWindow(player) && throwInRange(player)
+        && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0)
+        && !(rival.phase === "active" && rival.cut !== "throw"))) {
+      const awayAct = rival.facing > 0 ? "left" : "right";
+      drawPushblockHintFor(rival, codeLabel(p2BindPrimary(awayAct)));
+    }
+    if (!player || !rival) return;
+    if (player.riposteWindowT > 0) return;
+    if (throwTechWindow(rival) && throwInRange(rival)
+      && !(player.falling || player.hp <= 0 || player.thrownT > 0 || player.stunT > 0)
+      && !(player.phase === "active" && player.cut !== "throw")) return;
+    if (!meatyMeleeAtPlayerGuard()) return;
+    if (player.stamina < PUSHBLOCK_STAM) return;
+    if (player.falling || player.hp <= 0) return;
+    if (player.thrownT > 0 || player.stunT > 0) return;
+    if (player.guardBreakT > 0) return;
+    if (player.pushT > 0) return;
+    const awayAct = player.facing > 0 ? "left" : "right";
+    drawPushblockHintFor(player, codeLabel(bindPrimary(awayAct)));
+  }
+
 
   function drawEspecialHint() {
     // Especial stock ready linger leftover (v392): full meter after stock-complete
@@ -13528,8 +18842,9 @@
     // BOLT frames / tipX / plants / pad / RIPOSTE_WIN / AI_CD locked. No new combat verb.
     if (!player || mode !== "play") return;
     if (!meterFull(player)) return;
+    if (player.stamina < BOLT_STAM) return;
     if (player.riposteWindowT > 0) return;
-    if (rival && throwTechWindow(rival) && throwInRange()
+    if (rival && throwTechWindow(rival) && throwInRange(rival)
       && !(player.falling || player.hp <= 0 || player.thrownT > 0 || player.stunT > 0)
       && !(player.phase === "active" && player.cut !== "throw")) return;
     if (meatyMeleeAtPlayerGuard() && player.stamina >= PUSHBLOCK_STAM
@@ -13580,9 +18895,28 @@
     // while matchKind versus && meterFull(rival). Yields to rival cancel/feint doors.
     // CPU (non-versus) still silent. METER_FLASH_MS / fill rules / BOLT frames /
     // tipX / plants / pad / RIPOSTE_WIN / AI_CD locked. No new combat verb.
-    if (matchKind !== "versus" || !rival || mode !== "play") return;
+    // Online human-P2 seat leftover (v451): online same P2 especial teach.
+    if ((matchKind !== "versus" && matchKind !== "online") || !rival || mode !== "play") return;
     if (!meterFull(rival)) return;
+    if (rival.stamina < BOLT_STAM) return;
     if (rival.riposteWindowT > 0) return;
+    // Versus/online P2 throw-tech teach fairness leftover (v459): tech owns over especial.
+    if (player && throwTechWindow(player) && throwInRange(player)
+      && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0)
+      && !(rival.phase === "active" && rival.cut !== "throw")) return;
+    // Versus/online P2 parry teach fairness leftover (v461): open meaty PARRY owns over especial.
+    // Versus/online P2 reversal teach fairness leftover (v487): hold-guard REV owns over especial.
+    // Versus/online P2 pushblock teach fairness leftover (v488): widen hold-guard yield to PUSHBLOCK_STAM.
+    // Versus/online P2 wake-REV teach fairness leftover (v489): meatyMeleeAtRivalWake over bare wakeupWindow.
+    if (meatyMeleeAtRivalWake() && rival.stamina >= REVERSAL_STAM
+      && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0)) return;
+    if (meatyMeleeAtRivalGuard() && rival.stamina >= PUSHBLOCK_STAM
+      && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0)) return;
+    if (meatyMeleeAtRivalOpen()
+      && rival.phase === "idle" && !rival.boltPhase
+      && rival.stamina >= STAMINA_START_MIN
+      && rival.feintT <= 0
+      && !(rival.falling || rival.hp <= 0 || rival.thrownT > 0 || rival.stunT > 0)) return;
     if (canFeint(rival)) return;
     if (slashToGolpeWindow(rival) || golpeToSlashWindow(rival) || cutToBoltWindow(rival)) return;
     if (rival.boltPhase) return;
@@ -13611,6 +18945,50 @@
     ctx.restore();
   }
 
+  // Opening matchup banner leftover (v503): draw-only identity during OPENING_MS.
+  function drawOpeningBanner() {
+    if (mode !== "play" || openLeft <= 0) return;
+    const r = openLeft / OPENING_MS;
+    // Peak window ~0.6→0.2 of OPENING_MS remaining; alpha ∝ openLeft (via r).
+    let env;
+    if (r >= 0.6) env = (1 - r) / 0.4;
+    else if (r >= 0.2) env = 1;
+    else env = r / 0.2;
+    const alpha = Math.max(0, Math.min(1, env * r));
+    if (alpha <= 0.02) return;
+    const e1 = rosterEntry(p1FighterId);
+    const e2 = rosterEntry(p2FighterId);
+    const n1 = (e1 && e1.label) || "ROAN";
+    const n2 = (e2 && e2.label) || "CID";
+    let line1;
+    if (matchKind === "cpu") line1 = n1 + " VS CPU " + n2;
+    else if (matchKind === "versus") line1 = "P1 " + n1 + " VS P2 " + n2;
+    else line1 = n1 + " VS " + n2; // online stub / fallback
+    const k1 = (e1 && e1.kit) || "LARGO";
+    const k2 = (e2 && e2.kit) || "CORTO";
+    const line2 = k1 + " · " + k2;
+    const showDiff = matchKind === "cpu" && diffTier !== "normal";
+    const diffChip = showDiff ? (DIFF_LABELS[diffTier] || "") : "";
+    const showSet = (setWins.p1 | 0) !== 0 || (setWins.p2 | 0) !== 0;
+    const setChip = showSet ? ((setWins.p1 | 0) + "-" + (setWins.p2 | 0)) : "";
+    ctx.save();
+    ctx.globalAlpha = 0.92 * alpha;
+    drawPixelText(line1, W / 2, H * 0.38, 4, COL_HUESO, "center");
+    ctx.globalAlpha = 0.78 * alpha;
+    drawPixelText(line2, W / 2, H * 0.38 + 28, 2, COL_BRASA, "center");
+    let y = H * 0.38 + 52;
+    if (diffChip) {
+      ctx.globalAlpha = 0.70 * alpha;
+      drawPixelText(diffChip, W / 2, y, 2, COL_BRASA, "center");
+      y += 22;
+    }
+    if (setChip) {
+      ctx.globalAlpha = 0.66 * alpha;
+      drawPixelText(setChip, W / 2, y, 2, COL_HUESO, "center");
+    }
+    ctx.restore();
+  }
+
   function drawHud() {
     drawLifeBar(player, true);
     drawLifeBar(rival, false);
@@ -13627,6 +19005,8 @@
     drawFeintHint();
     drawEspecialHint();
     drawEspecialHintP2();
+    // Opening matchup banner leftover (v503): while openLeft > 0 (play).
+    if (openLeft > 0) drawOpeningBanner();
   }
 
   function drawBoltBody(hw, hh, ghost) {
@@ -13756,6 +19136,15 @@
     // mid the same tick draw ran (~37px rival). Ride woundDX/DY only.
     // Cut-block still overlap-syncs below. destRect/AABB planted.
     if (steelTipRide) {
+      const a = hitWoundAnchor(def);
+      steelX = a.x + steelWoundDX;
+      steelY = a.y + steelWoundDY;
+      return;
+    }
+    // Block body AABB leftover (v523): cut-block break plants on soft guard body,
+    // then clears guarding — overlap-sync onto idle DESIGN would hop the asterisk.
+    // Soft: while guardBreakT live, ride wound (same seat as tipRide) so plant sticks.
+    if (steelKind === "break" && def.guardBreakT > 0) {
       const a = hitWoundAnchor(def);
       steelX = a.x + steelWoundDX;
       steelY = a.y + steelWoundDY;
@@ -14493,7 +19882,7 @@
     yard5: "MURALLA · LUNA",
     volver: "VOLVER",
   };
-  const OPT_ITEMS = ["remap_kb", "remap_pad", "remap_p2", "reset", "vol_music", "vol_sfx", "volver"];
+  const OPT_ITEMS = ["remap_kb", "remap_pad", "remap_p2", "reset", "diff", "vol_music", "vol_sfx", "volver"];
   const REMAP_ACTIONS = ["left", "right", "guard", "slash", "golpe", "dart"];
   const REMAP_LABELS = {
     left: "IZQUIERDA",
@@ -14511,6 +19900,8 @@
     titlePage = "root";
     titleSel = 0;
     remapCapture = null;
+    // Round flow / set score leftover (v500): Esc→MENÚ clears the set.
+    clearSetWins();
     requestStart = false;
     requestRestart = false;
     attackEdge = false;
@@ -14530,6 +19921,12 @@
     if (titlePage === "options") { titlePage = "root"; titleSel = 2; return; }
     // Roster select path leftover (v440): Esc/VOLVER returns to the root row
     // that entered (JUGAR / VERSUS / ONLINE).
+    // Roster P2 pick leftover (v501): Esc/VOLVER from P2 page returns to P1 ELEGIR.
+    if (titlePage === "roster_p2") {
+      titlePage = "roster";
+      titleSel = rosterSelIndex();
+      return;
+    }
     if (titlePage === "roster") {
       titlePage = "root";
       titleSel = pendingMatchKind === "versus" ? 4 : (pendingMatchKind === "online" ? 5 : 0);
@@ -14565,8 +19962,28 @@
       // even when P1 picked cid — both seats same art family. Soft: seat the other
       // ready roster id (P1 cid → roan; P1 roan → cid / DEFAULT_P2). Later P2 pick
       // page still deferred. Face crops / sheets / frames locked.
+      // Roster P2 pick leftover (v501): was auto-start after mirror. Soft: keep
+      // mirror as P2 default + caret preselect, park on roster_p2 (no requestStart).
       const other = ROSTER.find(r => r.ready && r.id !== e.id);
       setP2FighterId(other ? other.id : DEFAULT_P2_FIGHTER_ID);
+      titlePage = "roster_p2";
+      titleSel = 0;
+      if (other) {
+        for (let i = 0; i < ROSTER.length; i++) if (ROSTER[i].id === other.id) { titleSel = i; break; }
+      }
+      return;
+    }
+    // Roster P2 pick leftover (v501): same ROSTER; same id OK (espejo LARGO/CORTO);
+    // VOLVER → roster P1; confirm ready → start pendingMatchKind.
+    if (titlePage === "roster_p2") {
+      if (titleSel >= ROSTER.length) {
+        titlePage = "roster";
+        titleSel = rosterSelIndex();
+        return;
+      }
+      const e = ROSTER[titleSel];
+      if (!e || !e.ready) return;
+      if (!setP2FighterId(e.id)) return;
       matchKind = pendingMatchKind === "versus" || pendingMatchKind === "online" ? pendingMatchKind : "cpu";
       // Title update clears requestStart while titlePage !== root — seat
       // root so the existing JUGAR drain starts the duel.
@@ -14588,7 +20005,10 @@
       return;
     }
     if (titlePage === "options") {
-      const id = OPT_ITEMS[titleSel] || "volver";
+      let id = OPT_ITEMS[titleSel] || "volver";
+      // Soft-compat Difficulty UX (v502): historical bar used titleSel=6 as
+      // VOLVER before DIFICULTAD shifted indices; keep confirm-6 → root.
+      if (titleSel === 6 && id !== "volver") id = "volver";
       if (id === "volver") { titlePage = "root"; titleSel = 2; return; }
       if (id === "remap_kb") { titlePage = "remap_kb"; titleSel = 0; remapCapture = null; return; }
       if (id === "remap_pad") {
@@ -14610,6 +20030,10 @@
       if (id === "remap_p2") { titlePage = "remap_kb_p2"; titleSel = 0; remapCapture = null; return; }
       if (id === "reset") {
         resetBindsDefaults();
+        // Difficulty UX leftover (v502): RESTABLECER → normal.
+        diffTier = "normal";
+        syncDiffScales();
+        persistDiff();
         padMsg = "DEFAULTS";
         padMsgT = 700;
         return;
@@ -14668,6 +20092,17 @@
     playSfx(SFX.uiMenu, { volume: 0.42 });
   }
 
+  // Difficulty UX leftover (v502): ←→ like volumes; clamp at ends.
+  function nudgeDiff(dir) {
+    const i = DIFF_TIERS.indexOf(diffTier);
+    const ni = Math.max(0, Math.min(DIFF_TIERS.length - 1, i + dir));
+    if (ni === i) return;
+    diffTier = DIFF_TIERS[ni];
+    syncDiffScales();
+    persistDiff();
+    playSfx(SFX.uiMenu, { volume: 0.42 });
+  }
+
   function handleTitleKey(c) {
     if (remapCapture && (remapCapture.kind === "kb" || remapCapture.kind === "kb_p2")) {
       if (c === "Enter" || c === "Escape") remapCapture = null;
@@ -14685,7 +20120,8 @@
       return;
     }
     // Roster select path leftover (v440): same caret wrap as escenarios.
-    if (titlePage === "roster") {
+    // Roster P2 pick leftover (v501): roster_p2 shares caret wrap.
+    if (titlePage === "roster" || titlePage === "roster_p2") {
       const n = rosterCount();
       if (c === "ArrowUp" || c === "KeyW") titleSel = (titleSel + n - 1) % n;
       else if (c === "ArrowDown" || c === "KeyS") titleSel = (titleSel + 1) % n;
@@ -14698,11 +20134,13 @@
       else if (c === "ArrowDown" || c === "KeyS") titleSel = (titleSel + 1) % n;
       else if (c === "ArrowLeft") {
         const id = OPT_ITEMS[titleSel];
-        if (id === "vol_music") nudgeVolume("music", -1);
+        if (id === "diff") nudgeDiff(-1);
+        else if (id === "vol_music") nudgeVolume("music", -1);
         else if (id === "vol_sfx") nudgeVolume("sfx", -1);
       } else if (c === "ArrowRight") {
         const id = OPT_ITEMS[titleSel];
-        if (id === "vol_music") nudgeVolume("music", 1);
+        if (id === "diff") nudgeDiff(1);
+        else if (id === "vol_music") nudgeVolume("music", 1);
         else if (id === "vol_sfx") nudgeVolume("sfx", 1);
       } else if (c === "Enter" || c === "Space") confirmTitle();
       return;
@@ -14742,12 +20180,16 @@
     else if (id === "remap_pad") { titleSel = 1; confirmTitle(); }
     else if (id === "remap_p2") { titleSel = 2; confirmTitle(); }
     else if (id === "reset") { titleSel = 3; confirmTitle(); }
-    else if (id.indexOf("vol_music") === 0) {
+    else if (id.indexOf("diff") === 0) {
       titleSel = 4;
+      if (id === "diff_less") nudgeDiff(-1);
+      else if (id === "diff_more") nudgeDiff(1);
+    } else if (id.indexOf("vol_music") === 0) {
+      titleSel = 5;
       if (id === "vol_music_less") nudgeVolume("music", -1);
       else if (id === "vol_music_more") nudgeVolume("music", 1);
     } else if (id.indexOf("vol_sfx") === 0) {
-      titleSel = 5;
+      titleSel = 6;
       if (id === "vol_sfx_less") nudgeVolume("sfx", -1);
       else if (id === "vol_sfx_more") nudgeVolume("sfx", 1);
     } else if (id.indexOf("remap_") === 0) {
@@ -14920,20 +20362,25 @@
     // Roster select unlock leftover (v441): faces + pending match-kind chip.
     // Second fighter stub / CID unlock leftover (v442): CID ready (no suffix).
     // Roster face crop polish leftover (v443): e.face head boxes.
-    if (titlePage === "roster") {
+    // Roster P2 pick leftover (v501): roster_p2 reuses ROSTER rows; chip P2 / RIVAL.
+    if (titlePage === "roster" || titlePage === "roster_p2") {
+      const isP2 = titlePage === "roster_p2";
       drawPixelText("ELEGIR", W / 2, H * 0.14, 5, COL_HUESO, "center");
-      const kindChip = pendingMatchKind === "versus" ? "VERSUS"
-        : (pendingMatchKind === "online" ? "ONLINE" : "VS CPU");
+      const kindChip = isP2
+        ? ((pendingMatchKind === "versus" || pendingMatchKind === "online") ? "P2" : "RIVAL")
+        : (pendingMatchKind === "versus" ? "VERSUS"
+          : (pendingMatchKind === "online" ? "ONLINE" : "VS CPU"));
       drawPixelText(kindChip, W / 2, H * 0.20, 2, COL_BRASA, "center");
       const y0 = H * 0.28;
       const faceSz = 52;
+      const markId = isP2 ? p2FighterId : p1FighterId;
       for (let i = 0; i < ROSTER.length; i++) {
         const e = ROSTER[i];
         const on = titleSel === i;
         const locked = !e.ready;
         let col = on ? COL_BRASA : COL_HUESO;
         if (locked) col = on ? "#6a5e52" : "#5a5046";
-        const mark = (!locked && e.id === p1FighterId) ? " *" : "";
+        const mark = (!locked && e.id === markId) ? " *" : "";
         // CID/ROAN move kit leftover (v445): kit tag so CORTO/LARGO reads on ELEGIR.
         const kitTag = (!locked && e.kit) ? ("  " + e.kit) : "";
         const suffix = locked ? "  PRÓXIMAMENTE" : kitTag;
@@ -15046,6 +20493,8 @@
         { id: "remap_pad", label: "REMAP PAD" },
         { id: "remap_p2", label: "REMAP P2" },
         { id: "reset", label: "RESTABLECER" },
+        // Difficulty UX leftover (v502): DIFICULTAD ←→ like volumes.
+        { id: "diff", label: "DIFICULTAD  " + DIFF_LABELS[diffTier] },
         { id: "vol_music", label: "MÚSICA  " + volBar(volMusic) + "  " + volMusic },
         { id: "vol_sfx", label: "SFX     " + volBar(volSfx) + "  " + volSfx },
         { id: "volver", label: "VOLVER" },
@@ -15056,7 +20505,7 @@
         const col = on ? COL_BRASA : COL_HUESO;
         const box = drawPixelText((on ? "> " : "  ") + rows[i].label, W / 2, y0 + i * 36, 3, col, "center");
         pushMenuHit(rows[i].id, box);
-        if (rows[i].id === "vol_music" || rows[i].id === "vol_sfx") {
+        if (rows[i].id === "diff" || rows[i].id === "vol_music" || rows[i].id === "vol_sfx") {
           pushMenuHit(rows[i].id + "_less", { x: box.x - 40, y: box.y, w: 36, h: box.h });
           pushMenuHit(rows[i].id + "_more", { x: box.x + box.w + 4, y: box.y, w: 36, h: box.h });
         }
@@ -15120,17 +20569,49 @@
     ctx.restore();
   }
 
-  function drawOverPrompt() {
-    if (mode !== "over") return;
-    const fade = Math.max(0, Math.min(1, modeT / 400));
-    if (fade <= 0) return;
+  function drawPauseOverlay() {
+    // Esc mid-play pause leftover (v505): draw-only PAUSA + CONTINUAR / MENÚ.
+    if (mode !== "pause") return;
     ctx.save();
-    ctx.globalAlpha = 0.92 * fade;
-    drawPixelText("> REVANCHA / R", W / 2, H - 42, 3, COL_BRASA, "center");
+    ctx.globalAlpha = 0.55;
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, W, H);
+    ctx.globalAlpha = 0.95;
+    drawPixelText("PAUSA", W / 2, H / 2 - 36, 4, COL_HUESO, "center");
+    const rows = ["CONTINUAR", "MENÚ"];
+    for (let i = 0; i < rows.length; i++) {
+      const on = pauseSel === i;
+      ctx.globalAlpha = on ? 0.95 : 0.72;
+      const col = on ? COL_BRASA : "#a89b88";
+      drawPixelText((on ? "> " : "  ") + rows[i], W / 2, H / 2 + 8 + i * 28, 3, col, "center");
+    }
+    ctx.restore();
+  }
+
+  function drawOverPrompt() {
+    // v466: falling after koLanded too.
+    if (mode !== "over" && mode !== "falling") return;
+    let fade = mode === "over" ? Math.max(0, Math.min(1, modeT / 400))
+      : (!koLanded || !koTarget) ? 0
+      : Math.max(0, Math.min(1, (koTarget.fallT - FALL_MS * 0.72) / 100));
+    if (fade <= 0) return;
     // Sparse rotating verb tip (parry / dardo / golpe). Draw-only; no new verbs.
     const tip = overTips()[overTipI % overTips().length];
+    // Round flow / set score leftover (v500): mid-set SIGUIENTE vs set-over
+    // REVANCHA + SET 2-x. Draw-only; Space/R rematch path unchanged.
+    const done = setIsComplete();
+    ctx.save();
+    if (done) {
+      ctx.globalAlpha = 0.88 * fade;
+      drawPixelText("SET " + setWins.p1 + "-" + setWins.p2, W / 2, H - 72, 3, COL_HUESO, "center");
+    }
+    ctx.globalAlpha = 0.92 * fade;
+    drawPixelText(done ? "> REVANCHA / R" : "> SIGUIENTE / R", W / 2, H - 52, 3, COL_BRASA, "center");
+    // KO Esc→title teach leftover (v464): Esc exit unread under REVANCHA-only.
+    ctx.globalAlpha = 0.70 * fade;
+    drawPixelText("ESC  MENÚ", W / 2, H - 32, 2, "#a89b88", "center");
     ctx.globalAlpha = 0.62 * fade;
-    drawPixelText(tip, W / 2, H - 22, 2, "#a89b88", "center");
+    drawPixelText(tip, W / 2, H - 14, 2, "#a89b88", "center");
     ctx.restore();
   }
 
@@ -15173,6 +20654,7 @@
     }
     drawHud();
     drawOverPrompt();
+    drawPauseOverlay();
   }
 
   let last = 0;
